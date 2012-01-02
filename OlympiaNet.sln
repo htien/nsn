@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Web Developer Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{ED97D02D-0F7C-403C-ABBB-931C76DF95B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaberLily.Web", "SaberLily.Web\SaberLily.Web.csproj", "{230257C6-2D1C-4AFD-B04B-BE7A7E77C520}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OlympiaNet.Website", "OlympiaNet.Website\OlympiaNet.Website.csproj", "{7C5EF84E-FC2A-48A4-904E-1BE78D490C97}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED97D02D-0F7C-403C-ABBB-931C76DF95B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED97D02D-0F7C-403C-ABBB-931C76DF95B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED97D02D-0F7C-403C-ABBB-931C76DF95B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED97D02D-0F7C-403C-ABBB-931C76DF95B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{230257C6-2D1C-4AFD-B04B-BE7A7E77C520}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{230257C6-2D1C-4AFD-B04B-BE7A7E77C520}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{230257C6-2D1C-4AFD-B04B-BE7A7E77C520}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{230257C6-2D1C-4AFD-B04B-BE7A7E77C520}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C5EF84E-FC2A-48A4-904E-1BE78D490C97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C5EF84E-FC2A-48A4-904E-1BE78D490C97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C5EF84E-FC2A-48A4-904E-1BE78D490C97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C5EF84E-FC2A-48A4-904E-1BE78D490C97}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
