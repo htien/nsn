@@ -1,4 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<objects xmlns="http://www.springframework.net" xmlns:db="http://www.springframework.net/database">
-	<object id="Singleton" type="OlympiaNet.Website.Singleton, OlympiaNet.Website" singleton="true" />
-</objects>

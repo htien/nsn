@@ -6,6 +6,7 @@ packages/
 *.bak
 *.csproj.user
 *.dll
+*.log
 *.suo
 
 ### Windows

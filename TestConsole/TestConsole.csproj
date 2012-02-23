@@ -9,7 +9,7 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OlympiaNet.TestConsole</RootNamespace>
-    <AssemblyName>OlympiaNet.Test</AssemblyName>
+    <AssemblyName>Lien.OlympiaNet.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
