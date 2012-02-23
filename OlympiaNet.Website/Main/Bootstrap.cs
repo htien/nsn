@@ -8,6 +8,8 @@ using Castle.Windsor.Installer;
 
 using SaberLily.Web.Factory;
 
+using OlympiaNet.Website.Installers;
+
 namespace OlympiaNet.Website.Main
 {
     /// <summary>
@@ -51,7 +53,10 @@ namespace OlympiaNet.Website.Main
 
         private void InitContainer()
         {
-            container = new WindsorContainer().Install(FromAssembly.This());
+            container = new WindsorContainer().Install(
+                new LoggerInstaller(),
+                new ControllersInstaller()
+            );
         }
 
         private void InitControllerFactory()
