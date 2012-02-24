@@ -83,6 +83,8 @@
   <ItemGroup>
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Static\Error404.htm" />
+    <Content Include="Static\GenericError.htm" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -136,7 +138,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>50350</DevelopmentServerPort>
+          <DevelopmentServerPort>55555</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
