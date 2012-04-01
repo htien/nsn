@@ -8,6 +8,8 @@ packages/
 *.dll
 *.log
 *.log.*
+*.orig.css
+*.orig.js
 *.suo
 
 ### Windows
