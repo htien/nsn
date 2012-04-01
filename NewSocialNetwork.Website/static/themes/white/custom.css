@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+/*----- HIKARI THEME -----*/
+
+#hikari { margin: 0 auto; min-width: 981px; max-width: 1910px; }
+#hikari #globalContainer,
+#hikari #globalFooter { width: 981px; min-width: 981px; }
+#hikari-nav-account { right: 78px; width: 125px; }
+#hikari-nav-help { right: 12px; width: 60px; }
+#hikari-divider-account { right: 75px; }
+
+#pagelet_copyrights { line-height: 12px; color: #7c8395; font-size: 11px; }
+#pagelet_copyrights a { color: #08c; }
+#pagelet_copyrights .stores,
+#pagelet_copyrights .stores li,
+#pagelet_copyrights .copyrights,
+#pagelet_copyrights .copyrights li,
+#pagelet_copyrights .help li { float: left; }
+#pagelet_copyrights .help, #pagelet_copyrights .order-by-phone { float: right; }
+#pagelet_copyrights .help li,
+#pagelet_copyrights .stores li,
+#pagelet_copyrights .copyrights li { margin-left: 10px; padding-left: 10px; border-left: 1px solid #ccc; }
+#pagelet_copyrights .help li.first,
+#pagelet_copyrights .stores li.first,
+#pagelet_copyrights .copyrights li.first { margin-left: 0; padding-left: 0; border-left: 0; }
+#pagelet_copyrights .separator { margin-bottom: 7px; padding-top: 7px; height: 1px; border-bottom: 3px double#ccc; }
+
+#pagelet_ads .pad,
+#pagelet_ads_2 .pad { padding: 5px 0 0; }
+
+#pagelet_categories li { }
+#pagelet_categories li a { display: block; }

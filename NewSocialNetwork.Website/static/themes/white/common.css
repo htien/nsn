@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+/*
+ * FREE FOR ALL BUT DOES NOT MEAN THERE IS NO PRICE.
+ *
+ * @author Tien Nguyen
+ * @version $Id: common.css,v 1.0 2011/10/03 21:14:25 lilylnx Exp $
+ */
+
+*|*:-moz-any-link:focus { outline: none; }
+button::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
+input[type="file"] > input[type="button"]::-moz-focus-inner { padding: 1px 2px; border: 1px none; }
+input[type="button"],
+input[type="submit"],
+input[type="image"], label { cursor: default; }
+a { color: #04b; cursor: pointer; text-decoration: none; }
+a:hover { color: #e47911 /*#d2480e*/; text-decoration: underline; }
+abbr { border-bottom: 1px dotted #a3756e; }
+h1, h2, h3, h4, h5, h6 { font-family: Lucida Grande, Helvetica, Arial, sans-serif; }
+h1 { font-size: 27px; }
+h2 { font-size: 23px; }
+h3 { font-size: 17px; }
+h4, h5, h6 { font-size: 11px; }
+img, div { max-width: 100%; }
+label { color: #666; cursor: pointer; font-weight: bold; vertical-align: middle; }
+p { margin-bottom: .85em; }
+pre, code { font-family: Monaco, 'Dejavu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace; }
+strong { font-weight: bold; }
+html { overflow-x: auto; overflow-y: scroll; }
+html, body { height: 100%; }
+body { line-height: 16px; color: #333; /*background-color: #e7ebf2;*/ font-family: Lucida Grande, Helvetica, Arial, sans-serif; font-size: 12px; font-weight: normal; vertical-align: baseline; visibility: visible; }
+
+.aero { opacity: .5; }
+.alignleft { float: left; }
+.alignright { float: right; }
+.block { display: block; }
+.center { margin-left: auto; margin-right: auto; }
+.clearfix, .section { clear: both; display: block; overflow: hidden; }
+.clearfix { zoom: 1; }
+.clearfix:after { clear: both; content: "."; display: block; height: 0; line-height:0; font-size: 0; visibility: hidden; }
+.direction_ltr { direction: ltr; }
+.direction_rtl { direction: rtl; }
+.fixed_elem { position: fixed !important; }
+.hidden_elem { display: none !important; }
+.hidden { display: none; }
+.invisible_elem { visibility: hidden; }
+.nobullet { list-style-type: none; }
+.w100 { width: 100%; }
+.widefat { clear: both; width: 100%; }
+.widefat * { word-wrap: break-word; }
+a.block { color: #333; text-decoration: none; }
+a.block span.link, a.block span.more { color: #04b; }
+a.block:hover span.link, a.block:hover span.more { text-decoration: underline; }
+a.more, a.block span.more { padding-right: 7px; background: url("data:image/gif;base64,R0lGODlhBAAHAIAAAACIzP///yH5BAEHAAEALAAAAAAEAAcAAAIIRA4WaeyrVCgAOw==") no-repeat 100% 60%; zoom: 1; }
+ol.nobullet, ul.nobullet { padding-left: 0; }
+table.fixed { table-layout: fixed; }
+
+/*----- HIKARI THEME -----*/
+
+.hikari .amz-nav-sprite { background-image: url(images/BeaconSprite-US-01._V141013396_.png); }

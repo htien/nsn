@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace OlympiaNet.TestConsole
+namespace NewSocialNetwork.TestConsole
 {
-    class Program
+    public class Program
     {
         public static void Main(String[] args)
         {
