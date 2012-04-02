@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Unix/Linux")]
 [assembly: AssemblyProduct("SaberLily.Web")]
-[assembly: AssemblyCopyright("Copyright © Unix/Linux 2011")]
+[assembly: AssemblyCopyright("Copyright © Unix/Linux 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

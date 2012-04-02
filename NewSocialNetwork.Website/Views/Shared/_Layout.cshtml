@@ -1,0 +1,151 @@
+﻿@{
+    ViewBag.Charset = "UTF-8";
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" dir="ltr">
+<head>
+    <meta charset="@ViewBag.Charset" />
+    <meta name="author" content="Phuong Lien" />
+    <meta name="description" content="New Social Network" />
+    <meta name="generator" content="Microsoft Visual Web Developer 2010 Express" />
+    <meta name="keywords" content="white, light, theme" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="application-name" content="New" />
+    <base href="@Url.Content("~/")" />
+    <title>@ViewBag.Title</title>
+    <script type="text/javascript">
+    //<![CDATA[
+        new Image().src = '@Url.Content("~/static/themes/white/images/BeaconSprite-US-01._V141013396_.png")';
+        new Image().src = '@Url.Content("~/static/themes/white/images/nav-pop-h._V155853593_.png")';
+    //]]>
+    </script>
+    <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/static/favicon.ico")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/static/themes/white/main.css")" />
+    <script type="text/javascript" src="@Url.Content("~/static/js/jquery-1.7.2.js")" charset="@ViewBag.Charset"></script>
+    <script type="text/javascript" src="@Url.Content("~/static/themes/white/NSN.orig.js")" charset="@ViewBag.Charset"></script>
+    <script type="text/javascript" src="@Url.Content("~/static/themes/white/main.js")" charset="@ViewBag.Charset"></script>
+</head>
+<body class="hikari home">
+    <div id="hikari" class="gA hasLeftCol">
+        <header>
+            <div id="globalHeader" class="gl">
+                <div class="amz-discovery">
+                    <div class="amz-navbar">
+                        <div class="amz-navbar-inner">
+                            <div id="hikari-navsearch-container" class="amz-navsearch-container">
+                                <label class="amz-navsearch-label" for="searchTextbox">Search</label>
+                                <form class="amz-searchbar" method="get" action="?">
+                                    <div class="amz-searchfield-outer amz-nav-sprite">
+                                        <div class="amz-searchfield-inner amz-nav-sprite">
+                                            <input id="searchTextbox" class="amz-searchfield-tbox" type="text" name="field-keywords" title="Search for" />
+                                        </div>
+                                    </div>
+                                    <div class="amz-searchfield-submit amz-nav-sprite">
+                                        <input type="submit" class="amz-searchfield-submitbutton" value="Go" title="Go" />
+                                    </div>
+                                </form>
+                            </div>
+                            <a id="hikari-nav-account" class="amz-navbutton-outer nav-menu-inactive" href="#">
+                                <span class="amz-navbutton amz-nav-sprite">
+                                    <span class="amz-navbutton-inner amz-nav-sprite">
+                                        <span class="amz-navbutton-title">Hello, <span class="amz-navbutton-em">Lien</span></span>
+                                        <span class="amz-navbutton-title amz-navbutton-strong">Your Account</span>
+                                    </span>
+                                </span>
+                                <span class="amz-down-arrow amz-nav-sprite"></span>
+                            </a>
+                            <span id="hikari-divider-account" class="amz-nav-divider"></span>
+                            <a id="hikari-nav-help" class="amz-navbutton-outer">
+                                <span class="amz-navbutton amz-nav-sprite">
+                                    <span class="amz-navbutton-inner amz-nav-sprite">
+                                        <span class="amz-navbutton-title">Help</span>
+                                        <span class="amz-navbutton-title amz-navbutton-strong">You</span>
+                                    </span>
+                                </span>
+                                <span class="amz-down-arrow amz-nav-sprite"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section>
+            <div id="globalContainer" class="gl">
+                <div id="mainContainer" class="amz-container">
+                    <div class="amz-leftcolcontainer">
+                        <div class="amz-leftcol">
+                            <div id="pagelet_categories" class="amz-sidebox first">
+                                <h2 class="title-bar">Departments</h2>
+                                <div class="navigation-list first">
+                                    <h3><a>Branches</a></h3>
+                                    <ul>
+                                        <li><a>Item 1</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="amz-contentcol hasRightCol">
+                        <div class="amz-rightcol">
+                            <div id="pagelet_ads" class="amz-sidebox first">
+                                <h2 class="title-bar">Advertisement</h2>
+                                <div class="tile first">
+                                    <a class="block">
+                                        <h3>Education Pricing</h3>
+                                        <div>
+                                            <img src="@Url.Content("~/static/images/tmp/macbook_air.jpg")" alt="" />
+                                        </div>
+                                        <p>College students and teachers, save on a new Mac, software and more.</p>
+                                        <p><span class="more">Learn more</span></p>
+                                    </a>
+                                </div>
+                                <div class="pad">
+                                    <img src="@Url.Content("~/static/images/tmp/camera-newincamphoto2_300x75._.png")" alt="" />
+                                    <img src="@Url.Content("~/static/images/tmp/mass-effect3-pre-order_300x120._V140235086_.jpg")" alt="" />
+                                    <img src="@Url.Content("~/static/images/tmp/bose_soundlink_wireless_mobile_speaker_300x120._V140173257_.gif")" alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="amz-contentarea">
+                            <div id="pagelet_centerA" class="amz-box first">
+                                <h2 class="title-bar">Hikari Store Best Sellers</h2>
+                                <div class="amz-bodyrender">
+                                    @RenderBody()
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div id="pagelet_hidden">
+                <div id="nav_account_flyout" class="hidden">Your account flyout</div>
+            </div>
+        </section>
+        <footer>
+            <div id="globalFooter" class="gl">
+                <div id="pagelet_copyrights" class="clearfix">
+                    <ul class="stores">
+                        <li class="first"><a>Change Language</a></li>
+                    </ul>
+                    <ul class="help">
+                        <li class="first"><a>About</a></li>
+                        <li><a>Account</a></li>
+                        <li><a>Help</a></li>
+                        <li><a>Security Policy</a></li>
+                    </ul>
+                    <div class="separator clearfix"></div>
+                    <ul class="copyrights">
+                        <li class="first">New Social Network &#169; 2012</li>
+                        <li><a>Terms of Use</a></li>
+                        <li><a>Privacy Policy</a></li>
+                    </ul>
+                    <span class="order-by-phone">Designed by Phuong Lien &lt;insaber2309@yahoo.com&gt;.</span>
+                </div>
+            </div>
+        </footer>
+    </div>    
+</body>
+</html>

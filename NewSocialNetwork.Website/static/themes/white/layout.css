@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+/*----- HIKARI THEME -----*/
+
+.hikari .gA,
+.hikari .gl { position: relative; margin-left: auto; margin-right: auto; }
+.hikari .gA { min-height: 100%; }
+#globalHeader { background-color: #fff; -webkit-box-shadow: 0 0 3px rgba(0,0,0,.1); -moz-box-shadow: 0 0 3px rgba(0,0,0,.1); box-shadow: 0 0 3px rgba(0,0,0,.1); }
+#globalContainer { padding-bottom: 90px; height: auto; min-height: 100%; zoom: 1; }
+#globalFooter { position: absolute; right: 0; bottom: 0; left: 0; clear: left; height: 55px; }
+.hikari .amz-discovery { zoom: 1; }
+.hikari .amz-navbar { position: relative; }
+.hikari .amz-navbar-inner { height: 50px; border-bottom: 1px solid #c4cde0; }
+.hikari .amz-navbutton-outer { position: absolute; top: 8px; height: 40px; display: block; text-decoration: none; }
+.hikari .amz-navbutton-outer .amz-down-arrow { position: absolute; right: 8px; bottom: 10px; display: block; width: 9px; height: 5px; background-position: -130px -50px; background-repeat: no-repeat; }
+.hikari .amz-navbutton { display: block; margin-right: 5px; height: 40px; background-position: 0 500px; background-repeat: no-repeat; }
+.hikari .amz-navbutton-inner { position: relative; right: -5px; display: block; padding: 0 5px; height: 40px; background-position: 0 500px; background-repeat: no-repeat; }
+.hikari .amz-navbutton-inner .amz-navbutton-title { position: relative; top: 7px; display: block; overflow: hidden; margin-bottom: -2px; line-height: 14px; color: #2e3741; white-space: nowrap; }
+.hikari .amz-navbutton-inner .amz-navbutton-em { color: #e47911; font-weight: bold; }
+.hikari .amz-navbutton-inner .amz-navbutton-strong { line-height: 16px; font-size: 14px; font-weight: bold; }
+.hikari .amz-nav-divider { position: absolute; top: 11px; overflow: hidden; width: 1px; height: 34px; border-right: 1px solid #ddd; }
+.hikari .amz-navsearch-container { overflow: hidden; margin-left: 177px; width: 450px; }
+.hikari .amz-navsearch-container .amz-navsearch-label { position: absolute; top: 22px; }
+.hikari .amz-navsearch-container .amz-searchbar { position: relative; display: block; margin: 10px 0 0 50px; height: 34px; }
+.hikari .amz-navsearch-container .amz-searchfield-outer { margin-right: 39px; padding-left: 5px; height: 34px; background-position: -10px -120px; background-repeat: no-repeat; }
+.hikari .amz-navsearch-container .amz-searchfield-inner { height: 34px; background-color: #fff; background-position: 0 -550px; background-repeat: repeat-x; }
+.hikari .amz-navsearch-container .amz-searchfield-tbox { margin-top: 7px; padding: 0; width: 100%; height: 23px; background: transparent; border: 0; outline: 0; font-size: 12pt; }
+.hikari .amz-navsearch-container .amz-searchfield-submit { position: absolute; right: 0; top: 0; overflow: hidden; padding-left: 3px; height: 34px; background-position: -33px -120px; }
+.hikari .amz-navsearch-container .amz-searchfield-submitbutton { width: 39px; height: 34px; background: none; border: 0; color: #fff; cursor: pointer; font-weight: bold; }
+/*.hikari .amz-container { margin-top: 8px; }*/
+.hikari .amz-contentcol { border-top: 0 !important; border: 1px solid #ccc; }
+.hikari .amz-contentcol .amz-contentarea { padding: 0 20px 20px; word-wrap: break-word; }
+.hikari .hasLeftCol .amz-contentcol { margin-left: 178px; }
+.hikari .hasLeftCol .hasRightCol .amz-contentarea { padding: 0 25px 20px 18px; width: 511px; }
+.hikari .hasRightCol .amz-contentarea { float: left; margin-right: 0; width: 695px; }
+.hikari .amz-leftcol { float: left; width: 178px; word-wrap: break-word; }
+.hikari .amz-rightcol { float: right; width: 244px; word-wrap: break-word; }
+.hikari .amz-box,
+.hikari .amz-sidebox { overflow: hidden; }
+.hikari .amz-box { margin-top: 8px; }
+.hikari .amz-box.first { margin-top: 0; }
+.hikari .amz-box .title-bar { margin: 8px 0 .35em; padding-bottom: 2px; line-height: 1.167; border-bottom: 1px solid #ebebeb; color: #d2480e; font-family: Segoe UI Light, Helvetica, Arial, sans-serif; font-size: 21px; }
+.hikari .amz-sidebox { margin-top: 6px; }
+.hikari .amz-sidebox.first { margin-top: 0; }
+.hikari .amz-sidebox .title-bar { margin: 5px 5px 0; padding: 2px 5px; /*background-color: #edeff4;*/ font-family: Lucida Grande, Tahoma, sans-serif; font-size: 9px; font-weight: bold; text-transform: uppercase; }
+.hikari .amz-sidebox .pad { margin: 0 5px 8px; padding: 5px 5px 0; }
+.hikari .amz-sidebox .tile { padding: 5px 0 10px; background: url("data:image/gif;base64,R0lGODdhpAABAPAAAMzMzP///ywAAAAApAABAEACD4yPCMvtD6OctNqLc9qnAAA7") no-repeat; font-size: 11px; }
+.hikari .amz-sidebox .tile.first { padding-top: 0; background-image: none; }
+.hikari .amz-sidebox .tile h3 { margin: 15px 15px 0; line-height: 18px; font-size: 12px; font-weight: bold; }
+.hikari .amz-sidebox .tile div { margin: 15px auto; text-align: center; }
+.hikari .amz-sidebox .tile div img { display: inline-block; }
+.hikari .amz-sidebox .tile p { margin: 5px 15px 0; line-height: 14px; color: #666; }
+.hikari .amz-sidebox .navigation-list.first { margin-top: 5px; }
+.hikari .amz-sidebox .navigation-list { padding-bottom: 5px; }
+.hikari .amz-sidebox .navigation-list a { color: #333; }
+.hikari .amz-sidebox .navigation-list h3 { font-size: 12px; font-weight: bold; }
+.hikari .amz-sidebox .navigation-list h3 a { display: block; padding: 0 10px; line-height: 24px; background: #689 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAAcUlEQVR42p2SPQrAIAxGPYF38SzunqF7p+ydlZw2/SypFAmhRHiDmsfnT5KILI7zKqABAh2Qzsu37i3OoIIB2GDofl6SLvAP6iPN6D1BMJzEkvTMvEuO2KZEluSINKVuSY7YQ0mhO4VeL/BPwY4I9d4NtLaDlKXEYzwAAAAASUVORK5CYII=") no-repeat 146px 5px; color: #fff; text-decoration: none; }
+.hikari .amz-sidebox .navigation-list ul { margin-top: 5px; line-height: 12px; }
+.hikari .amz-sidebox .navigation-list li a { padding: 5px 11px 5px 15px; color: #666; font-size: 11px; font-weight: bold; }
+.hikari .amz-sidebox .navigation-list li a:hover { background-color: #ffebbf; color: #333; text-decoration: none; }
+
+img,
+#globalHeader, #globalFooter,
+.hikari .amz-box .title,
+.hikari .amz-sidebox .title { user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; -o-user-select: none; -khtml-user-select: none; }

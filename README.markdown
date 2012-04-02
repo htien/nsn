@@ -1,5 +1,5 @@
-﻿OlympiaNet Social Network
-=========================
+﻿New Social Network
+==================
 
     Initial commit!
 
