@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-
-using Castle.ActiveRecord;
+﻿using Castle.ActiveRecord;
 
 namespace NewSocialNetwork.Entities
 {
