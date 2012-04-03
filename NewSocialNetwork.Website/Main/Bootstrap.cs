@@ -1,19 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Configuration;
+using System.Reflection;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Routing;
 
 using Castle.ActiveRecord;
-using Castle.ActiveRecord.Framework;
 using Castle.ActiveRecord.Framework.Config;
-using Castle.MicroKernel.Registration;
-using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-using Castle.Windsor.Installer;
 
 using SaberLily.Web.Factory;
 
 using NewSocialNetwork.Website.Installers;
-using System.Reflection;
 
 namespace NewSocialNetwork.Website.Main
 {
@@ -23,6 +23,7 @@ namespace NewSocialNetwork.Website.Main
     public sealed class Bootstrap
     {
         private static IWindsorContainer container;
+        public static bool isInitialized = false;
 
         public static Bootstrap Instance
         {
@@ -39,14 +40,20 @@ namespace NewSocialNetwork.Website.Main
         /// </summary>
         public void Init()
         {
-            AreaRegistration.RegisterAllAreas();
+            if (isInitialized)
+            {
+                //return;
+            }
 
+            AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
             InitContainer();
             InitControllerFactory();
             InitActiveRecord();
+
+            isInitialized = true;
         }
 
         /// <summary>
@@ -73,9 +80,38 @@ namespace NewSocialNetwork.Website.Main
 
         private void InitActiveRecord()
         {
-            IConfigurationSource config = System.Configuration.ConfigurationManager.GetSection("activeRecord") as Castle.ActiveRecord.Framework.IConfigurationSource;
+            NameValueCollection appSettings = WebConfigurationManager.AppSettings;
+            ConnectionStringSettingsCollection cfgSettings = WebConfigurationManager.ConnectionStrings;
+            NameValueCollection db = WebConfigurationManager.GetSection("databaseSettings", "/" + ConfigKeys.CONFIG_FOLDER_PATH + "Database.config") as NameValueCollection;
+            NameValueCollection ar = WebConfigurationManager.GetSection("activeRecordSettings", "/" + ConfigKeys.CONFIG_FOLDER_PATH + "Database.config") as NameValueCollection;
+
+            IDictionary<string, string> settings = new Dictionary<string, string>();
+            foreach (string key in ar.AllKeys)
+            {
+                settings[key] = ar[key];
+            }
+
+            if ((!settings.ContainsKey("connection.connection_string_name") || settings["connection.connection_string_name"].Length == 0) &&
+                (!settings.ContainsKey("connection.connection_string") || settings["connection.connection_string"].Length == 0))
+            {
+                bool isRemote = Convert.ToBoolean(appSettings["isRemote"]);
+                string @connectionString = (isRemote ? cfgSettings["remote"] : cfgSettings["local"]).ConnectionString;
+                connectionString = isRemote
+                        ? string.Format(connectionString,
+                                db["db.datasource"], db["db.port"], db["db.name"],
+                                db["db.user"], db["db.passwd"])
+                        : string.Format(connectionString,
+                                db["db.datasource"], db["db.port"], db["db.name"]);
+                settings["connection.connection_string"] = connectionString;
+            }
+
+            InPlaceConfigurationSource configSource = new InPlaceConfigurationSource();
+            configSource.Add(typeof(ActiveRecordBase), settings);
+            configSource.IsRunningInWebApp = Convert.ToBoolean(appSettings["active-record:isWebapp"]);
+            configSource.SetDebugFlag(Convert.ToBoolean(appSettings["active-record:debug"]));
+
             Assembly asmEntities = Assembly.Load("Lien.NewSocialNetwork.Entities");
-            ActiveRecordStarter.Initialize(asmEntities, config);
+            ActiveRecordStarter.Initialize(asmEntities, configSource);
         }
 
         private void RegisterGlobalFilters(GlobalFilterCollection filters)

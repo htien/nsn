@@ -144,6 +144,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Installers\LoggerInstaller.cs" />
+    <Compile Include="Main\ConfigKeys.cs" />
     <Compile Include="Main\NewSocialNetwork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -159,6 +160,10 @@
       <Project>{230257C6-2D1C-4AFD-B04B-BE7A7E77C520}</Project>
       <Name>SaberLily.Web</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SaberLily\SaberLily.csproj">
+      <Project>{D14D16FE-81B2-499F-A3E7-D8AEDA6E5150}</Project>
+      <Name>SaberLily</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Error.cshtml" />
@@ -167,12 +172,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="packages.config">
+    <Content Include="packages.config" />
+    <Content Include="Config\Log4Net.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Config\log4net.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Config\Web.new.config" />
+    <Content Include="Config\Web.config" />
     <None Include="static\themes\white\images\fonts\open-sans.woff" />
     <None Include="Views\Web.config">
       <SubType>Designer</SubType>
