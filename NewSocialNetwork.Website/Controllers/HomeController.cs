@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 
+using Castle.ActiveRecord;
 using Castle.Core.Logging;
 
 using NewSocialNetwork.Entities;
@@ -19,10 +20,12 @@ namespace NewSocialNetwork.Website.Controllers
 
         public ActionResult Index()
         {
-            string iso = Country.Find("VN").Name;
+            IList<Country> Countries = Country.FindAll();
+            CountryChild Alaska = CountryChild.Find(2);
 
             ViewBag.Welcome = "New Social Network";
-            ViewBag.iso = iso;
+            ViewBag.Countries = Countries;
+            ViewBag.Alaska = Alaska;
             return View();
         }
     }

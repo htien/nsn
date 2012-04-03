@@ -3,5 +3,14 @@
 }
 <div>
     <p>@ViewBag.Welcome</p>
-    <p>@ViewBag.iso</p>
+    <p>@ViewBag.Alaska.Name - @ViewBag.Alaska.Country.Name</p>
+    @foreach (var country in ViewBag.Countries)
+    {
+        @:<p>[@country.CountryIso - @country.Name]<br />
+        foreach (var child in country.CountryChilds)
+        {
+            @:@child.Name,
+        }
+        @:</p>
+    }
 </div>

@@ -1,6 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Configuration;
+using System.IO;
+using System.Reflection;
+using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Xml;
 
 using Castle.ActiveRecord;
 using Castle.ActiveRecord.Framework;
@@ -13,7 +21,7 @@ using Castle.Windsor.Installer;
 using SaberLily.Web.Factory;
 
 using NewSocialNetwork.Website.Installers;
-using System.Reflection;
+using Castle.Core.Configuration;
 
 namespace NewSocialNetwork.Website.Main
 {
@@ -23,6 +31,7 @@ namespace NewSocialNetwork.Website.Main
     public sealed class Bootstrap
     {
         private static IWindsorContainer container;
+        public static bool isInitialized = false;
 
         public static Bootstrap Instance
         {
@@ -39,14 +48,20 @@ namespace NewSocialNetwork.Website.Main
         /// </summary>
         public void Init()
         {
-            AreaRegistration.RegisterAllAreas();
+            if (isInitialized)
+            {
+                //return;
+            }
 
+            AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
             InitContainer();
             InitControllerFactory();
             InitActiveRecord();
+
+            isInitialized = true;
         }
 
         /// <summary>
@@ -73,9 +88,31 @@ namespace NewSocialNetwork.Website.Main
 
         private void InitActiveRecord()
         {
-            IConfigurationSource config = System.Configuration.ConfigurationManager.GetSection("activeRecord") as Castle.ActiveRecord.Framework.IConfigurationSource;
+            string connectionString = @WebConfigurationManager.ConnectionStrings["default"].ConnectionString;
+            InPlaceConfigurationSource configSource = new InPlaceConfigurationSource();
+            NameValueCollection db = WebConfigurationManager.GetSection("databaseSettings", "/" + ConfigKeys.CONFIG_FOLDER_PATH) as NameValueCollection;
+            NameValueCollection ar = WebConfigurationManager.GetSection("activeRecordSettings", "/" + ConfigKeys.CONFIG_FOLDER_PATH) as NameValueCollection;
+
+            connectionString = string.Format(connectionString,
+                    db["db.datasource"], db["db.port"],
+                    db["db.name"], db["db.user"], db["db.passwd"]);
+
+            IDictionary<string, string> settings = new Dictionary<string, string>()
+            {
+                {"connection.connection_string", connectionString}
+            };
+
+            foreach (string key in ar.Keys)
+            {
+                settings[key] = ar[key];
+            }
+
+            configSource.Add(typeof(ActiveRecordBase), settings);
+            configSource.IsRunningInWebApp = Convert.ToBoolean(WebConfigurationManager.AppSettings["active-record:isWebapp"]);
+            configSource.SetDebugFlag(Convert.ToBoolean(WebConfigurationManager.AppSettings["active-record:debug"]));
+
             Assembly asmEntities = Assembly.Load("Lien.NewSocialNetwork.Entities");
-            ActiveRecordStarter.Initialize(asmEntities, config);
+            ActiveRecordStarter.Initialize(asmEntities, configSource);
         }
 
         private void RegisterGlobalFilters(GlobalFilterCollection filters)

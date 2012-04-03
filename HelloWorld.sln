@@ -9,9 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewSocialNetwork.Website", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld.Website", "HelloWorld.Website\HelloWorld.Website.csproj", "{B2B0F635-9C55-40A1-863A-DAD9A067AA0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikariStore.Website", "HikariStore\HikariStore.Website.csproj", "{A900030C-1EA4-4F13-9AF0-5EB0E225ACBA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikariStore.Website", "HikariStore.Website\HikariStore.Website.csproj", "{A900030C-1EA4-4F13-9AF0-5EB0E225ACBA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewSocialNetwork.Entities", "NewSocialNetwork.Entities\NewSocialNetwork.Entities.csproj", "{65C4E0C6-E101-446C-BEC5-AC149BE0AA9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaberLily", "SaberLily\SaberLily.csproj", "{D14D16FE-81B2-499F-A3E7-D8AEDA6E5150}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{65C4E0C6-E101-446C-BEC5-AC149BE0AA9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65C4E0C6-E101-446C-BEC5-AC149BE0AA9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65C4E0C6-E101-446C-BEC5-AC149BE0AA9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D14D16FE-81B2-499F-A3E7-D8AEDA6E5150}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D14D16FE-81B2-499F-A3E7-D8AEDA6E5150}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D14D16FE-81B2-499F-A3E7-D8AEDA6E5150}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D14D16FE-81B2-499F-A3E7-D8AEDA6E5150}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

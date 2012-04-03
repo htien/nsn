@@ -6,19 +6,20 @@ using Castle.ActiveRecord;
 
 namespace NewSocialNetwork.Entities
 {
-    public class CountryChild
+    [ActiveRecord("[NSN.CountryChild]", "dbo", Lazy = true)]
+    public class CountryChild : ActiveRecordBase<CountryChild>
     {
-        [PrimaryKey("ChildId")]
-        public int ChildId { get; set; }
+        [PrimaryKey(PrimaryKeyType.Identity, "ChildId")]
+        public virtual int ChildId { get; set; }
 
-        [BelongsTo("CountryIso")]
-        public string CountryIso { get; set; }
+        [BelongsTo("CountryIso", NotNull = true)]
+        public virtual Country Country { get; set; }
 
-        [Property("Name", Length=200, NotNull=true)]
-        public string Name { get; set; }
+        [Property("Name", Length = 200, NotNull = true)]
+        public virtual string Name { get; set; }
 
-        [Property("Ordering", NotNull=true)]
-        public short Ordering { get; set; }
+        [Property("Ordering", NotNull = true)]
+        public virtual short Ordering { get; set; }
 
         public CountryChild() { }
     }
