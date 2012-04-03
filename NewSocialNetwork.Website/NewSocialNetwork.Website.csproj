@@ -99,7 +99,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config\ActiveRecord.xml" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="static\Error404.htm" />
