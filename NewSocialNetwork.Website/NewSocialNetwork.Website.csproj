@@ -175,6 +175,7 @@
     <Content Include="Config\Log4Net.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Config\Web.new.config" />
     <Content Include="Config\Web.config" />
     <None Include="static\themes\white\images\fonts\open-sans.woff" />
     <None Include="Views\Web.config">
