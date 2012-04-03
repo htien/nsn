@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NewSocialNetwork.Website
+﻿namespace NewSocialNetwork.Website
 {
     public class Global : NewSocialNetwork.Website.Main.NewSocialNetwork { }
 }
