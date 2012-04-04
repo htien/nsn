@@ -8,14 +8,16 @@ namespace NewSocialNetwork.Entities
         [PrimaryKey(PrimaryKeyType.Identity, "TweetId")]
         public virtual int TweetId { get; set; }
 
-        public virtual int UserId { get; set; }
+        [BelongsTo("UserId", NotNull = true)]
+        public virtual User UserId { get; set; }
 
-        public virtual int FriendUserId { get; set; }
+        [BelongsTo("FriendUserId", NotNull = true)]
+        public virtual User FriendUserId { get; set; }
 
         [Property("Privacy", NotNull = true)]
         public virtual int Privacy { get; set; }
 
-        [Property("Content", ColumnType="StringClob", SqlType="NTEXT", NotNull = false)]
+        [Property("Content", ColumnType = "StringClob", SqlType = "NTEXT", NotNull = false)]
         public virtual string Content { get; set; }
 
         [Property("Timestamp", NotNull = true)]

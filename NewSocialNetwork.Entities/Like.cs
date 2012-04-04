@@ -1,0 +1,25 @@
+﻿
+using Castle.ActiveRecord;
+namespace NewSocialNetwork.Entities
+{
+    [ActiveRecord("[NSN.Like]", "dbo", Lazy = true)]
+    public class Like : ActiveRecordBase<Like>
+    {
+        [PrimaryKey(PrimaryKeyType.Identity, "LikeId")]
+        public virtual int LikeId { get; set; }
+
+        [Property("TypeId", Length = 75, NotNull = true)]
+        public virtual string TypeId { get; set; }
+
+        [Property("ItemId", NotNull = true)]
+        public virtual int ItemId { get; set; }
+
+        [BelongsTo("UserId", NotNull = true)]
+        public virtual User UserId { get; set; }
+
+        [Property("Timestamp", NotNull = true)]
+        public virtual int Timestamp { get; set; }
+
+        public Like() { }
+    }
+}

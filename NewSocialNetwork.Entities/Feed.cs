@@ -17,11 +17,11 @@ namespace NewSocialNetwork.Entities
         [Property("ItemId", NotNull = true)]
         public virtual int ItemId { get; set; }
 
-        [Property("UserId", NotNull = true)]
-        public virtual int UserId { get; set; }
+        [BelongsTo("UserId", NotNull = false)]
+        public virtual User UserId { get; set; }
 
-        [Property("ParentUserId", NotNull = true)]
-        public virtual int ParentUserId { get; set; }
+        [BelongsTo("ParentUserId", NotNull = true)]
+        public virtual User ParentUserId { get; set; }
 
         [Property("Timestamp", NotNull = true)]
         public virtual int Timestamp { get; set; }
