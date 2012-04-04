@@ -13,7 +13,7 @@ namespace NewSocialNetwork.Entities
         [Property("Name", Length = 80, NotNull = false)]
         public virtual string Name { get; set; }
 
-        [Property("Ordering", Default = "0", NotNull = true)]
+        [Property("Ordering", NotNull = true, Default = "0")]
         public virtual short Order { get; set; }
 
         [HasMany(typeof(CountryChild), Table = "[NSN.CountryChild]", ColumnKey = "CountryIso", Lazy = true)]
