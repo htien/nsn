@@ -60,6 +60,7 @@
     <Compile Include="CountryChild.cs" />
     <Compile Include="Feed.cs" />
     <Compile Include="Link.cs" />
+    <Compile Include="MailFolder.cs" />
     <Compile Include="Photo.cs" />
     <Compile Include="PhotoAlbum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

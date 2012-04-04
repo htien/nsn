@@ -3,7 +3,9 @@
 }
 <div>
     <p>@ViewBag.Welcome</p>
+    <p>@ViewBag.User.FullName, @ViewBag.User.Email</p>
     <p>@ViewBag.Alaska.Name - @ViewBag.Alaska.Country.Name</p>
+    <p>@ViewBag.User.UserGroup.Title</p>
     @foreach (var country in ViewBag.Countries)
     {
         @:<p>[@country.CountryIso - @country.Name]<br />

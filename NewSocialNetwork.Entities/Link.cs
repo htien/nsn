@@ -15,8 +15,8 @@ namespace NewSocialNetwork.Entities
         [Property("Privacy", NotNull = true, Default = "0")]
         public virtual byte Privacy { get; set; }
 
-        [Property("Link", Length = 255, NotNull = true)]
-        public virtual string Link { get; set; }
+        [Property("Url", Length = 255, NotNull = true)]
+        public virtual string Url { get; set; }
 
         [Property("Image", Length = 255, NotNull = false)]
         public virtual string Image { get; set; }

@@ -8,6 +8,9 @@ namespace NewSocialNetwork.Entities
         [PrimaryKey(PrimaryKeyType.Foreign, "CommentId")]
         public virtual long CommentId { get; set; }
 
+        [OneToOne]
+        public virtual Comment Comment { get; set; }
+
         [Property("Text", ColumnType = "StringClob", SqlType = "NTEXT", NotNull = false)]
         public virtual string Text { get; set; }
 
