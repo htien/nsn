@@ -8,8 +8,10 @@ namespace NewSocialNetwork.Entities
         [PrimaryKey(PrimaryKeyType.Identity, "AlbumId")]
         public virtual int AlbumId { get; set; }
 
-        public virtual int UserId { get; set; }
+        [BelongsTo("UserId", NotNull = true)]
+        public virtual User UserId { get; set; }
 
+        [Property("ProfifeId", NotNull = true)]
         public virtual int ProfileId { get; set; }
 
         [Property("Privacy", NotNull = true, Default = "0")]

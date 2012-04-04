@@ -10,9 +10,11 @@ namespace NewSocialNetwork.Entities
 
         public virtual int AlbumId { get; set; }
 
-        public virtual int UserId { get; set; }
+        [BelongsTo("UserId", NotNull = true)]
+        public virtual User UserId { get; set; }
 
-        public virtual int FriendUserId { get; set; }
+        [BelongsTo("FriendUserId", NotNull = true)]
+        public virtual User FriendUserId { get; set; }
 
         [Property("Privacy", NotNull = true, Default = "0")]
         public virtual byte Privacy { get; set; }
