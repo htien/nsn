@@ -12,8 +12,6 @@ packages/
 *.orig.js
 *.suo
 
-packages.config
-
 ### Windows
 .DS_Store?
 Desktop.ini
