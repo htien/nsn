@@ -4,26 +4,20 @@ using Castle.ActiveRecord;
 
 namespace NewSocialNetwork.Entities
 {
-    [ActiveRecord("[NSN.Country]", "dbo")]
+    [ActiveRecord("[NSN.Country]", "dbo", Lazy = true)]
     public class Country : ActiveRecordBase<Country>
     {
         [PrimaryKey(PrimaryKeyType.Assigned, "CountryIso", Length = 2)]
-        public string CountryIso { get; set; }
+        public virtual string CountryIso { get; set; }
 
         [Property("Name", Length = 80, NotNull = false)]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
 
         [Property("Ordering", Default = "0", NotNull = true)]
-        public short Order { get; set; }
-
-        private IList<CountryChild> _CountryChilds = new List<CountryChild>();
+        public virtual short Order { get; set; }
 
         [HasMany(typeof(CountryChild), Table = "[NSN.CountryChild]", ColumnKey = "CountryIso", Lazy = true)]
-        public virtual IList<CountryChild> CountryChilds
-        {
-            get { return _CountryChilds; }
-            set { _CountryChilds = value; }
-        }
+        public virtual IList<CountryChild> CountryChilds { get; set; }
 
         public Country() { }
     }

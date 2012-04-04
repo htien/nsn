@@ -82,8 +82,8 @@ namespace NewSocialNetwork.Website.Main
         {
             NameValueCollection appSettings = WebConfigurationManager.AppSettings;
             ConnectionStringSettingsCollection cfgSettings = WebConfigurationManager.ConnectionStrings;
-            NameValueCollection db = WebConfigurationManager.GetSection("databaseSettings", "/" + ConfigKeys.CONFIG_FOLDER_PATH + "Database.config") as NameValueCollection;
-            NameValueCollection ar = WebConfigurationManager.GetSection("activeRecordSettings", "/" + ConfigKeys.CONFIG_FOLDER_PATH + "Database.config") as NameValueCollection;
+            NameValueCollection db = WebConfigurationManager.GetSection("databaseSettings", "/" + ConfigKeys.CONFIG_FOLDER_PATH) as NameValueCollection;
+            NameValueCollection ar = WebConfigurationManager.GetSection("activeRecordSettings", "/" + ConfigKeys.CONFIG_FOLDER_PATH) as NameValueCollection;
 
             IDictionary<string, string> settings = new Dictionary<string, string>();
             foreach (string key in ar.AllKeys)
@@ -91,8 +91,13 @@ namespace NewSocialNetwork.Website.Main
                 settings[key] = ar[key];
             }
 
-            if ((!settings.ContainsKey("connection.connection_string_name") || settings["connection.connection_string_name"].Length == 0) &&
-                (!settings.ContainsKey("connection.connection_string") || settings["connection.connection_string"].Length == 0))
+            string connStrKey = "connection.connection_string";
+            string connStrNameKey = "connection.connection_string_name";
+            bool hasConnectionStringName = settings.ContainsKey(connStrNameKey) && settings[connStrNameKey].Length > 0;
+            bool hasConnectionString = settings.ContainsKey(connStrKey) && settings[connStrKey].Length > 0;
+
+            if (!hasConnectionStringName && !hasConnectionString ||
+                hasConnectionStringName && settings[connStrNameKey].Equals("tien.somee.com"))
             {
                 bool isRemote = Convert.ToBoolean(appSettings["isRemote"]);
                 string @connectionString = (isRemote ? cfgSettings["remote"] : cfgSettings["local"]).ConnectionString;
@@ -102,7 +107,12 @@ namespace NewSocialNetwork.Website.Main
                                 db["db.user"], db["db.passwd"])
                         : string.Format(connectionString,
                                 db["db.datasource"], db["db.port"], db["db.name"]);
-                settings["connection.connection_string"] = connectionString;
+
+                if (hasConnectionStringName)
+                {
+                    settings.Remove(connStrNameKey);
+                }
+                settings[connStrKey] = connectionString;
             }
 
             InPlaceConfigurationSource configSource = new InPlaceConfigurationSource();

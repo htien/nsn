@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="ftp://tien.somee.com/www.tien.somee.com" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="tien.somee.com -helloworld" publishMethod="FTP" replaceMatchingFiles="True" userName="tien" savePWD="True" userPWD="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAim/3xvpHZEmIbM3yEMsPugAAAAACAAAAAAAQZgAAAAEAACAAAABshV/7A8tLPLsC3438TFVJcweytD0QwkmggDqNmgiXJwAAAAAOgAAAAAIAACAAAACjKN6/8blj5lmO6BGUC2JaVWONPXWbraUSchDQRKytGiAAAACUciFr6a4Xsu95vgx4qMgbTw+MCZ4yWGhCV/HdoattQ0AAAAAC4uNRk22xPPJouyJ2AzqKDiNLLX9N0symn/9Acqmfh9I7sPeH3PINPLRRJvjRFqS8whDmNxxgB4EsrrJGpRRc" SelectedForPublish="True">
+    <file relUrl="bin/Lien.HelloWorld.Website.dll" publishTime="04/04/2012 11:15:06" />
+    <file relUrl="bin/Lien.HelloWorld.Website.pdb" publishTime="04/04/2012 11:15:06" />
+    <file relUrl="Web.config" publishTime="04/04/2012 11:17:09" />
+    <file relUrl="Default.aspx" publishTime="04/04/2012 11:14:55" />
+  </publishProfile>
+</publishData>

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 
+using Castle.ActiveRecord;
 using Castle.Core.Logging;
 
 using NewSocialNetwork.Entities;
