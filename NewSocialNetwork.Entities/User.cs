@@ -9,7 +9,7 @@ namespace NewSocialNetwork.Entities
         public virtual int UserId { get; set; }
 
         [BelongsTo("UserGroupId", NotNull = true)]
-        public virtual byte UserGroupId { get; set; }
+        public virtual UserGroup UserGroup { get; set; }
 
         [Property("Email", Length = 255, NotNull = false)]
         public virtual string Email { get; set; }
@@ -30,7 +30,7 @@ namespace NewSocialNetwork.Entities
         public virtual string Birthday { get; set; }
 
         [BelongsTo("CountryIso", NotNull = false)]
-        public virtual Country CountryIso { get; set; }
+        public virtual Country Country { get; set; }
 
         [Property("Joined", NotNull = true)]
         public virtual int Joined { get; set; }
