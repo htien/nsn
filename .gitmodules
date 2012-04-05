@@ -1,4 +1,3 @@
-[submodule "Tien"]
-	path = Tien
-	url = git://github.com/lilylnx/helloworld-dotnet.git
-
+[submodule "lilylnx.github.com"]
+	path = lilylnx.github.com
+	url = git://github.com/lilylnx/lilylnx.github.com.git
