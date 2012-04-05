@@ -1,3 +1,6 @@
+[submodule "gh-pages"]
+	path = gh-pages
+	url = git://github.com/lilylnx/helloworld-dotnet.git
 [submodule "TienNguyen"]
 	path = TienNguyen
 	url = git://github.com/lilylnx/lilylnx.github.com.git
