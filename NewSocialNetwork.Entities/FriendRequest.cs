@@ -1,6 +1,5 @@
-﻿
+﻿using Castle.ActiveRecord;
 
-using Castle.ActiveRecord;
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.FriendRequest]", "dbo", Lazy = true)]
@@ -10,18 +9,18 @@ namespace NewSocialNetwork.Entities
         public virtual int RequestId { get; set; }
 
         [BelongsTo("UserId", NotNull = true)]
-        public virtual User UserId { get; set; }
+        public virtual User User { get; set; }
 
         [BelongsTo("FriendUserId", NotNull = true)]
-        public virtual User FriendUserId { get; set; }
+        public virtual User FriendUser { get; set; }
 
         [BelongsTo("ListId", NotNull = true)]
-        public virtual FriendList ListId { get; set; }
+        public virtual FriendList List { get; set; }
 
-        [Property("IsSeen", NotNull = true)]
+        [Property("IsSeen", NotNull = true, Default = "false")]
         public virtual bool IsSeen { get; set; }
 
-        [Property("IsIgnore", NotNull = true)]
+        [Property("IsIgnore", NotNull = true, Default = "false")]
         public virtual bool IsIgnore { get; set; }
 
         [Property("Message", Length = 255, NotNull = false)]

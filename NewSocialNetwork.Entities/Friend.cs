@@ -1,6 +1,5 @@
-﻿
+﻿using Castle.ActiveRecord;
 
-using Castle.ActiveRecord;
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.Friend]", "dbo", Lazy = true)]
@@ -10,10 +9,10 @@ namespace NewSocialNetwork.Entities
         public virtual int FriendId { get; set; }
 
         [BelongsTo("UserId", NotNull = true)]
-        public virtual User UserId { get; set; }
+        public virtual User User { get; set; }
 
         [BelongsTo("FriendUserId", NotNull = true)]
-        public virtual User FriendUserId { get; set; }
+        public virtual User FriendUser { get; set; }
 
         [Property("Timestamp", NotNull = true)]
         public virtual int Timestamp { get; set; }

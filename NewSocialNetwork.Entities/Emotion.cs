@@ -1,13 +1,12 @@
-﻿
+﻿using Castle.ActiveRecord;
 
-using Castle.ActiveRecord;
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.Emotion]", "dbo", Lazy = true)]
     public class Emotion : ActiveRecordBase<Emotion>
     {
         [PrimaryKey(PrimaryKeyType.Identity, "EmotionId")]
-        public virtual byte EmotionId { get; set; }
+        public virtual short EmotionId { get; set; }
 
         [BelongsTo("PackagePath", NotNull = true)]
         public virtual EmotionPackage PackagePath { get; set; }
@@ -21,8 +20,8 @@ namespace NewSocialNetwork.Entities
         [Property("Image", Length = 100, NotNull = true)]
         public virtual string Image { get; set; }
 
-        [Property("Ordering", NotNull = true)]
-        public virtual byte Ordering { get; set; }
+        [Property("Ordering", NotNull = true, Default = "0")]
+        public virtual short Ordering { get; set; }
 
         public Emotion() { }
     }

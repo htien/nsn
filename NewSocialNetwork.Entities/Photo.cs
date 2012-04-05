@@ -8,13 +8,14 @@ namespace NewSocialNetwork.Entities
         [PrimaryKey(PrimaryKeyType.Identity, "PhotoId")]
         public virtual int PhotoId { get; set; }
 
-        public virtual int AlbumId { get; set; }
+        [BelongsTo("AlbumId", NotNull = true)]
+        public virtual PhotoAlbum Album { get; set; }
 
         [BelongsTo("UserId", NotNull = true)]
-        public virtual User UserId { get; set; }
+        public virtual User User { get; set; }
 
         [BelongsTo("FriendUserId", NotNull = true)]
-        public virtual User FriendUserId { get; set; }
+        public virtual User FriendUser { get; set; }
 
         [Property("Privacy", NotNull = true, Default = "0")]
         public virtual byte Privacy { get; set; }

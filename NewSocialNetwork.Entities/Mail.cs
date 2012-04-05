@@ -29,7 +29,7 @@ namespace NewSocialNetwork.Entities
         [Property("ViewerTypeId", NotNull = true, Default = "0")]
         public virtual byte ViewerTypeId { get; set; }
 
-        [Property("ViewerIsNew", NotNull = true, Default = "1")]
+        [Property("ViewerIsNew", NotNull = true, Default = "true")]
         public virtual bool ViewerIsNew { get; set; }
 
         [Property("Subject", Length = 255, NotNull = false)]

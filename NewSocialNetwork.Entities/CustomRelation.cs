@@ -1,6 +1,5 @@
-﻿
+﻿using Castle.ActiveRecord;
 
-using Castle.ActiveRecord;
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.CustomRelation]", "dbo", Lazy = true)]

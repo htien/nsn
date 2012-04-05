@@ -9,9 +9,9 @@ namespace NewSocialNetwork.Entities
         public virtual int AlbumId { get; set; }
 
         [BelongsTo("UserId", NotNull = true)]
-        public virtual User UserId { get; set; }
+        public virtual User User { get; set; }
 
-        [Property("ProfifeId", NotNull = true)]
+        [Property("ProfifeId", NotNull = true, Default = "0")]
         public virtual int ProfileId { get; set; }
 
         [Property("Privacy", NotNull = true, Default = "0")]

@@ -9,13 +9,13 @@ namespace NewSocialNetwork.Entities
         public virtual int TweetId { get; set; }
 
         [BelongsTo("UserId", NotNull = true)]
-        public virtual User UserId { get; set; }
+        public virtual User User { get; set; }
 
         [BelongsTo("FriendUserId", NotNull = true)]
-        public virtual User FriendUserId { get; set; }
+        public virtual User FriendUser { get; set; }
 
-        [Property("Privacy", NotNull = true)]
-        public virtual int Privacy { get; set; }
+        [Property("Privacy", NotNull = true, Default = "0")]
+        public virtual byte Privacy { get; set; }
 
         [Property("Content", ColumnType = "StringClob", SqlType = "NTEXT", NotNull = false)]
         public virtual string Content { get; set; }

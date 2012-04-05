@@ -1,6 +1,5 @@
-﻿
+﻿using Castle.ActiveRecord;
 
-using Castle.ActiveRecord;
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.MailFolder]", "dbo", Lazy = true)]
@@ -13,7 +12,7 @@ namespace NewSocialNetwork.Entities
         public virtual string Name { get; set; }
 
         [BelongsTo("UserId", NotNull = true)]
-        public virtual User UserId { get; set; }
+        public virtual User User { get; set; }
 
         public MailFolder() { }
     }

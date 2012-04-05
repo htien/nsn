@@ -1,5 +1,5 @@
-﻿
-using Castle.ActiveRecord;
+﻿using Castle.ActiveRecord;
+
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.CustomRelationData]", "dbo", Lazy = true)]
@@ -8,22 +8,22 @@ namespace NewSocialNetwork.Entities
         [PrimaryKey(PrimaryKeyType.Identity, "RelationDataId")]
         public virtual int RelationDataId { get; set; }
 
-        [BelongsTo("Relation", NotNull = true)]
-        public virtual CustomRelation RelationId { get; set; }
+        [BelongsTo("RelationId", NotNull = true)]
+        public virtual CustomRelation CustomRelation { get; set; }
 
         [BelongsTo("UserId", NotNull = true)]
-        public virtual User UserId { get; set; }
+        public virtual User User { get; set; }
 
         [BelongsTo("WithUserId", NotNull = false)]
-        public virtual User WithUserId { get; set; }
+        public virtual User WithUser { get; set; }
 
         [Property("Status", NotNull = false)]
         public virtual byte Status { get; set; }
 
-        [Property("TotalComment", NotNull = true)]
+        [Property("TotalComment", NotNull = true, Default = "0")]
         public virtual int TotalComment { get; set; }
 
-        [Property("TotalLike", NotNull = true)]
+        [Property("TotalLike", NotNull = true, Default = "0")]
         public virtual int TotalLike { get; set; }
 
         public CustomRelationData() { }

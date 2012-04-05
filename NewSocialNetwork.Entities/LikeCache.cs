@@ -1,6 +1,5 @@
-﻿
+﻿using Castle.ActiveRecord;
 
-using Castle.ActiveRecord;
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.LikeCache]", "dbo", Lazy = true)]
@@ -9,9 +8,11 @@ namespace NewSocialNetwork.Entities
         [Property("TypeId", NotNull = true)]
         public virtual string TypeId { get; set; }
 
+        [Property("ItemId", NotNull = true)]
         public virtual int ItemId { get; set; }
 
-        public virtual User UserId { get; set; }
+        [BelongsTo("UserId", NotNull = true)]
+        public virtual User User { get; set; }
 
         public LikeCache() { }
     }

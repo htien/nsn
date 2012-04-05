@@ -1,5 +1,5 @@
-﻿
-using Castle.ActiveRecord;
+﻿using Castle.ActiveRecord;
+
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.Like]", "dbo", Lazy = true)]
@@ -15,7 +15,7 @@ namespace NewSocialNetwork.Entities
         public virtual int ItemId { get; set; }
 
         [BelongsTo("UserId", NotNull = true)]
-        public virtual User UserId { get; set; }
+        public virtual User User { get; set; }
 
         [Property("Timestamp", NotNull = true)]
         public virtual int Timestamp { get; set; }

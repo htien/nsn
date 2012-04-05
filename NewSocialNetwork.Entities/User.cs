@@ -2,7 +2,7 @@
 
 namespace NewSocialNetwork.Entities
 {
-    [ActiveRecord("[NSN.User]", "dbo")]
+    [ActiveRecord("[NSN.User]", "dbo", Lazy = true)]
     public class User : ActiveRecordBase<User>
     {
         [PrimaryKey(PrimaryKeyType.Identity, "UserId")]
