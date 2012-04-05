@@ -25,7 +25,7 @@ Sử dụng các công nghệ
 Sử dụng Github
 --------------
 
-### Code
+### # Code
 
 ##### Branches
 
@@ -35,7 +35,7 @@ Sử dụng Github
 
 ##### Downloads
 
-### Network
+### # Network
 
 
 Hướng dẫn mở đề án
