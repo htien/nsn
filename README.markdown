@@ -22,6 +22,22 @@ Sử dụng các công nghệ
 * __Trình quản lý source__: [msysgit] \(Git for Windows\)
 
 
+Sử dụng Github
+--------------
+
+### # Code
+
+##### Branches
+
+##### Commits
+
+##### Tags
+
+##### Downloads
+
+### # Network
+
+
 Hướng dẫn mở đề án
 ------------------
 
@@ -73,7 +89,7 @@ Yêu cầu hiệu chỉnh lại tính năng `Format Document` trong Visual Studi
         }
     }
 
-\*Đang cập nhật...\*
+Đang cập nhật...
 
 
 [1]: https://github.com/lilylnx/hellworld-dotnet/ "'helloworld-dotnet' trên Github"
