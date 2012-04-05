@@ -11,7 +11,7 @@ Sử dụng các công nghệ
 
 * __Phía Client__: jQuery(, Closure Library)
 
-* __Môi trường lập trình__: Visual Studio 2010 Web Developer Express (hoặc cao)
+* __Môi trường lập trình__: Visual Studio 2010 Web Developer Express (hoặc cao hơn)
 
     Plugins:
 
