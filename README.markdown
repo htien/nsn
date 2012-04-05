@@ -33,9 +33,29 @@ Sử dụng Github
 
 ##### Tags
 
+Đây là một commit đặc biệt, một sự đánh dấu cột mốc quan trong (milestone).
+
+Chẳng hạn, có thể đánh dấu source tại thời điểm A là v1.0 (version 1.0)
+và thời điểm B là v2.0 (version 2.0). Qua đó source có thể được quản lý
+theo từng version cụ thể hơn.
+
 ##### Downloads
 
+Nơi này chứa các tập tin nằm bên ngoài thư mục đề án, chẳng hạn như tập tin
+text, hình ảnh, tập tin nén v.v..
+Hiện tại, cụ thể trong đề án `New Social Network` chỉ dành để chứa tập tin
+.7z, .zip, .rar.
+
+Thành viên có thể tải database dạng detach tại đây. Sau khi download về máy,
+có thể dùng SQL Studio Management để attach nó vào.
+
 ### # Network
+
+Trang này chứa biểu đồ mô tả quá trình làm việc của các thành viên trên các nhánh.
+Cụ thể là các commit, quá trình phân nhánh và ghép nhánh.
+Theo biểu đồ mô tả có thể thấy, nhánh `master` (màu đen, trên cùng) là luôn luôn
+không đổi, và các nhánh khác sau khi đã hoàn thành nhiệm vụ đều thể hiện
+1 đường nối ghép vào nhánh `master` này.
 
 
 Hướng dẫn mở đề án
@@ -92,11 +112,12 @@ Yêu cầu hiệu chỉnh lại tính năng `Format Document` trong Visual Studi
 Đang cập nhật...
 
 
+--
+Tien Nguyen ([Blog][tiennguyen-blog])
+
+
 [1]: https://github.com/lilylnx/hellworld-dotnet/ "'helloworld-dotnet' trên Github"
 [2]: http://code.google.com/p/helloworld-dotnet/ "'helloworld-dotnet' trên Google Code"
 [msysgit]: http://code.google.com/p/msysgit/
 [NuGet]: http://nuget.org
-
-
---
-Tien Nguyen ([Blog](http://lilylnx.wordpress.com/))
+[tiennguyen-blog]: http://lilylnx.wordpress.com/ "Tien Nguyen - The Long Road"
