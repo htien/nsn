@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <properties>
+    </properties>
+
+    <facilities>
+        <facility id="quartznet" type="Castle.Facilities.QuartzIntegration.QuartzFacility, Castle.Facilities.QuartzIntegration">
+            <quartz>
+                <item key="quartz.scheduler.instanceName">XmlConfiguredInstance</item>
+                <item key="quartz.threadPool.type">Quartz.Simpl.SimpleThreadPool, Quartz</item>
+                <item key="quartz.threadPool.threadCount">5</item>
+                <item key="quartz.threadPool.threadPriority">Normal</item>
+                <item key="quartz.plugin.xml.type">Quartz.Plugin.Xml.JobInitializationPlugin, Quartz</item>
+                <item key="quartz.plugin.xml.overwriteExistingJobs">true</item>
+                <item key="quartz.plugin.xml.scanInterval">10</item>
+            </quartz>
+        </facility>
+    </facilities>
+
+    <components>
+    </components>
+</configuration>

@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.PhotoAlbum]", "dbo", Lazy = true)]
-    public class PhotoAlbum : ActiveRecordBase<PhotoAlbum>
+    public class PhotoAlbum : ActiveRecordValidationBase<PhotoAlbum>
     {
         [PrimaryKey(PrimaryKeyType.Identity, "AlbumId")]
         public virtual int AlbumId { get; set; }

@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.Comment]", "dbo")]
-    public class Comment : ActiveRecordBase<Comment>
+    public class Comment : ActiveRecordValidationBase<Comment>
     {
         [PrimaryKey(PrimaryKeyType.Identity, "CommentId")]
         public virtual long CommentId { get; set; }

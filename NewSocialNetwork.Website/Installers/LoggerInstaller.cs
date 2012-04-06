@@ -2,7 +2,6 @@
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-
 using NewSocialNetwork.Website.Main;
 
 namespace NewSocialNetwork.Website.Installers

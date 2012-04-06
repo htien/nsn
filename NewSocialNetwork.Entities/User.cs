@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.User]", "dbo", Lazy = true)]
-    public class User : ActiveRecordBase<User>
+    public class User : ActiveRecordValidationBase<User>
     {
         [PrimaryKey(PrimaryKeyType.Identity, "UserId")]
         public virtual int UserId { get; set; }
@@ -11,10 +11,10 @@ namespace NewSocialNetwork.Entities
         [BelongsTo("UserGroupId", NotNull = true)]
         public virtual UserGroup UserGroup { get; set; }
 
-        [Property("Email", Length = 255, NotNull = false)]
+        [Property("Email", Unique = true, Length = 255, NotNull = false)]
         public virtual string Email { get; set; }
 
-        [Property("Username", Length = 100, NotNull = false)]
+        [Property("Username", Unique = true, Length = 100, NotNull = false)]
         public virtual string Username { get; set; }
 
         [Property("Passwd", Length = 1024, NotNull = false)]
