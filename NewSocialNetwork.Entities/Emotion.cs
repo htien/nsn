@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.Emotion]", "dbo", Lazy = true)]
-    public class Emotion : ActiveRecordBase<Emotion>
+    public class Emotion : ActiveRecordValidationBase<Emotion>
     {
         [PrimaryKey(PrimaryKeyType.Identity, "EmotionId")]
         public virtual short EmotionId { get; set; }

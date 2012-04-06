@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.Link]", "dbo", Lazy = true)]
-    public class Link : ActiveRecordBase<Link>
+    public class Link : ActiveRecordValidationBase<Link>
     {
         [PrimaryKey(PrimaryKeyType.Identity, "LinkId")]
         public virtual int LinkId { get; set; }

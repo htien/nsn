@@ -6,14 +6,11 @@ using System.Reflection;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Routing;
-
 using Castle.ActiveRecord;
 using Castle.ActiveRecord.Framework.Config;
 using Castle.Windsor;
-
-using SaberLily.Web.Factory;
-
 using NewSocialNetwork.Website.Installers;
+using SaberLily.Web.Factory;
 
 namespace NewSocialNetwork.Website.Main
 {
@@ -66,10 +63,11 @@ namespace NewSocialNetwork.Website.Main
 
         private void InitContainer()
         {
-            container = new WindsorContainer().Install(
-                new LoggerInstaller(),
-                new ControllersInstaller()
-            );
+            container = new WindsorContainer(ConfigKeys.CONFIG_FOLDER_PATH + "CastleWindsor.xml")
+                .Install(new StandardInstaller(),
+                         new LoggerInstaller(),
+                         new ControllersInstaller(),
+                         new RepositoriesInstaller());
         }
 
         private void InitControllerFactory()

@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.UserCount]", "dbo", Lazy = true)]
-    public class UserCount : ActiveRecordBase<UserCount>
+    public class UserCount : ActiveRecordValidationBase<UserCount>
     {
         [PrimaryKey(PrimaryKeyType.Foreign, "UserId")]
         public virtual int UserId { get; set; }

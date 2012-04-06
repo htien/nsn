@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.Like]", "dbo", Lazy = true)]
-    public class Like : ActiveRecordBase<Like>
+    public class Like : ActiveRecordValidationBase<Like>
     {
         [PrimaryKey(PrimaryKeyType.Identity, "LikeId")]
         public virtual int LikeId { get; set; }

@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.Mail]", "dbo", Lazy = true)]
-    public class Mail : ActiveRecordBase<Mail>
+    public class Mail : ActiveRecordValidationBase<Mail>
     {
         [PrimaryKey(PrimaryKeyType.Identity, "MailId")]
         public virtual int MailId { get; set; }

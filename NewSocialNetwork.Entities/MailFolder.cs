@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.MailFolder]", "dbo", Lazy = true)]
-    public class MailFolder : ActiveRecordBase<MailFolder>
+    public class MailFolder : ActiveRecordValidationBase<MailFolder>
     {
         [PrimaryKey(PrimaryKeyType.Identity, "FolderId")]
         public virtual int FolderId { get; set; }

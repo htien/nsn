@@ -3,18 +3,18 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.CustomRelationData]", "dbo", Lazy = true)]
-    public class CustomRelationData : ActiveRecordBase<CustomRelationData>
+    public class CustomRelationData : ActiveRecordValidationBase<CustomRelationData>
     {
         [PrimaryKey(PrimaryKeyType.Identity, "RelationDataId")]
         public virtual int RelationDataId { get; set; }
 
-        [BelongsTo("RelationId", NotNull = true)]
+        [BelongsTo("RelationId", UniqueKey = "UQ_NSN.CustomRelationData", NotNull = true)]
         public virtual CustomRelation CustomRelation { get; set; }
 
-        [BelongsTo("UserId", NotNull = true)]
+        [BelongsTo("UserId", UniqueKey = "UQ_NSN.CustomRelationData", NotNull = true)]
         public virtual User User { get; set; }
 
-        [BelongsTo("WithUserId", NotNull = false)]
+        [BelongsTo("WithUserId", UniqueKey = "UQ_NSN.CustomRelationData", NotNull = false)]
         public virtual User WithUser { get; set; }
 
         [Property("Status", NotNull = false)]

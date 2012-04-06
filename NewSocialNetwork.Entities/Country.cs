@@ -5,12 +5,12 @@ using Castle.ActiveRecord;
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.Country]", "dbo", Lazy = true)]
-    public class Country : ActiveRecordBase<Country>
+    public class Country : ActiveRecordValidationBase<Country>
     {
         [PrimaryKey(PrimaryKeyType.Assigned, "CountryIso", Length = 2)]
         public virtual string CountryIso { get; set; }
 
-        [Property("Name", Length = 80, NotNull = false)]
+        [Property("Name", Unique = true, Length = 80, NotNull = false)]
         public virtual string Name { get; set; }
 
         [Property("Ordering", NotNull = true, Default = "0")]

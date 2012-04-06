@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.Feed]", "dbo", Lazy = true)]
-    public class Feed : ActiveRecordBase<Feed>
+    public class Feed : ActiveRecordValidationBase<Feed>
     {
         [PrimaryKey(PrimaryKeyType.Identity, "FeedId")]
         public virtual long FeedId { get; set; }

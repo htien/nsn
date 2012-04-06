@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.FriendList]", "dbo", Lazy = true)]
-    public class FriendList : ActiveRecordBase<FriendList>
+    public class FriendList : ActiveRecordValidationBase<FriendList>
     {
         [PrimaryKey(PrimaryKeyType.Identity, "ListId")]
         public virtual int ListId { get; set; }
