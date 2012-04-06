@@ -65,7 +65,7 @@ Hướng dẫn mở đề án
 
 Đề án được viết bằng ngôn ngữ ASP.NET C# nên chỉ có thể mở bằng Visual Studio (bản 2010).
 
-__*Lưu ý*__: Visual Studio phải được cài đặt Nuget plugin.
+__*Lưu ý: Visual Studio phải được cài đặt Nuget plugin.*__
 
 Đề án được lưu trữ lại:
 
@@ -86,18 +86,23 @@ thực hiện các bước bên dưới:
 1. Cập nhật thư viện cho đề án:
 
     Vào menu `Tools > Library Package Manager > Package Manager Console`.
-    Gõ lệnh `Get-Help NuGet`, nếu không thành công nghĩa là NuGet chưa được cài đặt.
+    Gõ lệnh `Get-Help NuGet`, nếu không thành công nghĩa là NuGet chưa
+    được cài đặt.
     
     Cài đặt NuGet: chọn menu `Tools > Extension Manager...`, hãy tìm kiếm
     và cài đặt `NuGet Package Manager`. Khi thành công, hãy tiếp theo bên dưới.
     
     Tại cửa sổ Console, chọn _Default project_ là: `NewSocialNetwork.Website`.
-    Tiếp theo, nhập lệnh sau để cài đặt thư viện cho project:
-    `Install-Package PackageName`
+    Tiếp theo, nhập lệnh theo cú pháp sau để tự động tải và cài đặt thư viện
+    cho project: `Install-Package PackageName`
     
     Ví dụ: `Install-Package Castle.ActiveRecord`.
-    Tương tự cho các thư viện khác, bạn hãy xem trong mục Refenrence của đề án,
-    nếu thấy thiếu thư viện nào thì hãy cài đặt tương tự như câu lệnh bên trên.
+    Tương tự cho các thư viện khác, bạn hãy xem trong mục __Refenrence__
+    của đề án, nếu thấy thiếu thư viện nào thì hãy cài đặt tương tự như
+    câu lệnh bên trên.
+    
+    __*Sau khi hoàn thành cài đặt tất cả thư viện, hãy nhập lệnh:
+    `Update-Package` để cập nhật version mới nhất cho các thư viện.*__
 
 2. ...
 
