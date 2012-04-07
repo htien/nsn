@@ -5,6 +5,8 @@ namespace NewSocialNetwork.Entities
     [ActiveRecord("[NSN.CountryChild]", "dbo", Lazy = true)]
     public class CountryChild : ActiveRecordValidationBase<CountryChild>
     {
+        #region Properties
+
         [PrimaryKey(PrimaryKeyType.Identity, "ChildId")]
         public virtual int ChildId { get; set; }
 
@@ -16,6 +18,8 @@ namespace NewSocialNetwork.Entities
 
         [Property("Ordering", NotNull = true)]
         public virtual short Ordering { get; set; }
+
+        #endregion
 
         public CountryChild() { }
     }

@@ -5,6 +5,8 @@ namespace NewSocialNetwork.Entities
     [ActiveRecord("[NSN.Emotion]", "dbo", Lazy = true)]
     public class Emotion : ActiveRecordValidationBase<Emotion>
     {
+        #region Properties
+
         [PrimaryKey(PrimaryKeyType.Identity, "EmotionId")]
         public virtual short EmotionId { get; set; }
 
@@ -22,6 +24,8 @@ namespace NewSocialNetwork.Entities
 
         [Property("Ordering", NotNull = true, Default = "0")]
         public virtual short Ordering { get; set; }
+
+        #endregion
 
         public Emotion() { }
     }

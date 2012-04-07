@@ -1,10 +1,13 @@
-﻿using Castle.ActiveRecord;
+﻿using System.Collections.Generic;
+using Castle.ActiveRecord;
 
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.FriendList]", "dbo", Lazy = true)]
     public class FriendList : ActiveRecordValidationBase<FriendList>
     {
+        #region Properties
+
         [PrimaryKey(PrimaryKeyType.Identity, "ListId")]
         public virtual int ListId { get; set; }
 
@@ -16,6 +19,15 @@ namespace NewSocialNetwork.Entities
 
         [Property("Timestamp", NotNull = true)]
         public virtual int Timestamp { get; set; }
+
+        #endregion
+
+        #region Relationship
+
+        [HasMany(typeof(FriendListData), ColumnKey = "ListId", Lazy = true)]
+        public virtual IList<FriendListData> FriendListData { get; set; }
+
+        #endregion
 
         public FriendList() { }
     }

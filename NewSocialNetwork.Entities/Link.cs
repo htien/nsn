@@ -5,6 +5,8 @@ namespace NewSocialNetwork.Entities
     [ActiveRecord("[NSN.Link]", "dbo", Lazy = true)]
     public class Link : ActiveRecordValidationBase<Link>
     {
+        #region Properties
+
         [PrimaryKey(PrimaryKeyType.Identity, "LinkId")]
         public virtual int LinkId { get; set; }
 
@@ -37,6 +39,8 @@ namespace NewSocialNetwork.Entities
 
         [Property("TotalLike", NotNull = true, Default = "0")]
         public virtual int TotalLike { get; set; }
+
+        #endregion
 
         public Link() { }
     }

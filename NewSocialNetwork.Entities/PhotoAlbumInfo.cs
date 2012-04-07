@@ -5,6 +5,8 @@ namespace NewSocialNetwork.Entities
     [ActiveRecord("[NSN.PhotoAlbumInfo]", "dbo", Lazy = true)]
     public class PhotoAlbumInfo : ActiveRecordValidationBase<PhotoAlbumInfo>
     {
+        #region Properties
+
         [PrimaryKey(PrimaryKeyType.Foreign, "AlbumId")]
         public virtual int AlbumId { get; set; }
 
@@ -13,6 +15,8 @@ namespace NewSocialNetwork.Entities
 
         [Property("Description", NotNull = true)]
         public virtual string Description { get; set; }
+
+        #endregion
 
         public PhotoAlbumInfo() { }
     }

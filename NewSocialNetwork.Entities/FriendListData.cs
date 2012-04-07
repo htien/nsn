@@ -6,11 +6,21 @@ namespace NewSocialNetwork.Entities
     [ActiveRecord("[NSN.FriendListData]", "dbo", Lazy = true)]
     public class FriendListData : ActiveRecordValidationBase<FriendListData>
     {
+        #region Properties
+
         [CompositeKey]
         public virtual FriendListDataPK Key { get; set; }
 
+        [BelongsTo("ListId", NotNull = true)]
+        public virtual FriendList FriendList { get; set; }
+
+        [BelongsTo("FriendUserId", NotNull = true)]
+        public virtual User FriendUser { get; set; }
+
         [Property("Ordering", NotNull = true, Default = "0")]
         public virtual int Ordering { get; set; }
+
+        #endregion
 
         public FriendListData() { }
     }
