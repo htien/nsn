@@ -7,6 +7,8 @@ namespace NewSocialNetwork.Entities
     [ActiveRecord("[NSN.Country]", "dbo", Lazy = true)]
     public class Country : ActiveRecordValidationBase<Country>
     {
+        #region Properties
+
         [PrimaryKey(PrimaryKeyType.Assigned, "CountryIso", Length = 2)]
         public virtual string CountryIso { get; set; }
 
@@ -16,8 +18,17 @@ namespace NewSocialNetwork.Entities
         [Property("Ordering", NotNull = true, Default = "0")]
         public virtual short Order { get; set; }
 
-        [HasMany(typeof(CountryChild), Table = "[NSN.CountryChild]", ColumnKey = "CountryIso", Lazy = true)]
+        #endregion
+
+        #region Relationship
+
+        [HasMany(typeof(CountryChild), ColumnKey = "CountryIso", Lazy = true)]
         public virtual IList<CountryChild> CountryChilds { get; set; }
+
+        [HasMany(typeof(User), ColumnKey = "CountryIso", Lazy = true)]
+        public virtual IList<User> Users { get; set; }
+
+        #endregion
 
         public Country() { }
     }

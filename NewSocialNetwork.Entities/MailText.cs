@@ -5,6 +5,8 @@ namespace NewSocialNetwork.Entities
     [ActiveRecord("[NSN.MailText]", "dbo", Lazy = true)]
     public class MailText : ActiveRecordValidationBase<MailText>
     {
+        #region Properties
+
         [PrimaryKey(PrimaryKeyType.Foreign, "MailId")]
         public virtual int MailId { get; set; }
 
@@ -16,7 +18,9 @@ namespace NewSocialNetwork.Entities
 
         [Property("TextParsed", ColumnType = "StringClob", SqlType = "NTEXT", NotNull = false)]
         public virtual string TextParsed { get; set; }
-        
+
+        #endregion
+
         public MailText() { }
     }
 }

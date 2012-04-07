@@ -5,6 +5,8 @@ namespace NewSocialNetwork.Entities
     [ActiveRecord("[NSN.Photo]", "dbo", Lazy = true)]
     public class Photo : ActiveRecordValidationBase<Photo>
     {
+        #region Properties
+
         [PrimaryKey(PrimaryKeyType.Identity, "PhotoId")]
         public virtual int PhotoId { get; set; }
 
@@ -40,6 +42,15 @@ namespace NewSocialNetwork.Entities
 
         [Property("Ordering", NotNull = true, Default = "0")]
         public virtual int Ordering { get; set; }
+
+        #endregion
+
+        #region Relationship
+
+        [OneToOne(Fetch = FetchEnum.Join)]
+        public virtual PhotoInfo PhotoInfo { get; set; }
+
+        #endregion
 
         public Photo() { }
     }

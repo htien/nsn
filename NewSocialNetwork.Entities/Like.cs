@@ -5,6 +5,8 @@ namespace NewSocialNetwork.Entities
     [ActiveRecord("[NSN.Like]", "dbo", Lazy = true)]
     public class Like : ActiveRecordValidationBase<Like>
     {
+        #region Properties
+
         [PrimaryKey(PrimaryKeyType.Identity, "LikeId")]
         public virtual int LikeId { get; set; }
 
@@ -19,6 +21,8 @@ namespace NewSocialNetwork.Entities
 
         [Property("Timestamp", NotNull = true)]
         public virtual int Timestamp { get; set; }
+
+        #endregion
 
         public Like() { }
     }

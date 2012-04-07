@@ -5,6 +5,8 @@ namespace NewSocialNetwork.Entities
     [ActiveRecord("[NSN.CommentText]", "dbo")]
     public class CommentText : ActiveRecordValidationBase<CommentText>
     {
+        #region Properties
+
         [PrimaryKey(PrimaryKeyType.Foreign, "CommentId")]
         public virtual long CommentId { get; set; }
 
@@ -16,6 +18,8 @@ namespace NewSocialNetwork.Entities
 
         [Property("TextParsed", ColumnType = "StringClob", SqlType = "NTEXT", NotNull = false)]
         public virtual string TextParsed { get; set; }
+
+        #endregion
 
         public CommentText() { }
     }

@@ -1,6 +1,5 @@
 ﻿using System;
-
-using SaberLily.Security.Crypto;
+using SaberLily;
 
 namespace NewSocialNetwork.TestConsole
 {
@@ -9,7 +8,6 @@ namespace NewSocialNetwork.TestConsole
         public static void Main(String[] args)
         {
             Console.WriteLine("Hello World!");
-            Console.ReadLine();
         }
     }
 }

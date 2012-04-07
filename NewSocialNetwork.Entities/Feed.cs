@@ -5,6 +5,8 @@ namespace NewSocialNetwork.Entities
     [ActiveRecord("[NSN.Feed]", "dbo", Lazy = true)]
     public class Feed : ActiveRecordValidationBase<Feed>
     {
+        #region Properties
+
         [PrimaryKey(PrimaryKeyType.Identity, "FeedId")]
         public virtual long FeedId { get; set; }
 
@@ -25,6 +27,8 @@ namespace NewSocialNetwork.Entities
 
         [Property("Timestamp", NotNull = true)]
         public virtual int Timestamp { get; set; }
+
+        #endregion
 
         public Feed() { }
     }

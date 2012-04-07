@@ -1,10 +1,13 @@
-﻿using Castle.ActiveRecord;
+﻿using System.Collections.Generic;
+using Castle.ActiveRecord;
 
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.Comment]", "dbo")]
     public class Comment : ActiveRecordValidationBase<Comment>
     {
+        #region Properties
+
         [PrimaryKey(PrimaryKeyType.Identity, "CommentId")]
         public virtual long CommentId { get; set; }
 
@@ -14,9 +17,15 @@ namespace NewSocialNetwork.Entities
         [Property("ItemId", NotNull = true)]
         public virtual string Itemid { get; set; }
 
+        /// <summary>
+        /// Người dùng nhận được comment.
+        /// </summary>
         [BelongsTo("UserId", NotNull = true)]
         public virtual User User { get; set; }
 
+        /// <summary>
+        /// Người dùng đã tạo ra comment.
+        /// </summary>
         [BelongsTo("OwnerUserId", NotNull = true)]
         public virtual User OwnerUser { get; set; }
 
@@ -28,6 +37,15 @@ namespace NewSocialNetwork.Entities
 
         [Property("TotalLike", NotNull = true, Default = "0")]
         public virtual int TotalLike { get; set; }
+
+        #endregion
+
+        #region Relationship
+
+        [OneToOne(Fetch = FetchEnum.Join)]
+        public virtual CommentText CommentText { get; set; }
+
+        #endregion
 
         public Comment() { }
     }

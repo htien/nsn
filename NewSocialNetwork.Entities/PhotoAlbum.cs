@@ -1,10 +1,13 @@
-﻿using Castle.ActiveRecord;
+﻿using System.Collections.Generic;
+using Castle.ActiveRecord;
 
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.PhotoAlbum]", "dbo", Lazy = true)]
     public class PhotoAlbum : ActiveRecordValidationBase<PhotoAlbum>
     {
+        #region Properties
+
         [PrimaryKey(PrimaryKeyType.Identity, "AlbumId")]
         public virtual int AlbumId { get; set; }
 
@@ -34,6 +37,18 @@ namespace NewSocialNetwork.Entities
 
         [Property("TotalLike", NotNull = true, Default = "0")]
         public virtual int TotalLike { get; set; }
+
+        #endregion
+
+        #region Relationship
+
+        [OneToOne(Fetch = FetchEnum.Join)]
+        public virtual PhotoAlbumInfo AlbumInfo { get; set; }
+
+        [HasMany(typeof(Photo), ColumnKey = "AlbumId", Lazy = true)]
+        public virtual IList<Photo> Photos { get; set; }
+
+        #endregion
 
         public PhotoAlbum() { }
     }

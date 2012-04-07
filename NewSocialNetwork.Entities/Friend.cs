@@ -5,6 +5,8 @@ namespace NewSocialNetwork.Entities
     [ActiveRecord("[NSN.Friend]", "dbo", Lazy = true)]
     public class Friend : ActiveRecordValidationBase<Friend>
     {
+        #region Properties
+
         [PrimaryKey(PrimaryKeyType.Identity, "FriendId")]
         public virtual int FriendId { get; set; }
 
@@ -16,6 +18,8 @@ namespace NewSocialNetwork.Entities
 
         [Property("Timestamp", NotNull = true)]
         public virtual int Timestamp { get; set; }
+
+        #endregion
 
         public Friend() { }
     }

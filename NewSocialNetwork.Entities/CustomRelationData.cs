@@ -5,11 +5,13 @@ namespace NewSocialNetwork.Entities
     [ActiveRecord("[NSN.CustomRelationData]", "dbo", Lazy = true)]
     public class CustomRelationData : ActiveRecordValidationBase<CustomRelationData>
     {
+        #region Properties
+
         [PrimaryKey(PrimaryKeyType.Identity, "RelationDataId")]
         public virtual int RelationDataId { get; set; }
 
         [BelongsTo("RelationId", UniqueKey = "UQ_NSN.CustomRelationData", NotNull = true)]
-        public virtual CustomRelation CustomRelation { get; set; }
+        public virtual CustomRelation Relation { get; set; }
 
         [BelongsTo("UserId", UniqueKey = "UQ_NSN.CustomRelationData", NotNull = true)]
         public virtual User User { get; set; }
@@ -25,6 +27,8 @@ namespace NewSocialNetwork.Entities
 
         [Property("TotalLike", NotNull = true, Default = "0")]
         public virtual int TotalLike { get; set; }
+
+        #endregion
 
         public CustomRelationData() { }
     }

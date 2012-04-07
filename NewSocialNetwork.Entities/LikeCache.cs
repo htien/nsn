@@ -6,11 +6,15 @@ namespace NewSocialNetwork.Entities
     [ActiveRecord("[NSN.LikeCache]", "dbo", Lazy = true)]
     public class LikeCache : ActiveRecordValidationBase<LikeCache>
     {
+        #region Properties
+
         [CompositeKey]
         public virtual LikeCachePK Key { get; set; }
 
         [BelongsTo("UserId", NotNull = true)]
         public virtual User User { get; set; }
+
+        #endregion
 
         public LikeCache() { }
     }

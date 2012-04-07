@@ -1,16 +1,25 @@
-﻿using Castle.ActiveRecord;
+﻿using System.Collections.Generic;
+using Castle.ActiveRecord;
 
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.Mail]", "dbo", Lazy = true)]
     public class Mail : ActiveRecordValidationBase<Mail>
     {
+        #region Properties
+
         [PrimaryKey(PrimaryKeyType.Identity, "MailId")]
         public virtual int MailId { get; set; }
 
+        /// <summary>
+        /// Thuộc tính chỉ định mail này là dạng mail reply.
+        /// </summary>
         [Property("ParentMailId", NotNull = true, Default = "0")]
         public virtual int ParentMailId { get; set; }
 
+        /// <summary>
+        /// Người gửi.
+        /// </summary>
         [BelongsTo("OwnerUserId", NotNull = true)]
         public virtual User OwnerUser { get; set; }
 
@@ -20,6 +29,9 @@ namespace NewSocialNetwork.Entities
         [Property("OwnerTypeId", NotNull = true, Default = "0")]
         public virtual byte OwnerTypeId { get; set; }
 
+        /// <summary>
+        /// Người xem/người nhận.
+        /// </summary>
         [BelongsTo("ViewerUserId", NotNull = true)]
         public virtual User ViewerUser { get; set; }
 
@@ -40,6 +52,15 @@ namespace NewSocialNetwork.Entities
 
         [Property("Timestamp", NotNull = true)]
         public virtual int Timestamp { get; set; }
+
+        #endregion
+
+        #region Relationship
+
+        [OneToOne(Fetch = FetchEnum.Join)]
+        public virtual MailText MailText { get; set; }
+
+        #endregion
 
         public Mail() { }
     }
