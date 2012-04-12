@@ -1,5 +1,7 @@
 ﻿using System.Web.Mvc;
+using Castle.ActiveRecord;
 using Castle.Core.Logging;
+using NewSocialNetwork.Entities;
 
 namespace NewSocialNetwork.Website.Controllers
 {
@@ -12,6 +14,7 @@ namespace NewSocialNetwork.Website.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.User = ActiveRecordMediator<User>.FindByPrimaryKey(2);
             return View();
         }
 

@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.Photo]", "dbo", Lazy = true)]
-    public class Photo : ActiveRecordValidationBase<Photo>
+    public class Photo : ActiveRecordValidationBase<Photo>, INSNEntity
     {
         #region Properties
 

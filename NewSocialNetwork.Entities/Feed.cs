@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.Feed]", "dbo", Lazy = true)]
-    public class Feed : ActiveRecordValidationBase<Feed>
+    public class Feed : ActiveRecordValidationBase<Feed>, INSNEntity
     {
         #region Properties
 

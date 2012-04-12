@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.MailText]", "dbo", Lazy = true)]
-    public class MailText : ActiveRecordValidationBase<MailText>
+    public class MailText : ActiveRecordValidationBase<MailText>, INSNEntity
     {
         #region Properties
 

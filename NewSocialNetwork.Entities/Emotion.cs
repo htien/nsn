@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.Emotion]", "dbo", Lazy = true)]
-    public class Emotion : ActiveRecordValidationBase<Emotion>
+    public class Emotion : ActiveRecordValidationBase<Emotion>, INSNEntity
     {
         #region Properties
 

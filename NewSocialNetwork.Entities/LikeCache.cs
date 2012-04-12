@@ -4,7 +4,7 @@ using Castle.ActiveRecord;
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.LikeCache]", "dbo", Lazy = true)]
-    public class LikeCache : ActiveRecordValidationBase<LikeCache>
+    public class LikeCache : ActiveRecordValidationBase<LikeCache>, INSNEntity
     {
         #region Properties
 
@@ -18,6 +18,8 @@ namespace NewSocialNetwork.Entities
 
         public LikeCache() { }
     }
+
+    #region Composite Key
 
     [Serializable]
     public class LikeCachePK
@@ -55,4 +57,6 @@ namespace NewSocialNetwork.Entities
             return true;
         }
     }
+
+    #endregion
 }

@@ -1,6 +1,9 @@
-﻿namespace NewSocialNetwork.Website.Repositories
+﻿using System.Collections.Generic;
+
+namespace NewSocialNetwork.Website.Repositories
 {
-    public class IRepository
+    public interface IRepository<T>
     {
+        // Định nghĩa thêm những phương thức truy vấn (lớp DAO)
     }
 }

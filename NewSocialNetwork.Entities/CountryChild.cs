@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.CountryChild]", "dbo", Lazy = true)]
-    public class CountryChild : ActiveRecordValidationBase<CountryChild>
+    public class CountryChild : ActiveRecordValidationBase<CountryChild>, INSNEntity
     {
         #region Properties
 
