@@ -1,6 +1,11 @@
 ﻿@{
     ViewBag.Title = "User";
 }
-<div>
-    <h2 style="margin-bottom:8px">@ViewBag.User.FullName</h2>
+<div id="pagelet_userlogin">
+    <form method="post" action="/User">
+        Username: <input type="text" name="username" /><br />
+        Password: <input type="password" name="password" /><br />
+        <input type="submit" value="Log In" />
+    </form>
+    @ViewBag.LoginOK
 </div>

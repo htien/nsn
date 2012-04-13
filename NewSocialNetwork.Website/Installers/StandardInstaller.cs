@@ -1,5 +1,4 @@
 ﻿using Castle.Facilities.EventWiring;
-using Castle.Facilities.QuartzIntegration;
 using Castle.Facilities.Startable;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;

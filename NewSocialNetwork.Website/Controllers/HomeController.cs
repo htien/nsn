@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using Castle.ActiveRecord;
 using Castle.Core.Logging;
 using NewSocialNetwork.Entities;
-using NewSocialNetwork.Website.Repositories;
+using NewSocialNetwork.Repositories;
 
 namespace NewSocialNetwork.Website.Controllers
 {
