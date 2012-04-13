@@ -4,7 +4,7 @@ using Castle.ActiveRecord;
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.PhotoAlbum]", "dbo", Lazy = true)]
-    public class PhotoAlbum : ActiveRecordValidationBase<PhotoAlbum>
+    public class PhotoAlbum : ActiveRecordValidationBase<PhotoAlbum>, INSNEntity
     {
         #region Properties
 

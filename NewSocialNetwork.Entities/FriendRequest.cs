@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.FriendRequest]", "dbo", Lazy = true)]
-    public class FriendRequest : ActiveRecordValidationBase<FriendRequest>
+    public class FriendRequest : ActiveRecordValidationBase<FriendRequest>, INSNEntity
     {
         #region Properties
 

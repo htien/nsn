@@ -4,7 +4,7 @@
 Sử dụng các công nghệ
 ---------------------
 
-* __RDBMS__: Microsoft SQL Server 2008 R2 Express (hoặc cao hơn)
+* __RDBMS__: Microsoft SQL Server 2012 Express (hoặc cao hơn)
 
 * __Phía Server__: ASP.NET MVC 3 (với Razor View Engine),
   Castle Windsor 3, Castle ActiveRecord 3, NHibernate 3.2.

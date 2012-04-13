@@ -1,4 +1,4 @@
-﻿namespace NewSocialNetwork.Website.Schedules
+﻿namespace NewSocialNetwork.Repositories.Schedules
 {
     public class Scheduler
     {

@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.UserGroup]", "dbo")]
-    public class UserGroup : ActiveRecordValidationBase<UserGroup>
+    public class UserGroup : ActiveRecordValidationBase<UserGroup>, INSNEntity
     {
         [PrimaryKey(PrimaryKeyType.Identity, "UserGroupId")]
         public virtual byte UserGroupId { get; set; }

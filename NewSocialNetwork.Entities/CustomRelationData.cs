@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.CustomRelationData]", "dbo", Lazy = true)]
-    public class CustomRelationData : ActiveRecordValidationBase<CustomRelationData>
+    public class CustomRelationData : ActiveRecordValidationBase<CustomRelationData>, INSNEntity
     {
         #region Properties
 

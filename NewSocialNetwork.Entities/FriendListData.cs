@@ -4,7 +4,7 @@ using Castle.ActiveRecord;
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.FriendListData]", "dbo", Lazy = true)]
-    public class FriendListData : ActiveRecordValidationBase<FriendListData>
+    public class FriendListData : ActiveRecordValidationBase<FriendListData>, INSNEntity
     {
         #region Properties
 
@@ -24,6 +24,8 @@ namespace NewSocialNetwork.Entities
 
         public FriendListData() { }
     }
+
+    #region Composite Key
 
     [Serializable]
     public class FriendListDataPK
@@ -58,4 +60,6 @@ namespace NewSocialNetwork.Entities
             return true;
         }
     }
+
+    #endregion
 }

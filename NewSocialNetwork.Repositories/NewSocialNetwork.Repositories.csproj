@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C1EE8E9B-8ED6-4094-B36A-4FDD3149BF25}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NewSocialNetwork.Repositories</RootNamespace>
+    <AssemblyName>Lien.NewSocialNetwork.Repositories</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.ActiveRecord">
+      <HintPath>..\packages\Castle.Activerecord.3.0.0.1\lib\Net40\Castle.ActiveRecord.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.ActiveRecord.Web">
+      <HintPath>..\packages\Castle.Activerecord.3.0.0.1\lib\Net40\Castle.ActiveRecord.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Components.Validator">
+      <HintPath>..\packages\Castle.Components.Validator.2.5.0\lib\NET40\Castle.Components.Validator.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=3.2.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NHibernate.3.2.0.4000\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Search">
+      <HintPath>..\packages\Castle.Activerecord.3.0.0.1\lib\Net40\NHibernate.Search.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataAccess\CommentDAO.cs" />
+    <Compile Include="DataAccess\CommentTextDAO.cs" />
+    <Compile Include="DataAccess\CountryChildDAO.cs" />
+    <Compile Include="DataAccess\CountryDAO.cs" />
+    <Compile Include="DataAccess\CustomRelationDAO.cs" />
+    <Compile Include="DataAccess\CustomRelationDataDAO.cs" />
+    <Compile Include="DataAccess\DAO.cs" />
+    <Compile Include="DataAccess\EmotionDAO.cs" />
+    <Compile Include="DataAccess\EmotionPackageDAO.cs" />
+    <Compile Include="DataAccess\FeedDAO.cs" />
+    <Compile Include="DataAccess\FriendDAO.cs" />
+    <Compile Include="DataAccess\FriendListDAO.cs" />
+    <Compile Include="DataAccess\FriendListDataDAO.cs" />
+    <Compile Include="DataAccess\FriendRequestDAO.cs" />
+    <Compile Include="DataAccess\LikeCacheDAO.cs" />
+    <Compile Include="DataAccess\LikeDAO.cs" />
+    <Compile Include="DataAccess\LinkDAO.cs" />
+    <Compile Include="DataAccess\MailDAO.cs" />
+    <Compile Include="DataAccess\MailFolderDAO.cs" />
+    <Compile Include="DataAccess\MailTextDAO.cs" />
+    <Compile Include="DataAccess\PhotoAlbumDAO.cs" />
+    <Compile Include="DataAccess\PhotoAlbumInfoDAO.cs" />
+    <Compile Include="DataAccess\PhotoDAO.cs" />
+    <Compile Include="DataAccess\PhotoInfoDAO.cs" />
+    <Compile Include="DataAccess\UserCountDAO.cs" />
+    <Compile Include="DataAccess\UserDAO.cs" />
+    <Compile Include="DataAccess\UserGroupDAO.cs" />
+    <Compile Include="DataAccess\UserTweetDAO.cs" />
+    <Compile Include="DataAccess\VersionDAO.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CommentRepository.cs" />
+    <Compile Include="Repositories\CommentTextRepository.cs" />
+    <Compile Include="Repositories\CountryChildRepository.cs" />
+    <Compile Include="Repositories\CountryRepository.cs" />
+    <Compile Include="Repositories\CustomRelationDataRepository.cs" />
+    <Compile Include="Repositories\CustomRelationRepository.cs" />
+    <Compile Include="Repositories\EmotionPackageRepository.cs" />
+    <Compile Include="Repositories\EmotionRepository.cs" />
+    <Compile Include="Repositories\FeedRepository.cs" />
+    <Compile Include="Repositories\FriendListDataRepository.cs" />
+    <Compile Include="Repositories\FriendListRepository.cs" />
+    <Compile Include="Repositories\FriendRepository.cs" />
+    <Compile Include="Repositories\FriendRequestRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\LikeCacheRepository.cs" />
+    <Compile Include="Repositories\LikeRepository.cs" />
+    <Compile Include="Repositories\LinkRepository.cs" />
+    <Compile Include="Repositories\MailFolderRepository.cs" />
+    <Compile Include="Repositories\MailRepository.cs" />
+    <Compile Include="Repositories\MailTextRepository.cs" />
+    <Compile Include="Repositories\PhotoAlbumInfoRepository.cs" />
+    <Compile Include="Repositories\PhotoAlbumRepository.cs" />
+    <Compile Include="Repositories\PhotoInfoRepository.cs" />
+    <Compile Include="Repositories\PhotoRepository.cs" />
+    <Compile Include="Repositories\UserCountRepository.cs" />
+    <Compile Include="Repositories\UserGroupRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\UserTweetRepository.cs" />
+    <Compile Include="Repositories\VersionRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NewSocialNetwork.Entities\NewSocialNetwork.Entities.csproj">
+      <Project>{65C4E0C6-E101-446C-BEC5-AC149BE0AA9F}</Project>
+      <Name>NewSocialNetwork.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

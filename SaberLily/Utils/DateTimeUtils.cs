@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SaberLily
+namespace SaberLily.Utils
 {
     public static class DateTimeUtils
     {

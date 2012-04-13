@@ -4,7 +4,7 @@ using Castle.ActiveRecord;
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.MailFolder]", "dbo", Lazy = true)]
-    public class MailFolder : ActiveRecordValidationBase<MailFolder>
+    public class MailFolder : ActiveRecordValidationBase<MailFolder>, INSNEntity
     {
         #region Properties
 
