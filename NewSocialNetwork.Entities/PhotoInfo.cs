@@ -3,8 +3,10 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.PhotoInfo]", "dbo", Lazy = true)]
-    public class PhotoInfo : ActiveRecordValidationBase<PhotoInfo>
+    public class PhotoInfo : ActiveRecordValidationBase<PhotoInfo>, INSNEntity
     {
+        #region Properties
+
         [PrimaryKey(PrimaryKeyType.Foreign, "PhotoId")]
         public virtual int PhotoId { get; set; }
 
@@ -31,6 +33,8 @@ namespace NewSocialNetwork.Entities
 
         [Property("Height", NotNull = true, Default = "0")]
         public virtual short Height { get; set; }
+
+        #endregion
 
         public PhotoInfo() { }
     }

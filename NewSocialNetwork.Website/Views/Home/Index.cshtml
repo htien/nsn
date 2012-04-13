@@ -2,17 +2,9 @@
     ViewBag.Title = "New Social Network";
 }
 <div>
-    <p>@ViewBag.Welcome</p>
-    <p>@ViewBag.User.FullName, @ViewBag.User.Email</p>
-    <p>@ViewBag.Alaska.Name - @ViewBag.Alaska.Country.Name</p>
-    <p>@ViewBag.User.UserGroup.Title</p>
-    @foreach (var country in ViewBag.Countries)
-    {
-        @:<p>[@country.CountryIso - @country.Name]<br />
-        foreach (var child in country.CountryChilds)
-        {
-            @:@child.Name,
+    @{
+        foreach (var user in ViewBag.Users) {
+            @:@user.UserId, @user.UserGroup.Title, @user.FullName<br />
         }
-        @:</p>
     }
 </div>

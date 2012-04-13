@@ -4,7 +4,7 @@ using Castle.ActiveRecord;
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.EmotionPackage]", "dbo", Lazy = true)]
-    public class EmotionPackage : ActiveRecordValidationBase<EmotionPackage>
+    public class EmotionPackage : ActiveRecordValidationBase<EmotionPackage>, INSNEntity
     {
         #region Properties
 

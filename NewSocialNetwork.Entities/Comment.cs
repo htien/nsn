@@ -4,7 +4,7 @@ using Castle.ActiveRecord;
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.Comment]", "dbo")]
-    public class Comment : ActiveRecordValidationBase<Comment>
+    public class Comment : ActiveRecordValidationBase<Comment>, INSNEntity
     {
         #region Properties
 

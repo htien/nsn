@@ -4,7 +4,7 @@ using Castle.ActiveRecord;
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.CustomRelation]", "dbo", Lazy = true)]
-    public class CustomRelation : ActiveRecordValidationBase<CustomRelation>
+    public class CustomRelation : ActiveRecordValidationBase<CustomRelation>, INSNEntity
     {
         #region Properties
 

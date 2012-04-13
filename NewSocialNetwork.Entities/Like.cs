@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.Like]", "dbo", Lazy = true)]
-    public class Like : ActiveRecordValidationBase<Like>
+    public class Like : ActiveRecordValidationBase<Like>, INSNEntity
     {
         #region Properties
 

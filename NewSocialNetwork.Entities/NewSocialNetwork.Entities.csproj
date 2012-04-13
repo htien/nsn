@@ -43,8 +43,9 @@
     <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate">
-      <HintPath>..\packages\NHibernate.3.2.0.4000\lib\Net35\NHibernate.dll</HintPath>
+    <Reference Include="NHibernate, Version=3.3.0.3001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NHibernate.3.3.0-CR1\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate.Search">
       <HintPath>..\packages\Castle.Activerecord.3.0.0.1\lib\Net40\NHibernate.Search.dll</HintPath>
@@ -73,6 +74,7 @@
     <Compile Include="Mail.cs" />
     <Compile Include="MailFolder.cs" />
     <Compile Include="MailText.cs" />
+    <Compile Include="INSNEntity.cs" />
     <Compile Include="Photo.cs" />
     <Compile Include="PhotoAlbum.cs" />
     <Compile Include="PhotoAlbumInfo.cs" />
@@ -82,7 +84,7 @@
     <Compile Include="UserCount.cs" />
     <Compile Include="UserGroup.cs" />
     <Compile Include="UserTweet.cs" />
-    <Compile Include="Version.cs" />
+    <Compile Include="NSNVersion.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

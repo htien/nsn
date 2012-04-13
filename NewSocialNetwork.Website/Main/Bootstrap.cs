@@ -67,7 +67,10 @@ namespace NewSocialNetwork.Website.Main
                 .Install(new StandardInstaller(),
                          new LoggerInstaller(),
                          new ControllersInstaller(),
-                         new RepositoriesInstaller());
+                         new AutoTxInstaller(),
+                         new RepositoriesInstaller(),
+                         new ModulesInstaller(),
+                         new ServicesInstaller());
         }
 
         private void InitControllerFactory()

@@ -3,7 +3,7 @@
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.UserTweet]", "dbo", Lazy = true)]
-    public class UserTweet : ActiveRecordValidationBase<UserTweet>
+    public class UserTweet : ActiveRecordValidationBase<UserTweet>, INSNEntity
     {
         [PrimaryKey(PrimaryKeyType.Identity, "TweetId")]
         public virtual int TweetId { get; set; }

@@ -4,7 +4,7 @@ using Castle.ActiveRecord;
 namespace NewSocialNetwork.Entities
 {
     [ActiveRecord("[NSN.FriendList]", "dbo", Lazy = true)]
-    public class FriendList : ActiveRecordValidationBase<FriendList>
+    public class FriendList : ActiveRecordValidationBase<FriendList>, INSNEntity
     {
         #region Properties
 
