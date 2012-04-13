@@ -11,7 +11,7 @@
     <!--<databaseSettings>
         <add key="db.datasource" value="tcp:(local)\SQLEXPRESS" />
         <add key="db.port" value="1433" />
-        <add key="db.name" value="NewSocialNetwork-with-relationship" />
+        <add key="db.name" value="NewSocialNetwork" />
         <add key="db.user" value="sa" />
         <add key="db.passwd" value="sysadmin" />
     </databaseSettings>-->
@@ -30,7 +30,7 @@
 
     <activeRecordSettings>
         <add key="dialect" value="NHibernate.Dialect.MsSql2008Dialect" />
-        <add key="connection.driver_class" value="NHibernate.Driver.SqlClientDriver" />
+        <add key="connection.driver_class" value="NHibernate.Driver.Sql2008ClientDriver" />
         <add key="connection.provider" value="NHibernate.Connection.DriverConnectionProvider" />
 
         <!-- Lưu ý: Chỉ được sử dụng 1 trong 2 thuộc tính bên dưới hoặc không sử dụng -->
