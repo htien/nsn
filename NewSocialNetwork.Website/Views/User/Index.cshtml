@@ -1,11 +1,10 @@
 ﻿@{
-    ViewBag.Title = "User";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewBag.Title = "NSN Home";
 }
-<div id="pagelet_userlogin">
-    <form method="post" action="/User">
-        Username: <input type="text" name="username" /><br />
-        Password: <input type="password" name="password" /><br />
-        <input type="submit" value="Log In" />
-    </form>
-    @ViewBag.LoginOK
-</div>
+
+<p>Đây là trang người dùng!</p>
+@foreach (var user in ViewBag.Users)
+{
+    <p>@user.UserId, @user.FullName, @user.Email</p>
+}
