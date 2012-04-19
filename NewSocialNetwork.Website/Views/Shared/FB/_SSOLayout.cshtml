@@ -12,12 +12,15 @@
     <title>@ViewBag.Title</title>
     <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/static/images/favicon.ico")" />
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/static/themes/white/sso.css")" />
+    <script type="text/javascript">
+        new Image().src = '@Url.Content("~/static/themes/white/images/map.png")';
+    </script>
     <script type="text/javascript" src="@Url.Content("~/static/js/jquery/jquery-1.7.2.js")" charset="@ViewBag.Charset"></script>
     <script type="text/javascript" src="@Url.Content("~/static/js/goog/base.js")" charset="@ViewBag.Charset"></script>
     <script type="text/javascript" src="@Url.Content("~/static/themes/white/nsn.js")" charset="@ViewBag.Charset"></script>
     <script type="text/javascript" src="@Url.Content("~/static/themes/white/sso.js")" charset="@ViewBag.Charset"></script>
 </head>
-<body>
+<body class="hikarilogin">
     @RenderBody()
 </body>
 </html>
