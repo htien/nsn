@@ -76,7 +76,7 @@ Sử dụng công cụ [msysgit] để tải đề án về.
 
 Sau khi tải thành công. Theo các bước bên dưới trước khi mở bằng Visual Studio:
 
-1. Đổi tên tập tin `Web.new.config` thành `Web.config` trong thư mục
+1. Đổi tên tập tin `Web.config.new` thành `Web.config` trong thư mục
    `NewSocialNetwork.Website\Config`.
 2. ...
 

@@ -12,7 +12,7 @@ namespace NewSocialNetwork.Website.Installers
 
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.AddFacility<LoggingFacility>(f => f.UseLog4Net(ConfigKeys.CONFIG_FOLDER_PATH + "Log4Net.xml"));
+            container.AddFacility<LoggingFacility>(f => f.UseLog4Net(CfgKeys.CONFIG_FOLDER_PATH + "Log4Net.xml"));
         }
 
         #endregion

@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" dir="ltr">
+<head>
+    <meta charset="@ViewBag.Charset" />
+    <meta name="author" content="Phuong Lien" />
+    <meta name="description" content="New Social Network" />
+    <meta name="generator" content="Microsoft Visual Web Developer 2010 Express" />
+    <meta name="keywords" content="white, light, theme, new social network, hikari" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="application-name" content="newworld" />
+    <base href="@Url.Content("~/")" />
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/static/images/favicon.ico")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/static/themes/white/user.css")" />
+    <script type="text/javascript" src="@Url.Content("~/static/js/jquery/jquery-1.7.2.js")" charset="@ViewBag.Charset"></script>
+    <script type="text/javascript" src="@Url.Content("~/static/js/goog/base.js")" charset="@ViewBag.Charset"></script>
+    <script type="text/javascript" src="@Url.Content("~/static/themes/white/nsn.js")" charset="@ViewBag.Charset"></script>
+    <script type="text/javascript" src="@Url.Content("~/static/themes/white/user.js")" charset="@ViewBag.Charset"></script>
+    @RenderSection("UserCSS_head", false)
+</head>
+<body class="hikari home">
+    <div id="hikari" class="gA hasLeftCol">
+        @RenderPage("~/Views/Shared/FB/header.cshtml")
+        @RenderBody()
+        @Html.Partial("FB/section/misc")
+        @RenderPage("~/Views/Shared/FB/footer.cshtml")
+    </div>
+</body>
+</html>

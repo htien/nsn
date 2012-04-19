@@ -1,4 +1,5 @@
 ﻿using Castle.ActiveRecord;
+using NHibernate.SqlTypes;
 
 namespace NewSocialNetwork.Entities
 {
