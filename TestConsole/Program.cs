@@ -1,4 +1,5 @@
 ﻿using System;
+using SaberLily.PowerShell;
 using SaberLily.Security.Crypto;
 using SaberLily.Utils;
 
@@ -10,6 +11,7 @@ namespace NewSocialNetwork.TestConsole
         {
             Console.WriteLine("Hello World!");
             Console.WriteLine("Current timestamp: " + GetTimestamp());
+            Console.WriteLine(PublicKeyToken.Get(@"D:\workspace\HelloWorld\packages\Castle.Activerecord.3.0.0.1\lib\Net40\Castle.ActiveRecord.dll"));
         }
 
         public static string HashPassword(string text)

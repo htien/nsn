@@ -43,8 +43,7 @@
     <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate, Version=3.3.0.3001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="NHibernate">
       <HintPath>..\packages\NHibernate.3.3.0-CR1\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate.Search">
@@ -83,6 +82,7 @@
     <Compile Include="User.cs" />
     <Compile Include="UserCount.cs" />
     <Compile Include="UserGroup.cs" />
+    <Compile Include="UserGroupLevel.cs" />
     <Compile Include="UserTweet.cs" />
     <Compile Include="NSNVersion.cs" />
   </ItemGroup>

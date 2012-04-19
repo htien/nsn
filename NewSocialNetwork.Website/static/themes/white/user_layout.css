@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+/*----- HIKARI THEME -----*/
+
+.hikari .gA,
+.hikari .gl {position:relative; margin-left:auto; margin-right:auto;}
+.hikari .gA {min-height:100%;}
+#globalHeader {background-color:#fff; -webkit-box-shadow:0 0 3px rgba(0,0,0,.1); -moz-box-shadow:0 0 3px rgba(0,0,0,.1); box-shadow:0 0 3px rgba(0,0,0,.1);}
+#globalContainer {padding-bottom:90px; height:auto; min-height:100%; zoom:1;}
+#globalFooter {position:absolute; right:0; bottom:0; left:0; clear:left; height:55px;}
+.hikari .nsn-discovery {zoom:1;}
+.hikari .nsn-navbar-outer {position:relative; background-color:#e26337;}
+.hikari .nsn-navbar-inner {height:38px;}
+.hikari .nsn-navsearch-container {overflow:hidden; margin-left:177px; width:350px;}
+.hikari .nsn-navsearch-container .nsn-searchbar {position:relative; display:block; margin-top:8px;}
+.hikari .nsn-navsearch-container .nsn-searchfield-outer {overflow:hidden; height:24px; background-color:#fff; border:1px solid #cc4b39; -webkit-border-radius:2px; -moz-border-radius:2px; border-radius:2px;}
+.hikari .nsn-navsearch-container .nsn-searchfield-inner {border-top:1px solid #e0e0e0;}
+.hikari .nsn-navsearch-container .nsn-searchfield-padding {padding:0 3px;}
+.hikari .nsn-navsearch-container .nsn-searchfield-textbox {margin:4px 0 0; padding:0; width:100%; border:0; outline:0; font-size:12px; color:#555;}
+.hikari .nsn-container {}
+.hikari .nsn-contentcol {border-top:0 !important; border:1px solid #ccc;}
+.hikari .nsn-contentcol .nsn-contentarea {padding:0 20px 20px; word-wrap:break-word;}
+.hikari .hasLeftCol .nsn-contentcol {margin-left:178px;}
+.hikari .hasLeftCol .hasRightCol .nsn-contentarea {padding:0 25px 20px 18px; width:511px;}
+.hikari .hasRightCol .nsn-contentarea {float:left; margin-right:0; width:695px;}
+.hikari .nsn-leftcol {float:left; width:178px; word-wrap:break-word;}
+.hikari .nsn-rightcol {float:right; width:244px; word-wrap:break-word;}
+.hikari .nsn-box,
+.hikari .nsn-sidebox {overflow:hidden;}
+.hikari .nsn-box {margin-top:8px;}
+.hikari .nsn-box.first {margin-top:0;}
+.hikari .nsn-box .title-bar {margin:8px 0 .35em; padding-bottom:2px; line-height:1.167; border-bottom:1px solid #ebebeb; color:#d2480e; font-family:Segoe UI Light, Helvetica, Arial, sans-serif; font-size:21px;}
+.hikari .nsn-sidebox {margin-top:6px;}
+.hikari .nsn-sidebox.first {margin-top:0;}
+.hikari .nsn-sidebox .title-bar {margin:5px 5px 0; padding:2px 5px; /*background-color:#edeff4;*/ font-family:Lucida Grande, Tahoma, sans-serif; font-size:9px; font-weight:bold; text-transform:uppercase;}
+.hikari .nsn-sidebox .pad {margin:0 5px 8px; padding:5px 5px 0;}
+.hikari .nsn-sidebox .tile {padding:5px 0 10px; background:url("data:image/gif;base64,R0lGODdhpAABAPAAAMzMzP///ywAAAAApAABAEACD4yPCMvtD6OctNqLc9qnAAA7") no-repeat; font-size:11px;}
+.hikari .nsn-sidebox .tile.first {padding-top:0; background-image:none;}
+.hikari .nsn-sidebox .tile h3 {margin:15px 15px 0; line-height:18px; font-size:12px; font-weight:bold;}
+.hikari .nsn-sidebox .tile div {margin:15px auto; text-align:center;}
+.hikari .nsn-sidebox .tile div img {display:inline-block;}
+.hikari .nsn-sidebox .tile p {margin:5px 15px 0; line-height:14px; color:#666;}
+.hikari .nsn-sidebox .navigation-list.first {margin-top:5px;}
+.hikari .nsn-sidebox .navigation-list {padding-bottom:5px;}
+.hikari .nsn-sidebox .navigation-list a {color:#333;}
+.hikari .nsn-sidebox .navigation-list h3 {font-size:12px; font-weight:bold;}
+.hikari .nsn-sidebox .navigation-list h3 a {display:block; padding:0 10px; line-height:24px; background:#689 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAAcUlEQVR42p2SPQrAIAxGPYF38SzunqF7p+ydlZw2/SypFAmhRHiDmsfnT5KILI7zKqABAh2Qzsu37i3OoIIB2GDofl6SLvAP6iPN6D1BMJzEkvTMvEuO2KZEluSINKVuSY7YQ0mhO4VeL/BPwY4I9d4NtLaDlKXEYzwAAAAASUVORK5CYII=") no-repeat 146px 5px; color:#fff; text-decoration:none;}
+.hikari .nsn-sidebox .navigation-list ul {margin-top:5px; line-height:12px;}
+.hikari .nsn-sidebox .navigation-list li a {padding:5px 11px 5px 15px; color:#666; font-size:11px; font-weight:bold;}
+.hikari .nsn-sidebox .navigation-list li a:hover {background-color:#ffebbf; color:#333; text-decoration:none;}
+
+img,
+#globalHeader, #globalFooter,
+.hikari .nsn-box .title,
+.hikari .nsn-sidebox .title {user-select:none; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; -o-user-select:none; -khtml-user-select:none;}

@@ -1,17 +1,20 @@
 ﻿using System.Web.Mvc;
-using Castle.ActiveRecord;
-using NewSocialNetwork.Entities;
 
 namespace NewSocialNetwork.Website.Controllers
 {
-    public class UserController : Controller
+    public class UserController : AbstractController
     {
+        public UserController()
+        {
+            ViewBag.Title = "NSN: Stream";
+        }
+
         //
         // GET: /User/
 
-        public ActionResult Index()
+        public ActionResult Stream()
         {
-            ViewBag.Users = ActiveRecordMediator<User>.FindAll();
+            ViewBag.kq = Request["name"];
             return View();
         }
 
