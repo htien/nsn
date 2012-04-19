@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/FB/_UserLayout.cshtml";
 }
-@section UserCSS_head {}
+@section custom_head_css {@RenderSection("custom_head_css", false)}
 <section>
     <div id="globalContainer" class="gl">
         <div id="mainContainer" class="nsn-container">

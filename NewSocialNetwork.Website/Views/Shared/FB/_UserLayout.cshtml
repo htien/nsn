@@ -16,14 +16,14 @@
     <script type="text/javascript" src="@Url.Content("~/static/js/goog/base.js")" charset="@ViewBag.Charset"></script>
     <script type="text/javascript" src="@Url.Content("~/static/themes/white/nsn.js")" charset="@ViewBag.Charset"></script>
     <script type="text/javascript" src="@Url.Content("~/static/themes/white/user.js")" charset="@ViewBag.Charset"></script>
-    @RenderSection("UserCSS_head", false)
+    @RenderSection("custom_head_css", false)
 </head>
-<body class="hikari home">
+<body class="hikari">
     <div id="hikari" class="gA hasLeftCol">
-        @RenderPage("~/Views/Shared/FB/header.cshtml")
+        @Html.Partial("FB/section/header")
         @RenderBody()
         @Html.Partial("FB/section/misc")
-        @RenderPage("~/Views/Shared/FB/footer.cshtml")
+        @Html.Partial("FB/section/footer")
     </div>
 </body>
 </html>
