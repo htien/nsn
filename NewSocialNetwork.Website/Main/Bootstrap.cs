@@ -10,6 +10,7 @@ using Castle.ActiveRecord;
 using Castle.ActiveRecord.Framework.Config;
 using Castle.Windsor;
 using NewSocialNetwork.Website.Installers;
+using SaberLily.Web.Extensions.LowercaseRouteMVC;
 using SaberLily.Web.Factory;
 
 namespace NewSocialNetwork.Website.Main
@@ -63,7 +64,7 @@ namespace NewSocialNetwork.Website.Main
 
         private void InitContainer()
         {
-            container = new WindsorContainer(ConfigKeys.CONFIG_FOLDER_PATH + "CastleWindsor.xml")
+            container = new WindsorContainer(CfgKeys.CONFIG_FOLDER_PATH + "CastleWindsor.xml")
                 .Install(new StandardInstaller(),
                          new LoggerInstaller(),
                          new ControllersInstaller(),
@@ -82,8 +83,8 @@ namespace NewSocialNetwork.Website.Main
         {
             NameValueCollection appSettings = WebConfigurationManager.AppSettings;
             ConnectionStringSettingsCollection cfgSettings = WebConfigurationManager.ConnectionStrings;
-            NameValueCollection db = WebConfigurationManager.GetSection("databaseSettings", "/" + ConfigKeys.CONFIG_FOLDER_PATH) as NameValueCollection;
-            NameValueCollection ar = WebConfigurationManager.GetSection("activeRecordSettings", "/" + ConfigKeys.CONFIG_FOLDER_PATH) as NameValueCollection;
+            NameValueCollection db = WebConfigurationManager.GetSection("databaseSettings", "/" + CfgKeys.CONFIG_FOLDER_PATH) as NameValueCollection;
+            NameValueCollection ar = WebConfigurationManager.GetSection("activeRecordSettings", "/" + CfgKeys.CONFIG_FOLDER_PATH) as NameValueCollection;
 
             IDictionary<string, string> settings = new Dictionary<string, string>();
             foreach (string key in ar.AllKeys)
@@ -99,14 +100,17 @@ namespace NewSocialNetwork.Website.Main
             if (!hasConnectionStringName && !hasConnectionString ||
                 hasConnectionStringName && settings[connStrNameKey].Equals("tien.somee.com"))
             {
-                bool isRemote = Convert.ToBoolean(appSettings["isRemote"]);
-                string @connectionString = (isRemote ? cfgSettings["remote"] : cfgSettings["local"]).ConnectionString;
+                bool isRemote = Convert.ToBoolean(appSettings[CfgKeys.ISREMOTE]);
+                string @connectionString = (isRemote
+                            ? cfgSettings[CfgKeys.CONNECTION_REMOTE_NAME]
+                            : cfgSettings[CfgKeys.CONNECTION_LOCAL_NAME]
+                        ).ConnectionString;
                 connectionString = isRemote
                         ? string.Format(connectionString,
-                                db["db.datasource"], db["db.port"], db["db.name"],
-                                db["db.user"], db["db.passwd"])
+                                db[CfgKeys.DB_DATASOURCE], db[CfgKeys.DB_PORT], db[CfgKeys.DB_NAME],
+                                db[CfgKeys.DB_USER], db[CfgKeys.DB_PASSWORD])
                         : string.Format(connectionString,
-                                db["db.datasource"], db["db.port"], db["db.name"]);
+                                db[CfgKeys.DB_DATASOURCE], db[CfgKeys.DB_PORT], db[CfgKeys.DB_NAME]);
 
                 if (hasConnectionStringName)
                 {
@@ -117,10 +121,10 @@ namespace NewSocialNetwork.Website.Main
 
             InPlaceConfigurationSource configSource = new InPlaceConfigurationSource();
             configSource.Add(typeof(ActiveRecordBase), settings);
-            configSource.IsRunningInWebApp = Convert.ToBoolean(appSettings["active-record:isWebapp"]);
-            configSource.SetDebugFlag(Convert.ToBoolean(appSettings["active-record:debug"]));
+            configSource.IsRunningInWebApp = Convert.ToBoolean(appSettings[CfgKeys.GLOBAL_ACTIVERECORD_ISWEBAPP]);
+            configSource.SetDebugFlag(Convert.ToBoolean(appSettings[CfgKeys.GLOBAL_ACTIVERECORD_DEBUG]));
 
-            Assembly asmEntities = Assembly.Load("Lien.NewSocialNetwork.Entities");
+            Assembly asmEntities = Assembly.Load(CfgKeys.ASSEMBLY_NSN_ENTITIES);
             ActiveRecordStarter.Initialize(asmEntities, configSource);
         }
 
@@ -134,15 +138,39 @@ namespace NewSocialNetwork.Website.Main
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
 
-            routes.MapRoute(
-                "Default", // Route name
-                "{controller}/{action}/{id}", // URL with parameters
-                new
-                {
-                    controller = "Home",
-                    action = "Index",
-                    id = UrlParameter.Optional
-                } // Parameter defaults
+            routes.Clear();
+            routes.MapRouteLowercase(
+                "UserStream",
+                "{id}/{action}",
+                new { controller = "User", action = "Stream" },
+                new { id = @"^\d+$" }
+            );
+            routes.MapRouteLowercase(
+                "User",
+                "{controller}/{id}/{action}",
+                new { controller = "User", action = "Stream" },
+                new { id = @"^\d+$" }
+            );
+            routes.MapRouteLowercase(
+                "AdminHome",
+                "AdminZ",
+                new { controller = "Admin", action = "Index" }
+            );
+            routes.MapRouteLowercase(
+                "Admin",
+                "AdminZ/{id}/{action}",
+                new { controller = "Admin", action = "Index", id = UrlParameter.Optional },
+                new { id = @"^\d+$" }
+            );
+            routes.MapRouteLowercase(
+                "SSO",
+                "Auth/{action}",
+                new { controller = "Auth", action = "Login" }
+            );
+            routes.MapRouteLowercase(
+                "Root",
+                "",
+                new { controller = "User", action = "Stream" }
             );
         }
 

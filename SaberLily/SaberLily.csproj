@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ModelCopier.cs" />
+    <Compile Include="PowerShell\PublicKeyToken.cs" />
     <Compile Include="Utils\DateTimeUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\Crypto\PasswordCryptor.cs" />
