@@ -147,7 +147,7 @@ namespace NewSocialNetwork.Website.Main
             );
             routes.MapRouteLowercase(
                 "User",
-                "{controller}/{id}/{action}",
+                "User/{id}/{action}",
                 new { controller = "User", action = "Stream" },
                 new { id = @"^\d+$" }
             );
