@@ -3,7 +3,7 @@ using NewSocialNetwork.Repositories;
 
 namespace NewSocialNetwork.DataAccess
 {
-    public class CustomRelationDataDAO : DAO<CustomRelationData>, CustomRelationDataRepository
+    public class CustomRelationDataDAO : DAO<CustomRelationData>, ICustomRelationDataRepository
     {
         public CustomRelationDataDAO() { }
     }

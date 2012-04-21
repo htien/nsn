@@ -3,7 +3,7 @@ using NewSocialNetwork.Repositories;
 
 namespace NewSocialNetwork.DataAccess
 {
-    public class MailFolderDAO : DAO<MailFolder>, MailFolderRepository
+    public class MailFolderDAO : DAO<MailFolder>, IMailFolderRepository
     {
         public MailFolderDAO() { }
     }

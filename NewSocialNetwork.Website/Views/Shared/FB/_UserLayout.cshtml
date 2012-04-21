@@ -18,10 +18,16 @@
     <script type="text/javascript" src="@Url.Content("~/static/themes/white/user.js")" charset="@ViewBag.Charset"></script>
     @RenderSection("custom_head_css", false)
 </head>
-<body class="hikari">
+<body class="UIPage UIPage_Hikari">
     <div id="hikari" class="gA hasLeftCol">
         @Html.Partial("FB/section/header")
-        @RenderBody()
+        <section>
+            <div id="globalContainer" class="gl">
+                <div id="mainContainer" class="nsn-container">
+                    @RenderBody()
+                </div>
+            </div>
+        </section>
         @Html.Partial("FB/section/misc")
         @Html.Partial("FB/section/footer")
     </div>
