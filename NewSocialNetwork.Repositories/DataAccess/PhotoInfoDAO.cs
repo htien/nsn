@@ -3,7 +3,7 @@ using NewSocialNetwork.Repositories;
 
 namespace NewSocialNetwork.DataAccess
 {
-    public class PhotoInfoDAO : DAO<PhotoInfo>, PhotoInfoRepository
+    public class PhotoInfoDAO : DAO<PhotoInfo>, IPhotoInfoRepository
     {
         public PhotoInfoDAO() { }
     }

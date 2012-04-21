@@ -4,7 +4,7 @@ using NewSocialNetwork.Repositories;
 
 namespace NewSocialNetwork.DataAccess
 {
-    public class UserDAO : DAO<User>, UserRepository
+    public class UserDAO : DAO<User>, IUserRepository
     {
         public UserDAO() { }
 

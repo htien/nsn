@@ -3,7 +3,7 @@ using NewSocialNetwork.Repositories;
 
 namespace NewSocialNetwork.DataAccess
 {
-    public class CommentDAO : DAO<Comment>, CommentRepository
+    public class CommentDAO : DAO<Comment>, ICommentRepository
     {
         public CommentDAO() { }
     }

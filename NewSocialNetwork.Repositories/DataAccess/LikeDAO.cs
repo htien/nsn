@@ -3,7 +3,7 @@ using NewSocialNetwork.Repositories;
 
 namespace NewSocialNetwork.DataAccess
 {
-    public class LikeDAO : DAO<Like>, LikeRepository
+    public class LikeDAO : DAO<Like>, ILikeRepository
     {
         public LikeDAO() { }
     }

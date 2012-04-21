@@ -3,7 +3,7 @@ using NewSocialNetwork.Repositories;
 
 namespace NewSocialNetwork.DataAccess
 {
-    public class EmotionDAO : DAO<Emotion>, EmotionRepository
+    public class EmotionDAO : DAO<Emotion>, IEmotionRepository
     {
         public EmotionDAO() { }
     }

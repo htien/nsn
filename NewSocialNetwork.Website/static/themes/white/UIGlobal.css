@@ -1,0 +1,83 @@
+﻿/*
+ * FREE FOR ALL BUT DOES NOT MEAN THERE IS NOT PRICE.
+ */
+
+#UIGlobal_BlueBarHolder, #UIGlobal_BlueBar {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
+#UIGlobal_BlueBarHolder {
+  height: 41px;
+  font-family: Tahoma, sans-serif;
+  font-size: 11px;
+}
+#UIGlobal_BlueBarHolder.loggedOut {
+  height: auto;
+}
+#UIGlobal_BlueBarHolder .stripe {
+  margin-top: 1px;
+  height: 10px;
+}
+
+#UIGlobal_BlueBar {
+  min-width: 981px;
+  background: #f2f2f2 url(images/background1.png) repeat-x;
+  border-bottom: 1px solid #ddd;
+}
+#UIGlobal_BlueBar.gradient {
+  background: #eaeada;
+  background: -webkit-gradient(radial,200 36,0,200 -40,120,from(#fefefe),to(#eaeada)),#eaeada;
+  background: -moz-radial-gradient(200px 36px,circle,#fefefe 20px,#eaeada 70px);
+}
+#UIGlobal_BlueBar.bs {
+  border-bottom: 1px solid #aaa;
+}
+#UIGlobal_BlueBar .logo {
+  display: inline-block;
+  margin-top: 8px;
+  margin-left: 10px;
+  text-decoration: none;
+}
+#UIGlobal_BlueBar .logo .logoIcon,
+#UIGlobal_BlueBar .logo .logoText {
+  vertical-align: middle;
+}
+#UIGlobal_BlueBar .logo .logoText {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+#UIGlobal_BlueBar .loggedOut_menubar_container {
+  min-width: 980px;
+  height: 82px;
+}
+#UIGlobal_BlueBar .loggedOut_menubar {
+  margin: 0 auto;
+  padding-top: 13px;
+  width: 964px;
+}
+#UIGlobal_BlueBar .nsn_login_container table tr td {
+  padding-left: 14px;
+}
+#UIGlobal_BlueBar .nsn_login_container label {
+  color: #333;
+  font-weight: normal;
+}
+#UIGlobal_BlueBar .nsn_login_container .uiFormText {
+  width: 142px;
+}
+#UIGlobal_BlueBar .nsn_login_container #nsn_signin {
+  margin-right: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#UIGlobal_BlueBar .nsn_login_container .persist_box {
+  vertical-align: middle;
+}
+#UIGlobal_BlueBar .nsn_login_container input.persist_box {
+  margin-left: 0;
+  padding-left: 0;
+}
