@@ -3,7 +3,7 @@ using NewSocialNetwork.Repositories;
 
 namespace NewSocialNetwork.DataAccess
 {
-    public class FeedDAO : DAO<Feed>, FeedRepository
+    public class FeedDAO : DAO<Feed>, IFeedRepository
     {
         public FeedDAO() { }
     }

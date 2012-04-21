@@ -1,8 +1,100 @@
-﻿<header>
-    <div id="pagelet_bluebar">
-        <div id="blueBarHolder" class="loggedOut">
+﻿@section pagelet_bluebar {@Html.Partial("FB/pagelet/_bluebar_pagelet")}
+<div class="gradient">
+    <div class="gradientContent">
+        <div class="clearfix nsnIndexFeaturedRegistration">
+            <div class="feature lfloat">
+                <div class="nsnIndexMap">
+                    <div class="title">NSN - connecting and sharing with a whole world.</div>
+                    <div class="map"></div>
+                </div>
+            </div>
+            <div class="signupForm rfloat">
+                <div class="nsnRegistrationContainer">
+                    <div class="headerText">
+                        <div class="mainTitle">Sign Up</div>
+                        <div class="subTitle">It's free and always will be.</div>
+                    </div>
+                    <div id="simple_registration_container">
+                        <form id="reg" action="?" method="post">
+                            <div id="reg_form_box">
+                                <table class="w100">
+                                    <tbody>
+                                        <tr>
+                                            <td class="label"><label>First Name:</label></td>
+                                            <td>
+                                                <div class="field_container"><input type="text" class="uiFormText" /></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label"><label>Last Name:</label></td>
+                                            <td>
+                                                <div class="field_container"><input type="text" class="uiFormText" /></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label"><label>Your Email:</label></td>
+                                            <td>
+                                                <div class="field_container"><input type="text" class="uiFormText" /></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label"><label>New Password:</label></td>
+                                            <td>
+                                                <div class="field_container"><input type="password" class="uiFormText" /></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label"><label>Re-enter:</label></td>
+                                            <td>
+                                                <div class="field_container"><input type="password" class="uiFormText" /></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label"><label>I am:</label></td>
+                                            <td>
+                                                <select class="uiFormSelect" name="gender">
+                                                    <option value="0">Select Sex:</option>
+                                                    <option value="1">Male</option>
+                                                    <option value="2">Female</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label"><label>Birthday:</label></td>
+                                            <td>
+                                                <select class="uiFormSelect" name="birthday_month">
+                                                    <option value="-1">Month:</option>
+                                                </select>
+                                                <select class="uiFormSelect" name="birthday_day">
+                                                    <option value="-1">Day:</option>
+                                                    @for (var i = 1; i <= 31; i++) {
+                                                        <option value="@i">@i</option>
+                                                    }
+                                                </select>
+                                                <select class="uiFormSelect" name="birthday_year">
+                                                    <option value="-1">Year:</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label"></td>
+                                            <td>
+                                                <div class="nsnRegistrationPPT">
+                                                    <p class="text privacy_policy_text">By clicking Sign Up, you agree to our <abbr>Terms</abbr> and that you
+                                                        have read and understand our <abbr>Data Use Policy</abbr>.</p>
+                                                </div>
+                                                <div class="nsnRegButton clearfix">
+                                                    <div class="guiButton guiRedButton">Sign Up</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</header>
-<section>
-</section>
+</div>

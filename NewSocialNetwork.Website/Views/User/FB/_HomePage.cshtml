@@ -2,28 +2,22 @@
     Layout = "~/Views/Shared/FB/_UserLayout.cshtml";
 }
 @section custom_head_css {@RenderSection("custom_head_css", false)}
-<section>
-    <div id="globalContainer" class="gl">
-        <div id="mainContainer" class="nsn-container">
-            <div class="nsn-leftcolcontainer">
-                <div class="nsn-leftcol">
-                    @Html.Partial("FB/pagelet/_categories_pagelet")
-                </div>
-            </div>
-            <div class="nsn-contentcol hasRightCol">
-                <div class="nsn-rightcol">
-                    @Html.Partial("FB/pagelet/_ads_pagelet")
-                </div>
-                <div class="nsn-contentarea">
-                    <div id="pagelet_stream" class="nsn-box first">
-                        <h2 class="title-bar">Hikari Store Best Sellers</h2>
-                        <div class="nsn-bodyrender">
-                            @RenderBody()
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
+<div class="nsn-leftcolcontainer">
+    <div class="nsn-leftcol">
+        @Html.Partial("FB/pagelet/_categories_pagelet")
+    </div>
+</div>
+<div class="nsn-contentcol hasRightCol">
+    <div class="nsn-rightcol">
+        @Html.Partial("FB/pagelet/_ads_pagelet")
+    </div>
+    <div class="nsn-contentarea">
+        <div id="pagelet_stream" class="nsn-box first">
+            <h2 class="title-bar">Hikari Store Best Sellers</h2>
+            <div class="nsn-bodyrender">
+                @RenderBody()
             </div>
         </div>
     </div>
-</section>
+    <div class="clearfix"></div>
+</div>

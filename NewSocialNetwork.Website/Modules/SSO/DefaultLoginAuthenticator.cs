@@ -7,7 +7,7 @@ namespace NewSocialNetwork.Website.Modules.SSO
 {
     public class DefaultLoginAuthenticator : ILoginAuthenticator
     {
-        public UserRepository userRepo { get; set; }
+        public IUserRepository userRepo { get; set; }
 
         public DefaultLoginAuthenticator() { }
 

@@ -22,13 +22,16 @@ input[type="image"], label {
   cursor: default;
 }
 a {
-  color: #04b;
+  color: #15c;
   cursor: pointer;
+  outline: 0;
   text-decoration: none;
 }
 a:hover {
-  color: #e47911 /*#d2480e*/;
   text-decoration: underline;
+}
+a:active {
+  color: #d14836;
 }
 abbr {
   border-bottom: 1px dotted #a3756e;
@@ -74,7 +77,7 @@ html, body {
   height: 100%;
 }
 body {
-  font: normal 12px/16px 'Lucida Grande', Arial, sans-serif;
+  font: normal 81.25%/16px 'Lucida Grande', Helvetica, Arial, sans-serif;
   /*background-color:#e7ebf2;*/
   color: #333;
   vertical-align: baseline;
@@ -84,10 +87,10 @@ body {
 .aero {
   opacity: .5;
 }
-.alignleft {
+.alignleft, .lfloat {
   float: left;
 }
-.alignright {
+.alignright, .rfloat {
   float: right;
 }
 .block {
@@ -132,11 +135,16 @@ body {
 .invisible_elem {
   visibility: hidden;
 }
+.field_container {
+  position: relative;
+  display: inline-block;
+  width: auto;
+}
 .nobullet {
   list-style-type: none;
 }
 .w100 {
-  width:100%;
+  width: 100%;
 }
 .widefat {
   clear: both;
@@ -165,4 +173,18 @@ ol.nobullet, ul.nobullet {
 }
 table.fixed {
   table-layout: fixed;
+}
+
+.nsnCopyright {
+  line-height: 1.4;
+  font-size: 11px;
+  color: #7c8395;
+  text-transform: uppercase;
+}
+.nsnCopyright .press {
+  color: #a3756e;
+}
+.nsnCopyright .press:hover,
+.nsnCopyright .press:active {
+  color: #7d4a42;
 }

@@ -1,6 +1,7 @@
 ﻿@import url(nsn_reset.css);
 @import url(nsn_fonts.css);
 @import url(nsn_common.css);
+@import url(nsn_common_ui.css);
 @import url(nsn_controls.css);
 @import url(sso_auth.css);
 @import url(custom_style.css);
