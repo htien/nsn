@@ -3,7 +3,7 @@ using NewSocialNetwork.Repositories;
 
 namespace NewSocialNetwork.DataAccess
 {
-    public class CountryChildDAO : DAO<CountryChild>, CountryChildRepository
+    public class CountryChildDAO : DAO<CountryChild>, ICountryChildRepository
     {
         public CountryChildDAO() { }
     }

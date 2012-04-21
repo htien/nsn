@@ -3,7 +3,7 @@ using NewSocialNetwork.Repositories;
 
 namespace NewSocialNetwork.DataAccess
 {
-    public class FriendRequestDAO : DAO<FriendRequest>, FriendRequestRepository
+    public class FriendRequestDAO : DAO<FriendRequest>, IFriendRequestRepository
     {
         public FriendRequestDAO() { }
     }

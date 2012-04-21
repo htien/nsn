@@ -123,13 +123,9 @@
     <Content Include="static\Error404.htm" />
     <Content Include="static\favicon.ico" />
     <Content Include="static\GenericError.htm" />
-    <Content Include="static\images\logo64.png" />
-    <Content Include="static\images\logo64s.png" />
     <Content Include="static\themes\white\images\blank.gif" />
     <Content Include="static\themes\white\images\indicator_blue_large.gif" />
-    <Content Include="static\themes\white\images\logo64.png" />
     <Content Include="static\images\favicon.ico" />
-    <Content Include="static\themes\white\images\logo64s.png" />
     <Content Include="static\images\tmp\bose_soundlink_wireless_mobile_speaker_300x120._V140173257_.gif" />
     <Content Include="static\images\tmp\camera-newincamphoto2_300x75._.png" />
     <Content Include="static\images\tmp\macbook_air.jpg" />
@@ -1014,7 +1010,16 @@
     <Content Include="static\js\goog\window\window.js" />
     <Content Include="static\js\jquery\jquery-1.7.2.js" />
     <Content Include="static\themes\white\images\loading2.gif" />
-    <Content Include="static\themes\white\images\map.png" />
+    <Content Include="static\themes\white\images\logo32_color.png" />
+    <Content Include="static\themes\white\images\logo32_white.png" />
+    <Content Include="static\themes\white\images\logo64_color.png" />
+    <Content Include="static\themes\white\images\logo64_white.png" />
+    <Content Include="static\themes\white\images\worldmap_2.png" />
+    <Content Include="static\themes\white\images\worldmap_1.png" />
+    <Content Include="static\themes\white\images\newsoclnet.png" />
+    <Content Include="static\themes\white\images\worldmap_2_1.png" />
+    <Content Include="static\themes\white\images\worldmap_2_2.png" />
+    <Content Include="static\themes\white\nsn_common_ui.css" />
     <Content Include="static\themes\white\images\stripe.gif" />
     <Content Include="static\themes\white\nsn_common.css" />
     <Content Include="static\themes\white\nsn_controls.css" />
@@ -1135,6 +1140,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\Auth\FB\pagelet\_bluebar_pagelet.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
