@@ -2,76 +2,6 @@
  * FREE FOR ALL BUT DOES NOT MEAN THERE IS NO PRICE.
  */
 
-#blueBarHolder, #UIGlobal_BlueBar {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  user-select: none;
-}
-#blueBarHolder {
-  height: 41px;
-  font-family: Tahoma, sans-serif;
-  font-size: 11px;
-}
-#blueBarHolder.loggedOut {
-  height: auto;
-}
-
-#UIGlobal_BlueBar {
-  min-width: 981px;
-  background-color: #eaeada;
-  background: -webkit-gradient(radial,200 36,0,200 -40,120,from(#fafafa),to(#eaeada)),#eaeada;
-  background: -moz-radial-gradient(200px 36px,circle,#fafafa 20px,#eaeada 70px);
-  border-bottom: 1px solid #505050;
-}
-#UIGlobal_BlueBar .logo {
-  display: inline-block;
-  margin-top: 8px;
-  margin-left: 10px;
-  text-decoration: none;
-}
-#UIGlobal_BlueBar .logo .logoIcon,
-#UIGlobal_BlueBar .logo .logoText {
-  vertical-align: middle;
-}
-#UIGlobal_BlueBar .logo .logoText {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-}
-#UIGlobal_BlueBar .loggedOut_menubar_container {
-  min-width: 980px;
-  height: 82px;
-}
-#UIGlobal_BlueBar .loggedOut_menubar {
-  margin: 0 auto;
-  padding-top: 13px;
-  width: 964px;
-}
-#UIGlobal_BlueBar .nsn_login_container table tr td {
-  padding-left: 14px;
-}
-#UIGlobal_BlueBar .nsn_login_container label {
-  color: #333;
-  font-weight: normal;
-}
-#UIGlobal_BlueBar .nsn_login_container .uiFormText {
-  width: 142px;
-}
-#UIGlobal_BlueBar .nsn_login_container #nsn_signin {
-  margin-right: 0;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-#UIGlobal_BlueBar .nsn_login_container .persist_box {
-  vertical-align: middle;
-}
-#UIGlobal_BlueBar .nsn_login_container input.persist_box {
-  margin-left: 0;
-  padding-left: 0;
-}
-
 .UIPage_HikariLogin #globalContainer {
   position: relative;
   margin: 0 auto;
@@ -165,6 +95,7 @@
 
 .nsnRegButton {
   padding-top: 7px;
+  padding-bottom: 7px;
 }
 .nsnRegButton .guiButton {
   padding: 1px 25px 2px;
@@ -174,7 +105,6 @@
 
 .UIPage_HikariLogin .nsnProjectAuthor {
   margin-top: 20px;
-  border-top: 1px solid #d0d0d0;
 }
 .UIPage_HikariLogin .projectAuthor {
   margin: 7px auto 0;

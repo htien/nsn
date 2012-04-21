@@ -3,5 +3,6 @@
 @import url(nsn_common.css);
 @import url(nsn_common_ui.css);
 @import url(nsn_controls.css);
+@import url(UIGlobal.css);
 @import url(sso_auth.css);
 @import url(custom_style.css);

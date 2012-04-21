@@ -123,6 +123,7 @@
     <Content Include="static\Error404.htm" />
     <Content Include="static\favicon.ico" />
     <Content Include="static\GenericError.htm" />
+    <Content Include="static\themes\white\images\background1.png" />
     <Content Include="static\themes\white\images\blank.gif" />
     <Content Include="static\themes\white\images\indicator_blue_large.gif" />
     <Content Include="static\images\favicon.ico" />
@@ -1031,6 +1032,7 @@
     <Content Include="static\themes\white\sso.css" />
     <Content Include="static\themes\white\sso.js" />
     <Content Include="static\themes\white\sso_auth.css" />
+    <Content Include="static\themes\white\UIGlobal.css" />
     <Content Include="static\themes\white\user_layout.css" />
     <Content Include="static\themes\white\user.css" />
     <Content Include="static\themes\white\user.js" />
