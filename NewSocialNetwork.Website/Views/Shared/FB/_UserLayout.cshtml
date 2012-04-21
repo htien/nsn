@@ -20,10 +20,14 @@
 </head>
 <body class="UIPage UIPage_Hikari">
     <div id="hikari" class="gA hasLeftCol">
-        @Html.Partial("FB/section/header")
+        <header>
+            <div id="globalHeader" class="gl">
+                @RenderPage("~/Views/Auth/FB/pagelet/_bluebar_pagelet.cshtml")
+            </div>
+        </header>
         <section>
             <div id="globalContainer" class="gl">
-                <div id="mainContainer" class="nsn-container">
+                <div id="mainContainer" class="nsnContainer">
                     @RenderBody()
                 </div>
             </div>

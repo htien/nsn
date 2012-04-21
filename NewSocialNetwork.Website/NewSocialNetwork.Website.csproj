@@ -1033,7 +1033,7 @@
     <Content Include="static\themes\white\sso.js" />
     <Content Include="static\themes\white\sso_auth.css" />
     <Content Include="static\themes\white\UIGlobal.css" />
-    <Content Include="static\themes\white\user_layout.css" />
+    <Content Include="static\themes\white\user_home.css" />
     <Content Include="static\themes\white\user.css" />
     <Content Include="static\themes\white\user.js" />
     <Content Include="static\themes\white\nsn.js" />
@@ -1131,7 +1131,7 @@
     <Content Include="Views\User\FB\pagelet\_login_pagelet.cshtml" />
     <Content Include="Views\User\FB\_HomePage.cshtml" />
     <Content Include="Views\User\FB\pagelet\_copyrights_pagelet.cshtml" />
-    <Content Include="Views\User\FB\section\header.cshtml" />
+    <Content Include="Views\User\FB\pagelet\_pagelet_discovery.cshtml" />
     <Content Include="Views\User\FB\pagelet\_hidden_pagelet.cshtml" />
     <Content Include="Views\User\FB\section\footer.cshtml" />
     <Content Include="Views\User\FB\pagelet\_categories_pagelet.cshtml" />
