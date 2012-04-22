@@ -108,14 +108,14 @@ body {
 .clearfix {
   zoom: 1;
 }
-.clearfix:after {
+.clearfix::after {
   clear: both;
   content: ".";
   display: block;
   height: 0;
   line-height: 0;
   font-size: 0;
-  visibility:hidden;
+  visibility: hidden;
 }
 .direction_ltr {
   direction: ltr;
@@ -123,7 +123,7 @@ body {
 .direction_rtl {
   direction: rtl;
 }
-.fixed_elem, fixed_always {
+.fixed_elem, .fixed_always {
   position: fixed !important;
 }
 .hidden_elem {
@@ -158,7 +158,7 @@ a.block {
   text-decoration: none;
 }
 a.block span.link, a.block span.more {
-  color: #04b;
+  color: #15c;
 }
 a.block:hover span.link, a.block:hover span.more {
   text-decoration: underline;
@@ -179,6 +179,18 @@ table.fixed {
   -webkit-box-shadow: 0 1px 0 rgba(0,0,0,.1);
   -moz-box-shadow: 0 1px 0 rgba(0,0,0,.1);
   box-shadow: 0 1px 0 rgba(0,0,0,.1);
+}
+.nostyle, .nobd {
+  border-width: 0;
+}
+.nostyle, .nomg {
+  margin: 0;
+}
+.nostyle, .nopd {
+  padding: 0;
+}
+.nostyle, .nool {
+  outline: 0;
 }
 .stripe {
   height: 5px;
