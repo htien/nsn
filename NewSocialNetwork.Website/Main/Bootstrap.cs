@@ -165,7 +165,7 @@ namespace NewSocialNetwork.Website.Main
             routes.MapRouteLowercase(
                 "SSO",
                 "Auth/{action}",
-                new { controller = "Auth", action = "Login" }
+                new { controller = "Auth", action = "Register" }
             );
             routes.MapRouteLowercase(
                 "Root",

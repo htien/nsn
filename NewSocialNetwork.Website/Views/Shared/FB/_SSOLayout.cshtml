@@ -15,6 +15,7 @@
     <script type="text/javascript">
         new Image().src = '@Url.Content("~/static/themes/hikari/images/worldmap_2_1.png")';
         new Image().src = '@Url.Content("~/static/themes/hikari/images/logo64_color.png")';
+        new Image().src = '@Url.Content("~/static/themes/hikari/images/newsoclnet.png")';
         new Image().src = '@Url.Content("~/static/themes/hikari/images/background1.png")';
         new Image().src = '@Url.Content("~/static/themes/hikari/images/stripe.gif")';
     </script>
@@ -25,7 +26,7 @@
 </head>
 <body class="UIPage UIPage_Index UIPage_HikariLogin">
     <header>
-        @RenderSection("pagelet_bluebar")
+        @RenderPage("~/Views/Auth/FB/pagelet/_bluebar_pagelet.cshtml")
     </header>
     <section>
         <div id="globalContainer" class="gl">

@@ -1015,6 +1015,7 @@
     <Content Include="static\themes\hikari\images\logo32_white.png" />
     <Content Include="static\themes\hikari\images\logo64_color.png" />
     <Content Include="static\themes\hikari\images\logo64_white.png" />
+    <Content Include="static\themes\hikari\images\nsn.png" />
     <Content Include="static\themes\hikari\images\worldmap_2.png" />
     <Content Include="static\themes\hikari\images\worldmap_1.png" />
     <Content Include="static\themes\hikari\images\newsoclnet.png" />
@@ -1131,18 +1132,17 @@
     <Content Include="Views\User\FB\pagelet\_login_pagelet.cshtml" />
     <Content Include="Views\User\FB\_HomePage.cshtml" />
     <Content Include="Views\User\FB\pagelet\_copyrights_pagelet.cshtml" />
-    <Content Include="Views\User\FB\pagelet\_pagelet_discovery.cshtml" />
+    <Content Include="Views\User\FB\pagelet\_discovery_pagelet.cshtml" />
     <Content Include="Views\User\FB\pagelet\_hidden_pagelet.cshtml" />
-    <Content Include="Views\User\FB\section\footer.cshtml" />
     <Content Include="Views\User\FB\pagelet\_categories_pagelet.cshtml" />
     <Content Include="Views\User\FB\pagelet\_ads_pagelet.cshtml" />
-    <Content Include="Views\User\FB\section\misc.cshtml" />
     <Content Include="Views\Auth\_ViewStart.cshtml" />
     <Content Include="Views\Shared\FB\_SSOLayout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\Auth\Register.cshtml" />
     <Content Include="Views\Auth\FB\pagelet\_bluebar_pagelet.cshtml" />
+    <Content Include="Views\User\FB\pagelet\_bluebar_pagelet.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -5,7 +5,8 @@
 /**
  * Google Buttons.
  */
-.guiButton, .guiButton2, .ui-button {
+.guiButton, .guiButton2, .guiButton3,
+.ui-button {
   -webkit-user-select: none;
   -moz-user-select: none;
   -khtml-user-select: none;
@@ -13,7 +14,8 @@
 }
 
 .guiButton, a.guiButton,
-.guiButton2, a.guiButton2 {
+.guiButton2, a.guiButton2,
+.guiButton3, a.guiButton3 {
   position: relative;
   display: inline-block;
   margin-right: 16px;
@@ -91,6 +93,20 @@
   -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.3);
   -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,.3);
   -box-shadow: inset 0 1px 2px rgba(0,0,0,.3);
+}
+
+.guiButton3, a.guiButton3 {
+  background-color: #fcfcfc;
+  border: 1px solid #dedede;
+  color: #333;
+}
+.guiButton3:hover {
+  border-color: #cbcbcb;
+}
+.guiButton3:active {
+  -webkit-box-shadow: inset 0 1px 5px #e7e7e7;
+  -moz-box-shadow: inset 0 1px 5px #e7e7e7;
+  box-shadow: inset 0 1px 5px #e7e7e7;
 }
 
 .guiBlueButton, a.guiBlueButton {
