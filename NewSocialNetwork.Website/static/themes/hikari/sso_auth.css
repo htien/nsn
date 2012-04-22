@@ -8,6 +8,16 @@
   zoom: 1;
 }
 
+.UIPage_HikariLogin #globalFooter {
+  margin-top: 20px;
+}
+
+.UIPage_HikariLogin #pageFooter {
+  margin: 0 auto;
+  padding-top: 7px;
+  width: 964px;
+}
+
 .UIPage_HikariLogin .gradient {
   min-width: 964px;
 }
@@ -101,12 +111,4 @@
   padding: 1px 25px 2px;
   font-size: 14px;
   text-transform: none;
-}
-
-.UIPage_HikariLogin .nsnProjectAuthor {
-  margin-top: 20px;
-}
-.UIPage_HikariLogin .projectAuthor {
-  margin: 7px auto 0;
-  width: 964px;
 }
