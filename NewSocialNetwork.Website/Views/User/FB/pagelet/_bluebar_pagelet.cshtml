@@ -26,17 +26,37 @@
                         </a>
                     </div>
                 </div>
-                <div id="nsnNavSearch" class="UIComponent">
+                <div id="nsnHeadNav" class="UIComponent">
                     <div class="lfloat">
                         <form id="navSearchForm" action="?" method="get">
                             <div id="navSearch" class="uiTypeahead UIInputText">
                                 <div class="wrap">
                                     <div class="innerWrap">
-                                        <input type="text" name="q" class="nostyle" />
+                                        <span class="uiSearchInput">
+                                            <input type="text" name="q" class="textInput nostyle" />
+                                            <button><span class="hidden_elem">Search</span></button>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </form>
+                    </div>
+                    <div class="rfloat">
+                        <ul id="pageNav">
+                            <li id="navHome" class="topNavLink middleLink">
+                                <a href="@Url.Content("~/")">Home</a>
+                            </li>
+                            <li class="topNavLink middleLink">
+                                <a href="#">Find Friends</a>
+                            </li>
+                            <li id="navTinyman" class="topNavLink tinyman">
+                                <a href="#" title="Profile">
+                                    <img class="uiProfilePhoto" />
+                                    <span class="tinymanName">Phuong Lien</span>
+                                </a>
+                            </li>
+                            <div class="clearfix"></div>
+                        </ul>
                     </div>
                 </div>
             </div>

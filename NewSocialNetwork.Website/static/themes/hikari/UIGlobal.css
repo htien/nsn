@@ -10,8 +10,6 @@
 }
 #UIGlobal_BlueBarHolder {
   height: 41px;
-  font-family: Tahoma, sans-serif;
-  font-size: 11px;
 }
 #UIGlobal_BlueBarHolder.loggedOut {
   height: auto;
@@ -26,11 +24,17 @@
 
 .slimHeader #UIGlobal_BlueBar {
   min-width: 981px;
+  font-family: Tahoma, sans-serif;
+  font-size: 11px;
   background: #f1f1f1 url(images/background1.png) repeat-x;
 }
-.slimHeader #nsnNavSearch {
+.slimHeader #nsnHeadNav {
   margin-left: 176px;
   width: 805px;
+}
+.slimHeader #pageNav {
+  margin-right: 1px;
+  padding-top: 6px;
 }
 
 .loggedOut #UIGlobal_BlueBar {
@@ -84,8 +88,9 @@
   color: #333;
   font-weight: normal;
 }
-#UIGlobal_BlueBar .nsn_login_container .uiFormText {
-  width: 142px;
+#UIGlobal_BlueBar .nsn_login_container .uiFormText,
+#UIGlobal_BlueBar .nsn_login_container .uiFormPassword {
+  width: 150px;
 }
 #UIGlobal_BlueBar .nsn_login_container #nsn_signin {
   margin-right: 0;
@@ -177,4 +182,63 @@
   position: relative;
   margin: 9px 0 0 4px;
   width: 350px;
+}
+
+#navSearch.uiTypeahead {
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  border-radius: 1px;
+}
+.uiSearchInput {
+  position: relative;
+  display: inline-block;
+  padding: 2px 0 3px;
+  border-top: 1px solid #e9e9e9;
+}
+.uiSearchInput input {
+  margin: 0 22px 0 5px;
+  padding: 1px 5px 2px 0;
+  width: 315px;
+  font-family: 'Lucida Grande', Tahoma, sans-serif;
+  font-size: 11px;
+}
+.uiSearchInput button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  width: 22px;
+  height: 19px;
+  background: #fff url(images/uiSearchButton.png) no-repeat;
+  border-width: 0;
+}
+
+#pageNav .topNavLink {
+  float: left;
+}
+#pageNav a {
+  display: inline-block;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.slimHeader #pageNav .topNavLink {
+  height: 31px;
+}
+.slimHeader #pageNav li.middleLink::before {
+  float: right;
+  display: inline-block;
+  margin-top: 9px;
+  width: 1px;
+  height: 14px;
+  content: " ";
+  background-color: #cfcfcf;
+}
+.slimHeader #pageNav a {
+  height: 31px;
+  line-height: 29px;
+  color: #111;
+}
+.slimHeader #pageNav .middleLink a {
+  padding: 0 8px;
 }
