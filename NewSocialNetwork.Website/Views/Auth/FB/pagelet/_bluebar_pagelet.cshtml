@@ -1,11 +1,11 @@
 ﻿<div id="pagelet_bluebar" class="UIPagelet">
-    <div id="blueBarHolder" class="UIComponent loggedOut">
+    <div id="UIGlobal_BlueBarHolder" class="UIComponent loggedOut">
         <div id="UIGlobal_BlueBar">
             <div class="loggedOut_menubar_container">
                 <div class="loggedOut_menubar">
                     <a class="logo" href="@Url.Content("~/")" title="Go to NSN Home">
-                        <img class="logoIcon" src="@Url.Content("~/static/themes/white/images/logo64_color.png")" alt="NSN Logo" width="48" height="48" />
-                        <img class="logoText" src="@Url.Content("~/static/themes/white/images/newsoclnet.png")" width="238" height="27" />
+                        <img class="logoIcon" src="@Url.Content("~/static/themes/hikari/images/logo64_color.png")" alt="NSN Logo" width="48" height="48" />
+                        <img class="logoText" src="@Url.Content("~/static/themes/hikari/images/newsoclnet.png")" width="238" height="27" />
                     </a>
                     <div class="rfloat">
                         <div class="nsn_login_container">
@@ -20,7 +20,7 @@
                                         <tr>
                                             <td><input type="text" id="nsn_id" name="nsn_id" class="uiFormText guiInputText" /></td>
                                             <td><input type="password" id="nsn_passwd" name="nsn_passwd" class="uiFormPassword guiInputText" /></td>
-                                            <td><div id="nsn_signin" class="guiButton guiRedButton">Sign In</div></td>
+                                            <td><div id="nsn_signin" class="guiButton guiBlueButton">Sign In</div></td>
                                         </tr>
                                         <tr>
                                             <td>
@@ -37,6 +37,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> @*UIGlobal_BlueBar*@
+        <div class="stripe"></div>
     </div>
 </div>

@@ -11,25 +11,41 @@
     <base href="@Url.Content("~/")" />
     <title>@ViewBag.Title</title>
     <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/static/images/favicon.ico")" />
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/static/themes/white/user.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/static/themes/hikari/user.css")" />
+    <script type="text/javascript">
+        new Image().src = '@Url.Content("~/static/themes/hikari/images/background1.png")';
+        new Image().src = '@Url.Content("~/static/themes/hikari/images/nsn.png")';
+        new Image().src = '@Url.Content("~/static/themes/hikari/images/fb_sprite.png")';
+        new Image().src = '@Url.Content("~/static/themes/hikari/images/stripe.gif")';
+    </script>
     <script type="text/javascript" src="@Url.Content("~/static/js/jquery/jquery-1.7.2.js")" charset="@ViewBag.Charset"></script>
     <script type="text/javascript" src="@Url.Content("~/static/js/goog/base.js")" charset="@ViewBag.Charset"></script>
-    <script type="text/javascript" src="@Url.Content("~/static/themes/white/nsn.js")" charset="@ViewBag.Charset"></script>
-    <script type="text/javascript" src="@Url.Content("~/static/themes/white/user.js")" charset="@ViewBag.Charset"></script>
+    <script type="text/javascript" src="@Url.Content("~/static/themes/hikari/nsn.js")" charset="@ViewBag.Charset"></script>
+    <script type="text/javascript" src="@Url.Content("~/static/themes/hikari/user.js")" charset="@ViewBag.Charset"></script>
     @RenderSection("custom_head_css", false)
 </head>
 <body class="UIPage UIPage_Hikari">
     <div id="hikari" class="gA hasLeftCol">
-        @Html.Partial("FB/section/header")
+        <header>
+            <div id="globalHeader" class="gl">
+                @RenderPage("~/Views/User/FB/pagelet/_bluebar_pagelet.cshtml")
+            </div>
+        </header>
         <section>
             <div id="globalContainer" class="gl">
-                <div id="mainContainer" class="nsn-container">
+                <div id="mainContainer" class="nsnContainer">
                     @RenderBody()
                 </div>
             </div>
         </section>
-        @Html.Partial("FB/section/misc")
-        @Html.Partial("FB/section/footer")
+        <section>
+            @Html.Partial("FB/pagelet/_hidden_pagelet")
+        </section>
+        <footer>
+            <div id="globalFooter" class="gl">
+                @Html.Partial("FB/pagelet/_copyrights_pagelet")
+            </div>
+        </footer>
     </div>
 </body>
 </html>

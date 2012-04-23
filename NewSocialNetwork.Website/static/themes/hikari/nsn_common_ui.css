@@ -162,7 +162,7 @@
 
 
 /**
- * Form elements.
+ * NSN Form elements.
  */
 input.uiFormAutoComplete,
 input.uiFormEmail,
@@ -186,6 +186,12 @@ input.uiFormText,
 input.uiFormPassword,
 select.uiFormSelect,
 textarea.uiFormTextArea {
+  border: 1px solid #d0d0d0;
+  border-top: 1px solid #a9a9a9;
+}
+
+.UIInputText {
+  background-color: #fff;
   border: 1px solid #d0d0d0;
   border-top: 1px solid #a9a9a9;
 }

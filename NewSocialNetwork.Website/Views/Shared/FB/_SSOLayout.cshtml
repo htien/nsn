@@ -11,30 +11,43 @@
     <base href="@Url.Content("~/")" />
     <title>@ViewBag.Title</title>
     <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/static/images/favicon.ico")" />
-    <link rel="stylesheet" type="text/css" href="@Url.Content("~/static/themes/white/sso.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/static/themes/hikari/sso.css")" />
     <script type="text/javascript">
-        new Image().src = '@Url.Content("~/static/themes/white/images/worldmap_2_1.png")';
-        new Image().src = '@Url.Content("~/static/images/logo64_color.png")';
+        new Image().src = '@Url.Content("~/static/themes/hikari/images/worldmap_2_1.png")';
+        new Image().src = '@Url.Content("~/static/themes/hikari/images/logo64_color.png")';
+        new Image().src = '@Url.Content("~/static/themes/hikari/images/newsoclnet.png")';
+        new Image().src = '@Url.Content("~/static/themes/hikari/images/background1.png")';
+        new Image().src = '@Url.Content("~/static/themes/hikari/images/stripe.gif")';
     </script>
     <script type="text/javascript" src="@Url.Content("~/static/js/jquery/jquery-1.7.2.js")" charset="@ViewBag.Charset"></script>
     <script type="text/javascript" src="@Url.Content("~/static/js/goog/base.js")" charset="@ViewBag.Charset"></script>
-    <script type="text/javascript" src="@Url.Content("~/static/themes/white/nsn.js")" charset="@ViewBag.Charset"></script>
-    <script type="text/javascript" src="@Url.Content("~/static/themes/white/sso.js")" charset="@ViewBag.Charset"></script>
+    <script type="text/javascript" src="@Url.Content("~/static/themes/hikari/nsn.js")" charset="@ViewBag.Charset"></script>
+    <script type="text/javascript" src="@Url.Content("~/static/themes/hikari/sso.js")" charset="@ViewBag.Charset"></script>
 </head>
 <body class="UIPage UIPage_Index UIPage_HikariLogin">
     <header>
-        @RenderSection("pagelet_bluebar")
+        @RenderPage("~/Views/Auth/FB/pagelet/_bluebar_pagelet.cshtml")
     </header>
     <section>
-        <div id="globalContainer">
+        <div id="globalContainer" class="gl">
             @RenderBody()
         </div>
     </section>
     <footer>
-        <div id="pagelet_nsnIndexAuthor">
-            <div class="nsnProjectAuthor">
-                <div class="projectAuthor">
-                    <span class="nsnCopyright"><span class="press">Phạm Thị Phương Liên</span> &lt;<span class="press">insaber2309@yahoo.com</span>&gt;</span>
+        <div id="globalFooter" class="gl">
+            <div class="stripe"></div>
+            <div id="pageFooter">
+                <div class="rfloat">
+                    <div id="pagelet_nsnIndexAuthor">
+                        <div class="nsnProjectAuthor">
+                            <p class="nsnCopyright"><span class="press">Phạm Thị Phương Liên</span> &lt;<span class="press">insaber2309@yahoo.com</span>&gt;</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lfloat">
+                    <div id="pagelet_nsnCopyleft">
+                        <p class="nsnCopyright">@@<span class="press">Copyleft</span> 2012, <span class="press">NewSocl.net</span></p>
+                    </div>
                 </div>
             </div>
         </div>
