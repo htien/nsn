@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using SaberLily.Web.Filter.Optimizer;
 
 namespace NewSocialNetwork.Website.Controllers
 {
@@ -20,5 +19,6 @@ namespace NewSocialNetwork.Website.Controllers
             return View();
         }
 
+        public ActionResult AddNew();
     }
 }

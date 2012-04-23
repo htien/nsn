@@ -10,21 +10,44 @@
 }
 #UIGlobal_BlueBarHolder {
   height: 41px;
-  font-family: Tahoma, sans-serif;
-  font-size: 11px;
 }
 #UIGlobal_BlueBarHolder.loggedOut {
   height: auto;
 }
-#UIGlobal_BlueBarHolder .stripe {
+#UIGlobal_BlueBarHolder.loggedOut .stripe {
   margin-top: 1px;
-  height: 10px;
+  height: 7px;
+}
+#UIGlobal_BlueBarHolder.slimHeader {
+  height: 38px;
 }
 
-#UIGlobal_BlueBar {
+.slimHeader #UIGlobal_BlueBar {
   min-width: 981px;
-  background: #f2f2f2 url(images/background1.png) repeat-x;
+  font-family: Tahoma, sans-serif;
+  font-size: 11px;
+  background: #f1f1f1 url(images/background1.png) repeat-x;
+}
+.slimHeader #nsnHeadNav {
+  margin-left: 176px;
+  width: 805px;
+}
+.slimHeader #pageNav {
+  margin-right: 1px;
+  padding-top: 6px;
+}
+
+.loggedOut #UIGlobal_BlueBar {
+  min-width: 981px;
+  background: #f1f1f1 url(images/background1.png) repeat-x;
   border-bottom: 1px solid #ddd;
+}
+
+#UIGlobal_BlueBar.fixed_always {
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
 }
 #UIGlobal_BlueBar.gradient {
   background: #eaeada;
@@ -65,8 +88,9 @@
   color: #333;
   font-weight: normal;
 }
-#UIGlobal_BlueBar .nsn_login_container .uiFormText {
-  width: 142px;
+#UIGlobal_BlueBar .nsn_login_container .uiFormText,
+#UIGlobal_BlueBar .nsn_login_container .uiFormPassword {
+  width: 150px;
 }
 #UIGlobal_BlueBar .nsn_login_container #nsn_signin {
   margin-right: 0;
@@ -80,4 +104,141 @@
 #UIGlobal_BlueBar .nsn_login_container input.persist_box {
   margin-left: 0;
   padding-left: 0;
+}
+
+#UIGlobal_BlueBar #pageHead {
+  margin: 0 auto;
+  width: 981px;
+}
+
+.navContainer #pageLogo {
+  float: left;
+}
+.navContainer #pageLogo a {
+  display: block;
+  margin-top: 6px;
+  width: 94px;
+  height: 31px;
+  background: url(images/nsn.png) no-repeat left 5px;
+}
+.navContainer #jewelContainer {
+  float: left;
+  padding-top: 6px;
+}
+
+.nsnJewel {
+  float: left;
+  position: relative;
+}
+.nsnJewel a.jewelButton {
+  position: relative;
+  display: block;
+  margin: 0 0 0 1px;
+  width: 24px;
+  height: 31px;
+  background-image: url(images/fb_sprite.png);
+  background-repeat: no-repeat;
+  text-decoration: none;
+}
+.nsnJewel a.jewelButton:hover {
+  background-color: #dadada;
+}
+.nsnJewel .jewelCount {
+  position: absolute;
+  top: 0;
+  right: -1px;
+  padding-bottom: 1px;
+  line-height: 1.28;
+  font-size: 9px;
+  font-weight: bold;
+  color: #fff;
+}
+.nsnJewel .jewelCount span {
+  display: block;
+  padding: 0 1px;
+  background-color: #f03d25;
+  border: 1px solid #d83722;
+  border-top: 1px solid #e23923;
+  border-bottom: 1px solid #c0311e;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1px 0 rgba(0,39,121,.77);
+  -moz-box-shadow: 0 1px 0 rgba(0,39,121,.77);
+  box-shadow: 0 1px 0 rgba(68,68,68,.77);
+}
+
+#nsnRequestsJewel a.jewelButton {
+  background-position: -56px -2px;
+}
+#nsnMessagesJewel a.jewelButton {
+  background-position: -25px -247px;
+}
+#nsnNotificationsJewel a.jewelButton {
+  background-position: -56px -72px;
+}
+
+#navSearchForm {
+  position: relative;
+  margin: 9px 0 0 4px;
+  width: 350px;
+}
+
+#navSearch.uiTypeahead {
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  border-radius: 1px;
+}
+.uiSearchInput {
+  position: relative;
+  display: inline-block;
+  padding: 2px 0 3px;
+  border-top: 1px solid #e9e9e9;
+}
+.uiSearchInput input {
+  margin: 0 22px 0 5px;
+  padding: 1px 5px 2px 0;
+  width: 315px;
+  font-family: 'Lucida Grande', Tahoma, sans-serif;
+  font-size: 11px;
+}
+.uiSearchInput button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  width: 22px;
+  height: 19px;
+  background: #fff url(images/uiSearchButton.png) no-repeat;
+  border-width: 0;
+}
+
+#pageNav .topNavLink {
+  float: left;
+}
+#pageNav a {
+  display: inline-block;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.slimHeader #pageNav .topNavLink {
+  height: 31px;
+}
+.slimHeader #pageNav li.middleLink::before {
+  float: right;
+  display: inline-block;
+  margin-top: 9px;
+  width: 1px;
+  height: 14px;
+  content: " ";
+  background-color: #cfcfcf;
+}
+.slimHeader #pageNav a {
+  height: 31px;
+  line-height: 29px;
+  color: #111;
+}
+.slimHeader #pageNav .middleLink a {
+  padding: 0 8px;
 }

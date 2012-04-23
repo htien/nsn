@@ -14,7 +14,7 @@ namespace NewSocialNetwork.Website.Controllers
         //
         // GET: /Auth/
 
-        public ActionResult Login()
+        public ActionResult Register()
         {
             return View();
         }
