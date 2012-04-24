@@ -168,6 +168,16 @@ namespace NewSocialNetwork.Website.Main
                 new { controller = "Auth", action = "Register" }
             );
             routes.MapRouteLowercase(
+                "PhotoAlbum",
+                "PhotoAlbum/{action}/{id}",
+                new { controller = "PhotoAlbum", action = "Index", id = UrlParameter.Optional }
+            );
+            routes.MapRouteLowercase(
+                "Photo",
+                "Photo/{action}/{id}",
+                new { controller = "Photo", action = "Index", id = UrlParameter.Optional }
+            );
+            routes.MapRouteLowercase(
                 "Root",
                 "",
                 new { controller = "User", action = "Stream" }
