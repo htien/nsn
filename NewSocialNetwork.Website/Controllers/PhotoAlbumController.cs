@@ -9,8 +9,9 @@ namespace NewSocialNetwork.Website.Controllers
 
         public PhotoAlbumController()
         {
-            ViewBag.Title = "NSN: Photo Album";
+            ViewBag.PageTitle = "NSN: Photo Album";
         }
+
         //
         // GET: /PhotoAlbum/
 

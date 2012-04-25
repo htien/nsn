@@ -139,48 +139,59 @@ namespace NewSocialNetwork.Website.Main
             routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
 
             routes.Clear();
+
+            // Front-end routes
+
             routes.MapRouteLowercase(
-                "UserStream",
+                "HomeStream",
                 "{id}/{action}",
                 new { controller = "User", action = "Stream" },
                 new { id = @"^\d+$" }
             );
             routes.MapRouteLowercase(
-                "User",
-                "User/{id}/{action}",
+                "Home",
+                "Home/{id}/{action}",
                 new { controller = "User", action = "Stream" },
                 new { id = @"^\d+$" }
             );
             routes.MapRouteLowercase(
+                "Photo",
+                "Photo/{id}/{action}/",
+                new { controller = "Photo", action = "Index", id = 0 }
+            );
+            routes.MapRouteLowercase(
+                "PhotoAlbum",
+                "PhotoAlbum/{id}/{action}",
+                new { controller = "PhotoAlbum", action = "Index", id = 0 }
+            );
+
+            // Back-end routes
+
+            routes.MapRouteLowercase(
                 "AdminHome",
-                "AdminZ",
+                "NSN-Admin",
                 new { controller = "Admin", action = "Index" }
             );
             routes.MapRouteLowercase(
                 "Admin",
-                "AdminZ/{id}/{action}",
+                "NSN-Admin/{id}/{action}",
                 new { controller = "Admin", action = "Index", id = UrlParameter.Optional },
                 new { id = @"^\d+$" }
             );
+
+            // Single Sign-On routes
+
             routes.MapRouteLowercase(
                 "SSO",
                 "Auth/{action}",
                 new { controller = "Auth", action = "Register" }
             );
-            routes.MapRouteLowercase(
-                "PhotoAlbum",
-                "PhotoAlbum/{action}/{id}",
-                new { controller = "PhotoAlbum", action = "Index", id = UrlParameter.Optional }
-            );
-            routes.MapRouteLowercase(
-                "Photo",
-                "Photo/{action}/{id}",
-                new { controller = "Photo", action = "Index", id = UrlParameter.Optional }
-            );
+
+            // Root route
             routes.MapRouteLowercase(
                 "Root",
                 "",
-                new { controller = "User", action = "Stream" }
+                new { controller = "Home", action = "Stream" }
             );
         }
 

@@ -4,12 +4,12 @@
 @section custom_head_css {@RenderSection("custom_head_css", false)}
 <div class="nsnLeftCol_Container">
     <div class="nsnLeftCol">
-        @Html.Partial("pagelet/_categories_pagelet")
+        @RenderPage("~/Views/Shared/Frontend/pagelet/_categories_pagelet.cshtml")
     </div>
 </div>
 <div class="nsnContentCol hasRightCol">
     <div class="nsnRightCol">
-        @Html.Partial("pagelet/_ads_pagelet")
+        @RenderPage("~/Views/Shared/Frontend/pagelet/_ads_pagelet.cshtml")
     </div>
     <div class="nsnContentArea">
         <div id="pagelet_stream" class="nsn-box first">

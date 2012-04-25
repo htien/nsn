@@ -3,9 +3,9 @@
 namespace NewSocialNetwork.Website.Controllers
 {
     [HandleError]
-    public class UserController : AbstractController
+    public class HomeController : AbstractController
     {
-        public UserController()
+        public HomeController()
         {
             ViewBag.PageTitle = "NSN: Stream";
         }

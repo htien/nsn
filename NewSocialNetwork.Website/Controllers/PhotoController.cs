@@ -1,6 +1,5 @@
 ﻿using System.Web.Mvc;
 using NewSocialNetwork.Repositories;
-using System;
 using NewSocialNetwork.Website.Models;
 
 namespace NewSocialNetwork.Website.Controllers
@@ -11,8 +10,9 @@ namespace NewSocialNetwork.Website.Controllers
 
         public PhotoController()
         {
-            ViewBag.Title = "NSN: Photo";
+            ViewBag.PageTitle = "NSN: Photo";
         }
+
         //
         // GET: /Photo/
 
@@ -48,7 +48,7 @@ namespace NewSocialNetwork.Website.Controllers
                     ViewBag.Message = "Insert Failed";
                 }
             }
-            catch (Exception e)
+            catch
             {
                 ViewBag.Message = "Insert Error";
             }
