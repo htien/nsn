@@ -1,16 +1,22 @@
 ﻿@{
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
-@section custom_head_css {@RenderSection("custom_head_css", false)}
+@section html_head_area {@RenderSection("html_head_area", false)}
 <div class="nsnLeftCol_Container">
+    @if (ViewBag.hasLeftCol)
+    {
     <div class="nsnLeftCol">
         @RenderPage("~/Views/Shared/Frontend/pagelet/_categories_pagelet.cshtml")
     </div>
+    }
 </div>
-<div class="nsnContentCol hasRightCol">
+<div class="nsnContentCol@(ViewBag.hasRightCol?" hasRightCol":"")">
+    @if (ViewBag.hasRightCol)
+    {
     <div class="nsnRightCol">
         @RenderPage("~/Views/Shared/Frontend/pagelet/_ads_pagelet.cshtml")
     </div>
+    }
     <div class="nsnContentArea">
         <div id="pagelet_stream" class="nsn-box first">
             <h2 class="title-bar">Hikari Store Best Sellers</h2>
