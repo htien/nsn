@@ -14,7 +14,7 @@
     <script type="text/javascript" src="@Url.Content("~/static/js/goog/base.js")" charset="@ViewBag.Charset"></script>
     <script type="text/javascript" src="@Url.Content("~/static/themes/hikari/nsn.js")" charset="@ViewBag.Charset"></script>
     <script type="text/javascript" src="@Url.Content("~/static/themes/hikari/user.js")" charset="@ViewBag.Charset"></script>
-    @RenderSection("custom_head_css", false)
+    @RenderSection("html_head_area")
 }
 @section body_attrib {class="UIPage UIPage_Hikari"}
 @section html_body_header {
@@ -27,7 +27,7 @@
         @RenderPage("~/Views/Shared/Frontend/pagelet/_copyrights_pagelet.cshtml")
     </div>
 }
-<div id="hikari" class="hasLeftCol">
+<div id="hikari" class="@(ViewBag.hasLeftCol?"hasLeftCol":"")">
     <div id="globalContainer" class="gl">
         <div id="mainContainer" class="nsnContainer">
             @RenderBody()
