@@ -3,11 +3,11 @@
 namespace NewSocialNetwork.Website.Controllers
 {
     [HandleError]
-    public class UserController : AbstractController
+    public class HomeController : AbstractController
     {
-        public UserController()
+        public HomeController()
         {
-            ViewBag.Title = "NSN: Stream";
+            ViewBag.PageTitle = "NSN: Stream";
         }
 
         //
@@ -18,7 +18,5 @@ namespace NewSocialNetwork.Website.Controllers
             ViewBag.kq = Request["name"];
             return View();
         }
-
-        public ActionResult AddNew();
     }
 }

@@ -1,5 +1,10 @@
 ﻿/*
- * FREE FOR ALL BUT DOES NOT MEAN THERE IS NOT PRICE.
+ * @Copyleft () 2012, Free Software, No License
+ * FREE FOR ALL BUT NOT MEAN THERE IS NO PRICE.
+ *
+ * @(#) $Id: UIGlobal.css,v 1.0 2012/04/25 lilylnx,saberlily Exp $
+ *
+ * @theme: Facebook / FB-TPL-010
  */
 
 #UIGlobal_BlueBarHolder, #UIGlobal_BlueBar {
@@ -189,20 +194,20 @@
   -moz-border-radius: 1px;
   border-radius: 1px;
 }
-.uiSearchInput {
+#navSearch .uiSearchInput {
   position: relative;
   display: inline-block;
   padding: 2px 0 3px;
   border-top: 1px solid #e9e9e9;
 }
-.uiSearchInput input {
+#navSearch .uiSearchInput input {
   margin: 0 22px 0 5px;
   padding: 1px 5px 2px 0;
   width: 315px;
   font-family: 'Lucida Grande', Tahoma, sans-serif;
   font-size: 11px;
 }
-.uiSearchInput button {
+#navSearch .uiSearchInput button {
   position: absolute;
   top: 0;
   right: 0;

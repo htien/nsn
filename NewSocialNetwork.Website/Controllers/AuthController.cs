@@ -8,7 +8,7 @@ namespace NewSocialNetwork.Website.Controllers
     {
         public AuthController()
         {
-            ViewBag.Title = "NSN: Sign In";
+            ViewBag.PageTitle = "NSN: Sign In";
         }
 
         //

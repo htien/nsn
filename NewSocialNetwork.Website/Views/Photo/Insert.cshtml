@@ -1,0 +1,10 @@
+﻿@model NewSocialNetwork.Website.Models.InsertPhotoModel
+<h2>Insert a Photo</h2>
+
+<p>@ViewBag.Message</p>
+
+@using (Html.BeginForm("InsertSave", "Photo"))
+{
+    <input type="text" name="test" />
+    <input type="submit" value="Submit" />
+}    
