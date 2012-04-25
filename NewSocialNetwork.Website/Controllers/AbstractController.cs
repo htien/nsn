@@ -9,6 +9,7 @@ namespace NewSocialNetwork.Website.Controllers
         protected internal AbstractController()
         {
             ViewBag.Charset = WebConfigurationManager.AppSettings[CfgKeys.GLOBAL_CHARSET];
+            ViewBag.PageTitle = "NSN: NoTitle";
         }
     }
 }

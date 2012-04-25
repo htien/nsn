@@ -1,0 +1,37 @@
+﻿@{
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+@section html_head_area {
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/static/themes/hikari/user.css")" />
+    <script type="text/javascript">
+        new Image().src = '@Url.Content("~/static/themes/hikari/images/background1.png")';
+        new Image().src = '@Url.Content("~/static/themes/hikari/images/nsn.png")';
+        new Image().src = '@Url.Content("~/static/themes/hikari/images/fb_sprite.png")';
+        new Image().src = '@Url.Content("~/static/themes/hikari/images/uiSearchButton.png")';
+        new Image().src = '@Url.Content("~/static/themes/hikari/images/stripe.gif")';
+    </script>
+    <script type="text/javascript" src="@Url.Content("~/static/js/jquery/jquery-1.7.2.js")" charset="@ViewBag.Charset"></script>
+    <script type="text/javascript" src="@Url.Content("~/static/js/goog/base.js")" charset="@ViewBag.Charset"></script>
+    <script type="text/javascript" src="@Url.Content("~/static/themes/hikari/nsn.js")" charset="@ViewBag.Charset"></script>
+    <script type="text/javascript" src="@Url.Content("~/static/themes/hikari/user.js")" charset="@ViewBag.Charset"></script>
+    @RenderSection("custom_head_css", false)
+}
+@section body_attrib {class="UIPage UIPage_Hikari"}
+@section html_body_header {
+    <div id="globalHeader" class="gl">
+        @RenderPage("~/Views/Shared/pagelet/_bluebar_loggedIn_pagelet.cshtml")
+    </div>
+}
+@section html_body_footer {
+    <div id="globalFooter" class="gl">
+        @RenderPage("~/Views/Shared/pagelet/_copyrights_pagelet.cshtml")
+    </div>
+}
+<div id="hikari" class="hasLeftCol">
+    <div id="globalContainer" class="gl">
+        <div id="mainContainer" class="nsnContainer">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+@RenderPage("~/Views/Shared/pagelet/_hidden_pagelet.cshtml")
