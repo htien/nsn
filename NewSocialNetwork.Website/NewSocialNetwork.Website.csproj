@@ -1092,7 +1092,6 @@
     <Folder Include="static\js\goog\editor\plugins\equation\" />
     <Folder Include="static\js\goog\net\xpc\testdata\" />
     <Folder Include="static\js\goog\throttle\" />
-    <Folder Include="Views\User\GP\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NewSocialNetwork.Entities\NewSocialNetwork.Entities.csproj">
@@ -1114,7 +1113,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\FB\_UserLayout.cshtml" />
+    <Content Include="Views\Shared\_UserLayout.cshtml" />
     <Content Include="Views\User\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -1130,27 +1129,28 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Admin\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\FB\_AdminLayout.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\User\Stream.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\User\FB\pagelet\_toplogin_pagelet.cshtml" />
-    <Content Include="Views\User\FB\pagelet\_login_pagelet.cshtml" />
-    <Content Include="Views\User\FB\_HomePage.cshtml" />
-    <Content Include="Views\User\FB\pagelet\_copyrights_pagelet.cshtml" />
-    <Content Include="Views\User\FB\pagelet\_discovery_pagelet.cshtml" />
-    <Content Include="Views\User\FB\pagelet\_hidden_pagelet.cshtml" />
-    <Content Include="Views\User\FB\pagelet\_categories_pagelet.cshtml" />
-    <Content Include="Views\User\FB\pagelet\_ads_pagelet.cshtml" />
+    <Content Include="Views\Shared\pagelet\_toplogin_pagelet.cshtml" />
+    <Content Include="Views\Shared\pagelet\_login_pagelet.cshtml" />
+    <Content Include="Views\User\_HomePageLayout.cshtml" />
+    <Content Include="Views\Shared\pagelet\_copyrights_pagelet.cshtml" />
+    <Content Include="Views\Shared\pagelet\_discovery_pagelet.cshtml" />
+    <Content Include="Views\Shared\pagelet\_hidden_pagelet.cshtml" />
+    <Content Include="Views\User\pagelet\_categories_pagelet.cshtml" />
+    <Content Include="Views\User\pagelet\_ads_pagelet.cshtml" />
     <Content Include="Views\Auth\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\FB\_SSOLayout.cshtml" />
+    <Content Include="Views\Shared\_SSOLayout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Auth\Register.cshtml" />
-    <Content Include="Views\Auth\FB\pagelet\_bluebar_pagelet.cshtml" />
-    <Content Include="Views\User\FB\pagelet\_bluebar_pagelet.cshtml" />
     <Content Include="Views\PhotoAlbum\Index.cshtml" />
     <Content Include="Views\Photo\Index.cshtml" />
     <Content Include="Views\Photo\Insert.cshtml" />
+    <Content Include="Views\Shared\pagelet\_bluebar_loggedOut_pagelet.cshtml" />
+    <Content Include="Views\Shared\pagelet\_bluebar_loggedIn_pagelet.cshtml" />
+    <Content Include="Views\Shared\_MasterLayout.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

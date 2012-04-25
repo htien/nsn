@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using SaberLily.Web.Filter.Optimizer;
 
 namespace NewSocialNetwork.Website.Controllers
 {
@@ -8,7 +7,7 @@ namespace NewSocialNetwork.Website.Controllers
     {
         public UserController()
         {
-            ViewBag.Title = "NSN: Stream";
+            ViewBag.PageTitle = "NSN: Stream";
         }
 
         //
@@ -19,6 +18,5 @@ namespace NewSocialNetwork.Website.Controllers
             ViewBag.kq = Request["name"];
             return View();
         }
-
     }
 }

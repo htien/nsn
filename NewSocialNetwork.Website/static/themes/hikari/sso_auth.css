@@ -1,5 +1,10 @@
 ﻿/*
- * FREE FOR ALL BUT DOES NOT MEAN THERE IS NO PRICE.
+ * @Copyleft () 2012, Free Software, No License
+ * FREE FOR ALL BUT NOT MEAN THERE IS NO PRICE.
+ *
+ * @(#) $Id: sso_auth.css,v 1.0 2012/04/25 lilylnx,saberlily Exp $
+ *
+ * @theme: Facebook / FB-TPL-010
  */
 
 .UIPage_HikariLogin #globalContainer {
@@ -7,17 +12,14 @@
   margin: 0 auto;
   zoom: 1;
 }
-
 .UIPage_HikariLogin #globalFooter {
   margin-top: 20px;
 }
-
 .UIPage_HikariLogin #pageFooter {
   margin: 0 auto;
   padding-top: 7px;
   width: 964px;
 }
-
 .UIPage_HikariLogin .gradient {
   min-width: 964px;
 }
@@ -73,45 +75,46 @@
   font-size: 15px;
 }
 
-#reg_form_box .label {
+.nsnRegistrationContainer #reg_form_box .label {
   padding-right: 3px;
   width: 105px;
   text-align: right;
 }
-#reg_form_box .label label {
+.nsnRegistrationContainer #reg_form_box .label label {
   font-weight: normal;
   color: #333;
   vertical-align: middle;
 }
-#reg_form_box input, #reg_form_box select {
+.nsnRegistrationContainer #reg_form_box input,
+.nsnRegistrationContainer #reg_form_box select {
   margin-top: 4px;
 }
-#reg_form_box .w100 .field_container {
+.nsnRegistrationContainer #reg_form_box .w100 .field_container {
   width: 100%;
 }
-#reg_form_box .uiFormText {
+.nsnRegistrationContainer #reg_form_box .uiFormText {
   padding: 6px;
   width: 100%;
   font-size: 16px;
 }
-#reg_form_box .uiFormText:focus {
+.nsnRegistrationContainer #reg_form_box .uiFormText:focus {
   background-color: #fdfdfd;
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.1);
+  -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.1);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.1);
 }
-#reg_form_box .uiFormSelect {
+.nsnRegistrationContainer #reg_form_box .uiFormSelect {
   padding: 5px;
 }
-
-.nsnRegistrationPPT .text {
+.nsnRegistrationContainer #reg_form_box .nsnRegistrationPPT .text {
   margin: 1em 0;
   font-size: 11px;
 }
-
-.nsnRegButton {
+.nsnRegistrationContainer #reg_form_box .nsnRegButton {
   padding-top: 7px;
   padding-bottom: 7px;
 }
-.nsnRegButton .guiRedButton {
+.nsnRegistrationContainer #reg_form_box .nsnRegButton .guiRedButton {
   padding: 1px 25px 2px;
   font-size: 14px;
   font-weight: normal;
