@@ -3,7 +3,7 @@ using NewSocialNetwork.Website.Modules.SSO;
 
 namespace NewSocialNetwork.Website.Services
 {
-    public class LoginService
+    public class LoginService : IBusinessService
     {
         private ILoginAuthenticator loginValidator;
 

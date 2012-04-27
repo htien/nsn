@@ -11,7 +11,7 @@ namespace NewSocialNetwork.Website.Installers
 
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(Component.For(typeof(LoginService)));
+            container.Register(AllTypes.FromThisAssembly().BasedOn<IBusinessService>().LifestyleSingleton());
         }
 
         #endregion

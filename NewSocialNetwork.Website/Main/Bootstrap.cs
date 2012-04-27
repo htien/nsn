@@ -140,6 +140,35 @@ namespace NewSocialNetwork.Website.Main
 
             routes.Clear();
 
+            // Root route
+            //routes.MapRouteLowercase(
+            //    "Root",
+            //    "",
+            //    new { controller = "Home", action = "Stream" }
+            //);
+
+            // Single Sign-On routes
+
+            routes.MapRouteLowercase(
+                "SSO",
+                "Auth/{action}",
+                new { controller = "Auth", action = "Register" }
+            );
+
+            // Back-end routes
+
+            routes.MapRouteLowercase(
+                "AdminHome",
+                "NSN-Admin",
+                new { controller = "Admin", action = "Index" }
+            );
+            routes.MapRouteLowercase(
+                "Admin",
+                "NSN-Admin/{action}/{id}",
+                new { controller = "Admin", action = "Index", id = UrlParameter.Optional },
+                new { id = @"^\d+$" }
+            );
+
             // Front-end routes
 
             routes.MapRouteLowercase(
@@ -163,35 +192,6 @@ namespace NewSocialNetwork.Website.Main
                 "Photo/{photoid}/{action}",
                 new { controller = "Photo", action = "Index" },
                 new { photoid = @"^\d+$" }
-            );
-
-            // Back-end routes
-
-            routes.MapRouteLowercase(
-                "AdminHome",
-                "NSN-Admin",
-                new { controller = "Admin", action = "Index" }
-            );
-            routes.MapRouteLowercase(
-                "Admin",
-                "NSN-Admin/{action}/{id}",
-                new { controller = "Admin", action = "Index", id = UrlParameter.Optional },
-                new { id = @"^\d+$" }
-            );
-
-            // Single Sign-On routes
-
-            routes.MapRouteLowercase(
-                "SSO",
-                "Auth/{action}",
-                new { controller = "Auth", action = "Register" }
-            );
-
-            // Root route
-            routes.MapRouteLowercase(
-                "Root",
-                "",
-                new { controller = "Home", action = "Stream" }
             );
         }
 
