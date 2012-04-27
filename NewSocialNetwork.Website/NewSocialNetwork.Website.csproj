@@ -1077,6 +1077,7 @@
     <Compile Include="Modules\SSO\ILoginAuthenticator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schedules\Scheduler.cs" />
+    <Compile Include="Services\IBusinessService.cs" />
     <Compile Include="Services\LoginService.cs" />
   </ItemGroup>
   <ItemGroup>

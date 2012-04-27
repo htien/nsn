@@ -140,29 +140,19 @@ namespace NewSocialNetwork.Website.Main
 
             routes.Clear();
 
-            // Front-end routes
+            // Root route
+            //routes.MapRouteLowercase(
+            //    "Root",
+            //    "",
+            //    new { controller = "Home", action = "Stream" }
+            //);
+
+            // Single Sign-On routes
 
             routes.MapRouteLowercase(
-                "HomeStream",
-                "{id}/{action}",
-                new { controller = "User", action = "Stream" },
-                new { id = @"^\d+$" }
-            );
-            routes.MapRouteLowercase(
-                "Home",
-                "Home/{id}/{action}",
-                new { controller = "User", action = "Stream" },
-                new { id = @"^\d+$" }
-            );
-            routes.MapRouteLowercase(
-                "Photo",
-                "Photo/{id}/{action}/",
-                new { controller = "Photo", action = "Index", id = 0 }
-            );
-            routes.MapRouteLowercase(
-                "PhotoAlbum",
-                "PhotoAlbum/{id}/{action}",
-                new { controller = "PhotoAlbum", action = "Index", id = 0 }
+                "SSO",
+                "Auth/{action}",
+                new { controller = "Auth", action = "Register" }
             );
 
             // Back-end routes
@@ -174,24 +164,34 @@ namespace NewSocialNetwork.Website.Main
             );
             routes.MapRouteLowercase(
                 "Admin",
-                "NSN-Admin/{id}/{action}",
+                "NSN-Admin/{action}/{id}",
                 new { controller = "Admin", action = "Index", id = UrlParameter.Optional },
                 new { id = @"^\d+$" }
             );
 
-            // Single Sign-On routes
+            // Front-end routes
 
             routes.MapRouteLowercase(
-                "SSO",
-                "Auth/{action}",
-                new { controller = "Auth", action = "Register" }
-            );
-
-            // Root route
-            routes.MapRouteLowercase(
-                "Root",
-                "",
+                "HomeFeed",
+                "{userid}",
                 new { controller = "Home", action = "Stream" }
+            );
+            routes.MapRouteLowercase(
+                "HomeAction",
+                "{userid}/Home/{action}",
+                new { controller = "Home", action = "Stream" }
+            );
+            routes.MapRouteLowercase(
+                "PhotoAlbumAction",
+                "{userid}/Photos/{albumid}/{action}",
+                new { controller = "PhotoAlbum", action = "Index" },
+                new { albumid = @"^\d+$" }
+            );
+            routes.MapRouteLowercase(
+                "PhotoAction",
+                "Photo/{photoid}/{action}",
+                new { controller = "Photo", action = "Index" },
+                new { photoid = @"^\d+$" }
             );
         }
 
