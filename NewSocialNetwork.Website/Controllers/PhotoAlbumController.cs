@@ -18,7 +18,6 @@ namespace NewSocialNetwork.Website.Controllers
         public ActionResult Index()
         {
             return View();
-        }
-
+        }       
     }
 }
