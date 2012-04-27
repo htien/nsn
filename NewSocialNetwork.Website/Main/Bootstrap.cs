@@ -143,24 +143,26 @@ namespace NewSocialNetwork.Website.Main
             // Front-end routes
 
             routes.MapRouteLowercase(
-                "HomeStream",
-                "{id}",
+                "HomeFeed",
+                "{userid}",
                 new { controller = "Home", action = "Stream" }
             );
             routes.MapRouteLowercase(
-                "Home",
-                "{id}/Home/{action}",
+                "HomeAction",
+                "{userid}/Home/{action}",
                 new { controller = "Home", action = "Stream" }
             );
             routes.MapRouteLowercase(
-                "Photo",
-                "Photo/{action}",
-                new { controller = "Photo", action = "Index" }
+                "PhotoAlbumAction",
+                "{userid}/Photos/{albumid}/{action}",
+                new { controller = "PhotoAlbum", action = "Index" },
+                new { albumid = @"^\d+$" }
             );
             routes.MapRouteLowercase(
-                "PhotoAlbum",
-                "{id}/Photos/{action}",
-                new { controller = "PhotoAlbum", action = "Index" }
+                "PhotoAction",
+                "Photo/{photoid}/{action}",
+                new { controller = "Photo", action = "Index" },
+                new { photoid = @"^\d+$" }
             );
 
             // Back-end routes
