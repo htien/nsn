@@ -146,11 +146,11 @@ Nếu ở remotehost, đường dẫn sẽ là `http://yourdomain`.
 
 Sau đây là các đường dẫn đến các trang:
 
-    Login & Register: `/auth`
-    Home Stream: `/{userid}`, `/{userid}/home`
-    Photo: `/photo/{photoid}`
-    PhotoAlbum: `/{userid}/photos`
-    ...
+    /auth               ...Login & Register
+    /{userid}         
+    /{userid}/home      ...Home Feed
+    /photo/{photoid}    ...Show a photo
+    /{userid}/photos    ...List of Photo Albums
 
 Đang cập nhật...
 
