@@ -144,25 +144,23 @@ namespace NewSocialNetwork.Website.Main
 
             routes.MapRouteLowercase(
                 "HomeStream",
-                "{id}/{action}",
-                new { controller = "User", action = "Stream" },
-                new { id = @"^\d+$" }
+                "{id}",
+                new { controller = "Home", action = "Stream" }
             );
             routes.MapRouteLowercase(
                 "Home",
-                "Home/{id}/{action}",
-                new { controller = "User", action = "Stream" },
-                new { id = @"^\d+$" }
+                "{id}/Home/{action}",
+                new { controller = "Home", action = "Stream" }
             );
             routes.MapRouteLowercase(
                 "Photo",
-                "Photo/{id}/{action}/",
-                new { controller = "Photo", action = "Index", id = 0 }
+                "Photo/{action}",
+                new { controller = "Photo", action = "Index" }
             );
             routes.MapRouteLowercase(
                 "PhotoAlbum",
-                "PhotoAlbum/{id}/{action}",
-                new { controller = "PhotoAlbum", action = "Index", id = 0 }
+                "{id}/Photos/{action}",
+                new { controller = "PhotoAlbum", action = "Index" }
             );
 
             // Back-end routes
@@ -174,7 +172,7 @@ namespace NewSocialNetwork.Website.Main
             );
             routes.MapRouteLowercase(
                 "Admin",
-                "NSN-Admin/{id}/{action}",
+                "NSN-Admin/{action}/{id}",
                 new { controller = "Admin", action = "Index", id = UrlParameter.Optional },
                 new { id = @"^\d+$" }
             );
