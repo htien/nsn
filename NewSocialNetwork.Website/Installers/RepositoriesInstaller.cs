@@ -36,6 +36,7 @@ namespace NewSocialNetwork.Website.Installers
                 .Register(Component.For<IPhotoAlbumRepository>().ImplementedBy<PhotoAlbumDAO>())
                 .Register(Component.For<IPhotoInfoRepository>().ImplementedBy<PhotoInfoDAO>())
                 .Register(Component.For<IPhotoRepository>().ImplementedBy<PhotoDAO>())
+                .Register(Component.For<ISessionRepository>().ImplementedBy<SessionDAO>())
                 .Register(Component.For<IUserCountRepository>().ImplementedBy<UserCountDAO>())
                 .Register(Component.For<IUserGroupRepository>().ImplementedBy<UserGroupDAO>())
                 .Register(Component.For<IUserRepository>().ImplementedBy<UserDAO>())

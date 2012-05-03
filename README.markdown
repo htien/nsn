@@ -135,6 +135,24 @@ Yêu cầu hiệu chỉnh lại tính năng `Format Document` trong Visual Studi
         }
     }
 
+
+MÔ TẢ PROJECT
+-------------
+
+### URL ROUTES
+
+Nếu ở localhost, đường dẫn mặc định là `http://localhost:55555`.
+Nếu ở remotehost, đường dẫn sẽ là `http://yourdomain`.
+
+Sau đây là các đường dẫn đến các trang:
+
+    /auth               ...Login & Register
+    /{userid}         
+    /{userid}/home      ...Home Feed
+    /photo/{photoid}    ...Show a photo
+    /{userid}/photos    ...List of Photo Albums
+
+
 Đang cập nhật...
 
 

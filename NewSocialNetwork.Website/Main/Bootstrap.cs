@@ -9,6 +9,7 @@ using System.Web.Routing;
 using Castle.ActiveRecord;
 using Castle.ActiveRecord.Framework.Config;
 using Castle.Windsor;
+using NewSocialNetwork.Website.Core;
 using NewSocialNetwork.Website.Installers;
 using SaberLily.Web.Extensions.LowercaseRouteMVC;
 using SaberLily.Web.Factory;
@@ -49,7 +50,7 @@ namespace NewSocialNetwork.Website.Main
 
             InitContainer();
             InitControllerFactory();
-            InitActiveRecord();
+            //InitActiveRecord();
 
             isInitialized = true;
         }
@@ -67,10 +68,10 @@ namespace NewSocialNetwork.Website.Main
             container = new WindsorContainer(CfgKeys.CONFIG_FOLDER_PATH + "CastleWindsor.xml")
                 .Install(new StandardInstaller(),
                          new LoggerInstaller(),
-                         new ControllersInstaller(),
                          new RepositoriesInstaller(),
                          new ModulesInstaller(),
-                         new ServicesInstaller());
+                         new ServicesInstaller(),
+                         new ControllersInstaller());
         }
 
         private void InitControllerFactory()
@@ -81,7 +82,7 @@ namespace NewSocialNetwork.Website.Main
 
         private void InitActiveRecord()
         {
-            NameValueCollection appSettings = WebConfigurationManager.AppSettings;
+            NSNConfig config = container.Resolve<NSNConfig>();
             ConnectionStringSettingsCollection cfgSettings = WebConfigurationManager.ConnectionStrings;
             NameValueCollection db = WebConfigurationManager.GetSection("databaseSettings", "/" + CfgKeys.CONFIG_FOLDER_PATH) as NameValueCollection;
             NameValueCollection ar = WebConfigurationManager.GetSection("activeRecordSettings", "/" + CfgKeys.CONFIG_FOLDER_PATH) as NameValueCollection;
@@ -100,7 +101,7 @@ namespace NewSocialNetwork.Website.Main
             if (!hasConnectionStringName && !hasConnectionString ||
                 hasConnectionStringName && settings[connStrNameKey].Equals("tien.somee.com"))
             {
-                bool isRemote = Convert.ToBoolean(appSettings[CfgKeys.ISREMOTE]);
+                bool isRemote = Convert.ToBoolean(config[CfgKeys.ISREMOTE]);
                 string @connectionString = (isRemote
                             ? cfgSettings[CfgKeys.CONNECTION_REMOTE_NAME]
                             : cfgSettings[CfgKeys.CONNECTION_LOCAL_NAME]
@@ -121,8 +122,8 @@ namespace NewSocialNetwork.Website.Main
 
             InPlaceConfigurationSource configSource = new InPlaceConfigurationSource();
             configSource.Add(typeof(ActiveRecordBase), settings);
-            configSource.IsRunningInWebApp = Convert.ToBoolean(appSettings[CfgKeys.GLOBAL_ACTIVERECORD_ISWEBAPP]);
-            configSource.SetDebugFlag(Convert.ToBoolean(appSettings[CfgKeys.GLOBAL_ACTIVERECORD_DEBUG]));
+            configSource.IsRunningInWebApp = Convert.ToBoolean(config[CfgKeys.GLOBAL_ACTIVERECORD_ISWEBAPP]);
+            configSource.SetDebugFlag(Convert.ToBoolean(config[CfgKeys.GLOBAL_ACTIVERECORD_DEBUG]));
 
             Assembly asmEntities = Assembly.Load(CfgKeys.ASSEMBLY_NSN_ENTITIES);
             ActiveRecordStarter.Initialize(asmEntities, configSource);
@@ -141,11 +142,11 @@ namespace NewSocialNetwork.Website.Main
             routes.Clear();
 
             // Root route
-            //routes.MapRouteLowercase(
-            //    "Root",
-            //    "",
-            //    new { controller = "Home", action = "Stream" }
-            //);
+            routes.MapRouteLowercase(
+                "Root",
+                "",
+                new { controller = "Home", action = "Stream", userid = (string)null }
+            );
 
             // Single Sign-On routes
 
@@ -172,14 +173,19 @@ namespace NewSocialNetwork.Website.Main
             // Front-end routes
 
             routes.MapRouteLowercase(
-                "HomeFeed",
-                "{userid}",
-                new { controller = "Home", action = "Stream" }
+                "ProfileAction",
+                "{userid}/{action}",
+                new { controller = "Profile", action = "Posts" }
             );
             routes.MapRouteLowercase(
-                "HomeAction",
-                "{userid}/Home/{action}",
-                new { controller = "Home", action = "Stream" }
+                "LinkAction",
+                "Links/{action}",
+                new { controller = "Link", action = "List" }
+            );
+            routes.MapRouteLowercase(
+                "MessageAction",
+                "Messages/{action}",
+                new { controller = "Message", action = "List" }
             );
             routes.MapRouteLowercase(
                 "PhotoAlbumAction",
