@@ -79,6 +79,7 @@
     <Compile Include="PhotoAlbumInfo.cs" />
     <Compile Include="PhotoInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Session.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserCount.cs" />
     <Compile Include="UserGroup.cs" />

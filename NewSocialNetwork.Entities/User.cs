@@ -158,6 +158,12 @@ namespace NewSocialNetwork.Entities
         public virtual IList<PhotoAlbum> PhotoAlbums { get; set; }
 
         /// <summary>
+        /// Danh sách các Session.
+        /// </summary>
+        [HasMany(typeof(Session), ColumnKey = "UserId", Lazy = true)]
+        public virtual IList<Session> Sessions { get; set; }
+
+        /// <summary>
         /// Danh sách các tweet của người dùng đã post.
         /// </summary>
         [HasMany(typeof(UserTweet), ColumnKey = "UserId", Lazy = true)]
