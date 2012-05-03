@@ -1,5 +1,4 @@
 ﻿using System.Web;
-using System.Web.Configuration;
 
 namespace NewSocialNetwork.Website.Main
 {
@@ -28,6 +27,9 @@ namespace NewSocialNetwork.Website.Main
         public static string DB_NAME = "db.name";
         public static string DB_USER = "db.user";
         public static string DB_PASSWORD = "db.passwd";
+
+        public static string SSO_LOGGED = "sso.logged";
+        public static string ANONYMOUS_USER_ID = "anonymous.user.id";
 
         public static string ASSEMBLY_NSN_ENTITIES = "Lien.NewSocialNetwork.Entities";
     }

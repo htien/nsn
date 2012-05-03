@@ -86,6 +86,7 @@
     <Compile Include="DataAccess\PhotoAlbumInfoDAO.cs" />
     <Compile Include="DataAccess\PhotoDAO.cs" />
     <Compile Include="DataAccess\PhotoInfoDAO.cs" />
+    <Compile Include="DataAccess\SessionDAO.cs" />
     <Compile Include="DataAccess\UserCountDAO.cs" />
     <Compile Include="DataAccess\UserDAO.cs" />
     <Compile Include="DataAccess\UserGroupDAO.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Repositories\IPhotoAlbumRepository.cs" />
     <Compile Include="Repositories\IPhotoInfoRepository.cs" />
     <Compile Include="Repositories\IPhotoRepository.cs" />
+    <Compile Include="Repositories\ISessionRepository.cs" />
     <Compile Include="Repositories\IUserCountRepository.cs" />
     <Compile Include="Repositories\IUserGroupRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
