@@ -2,22 +2,23 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Castle.MicroKernel;
+using Castle.Windsor;
 
 namespace SaberLily.Web.Factory
 {
     public class WindsorControllerFactory : DefaultControllerFactory
     {
-        private readonly IKernel kernel;
+        private readonly IWindsorContainer container;
 
-        public WindsorControllerFactory(IKernel kernel)
+        public WindsorControllerFactory(IWindsorContainer container)
         {
-            this.kernel = kernel;
+            this.container = container;
         }
 
         public override void ReleaseController(IController controller)
         {
-            kernel.ReleaseComponent(controller);
+            container.Release(controller);
+            ReleaseController(controller);
         }
 
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
@@ -26,7 +27,9 @@ namespace SaberLily.Web.Factory
             {
                 throw new HttpException(404, string.Format("The controller for path '{0}' could not be found.", requestContext.HttpContext.Request.Path));
             }
-            return (IController)kernel.Resolve(controllerType);
+            return (IController)container.Resolve(controllerType);
         }
+
+        
     }
 }
