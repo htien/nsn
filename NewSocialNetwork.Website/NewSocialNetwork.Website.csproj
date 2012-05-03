@@ -1082,6 +1082,7 @@
     <Compile Include="Models\PhotoModel.cs" />
     <Compile Include="Modules\SSO\DefaultLoginAuthenticator.cs" />
     <Compile Include="Modules\SSO\ILoginAuthenticator.cs" />
+    <Compile Include="Modules\SSO\RemoteUserSSO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schedules\Scheduler.cs" />
     <Compile Include="Services\IBusinessService.cs" />
@@ -1129,6 +1130,7 @@
     <Content Include="Config\Log4Net.xml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Config\Custom.properties" />
     <None Include="Config\SystemGlobals.properties" />
     <None Include="Config\Web.config" />
     <None Include="Config\Web.config.new" />

@@ -14,13 +14,13 @@ namespace NewSocialNetwork.Entities
         public virtual string Ip { get; set; }
 
         [Property("Start", NotNull = false)]
-        public virtual int Start { get; set; }
+        public virtual int? Start { get; set; }
 
         [Property("LastAccess", NotNull = false)]
-        public virtual int LastAccess { get; set; }
+        public virtual int? LastAccess { get; set; }
 
         [Property("LastVisit", NotNull = false)]
-        public virtual int LastVisit { get; set; }
+        public virtual int? LastVisit { get; set; }
 
         #endregion
 

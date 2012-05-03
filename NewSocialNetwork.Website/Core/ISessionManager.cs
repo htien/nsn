@@ -1,4 +1,4 @@
-﻿using System.Web;
+﻿using System.Web.SessionState;
 using NewSocialNetwork.Entities;
 
 namespace NewSocialNetwork.Website.Core
@@ -8,10 +8,13 @@ namespace NewSocialNetwork.Website.Core
         void Add(UserSession userSession);
         void Remove(string sessionId);
         void StoreSession(string sessionId);
-        UserSession RefreshSession(HttpRequest request, HttpResponse response);
+        UserSession RefreshSession(HttpSessionState session);
+        UserSession GetUserSession();
         UserSession GetUserSession(string sessionId);
-        UserSession IsUserSession(int userId);
+        UserSession GetExistingUserSession(int userId);
         User GetUser();
         int TotalUsers();
+        int TotalLoggedUsers();
+        int TotalAnonymousUsers();
     }
 }
