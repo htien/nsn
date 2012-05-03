@@ -1,9 +1,7 @@
-﻿using System;
-using System.Web;
-using System.Web.Mvc;
-using NewSocialNetwork.Entities;
+﻿using System.Web.Mvc;
 using NewSocialNetwork.Repositories;
-using NHibernate.Criterion;
+using NewSocialNetwork.Website.Core;
+using NewSocialNetwork.Website.Main;
 
 namespace NewSocialNetwork.Website.Controllers
 {
@@ -11,6 +9,7 @@ namespace NewSocialNetwork.Website.Controllers
     public class HomeController : AbstractController
     {
         public IUserRepository userRepo { private get; set; }
+        public NSNConfig config { private get; set; }
 
         public HomeController()
         {
@@ -20,19 +19,14 @@ namespace NewSocialNetwork.Website.Controllers
         //
         // GET: /Home/
 
-        [HttpGet]
         public ActionResult Stream(string userid)
         {
-            if (userid == null || userid.Length == 0)
-                userid = ""; // Lấy userid của người đã đăng nhập!!!
+            ViewBag.Author = config[CfgKeys.ANONYMOUS_USER_ID];
+            return View();
+        }
 
-            DetachedCriteria criteria = DetachedCriteria.For<User>()
-                .Add(Restrictions.Eq(true ? "UserId" : "Username", Convert.ToInt32(userid)));
-            if (!userRepo.Exists(criteria))
-            {
-                throw new HttpException(404, "Not found");
-            }
-
+        public ActionResult FindFriends()
+        {
             return View();
         }
     }

@@ -1054,10 +1054,18 @@
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\LinkController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\PhotoAlbumController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RedirectorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Core\ISessionManager.cs" />
+    <Compile Include="Core\NSNConfig.cs" />
+    <Compile Include="Core\SessionManager.cs" />
+    <Compile Include="Core\UserSession.cs" />
+    <Compile Include="Exceptions\NSNException.cs" />
     <Compile Include="Installers\ModulesInstaller.cs" />
     <Compile Include="Installers\ServicesInstaller.cs" />
     <Compile Include="Installers\StandardInstaller.cs" />
@@ -1121,6 +1129,7 @@
     <Content Include="Config\Log4Net.xml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Config\SystemGlobals.properties" />
     <None Include="Config\Web.config" />
     <None Include="Config\Web.config.new" />
     <None Include="packages.config" />
@@ -1154,6 +1163,13 @@
     <Content Include="Views\Shared\_MasterLayout.cshtml" />
     <Content Include="Views\Photo\_ViewStart.cshtml" />
     <Content Include="Views\PhotoAlbum\_ViewStart.cshtml" />
+    <Content Include="Views\Profile\_ViewStart.cshtml" />
+    <Content Include="Views\Profile\Posts.cshtml" />
+    <Content Include="Views\Profile\Info.cshtml" />
+    <Content Include="Views\Profile\Friends.cshtml" />
+    <Content Include="Views\Profile\Links.cshtml" />
+    <Content Include="Views\Link\_ViewStart.cshtml" />
+    <Content Include="Views\Message\_ViewStart.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

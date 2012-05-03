@@ -36,7 +36,13 @@ namespace SaberLily.Utils
         public string GetString(string key)
         {
             object val = Get(key);
-            return Get(key) != null ? val.ToString() : null;
+            return val != null ? val.ToString() : null;
+        }
+
+        public int GetInt(string key)
+        {
+            object val = Get(key);
+            return val != null ? Convert.ToInt32(val) : 0;
         }
 
         public void Add(string key, object value)
