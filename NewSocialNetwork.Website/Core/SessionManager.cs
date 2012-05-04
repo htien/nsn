@@ -1,15 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.SessionState;
+using log4net;
 using NewSocialNetwork.Entities;
 using NewSocialNetwork.Repositories;
 using NewSocialNetwork.Website.Exceptions;
 using NewSocialNetwork.Website.Main;
+using SaberLily.Utils;
 
 namespace NewSocialNetwork.Website.Core
 {
     public class SessionManager : ISessionManager
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(SessionManager));
         private IDictionary<string, UserSession> _LoggedSessions = new Dictionary<string, UserSession>();
         private IDictionary<string, UserSession> _AnonymousSessions = new Dictionary<string, UserSession>();
         private readonly object _AddSyncLock = new object();
@@ -101,7 +105,79 @@ namespace NewSocialNetwork.Website.Core
         public UserSession RefreshSession(HttpSessionState session)
         {
             bool isSSOAuthentication = CfgKeys.TYPE_SSO.Equals(this.config[CfgKeys.AUTHENTICATION_TYPE]);
-            return null;
+            session[CfgKeys.TYPE_SSO] = isSSOAuthentication;
+            session[CfgKeys.SSO_LOGOUT_URL] = config[CfgKeys.SSO_LOGOUT_URL];
+
+            UserSession userSession = this.GetUserSession(session.SessionID);
+            int anonymousUserId = this.config.GetInt(CfgKeys.ANONYMOUS_USER_ID);
+
+            if (userSession == null)
+            {
+                userSession = new UserSession()
+                {
+                    SessionId = session.SessionID,
+                    CreationTime = DateTimeUtils.CurrentTimeMillis
+                };
+                if (true)
+                {
+                    if (isSSOAuthentication)
+                    {
+                        //CheckSSO
+                    }
+                    else
+                    {
+                        bool autoLoginEnabled = this.config.GetBoolean(CfgKeys.AUTO_LOGIN_ENABLED);
+                        bool autoLoginSuccess = autoLoginEnabled && this.CheckAutoLogin(userSession);
+                        if (!autoLoginSuccess)
+                        {
+                            userSession.BecomesAnonymous(anonymousUserId);
+                            userSession.User = this.userRepo.FindById(anonymousUserId);
+                        }
+                    }
+                }
+                this.Add(userSession);
+                if (log.IsInfoEnabled)
+                {
+                    log.Info("Registered user userSession: " + session.SessionID);
+                }
+            }
+            else if (isSSOAuthentication)
+            {
+                // TODO
+            }
+            else
+            {
+                // FIXME: Force a reload of the user instance, because if it's kept in the usersession,
+                // changes made to the group (like permissions) won't be seen.
+                userSession.User = this.userRepo.FindById(userSession.User.UserId);
+            }
+
+            userSession.ping();
+
+            if (userSession.User == null || userSession.User.UserId == 0)
+            {
+                if (log.IsWarnEnabled)
+                {
+                    log.Warn("After userSession.Ping() -> userSession.GetUser returned null or user.UserId is zero. " +
+                             "User is null? " + (userSession.User == null) + ". user.UserId is: " +
+                             (userSession.User == null ? "GetUser() returned null" : userSession.User.UserId.ToString()) +
+                             ". As we have a problem, will force the user to become anonymous. Session ID: " +
+                             session.SessionID.ToString());
+                }
+                userSession.BecomesAnonymous(anonymousUserId);
+
+                User anonymousUser = this.userRepo.FindById(userSession.User.UserId);
+                if (anonymousUser == null)
+                {
+                    if (log.IsWarnEnabled)
+                        log.Warn("Could not find the anonymous user in the database. Tried using id " + anonymousUserId);
+                }
+                else
+                    userSession.User = anonymousUser;
+            }
+
+            // TODO: SetRoleManager()
+            return userSession;
         }
 
         public UserSession GetUserSession()
@@ -143,6 +219,23 @@ namespace NewSocialNetwork.Website.Core
         public int TotalAnonymousUsers()
         {
             return _AnonymousSessions.Count;
+        }
+
+        /// <summary>
+        /// Checks for user authentication using some SSO implementation.
+        /// </summary>
+        /// <param name="userSession"></param>
+        /// <param name="session"></param>
+        private void CheckSSO(UserSession userSession, HttpSessionState session)
+        {
+            try
+            {
+                // TODO
+            }
+            catch (Exception e)
+            {
+                throw new NSNException("Error while executing SSO actions: " + e.Message, e);
+            }
         }
 
         /// <summary>

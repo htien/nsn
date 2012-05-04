@@ -6,7 +6,7 @@ namespace NewSocialNetwork.Website.Main
     {
         public static string CONFIG_FOLDER_NAME = "Config";
         public static string CONFIG_FOLDER_PATH = CONFIG_FOLDER_NAME + "/";
-        public static string PHYSICAL_CONFIG_PATH = HttpContext.Current.Server.MapPath(CONFIG_FOLDER_PATH);
+        public static string CONFIG_PHYSICAL_PATH = HttpContext.Current.Server.MapPath(CONFIG_FOLDER_PATH);
 
         public static string ASSEMBLY_NSN_ENTITIES = "Lien.NewSocialNetwork.Entities";
 
@@ -54,7 +54,9 @@ namespace NewSocialNetwork.Website.Main
         public static string AUTHENTICATION_TYPE = "authentication.type";
         public static string LOGIN_AUTHENTICATOR = "login.authenticator";
         public static string SSO_IMPLEMENTATION = "sso.implementation";
-        
+        public static string SSO_LOGOUT_URL = "sso.logOutUrl";
+
         public static string ANONYMOUS_USER_ID = "anonymous.userId";
+        public static string AUTO_LOGIN_ENABLED = "auto.login.enabled";
     }
 }
