@@ -1,4 +1,5 @@
 ﻿using Castle.ActiveRecord;
+using System.Web.Script.Serialization;
 
 namespace NewSocialNetwork.Entities
 {

@@ -7,7 +7,7 @@ namespace NewSocialNetwork.Entities
     {
         #region Properties
 
-        [PrimaryKey(PrimaryKeyType.Foreign, "UserId")]
+        [PrimaryKey(PrimaryKeyType.Native, "UserId")]
         public virtual int UserId { get; set; }
 
         [Property("Ip", NotNull = false)]

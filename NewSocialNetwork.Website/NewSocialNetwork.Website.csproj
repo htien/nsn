@@ -94,6 +94,9 @@
       <HintPath>..\packages\Meleze.Web.1.4.1\lib\NET40\Meleze.Web.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.4\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\packages\NHibernate.3.3.0-CR1\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
@@ -1054,6 +1057,8 @@
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\Helper\ResponseMessage.cs" />
+    <Compile Include="Controllers\Helper\RStatus.cs" />
     <Compile Include="Controllers\LinkController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\PhotoAlbumController.cs" />
@@ -1061,32 +1066,13 @@
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RedirectorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Core\ISessionManager.cs" />
-    <Compile Include="Core\NSNConfig.cs" />
-    <Compile Include="Core\SessionManager.cs" />
-    <Compile Include="Core\UserSession.cs" />
-    <Compile Include="Exceptions\NSNException.cs" />
-    <Compile Include="Installers\ModulesInstaller.cs" />
-    <Compile Include="Installers\ServicesInstaller.cs" />
-    <Compile Include="Installers\StandardInstaller.cs" />
-    <Compile Include="Installers\RepositoriesInstaller.cs" />
-    <Compile Include="Main\Bootstrap.cs" />
-    <Compile Include="Installers\ControllersInstaller.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Installers\LoggerInstaller.cs" />
-    <Compile Include="Main\CfgKeys.cs" />
-    <Compile Include="Main\NewSocialNetwork.cs" />
     <Compile Include="Models\CountryModel.cs" />
     <Compile Include="Models\PhotoModel.cs" />
-    <Compile Include="Modules\SSO\DefaultLoginAuthenticator.cs" />
-    <Compile Include="Modules\SSO\ILoginAuthenticator.cs" />
-    <Compile Include="Modules\SSO\RemoteUserSSO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schedules\Scheduler.cs" />
-    <Compile Include="Services\IBusinessService.cs" />
-    <Compile Include="Services\LoginService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="static\js\goog\demos\editor\css\" />
@@ -1112,9 +1098,9 @@
       <Project>{C1EE8E9B-8ED6-4094-B36A-4FDD3149BF25}</Project>
       <Name>NewSocialNetwork.Repositories</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SaberLily.Web\SaberLily.Web.csproj">
-      <Project>{230257C6-2D1C-4AFD-B04B-BE7A7E77C520}</Project>
-      <Name>SaberLily.Web</Name>
+    <ProjectReference Include="..\NSN.Kernel\NSN.Kernel.csproj">
+      <Project>{C8DFDE88-5823-48A1-9589-3F48C72F8D1A}</Project>
+      <Name>NSN.Kernel</Name>
     </ProjectReference>
     <ProjectReference Include="..\SaberLily\SaberLily.csproj">
       <Project>{D14D16FE-81B2-499F-A3E7-D8AEDA6E5150}</Project>

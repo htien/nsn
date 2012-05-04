@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System.Web.Script.Serialization;
 using Castle.ActiveRecord;
 
 namespace NewSocialNetwork.Entities
@@ -22,9 +22,11 @@ namespace NewSocialNetwork.Entities
 
         #region Relationship
 
+        [ScriptIgnore]
         [HasMany(typeof(CountryChild), ColumnKey = "CountryIso", Lazy = true)]
         public virtual IList<CountryChild> CountryChilds { get; set; }
 
+        [ScriptIgnore]
         [HasMany(typeof(User), ColumnKey = "CountryIso", Lazy = true)]
         public virtual IList<User> Users { get; set; }
 

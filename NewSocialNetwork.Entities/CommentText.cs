@@ -2,7 +2,7 @@
 
 namespace NewSocialNetwork.Entities
 {
-    [ActiveRecord("[NSN.CommentText]", "dbo")]
+    [ActiveRecord("[NSN.CommentText]", "dbo", Lazy = true)]
     public class CommentText : ActiveRecordValidationBase<CommentText>, INSNEntity
     {
         #region Properties

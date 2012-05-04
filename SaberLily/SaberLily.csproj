@@ -31,11 +31,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.4\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Web\Extension\LowercaseRouteMVC\LowercaseRoute.cs" />
+    <Compile Include="Web\Extension\LowercaseRouteMVC\RouteCollectionExtensions.cs" />
     <Compile Include="Helpers\ModelCopier.cs" />
     <Compile Include="PowerShell\PublicKeyToken.cs" />
     <Compile Include="Text\SimpleStringTokenizer.cs" />
@@ -46,8 +53,17 @@
     <Compile Include="Security\Crypto\PasswordCryptor.cs" />
     <Compile Include="Utils\PropertiesConfiguration.cs" />
     <Compile Include="Utils\ValidatorUtils.cs" />
+    <Compile Include="Web\Filter\Optimizer\WhitespaceFilter.cs" />
+    <Compile Include="Web\Filter\Optimizer\WhitespaceFilterAttribute.cs" />
+    <Compile Include="Web\HttpModule\Optimizer\WhitespaceClassic.cs" />
+    <Compile Include="Web\Mvc\JsonNetResult.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Web\MvcContrib\Castle\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

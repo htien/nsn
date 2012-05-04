@@ -1,7 +1,6 @@
 ﻿using System.Web.Mvc;
 using NewSocialNetwork.Repositories;
-using NewSocialNetwork.Website.Core;
-using NewSocialNetwork.Website.Main;
+using NSN.Kernel;
 
 namespace NewSocialNetwork.Website.Controllers
 {

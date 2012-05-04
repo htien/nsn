@@ -1,4 +1,4 @@
 ﻿namespace NewSocialNetwork.Website
 {
-    public class Global : NewSocialNetwork.Website.Main.NewSocialNetwork { }
+    public class Global : NSN.Init.NewSocialNetwork { }
 }

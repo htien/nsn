@@ -3,7 +3,7 @@ using NHibernate.SqlTypes;
 
 namespace NewSocialNetwork.Entities
 {
-    [ActiveRecord("[NSN.UserGroup]", "dbo")]
+    [ActiveRecord("[NSN.UserGroup]", "dbo", Lazy = true)]
     public class UserGroup : ActiveRecordValidationBase<UserGroup>, INSNEntity
     {
         [PrimaryKey(PrimaryKeyType.Identity, "UserGroupId")]
