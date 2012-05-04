@@ -5,16 +5,16 @@ namespace NewSocialNetwork.Website.Services
 {
     public class LoginService : IBusinessService
     {
-        private ILoginAuthenticator loginValidator;
+        private ILoginAuthenticator loginAuthenticator;
 
-        public LoginService(ILoginAuthenticator loginValidator)
+        public LoginService(ILoginAuthenticator loginAuthenticator)
         {
-            this.loginValidator = loginValidator;
+            this.loginAuthenticator = loginAuthenticator;
         }
 
         public User Authenticate(string usernameOrEmail, string password)
         {
-            return loginValidator.ValidateUser(usernameOrEmail, password);
+            return loginAuthenticator.authenticateUser(usernameOrEmail, password);
         }
     }
 }

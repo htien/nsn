@@ -10,6 +10,8 @@ namespace NewSocialNetwork.Website.Core
 {
     public class NSNConfig : PropertiesConfiguration
     {
+        internal static NSNConfig Instance { get; private set; }
+
         public NSNConfig()
         {
             try
@@ -43,5 +45,10 @@ namespace NewSocialNetwork.Website.Core
         }
 
         private new void Reload() { /* Không cho phép xài chức năng này */ }
+
+        internal static void SetInstance(NSNConfig config)
+        {
+            NSNConfig.Instance = config;
+        }
     }
 }

@@ -8,6 +8,8 @@ namespace NewSocialNetwork.Website.Main
         public static string CONFIG_FOLDER_PATH = CONFIG_FOLDER_NAME + "/";
         public static string CONFIG_PHYSICAL_PATH = HttpContext.Current.Server.MapPath(CONFIG_FOLDER_PATH);
 
+        public static string CTX_NSNCONFIG = "__NSNConfig";
+
         public static string ASSEMBLY_NSN_ENTITIES = "Lien.NewSocialNetwork.Entities";
 
         public static string CONNECTION_REMOTE_NAME = "remote";
@@ -34,8 +36,11 @@ namespace NewSocialNetwork.Website.Main
         public static string GLOBAL_MELEZEMINIFIER_COMMENTS = "meleze-minifier:Comments";
         public static string GLOBAL_MELEZEMINIFIER_JAVASCRIPT = "meleze-minifier:Javascript";
 
-        public static string NSN_VERSION = "nsn.version";
+        public static string NSN_AUTHOR_NAME = "author.name";
+        public static string NSN_AUTHOR_EMAIL = "author.email";
+
         public static string NSN_CODENAME = "nsn.codename";
+        public static string NSN_VERSION = "nsn.version";
         public static string NSN_NAME = "nsn.name";
         public static string NSN_DESCRIPTION = "nsn.description";
 
@@ -43,6 +48,7 @@ namespace NewSocialNetwork.Website.Main
         public static string PAGE_TITLE = "page.title";
         public static string PAGE_METATAG_KEYWORDS = "page.metatag.keywords";
         public static string PAGE_METATAG_DESCRIPTION = "page.metatag.description";
+        public static string PAGE_METATAG_GENERATOR = "page.metatag.generator";
 
         public static string DATETIME_FORMAT = "datetime.format";
         public static string DATETIME_DATE_FORMAT = "datetime.date.format";

@@ -14,6 +14,6 @@ namespace NewSocialNetwork.Website.Modules.SSO
         /// <param name="username">Tên người dùng</param>
         /// <param name="passwd">Mật khẩu</param>
         /// <returns>Thực thể User đã đăng nhập</returns>
-        User ValidateUser(string usernameOrEmail, string passwd);
+        User authenticateUser(string usernameOrEmail, string passwd);
     }
 }

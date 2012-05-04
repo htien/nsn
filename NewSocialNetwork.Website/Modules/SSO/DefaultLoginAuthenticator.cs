@@ -7,13 +7,13 @@ namespace NewSocialNetwork.Website.Modules.SSO
 {
     public class DefaultLoginAuthenticator : ILoginAuthenticator
     {
-        public IUserRepository userRepo { get; set; }
+        public IUserRepository userRepo { private get; set; }
 
         public DefaultLoginAuthenticator() { }
 
-        #region ILoginValidator Members
+        #region ILoginAuthenticator Members
 
-        public User ValidateUser(string usernameOrEmail, string passwd)
+        public User authenticateUser(string usernameOrEmail, string passwd)
         {
             // Kiểm tra phải email không?
             bool isEmail = ValidatorUtils.IsEmail(usernameOrEmail);

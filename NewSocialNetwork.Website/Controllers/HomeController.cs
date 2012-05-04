@@ -9,7 +9,6 @@ namespace NewSocialNetwork.Website.Controllers
     public class HomeController : AbstractController
     {
         public IUserRepository userRepo { private get; set; }
-        public NSNConfig config { private get; set; }
 
         public HomeController()
         {

@@ -1,9 +1,11 @@
-﻿using Castle.Facilities.EventWiring;
+﻿using System.Web;
+using Castle.Facilities.EventWiring;
 using Castle.Facilities.Startable;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using NewSocialNetwork.Website.Core;
+using NewSocialNetwork.Website.Main;
 
 namespace NewSocialNetwork.Website.Installers
 {
@@ -21,6 +23,8 @@ namespace NewSocialNetwork.Website.Installers
             // Singleton components
             container.Register(Component.For<NSNConfig>().LifestyleSingleton());
             container.Register(Component.For<ISessionManager>().ImplementedBy<SessionManager>().LifestyleSingleton());
+            
+            NSNConfig.SetInstance(container.Resolve<NSNConfig>());
         }
 
         #endregion
