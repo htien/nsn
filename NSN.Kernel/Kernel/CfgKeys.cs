@@ -8,6 +8,7 @@ namespace NSN.Kernel
         public static string CONFIG_FOLDER_PATH = CONFIG_FOLDER_NAME + "/";
         public static string CONFIG_PHYSICAL_PATH = HttpContext.Current.Server.MapPath(CONFIG_FOLDER_PATH);
 
+        public static string CTX_CONTAINER = "__NSNContainer";
         public static string CTX_NSNCONFIG = "__NSNConfig";
 
         public static string ASSEMBLY_NSN_ENTITIES = "Lien.NewSocialNetwork.Entities";

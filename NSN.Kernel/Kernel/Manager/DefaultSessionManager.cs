@@ -6,6 +6,7 @@ using log4net;
 using NewSocialNetwork.Entities;
 using NewSocialNetwork.Repositories;
 using SaberLily.Utils;
+using NHibernate;
 
 namespace NSN.Kernel.Manager
 {
@@ -54,9 +55,16 @@ namespace NSN.Kernel.Manager
                         }
                         else
                         {
-                            Session session = this.sessionRepo.FindById(userSession.SessionId);
-                            if (session != null && session.LastVisit != null)
-                                userSession.LastVisit = session.LastVisit.Value;
+                            try
+                            {
+                                Session session = this.sessionRepo.FindById(userSession.User.UserId);
+                                if (session != null && session.LastVisit != null)
+                                    userSession.LastVisit = session.LastVisit.Value;
+                            }
+                            catch// (ObjectNotFoundException e)
+                            {
+                                // LOG
+                            }
                         }
                         this._LoggedSessions.Add(userSession.SessionId, userSession);
                     }
@@ -100,11 +108,12 @@ namespace NSN.Kernel.Manager
         /// <param name="request"></param>
         /// <param name="response"></param>
         /// <returns></returns>
-        public UserSession RefreshSession(HttpSessionState session)
+        public UserSession RefreshSession(HttpContext context)
         {
+            HttpSessionState session = context.Session;
             bool isSSOAuthentication = CfgKeys.TYPE_SSO.Equals(this.config[CfgKeys.AUTHENTICATION_TYPE]);
-            session[CfgKeys.TYPE_SSO] = isSSOAuthentication;
-            session[CfgKeys.SSO_LOGOUT_URL] = config[CfgKeys.SSO_LOGOUT_URL];
+            context.Items[CfgKeys.TYPE_SSO] = isSSOAuthentication;
+            context.Items[CfgKeys.SSO_LOGOUT_URL] = config[CfgKeys.SSO_LOGOUT_URL];
 
             UserSession userSession = this.GetUserSession(session.SessionID);
             int anonymousUserId = this.config.GetInt(CfgKeys.ANONYMOUS_USER_ID);

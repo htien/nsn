@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
 using System.Reflection;
+using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -20,8 +21,8 @@ namespace NSN.Kernel
     /// </summary>
     public sealed class Bootstrap
     {
+        private HttpApplication nsn;
         private static IWindsorContainer container;
-        public static bool isInitialized = false;
 
         public static Bootstrap Instance
         {
@@ -36,12 +37,9 @@ namespace NSN.Kernel
         /// <summary>
         /// Khởi tạo các thành phần cơ bản cho web.
         /// </summary>
-        public void Init()
+        public void Init(HttpApplication nsn)
         {
-            if (isInitialized)
-            {
-                //return;
-            }
+            this.nsn = nsn;
 
             AreaRegistration.RegisterAllAreas();
             RegisterGlobalFilters(GlobalFilters.Filters);
@@ -50,8 +48,6 @@ namespace NSN.Kernel
             InitContainer();
             InitControllerFactory();
             InitActiveRecord();
-
-            isInitialized = true;
         }
 
         /// <summary>
@@ -71,6 +67,7 @@ namespace NSN.Kernel
                          new ModulesInstaller(),
                          new ServicesInstaller(),
                          new ControllersInstaller());
+            this.nsn.Application.Add(CfgKeys.CTX_CONTAINER, container);
         }
 
         private void InitControllerFactory()

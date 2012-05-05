@@ -43,6 +43,11 @@ namespace NewSocialNetwork.DataAccess
             return ActiveRecordMediator<T>.FindByPrimaryKey(id);
         }
 
+        public T FindById(object id, bool throwOnNotFound)
+        {
+            return ActiveRecordMediator<T>.FindByPrimaryKey(id, throwOnNotFound);
+        }
+
         public IList<T> FindAll()
         {
             return ActiveRecordMediator<T>.FindAll();

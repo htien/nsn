@@ -1,4 +1,4 @@
-﻿using System.Web.SessionState;
+﻿using System.Web;
 using NewSocialNetwork.Entities;
 
 namespace NSN.Kernel.Manager
@@ -8,7 +8,7 @@ namespace NSN.Kernel.Manager
         void Add(UserSession userSession);
         void Remove(string sessionId);
         void StoreSession(string sessionId);
-        UserSession RefreshSession(HttpSessionState session);
+        UserSession RefreshSession(HttpContext context);
         UserSession GetUserSession();
         UserSession GetUserSession(string sessionId);
         UserSession GetExistingUserSession(int userId);

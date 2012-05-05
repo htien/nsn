@@ -30,7 +30,7 @@ namespace NewSocialNetwork.Website.Controllers
         [HttpPost]
         public JsonResult Login(string nsnId, string nsnPasswd)
         {
-            ResponseMessage msg = new ResponseMessage("Login", RStatus.FAIL, "Wrong ID/password. Access denied.");
+            ResponseMessage msg = new ResponseMessage("Login", RStatus.FAIL, "Wrong ID or password. Access denied.");
             //try
             //{
                 Entities.User user = this.loginService.Authenticate(nsnId, nsnPasswd);

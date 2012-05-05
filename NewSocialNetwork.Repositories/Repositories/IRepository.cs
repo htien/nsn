@@ -15,6 +15,7 @@ namespace NewSocialNetwork.Repositories
         void Delete(T entity);
 
         T FindById(object id);
+        T FindById(object id, bool throwOnNotFound);
         IList<T> FindAll();
         IList<T> FindAll(Order order, params ICriterion[] criteria);
         IList<T> FindAll(DetachedCriteria criteria, params Order[] orders);
