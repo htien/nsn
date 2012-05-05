@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Init\NewSocialNetwork.cs" />
+    <Compile Include="Kernel\HttpModule\RequestFilter.cs" />
     <Compile Include="Kernel\NSNContextAware.cs" />
     <Compile Include="Sub\Castle\WindsorControllerFactory.cs" />
     <Compile Include="Part\Installers\ControllersInstaller.cs" />
