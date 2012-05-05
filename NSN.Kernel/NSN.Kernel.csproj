@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NSN</RootNamespace>
-    <AssemblyName>NSN.Kernel</AssemblyName>
+    <AssemblyName>Lien.NSN.Kernel</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -97,13 +97,13 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\NewSocialNetwork.Entities\NewSocialNetwork.Entities.csproj">
+    <ProjectReference Include="..\NSN.Framework\NSN.Framework.csproj">
       <Project>{65C4E0C6-E101-446C-BEC5-AC149BE0AA9F}</Project>
-      <Name>NewSocialNetwork.Entities</Name>
+      <Name>NSN.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NewSocialNetwork.Repositories\NewSocialNetwork.Repositories.csproj">
+    <ProjectReference Include="..\NewSocialNetwork.Data\NewSocialNetwork.Data.csproj">
       <Project>{C1EE8E9B-8ED6-4094-B36A-4FDD3149BF25}</Project>
-      <Name>NewSocialNetwork.Repositories</Name>
+      <Name>NewSocialNetwork.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\SaberLily\SaberLily.csproj">
       <Project>{D14D16FE-81B2-499F-A3E7-D8AEDA6E5150}</Project>

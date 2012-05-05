@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Web;
 using System.Web.SessionState;
-using NewSocialNetwork.Entities;
+using NewSocialNetwork.Domain;
 using SaberLily.Text;
 using SaberLily.Utils;
 

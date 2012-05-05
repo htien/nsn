@@ -33,7 +33,7 @@ namespace NewSocialNetwork.Website.Controllers
             ResponseMessage msg = new ResponseMessage("Login", RStatus.FAIL, "Wrong ID or password. Access denied.");
             //try
             //{
-                Entities.User user = this.loginService.Authenticate(nsnId, nsnPasswd);
+                Domain.User user = this.loginService.Authenticate(nsnId, nsnPasswd);
                 if (user == null)
                 {
                     ViewBag.LoginFail = true;

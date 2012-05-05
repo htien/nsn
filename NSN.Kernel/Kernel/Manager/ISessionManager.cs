@@ -1,5 +1,5 @@
 ﻿using System.Web;
-using NewSocialNetwork.Entities;
+using NewSocialNetwork.Domain;
 
 namespace NSN.Kernel.Manager
 {

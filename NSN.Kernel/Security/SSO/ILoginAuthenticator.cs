@@ -1,4 +1,4 @@
-﻿using NewSocialNetwork.Entities;
+﻿using NewSocialNetwork.Domain;
 
 namespace NSN.Security.SSO
 {

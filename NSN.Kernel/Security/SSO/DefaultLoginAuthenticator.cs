@@ -1,4 +1,4 @@
-﻿using NewSocialNetwork.Entities;
+﻿using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using SaberLily.Security.Crypto;
 using SaberLily.Utils;

@@ -11,7 +11,7 @@ namespace NSN.Kernel
         public static string CTX_CONTAINER = "__NSNContainer";
         public static string CTX_NSNCONFIG = "__NSNConfig";
 
-        public static string ASSEMBLY_NSN_ENTITIES = "Lien.NewSocialNetwork.Entities";
+        public static string ASSEMBLY_NSN_ENTITIES = "Lien.NewSocialNetwork.Data";
         public static string ASSEMBLY_NSN_WEBSITE = "Lien.NewSocialNetwork.Website";
 
         public static string CONNECTION_REMOTE_NAME = "remote";

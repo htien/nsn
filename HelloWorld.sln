@@ -9,11 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld.Website", "Hello
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HikariStore.Website", "HikariStore.Website\HikariStore.Website.csproj", "{A900030C-1EA4-4F13-9AF0-5EB0E225ACBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewSocialNetwork.Entities", "NewSocialNetwork.Entities\NewSocialNetwork.Entities.csproj", "{65C4E0C6-E101-446C-BEC5-AC149BE0AA9F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSN.Framework", "NSN.Framework\NSN.Framework.csproj", "{65C4E0C6-E101-446C-BEC5-AC149BE0AA9F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaberLily", "SaberLily\SaberLily.csproj", "{D14D16FE-81B2-499F-A3E7-D8AEDA6E5150}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewSocialNetwork.Repositories", "NewSocialNetwork.Repositories\NewSocialNetwork.Repositories.csproj", "{C1EE8E9B-8ED6-4094-B36A-4FDD3149BF25}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewSocialNetwork.Data", "NewSocialNetwork.Data\NewSocialNetwork.Data.csproj", "{C1EE8E9B-8ED6-4094-B36A-4FDD3149BF25}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSN.Kernel", "NSN.Kernel\NSN.Kernel.csproj", "{C8DFDE88-5823-48A1-9589-3F48C72F8D1A}"
 EndProject

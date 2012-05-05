@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.SessionState;
 using log4net;
-using NewSocialNetwork.Entities;
+using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using SaberLily.Utils;
 using NHibernate;
