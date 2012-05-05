@@ -45,6 +45,12 @@ namespace SaberLily.Utils
             return val != null ? Convert.ToInt32(val) : 0;
         }
 
+        public bool GetBoolean(string key)
+        {
+            object val = Get(key);
+            return val != null ? Convert.ToBoolean(val) : false;
+        }
+
         public void Add(string key, object value)
         {
             if (list == null)

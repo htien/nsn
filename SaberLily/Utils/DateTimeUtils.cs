@@ -9,9 +9,9 @@ namespace SaberLily.Utils
             get { return DateTime.Parse("1970/01/01 00:00:00"); }
         }
 
-        public static long CurrentTimeMillis
+        public static int CurrentTimeMillis
         {
-            get { return (long)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds; }
+            get { return (int)(DateTime.UtcNow - Jan1st1970).TotalMilliseconds; }
         }
 
         public static long UnixTicks

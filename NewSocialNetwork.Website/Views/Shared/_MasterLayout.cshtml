@@ -2,12 +2,12 @@
 <html id="newsocl" xmlns="http://www.w3.org/1999/xhtml" lang="en-US" dir="ltr">
 <head>
     <meta charset="@ViewBag.Charset" />
-    <meta name="author" content="Phuong Lien" />
-    <meta name="description" content="New Social Network" />
-    <meta name="generator" content="Microsoft Visual Web Developer 2010 Express" />
-    <meta name="keywords" content="white, light, theme, new social network, hikari" />
+    <meta name="author" content="@ViewBag.NSNAuthorName <@(ViewBag.NSNAuthorEmail)>" />
+    <meta name="application-name" content="@ViewBag.NSNCodeName" />
+    <meta name="description" content="@ViewBag.NSNName (v@(ViewBag.NSNVersion))" />
+    <meta name="generator" content="@ViewBag.PageGenerator" />
+    <meta name="keywords" content="@ViewBag.PageKeywords" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="application-name" content="newworld" />
     <base href="@Url.Content("~/")" />
     <title>@ViewBag.PageTitle</title>
     <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/static/images/favicon.ico")" />

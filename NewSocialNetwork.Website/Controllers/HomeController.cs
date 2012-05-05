@@ -1,7 +1,6 @@
 ﻿using System.Web.Mvc;
 using NewSocialNetwork.Repositories;
-using NewSocialNetwork.Website.Core;
-using NewSocialNetwork.Website.Main;
+using NSN.Kernel;
 
 namespace NewSocialNetwork.Website.Controllers
 {
@@ -9,7 +8,6 @@ namespace NewSocialNetwork.Website.Controllers
     public class HomeController : AbstractController
     {
         public IUserRepository userRepo { private get; set; }
-        public NSNConfig config { private get; set; }
 
         public HomeController()
         {

@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using NewSocialNetwork.Entities;
+using NewSocialNetwork.Domain;
 
 namespace NewSocialNetwork.Website.Controllers
 {

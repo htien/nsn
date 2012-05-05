@@ -11,7 +11,8 @@ namespace NewSocialNetwork.TestConsole
         {
             Console.WriteLine("Hello World!");
             Console.WriteLine("Current timestamp: " + GetTimestamp());
-            Console.WriteLine(PublicKeyToken.Get(@"D:\workspace\HelloWorld\packages\Castle.Activerecord.3.0.0.1\lib\Net40\Castle.ActiveRecord.dll"));
+            Console.WriteLine(PublicKeyToken.Get(@"D:\workspace\HelloWorld\packages\Quartz.1.0.3\lib\3.5\Quartz.dll"));
+            Console.ReadLine();
         }
 
         public static string HashPassword(string text)

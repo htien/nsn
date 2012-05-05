@@ -9,7 +9,7 @@
                     </a>
                     <div class="rfloat">
                         <div class="nsn_login_container">
-                            <form id="login_form" action="?" method="post">
+                            <form id="login_form" action="@Url.Action("Login")" method="post">
                                 <table>
                                     <tbody>
                                         <tr>
@@ -18,8 +18,8 @@
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td><input type="text" id="nsn_id" name="nsn_id" class="uiFormText guiInputText" /></td>
-                                            <td><input type="password" id="nsn_passwd" name="nsn_passwd" class="uiFormPassword guiInputText" /></td>
+                                            <td><input type="text" id="nsn_id" name="nsnId" class="uiFormText guiInputText" /></td>
+                                            <td><input type="password" id="nsn_passwd" name="nsnPasswd" class="uiFormPassword guiInputText" /></td>
                                             <td><div id="nsn_signin" class="guiButton guiBlueButton">Sign In</div></td>
                                         </tr>
                                         <tr>
@@ -32,6 +32,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <input type="submit" value="Submit" />
                             </form>
                         </div>
                     </div>
