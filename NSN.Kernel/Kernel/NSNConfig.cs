@@ -2,13 +2,14 @@
 using System.Collections.Specialized;
 using System.Web;
 using System.Web.Configuration;
+using NSN.Framework;
 using SaberLily.Utils;
 
 namespace NSN.Kernel
 {
-    public class NSNConfig : PropertiesConfiguration
+    public class NSNConfig : PropertiesConfiguration, INSNConfig
     {
-        public static NSNConfig Instance { get; private set; }
+        public static INSNConfig Instance { get; set; }
 
         public NSNConfig()
         {
@@ -23,10 +24,14 @@ namespace NSN.Kernel
             }
         }
 
+        #region INSNConfig Members
+
         public string ApplicationPath
         {
             get { return HttpContext.Current.Server.MapPath("~/"); }
         }
+
+        #endregion
 
         private void LoadAppSettings()
         {
@@ -43,10 +48,5 @@ namespace NSN.Kernel
         }
 
         private new void Reload() { /* Không cho phép xài chức năng này */ }
-
-        public static void SetInstance(NSNConfig config)
-        {
-            NSNConfig.Instance = config;
-        }
     }
 }

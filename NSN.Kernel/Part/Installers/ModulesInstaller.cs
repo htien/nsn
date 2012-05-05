@@ -2,6 +2,7 @@
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using NSN.Framework;
 using NSN.Security.SSO;
 
 namespace NSN.Kernel.Part.Installers
@@ -12,11 +13,11 @@ namespace NSN.Kernel.Part.Installers
 
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            NSNConfig config = container.Resolve<NSNConfig>();
+            INSNConfig config = container.Resolve<INSNConfig>();
             RegisterLoginValidator(container, config);
         }
 
-        private void RegisterLoginValidator(IWindsorContainer container, NSNConfig config)
+        private void RegisterLoginValidator(IWindsorContainer container, INSNConfig config)
         {
             Type loginValidator = Type.GetType(config[CfgKeys.LOGIN_AUTHENTICATOR]);
             container.Register(Component.For<ILoginAuthenticator>().ImplementedBy(loginValidator).LifestyleSingleton());

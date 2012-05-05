@@ -1,11 +1,12 @@
 ﻿using System.Web.Mvc;
+using NSN.Framework;
 using NSN.Kernel;
 
 namespace NewSocialNetwork.Website.Controllers
 {
     public abstract class AbstractController : Controller
     {
-        protected internal NSNConfig config;
+        protected internal INSNConfig config;
         protected internal string charset;
 
         protected internal AbstractController()

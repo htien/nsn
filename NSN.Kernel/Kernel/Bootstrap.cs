@@ -10,6 +10,7 @@ using System.Web.Routing;
 using Castle.ActiveRecord;
 using Castle.ActiveRecord.Framework.Config;
 using Castle.Windsor;
+using NSN.Framework;
 using NSN.Kernel.Part.Installers;
 using NSN.Sub.Castle;
 using SaberLily.Web.Extension.LowercaseRouteMVC;
@@ -22,7 +23,7 @@ namespace NSN.Kernel
     public sealed class Bootstrap
     {
         private HttpApplication nsn;
-        private static IWindsorContainer container;
+        private IWindsorContainer container;
 
         public static Bootstrap Instance
         {
@@ -55,30 +56,30 @@ namespace NSN.Kernel
         /// </summary>
         public void Dispose()
         {
-            container.Dispose();
+            this.container.Dispose();
         }
 
         private void InitContainer()
         {
-            container = new WindsorContainer(CfgKeys.CONFIG_FOLDER_PATH + "CastleWindsor.xml")
-                .Install(new LoggerInstaller(),
+            this.container = new WindsorContainer(CfgKeys.CONFIG_FOLDER_PATH + "CastleWindsor.xml");
+            this.nsn.Application.Add(CfgKeys.CTX_NSNCONTAINER, this.container);
+            this.container.Install(new LoggerInstaller(),
                          new StandardInstaller(),
                          new RepositoriesInstaller(),
                          new ModulesInstaller(),
                          new ServicesInstaller(),
                          new ControllersInstaller());
-            this.nsn.Application.Add(CfgKeys.CTX_CONTAINER, container);
         }
 
         private void InitControllerFactory()
         {
-            var controllerFactory = new WindsorControllerFactory(container.Kernel);
+            var controllerFactory = new WindsorControllerFactory(this.container.Kernel);
             ControllerBuilder.Current.SetControllerFactory(controllerFactory);
         }
 
         private void InitActiveRecord()
         {
-            NSNConfig config = container.Resolve<NSNConfig>();
+            INSNConfig config = this.container.Resolve<INSNConfig>();
             ConnectionStringSettingsCollection cfgSettings = WebConfigurationManager.ConnectionStrings;
             NameValueCollection db = WebConfigurationManager.GetSection("databaseSettings", "/" + CfgKeys.CONFIG_FOLDER_PATH) as NameValueCollection;
             NameValueCollection ar = WebConfigurationManager.GetSection("activeRecordSettings", "/" + CfgKeys.CONFIG_FOLDER_PATH) as NameValueCollection;

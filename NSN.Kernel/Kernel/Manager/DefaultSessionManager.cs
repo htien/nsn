@@ -5,8 +5,8 @@ using System.Web.SessionState;
 using log4net;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
+using NSN.Framework;
 using SaberLily.Utils;
-using NHibernate;
 
 namespace NSN.Kernel.Manager
 {
@@ -18,7 +18,7 @@ namespace NSN.Kernel.Manager
         private readonly object _AddSyncLock = new object();
         private readonly object _RemoveSyncLock = new object();
 
-        public NSNConfig config { private get; set; }
+        public INSNConfig config { private get; set; }
         public IUserRepository userRepo { private get; set; }
         public ISessionRepository sessionRepo { private get; set; }
 
@@ -111,6 +111,9 @@ namespace NSN.Kernel.Manager
         public UserSession RefreshSession(HttpContext context)
         {
             HttpSessionState session = context.Session;
+            if (session == null || session.SessionID == null)
+                return null;
+
             bool isSSOAuthentication = CfgKeys.TYPE_SSO.Equals(this.config[CfgKeys.AUTHENTICATION_TYPE]);
             context.Items[CfgKeys.TYPE_SSO] = isSSOAuthentication;
             context.Items[CfgKeys.SSO_LOGOUT_URL] = config[CfgKeys.SSO_LOGOUT_URL];

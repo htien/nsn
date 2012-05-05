@@ -3,6 +3,7 @@ using Castle.Facilities.Startable;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using NSN.Framework;
 using NSN.Kernel.Manager;
 
 namespace NSN.Kernel.Part.Installers
@@ -20,10 +21,10 @@ namespace NSN.Kernel.Part.Installers
 
             // Singleton components
             container
-                .Register(Component.For<NSNConfig>().LifestyleSingleton())
+                .Register(Component.For<INSNConfig>().ImplementedBy<NSNConfig>().LifestyleSingleton())
                 .Register(Component.For<ISessionManager>().ImplementedBy<DefaultSessionManager>().LifestyleSingleton());
             
-            NSNConfig.SetInstance(container.Resolve<NSNConfig>());
+            NSNConfig.Instance = container.Resolve<INSNConfig>();
         }
 
         #endregion
