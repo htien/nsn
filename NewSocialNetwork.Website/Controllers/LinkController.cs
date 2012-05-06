@@ -2,7 +2,7 @@
 
 namespace NewSocialNetwork.Website.Controllers
 {
-    public class LinkController : AbstractController
+    public class LinkController : AbstractDefaultController
     {
         //
         // GET: /Link/

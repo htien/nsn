@@ -4,7 +4,7 @@ using NewSocialNetwork.Website.Models;
 
 namespace NewSocialNetwork.Website.Controllers
 {
-    public class PhotoController : AbstractController
+    public class PhotoController : AbstractDefaultController
     {
         public IPhotoRepository photoRepo { get; set; }
 

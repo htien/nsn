@@ -5,10 +5,12 @@ using System.Web.SessionState;
 using log4net;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
+using NSN.Common;
 using NSN.Framework;
+using NSN.Kernel;
 using SaberLily.Utils;
 
-namespace NSN.Kernel.Manager
+namespace NSN.Manager
 {
     public class DefaultSessionManager : ISessionManager
     {
@@ -43,7 +45,7 @@ namespace NSN.Kernel.Manager
                 if (!userSession.IsBot())
                 {
                     this.PreventDupplicates(userSession);
-                    if (userSession.User.UserId == this.config.GetInt(CfgKeys.ANONYMOUS_USER_ID))
+                    if (userSession.User.UserId == this.config.GetInt(Globals.ANONYMOUS_USER_ID))
                         this._AnonymousSessions.Add(userSession.SessionId, userSession);
                     else
                     {
@@ -94,7 +96,7 @@ namespace NSN.Kernel.Manager
         public void StoreSession(string sessionId)
         {
             UserSession us = this.GetUserSession(sessionId);
-            if (us != null && us.User.UserId != this.config.GetInt(CfgKeys.ANONYMOUS_USER_ID))
+            if (us != null && us.User.UserId != this.config.GetInt(Globals.ANONYMOUS_USER_ID))
             {
                 Session s = us.AsSession();
                 s.LastVisit = s.LastAccess;
@@ -114,19 +116,19 @@ namespace NSN.Kernel.Manager
             if (session == null || session.SessionID == null)
                 return null;
 
-            bool isSSOAuthentication = CfgKeys.TYPE_SSO.Equals(this.config[CfgKeys.AUTHENTICATION_TYPE]);
-            context.Items[CfgKeys.TYPE_SSO] = isSSOAuthentication;
-            context.Items[CfgKeys.SSO_LOGOUT_URL] = config[CfgKeys.SSO_LOGOUT_URL];
+            bool isSSOAuthentication = Globals.TYPE_SSO.Equals(this.config[Globals.AUTHENTICATION_TYPE]);
+            context.Items[Globals.TYPE_SSO] = isSSOAuthentication;
+            context.Items[Globals.SSO_LOGOUT_URL] = config[Globals.SSO_LOGOUT_URL];
 
             UserSession userSession = this.GetUserSession(session.SessionID);
-            int anonymousUserId = this.config.GetInt(CfgKeys.ANONYMOUS_USER_ID);
+            int anonymousUserId = this.config.GetInt(Globals.ANONYMOUS_USER_ID);
 
             if (userSession == null)
             {
                 userSession = new UserSession()
                 {
                     SessionId = session.SessionID,
-                    CreationTime = DateTimeUtils.CurrentTimeMillis
+                    CreationTime = DateTimeUtils.UnixTimestamp
                 };
                 if (true)
                 {
@@ -136,7 +138,7 @@ namespace NSN.Kernel.Manager
                     }
                     else
                     {
-                        bool autoLoginEnabled = this.config.GetBoolean(CfgKeys.AUTO_LOGIN_ENABLED);
+                        bool autoLoginEnabled = this.config.GetBoolean(Globals.AUTO_LOGIN_ENABLED);
                         bool autoLoginSuccess = autoLoginEnabled && this.CheckAutoLogin(userSession);
                         if (!autoLoginSuccess)
                         {

@@ -73,31 +73,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\About.cs" />
+    <Compile Include="Application\AssemblyStatusAttribute.cs" />
+    <Compile Include="Common\Utilities\Null.cs" />
     <Compile Include="Init\NewSocialNetwork.cs" />
-    <Compile Include="Kernel\HttpModule\RequestFilter.cs" />
-    <Compile Include="Kernel\NSNContextAware.cs" />
+    <Compile Include="HttpModule\RequestFilter.cs" />
+    <Compile Include="Application\NSNContext.cs" />
     <Compile Include="Sub\Castle\WindsorControllerFactory.cs" />
-    <Compile Include="Part\Installers\ControllersInstaller.cs" />
-    <Compile Include="Part\Installers\LoggerInstaller.cs" />
-    <Compile Include="Part\Installers\ModulesInstaller.cs" />
-    <Compile Include="Part\Installers\RepositoriesInstaller.cs" />
-    <Compile Include="Part\Installers\ServicesInstaller.cs" />
-    <Compile Include="Part\Installers\StandardInstaller.cs" />
+    <Compile Include="Installer\ControllersInstaller.cs" />
+    <Compile Include="Installer\LoggerInstaller.cs" />
+    <Compile Include="Installer\ModulesInstaller.cs" />
+    <Compile Include="Installer\RepositoriesInstaller.cs" />
+    <Compile Include="Installer\ServicesInstaller.cs" />
+    <Compile Include="Installer\StandardInstaller.cs" />
     <Compile Include="Kernel\Bootstrap.cs" />
-    <Compile Include="Kernel\CfgKeys.cs" />
-    <Compile Include="Kernel\Manager\DefaultSessionManager.cs" />
-    <Compile Include="Kernel\Manager\ISessionManager.cs" />
+    <Compile Include="Common\Globals.cs" />
+    <Compile Include="Manager\DefaultSessionManager.cs" />
+    <Compile Include="Manager\ISessionManager.cs" />
     <Compile Include="Kernel\NSNConfig.cs" />
     <Compile Include="Kernel\NSNException.cs" />
     <Compile Include="Kernel\UserSession.cs" />
-    <Compile Include="Part\Services\IBusinessService.cs" />
-    <Compile Include="Part\Services\LoginService.cs" />
+    <Compile Include="Service\BusinessService\IBusinessService.cs" />
+    <Compile Include="Service\BusinessService\AuthService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\SSO\DefaultLoginAuthenticator.cs" />
-    <Compile Include="Security\SSO\ILoginAuthenticator.cs" />
-    <Compile Include="Security\SSO\RemoteUserSSO.cs" />
+    <Compile Include="Service\SSO\DefaultLoginAuthenticator.cs" />
+    <Compile Include="Service\SSO\ILoginAuthenticator.cs" />
+    <Compile Include="Service\SSO\RemoteUserSSO.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Security\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NSN.Framework\NSN.Framework.csproj">
       <Project>{65C4E0C6-E101-446C-BEC5-AC149BE0AA9F}</Project>

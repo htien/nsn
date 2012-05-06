@@ -1,11 +1,11 @@
 ﻿using System.Web.Mvc;
 using NewSocialNetwork.Repositories;
-using NSN.Kernel;
+using NSN.Common;
 
 namespace NewSocialNetwork.Website.Controllers
 {
     [HandleError]
-    public class HomeController : AbstractController
+    public class HomeController : AbstractDefaultController
     {
         public IUserRepository userRepo { private get; set; }
 
@@ -19,7 +19,7 @@ namespace NewSocialNetwork.Website.Controllers
 
         public ActionResult Stream(string userid)
         {
-            ViewBag.Author = config[CfgKeys.ANONYMOUS_USER_ID];
+            ViewBag.Author = config[Globals.ANONYMOUS_USER_ID];
             return View();
         }
 

@@ -2,8 +2,9 @@
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using NSN.Common;
 
-namespace NSN.Kernel.Part.Installers
+namespace NSN.Installer
 {
     public class ControllersInstaller : IWindsorInstaller
     {
@@ -11,7 +12,7 @@ namespace NSN.Kernel.Part.Installers
 
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(AllTypes.FromAssemblyNamed(CfgKeys.ASSEMBLY_NSN_WEBSITE)
+            container.Register(AllTypes.FromAssemblyNamed(Globals.ASSEMBLY_NSN_WEBSITE)
                         .BasedOn<IController>()
                         .LifestyleTransient());
         }

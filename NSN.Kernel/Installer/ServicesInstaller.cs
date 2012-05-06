@@ -1,9 +1,9 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-using NSN.Kernel.Part.Services;
+using NSN.Service.BusinessService;
 
-namespace NSN.Kernel.Part.Installers
+namespace NSN.Installer
 {
     public class ServicesInstaller : IWindsorInstaller
     {

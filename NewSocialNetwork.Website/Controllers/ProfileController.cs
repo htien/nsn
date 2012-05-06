@@ -3,14 +3,9 @@ using NewSocialNetwork.Domain;
 
 namespace NewSocialNetwork.Website.Controllers
 {
-    public class ProfileController : AbstractController
+    public class ProfileController : AbstractDefaultController
     {
-        private User loggedUser;
-
-        public ProfileController()
-        {
-            this.loggedUser = null; // lấy thực thể User từ SessionManager
-        }
+        public ProfileController() { }
 
         //
         // GET: /Profile/
@@ -21,9 +16,10 @@ namespace NewSocialNetwork.Website.Controllers
             return View();
         }
 
-        public ActionResult Posts()
+        public ActionResult Posts(string userid)
         {
             ViewBag.PageTitle = "NSN: Posts";
+            ViewBag.abc = userid;
             return View();
         }
 

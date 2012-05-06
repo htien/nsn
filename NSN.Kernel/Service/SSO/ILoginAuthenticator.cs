@@ -1,6 +1,6 @@
 ﻿using NewSocialNetwork.Domain;
 
-namespace NSN.Security.SSO
+namespace NSN.Service.SSO
 {
     /// <summary>
     /// Giao diện cơ bản của lớp LoginValidator, dùng để xác thực người dùng
@@ -14,6 +14,6 @@ namespace NSN.Security.SSO
         /// <param name="username">Tên người dùng</param>
         /// <param name="passwd">Mật khẩu</param>
         /// <returns>Thực thể User đã đăng nhập</returns>
-        User authenticateUser(string usernameOrEmail, string passwd);
+        User AuthenticateUser(string usernameOrEmail, string passwd);
     }
 }

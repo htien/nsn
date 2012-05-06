@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
-using System.Web;
 using System.Web.Configuration;
+using NSN.Common;
 using NSN.Framework;
 using SaberLily.Utils;
 
@@ -28,7 +28,12 @@ namespace NSN.Kernel
 
         public string ApplicationPath
         {
-            get { return HttpContext.Current.Server.MapPath("~/"); }
+            get { return Globals.ApplicationPath; }
+        }
+
+        public string ApplicationMapPath
+        {
+            get { return Globals.ApplicationMapPath; }
         }
 
         #endregion
@@ -44,7 +49,7 @@ namespace NSN.Kernel
 
         private void LoadGlobalProps()
         {
-            this.LoadFromFile(ApplicationPath + "/Config/SystemGlobals.properties", this[CfgKeys.GLOBAL_CHARSET]);
+            this.LoadFromFile(ApplicationMapPath + "/Config/SystemGlobals.properties", this[Globals.GLOBAL_CHARSET]);
         }
 
         private new void Reload() { /* Không cho phép xài chức năng này */ }

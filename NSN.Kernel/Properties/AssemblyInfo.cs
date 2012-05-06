@@ -1,17 +1,18 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using NSN.Application;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NSN.Kernel")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("NSN Kernel")]
+[assembly: AssemblyDescription("New Social Network Kernel")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Unix/Linux")]
-[assembly: AssemblyProduct("NSN.Kernel")]
+[assembly: AssemblyProduct("NSN Kernel")]
 [assembly: AssemblyCopyright("Copyright © Unix/Linux 2012")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("NSN")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -34,3 +35,4 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyStatus(ReleaseMode.Alpha)]

@@ -10,8 +10,11 @@ using System.Web.Routing;
 using Castle.ActiveRecord;
 using Castle.ActiveRecord.Framework.Config;
 using Castle.Windsor;
+using NSN.Common;
+using NSN.Common.Utilities;
 using NSN.Framework;
-using NSN.Kernel.Part.Installers;
+using NSN.Installer;
+using NSN.Manager;
 using NSN.Sub.Castle;
 using SaberLily.Web.Extension.LowercaseRouteMVC;
 
@@ -24,6 +27,8 @@ namespace NSN.Kernel
     {
         private HttpApplication nsn;
         private IWindsorContainer container;
+        private bool _initializedAlready;
+        private readonly object _initializeLock = new object();
 
         public static Bootstrap Instance
         {
@@ -36,19 +41,28 @@ namespace NSN.Kernel
         private Bootstrap() { }
 
         /// <summary>
-        /// Khởi tạo các thành phần cơ bản cho web.
+        /// Khởi tạo các thành phần cơ bản cho ứng dụng.
         /// </summary>
-        public void Init(HttpApplication nsn)
+        public void Init(HttpApplication app)
         {
-            this.nsn = nsn;
-
-            AreaRegistration.RegisterAllAreas();
-            RegisterGlobalFilters(GlobalFilters.Filters);
-            RegisterRoutes(RouteTable.Routes);
-
-            InitContainer();
-            InitControllerFactory();
-            InitActiveRecord();
+            string redirect;
+            if (_initializedAlready)
+            {
+                return;
+            }
+            lock (_initializeLock)
+            {
+                if (_initializedAlready)
+                {
+                    return;
+                }
+                redirect = InitApp(app);
+                _initializedAlready = true;
+            }
+            if (!String.IsNullOrEmpty(redirect))
+            {
+                app.Response.Redirect(redirect, true);
+            }
         }
 
         /// <summary>
@@ -59,10 +73,41 @@ namespace NSN.Kernel
             this.container.Dispose();
         }
 
+        private string InitApp(HttpApplication app)
+        {
+            HttpServerUtility server = app.Server;
+            HttpRequest request = app.Request;
+            string redirect = Null.NullString;
+
+            // TODO: Need to upgrade
+            if (String.IsNullOrEmpty(redirect))
+            {
+                this.nsn = app;
+                AreaRegistration.RegisterAllAreas();
+                RegisterGlobalFilters(GlobalFilters.Filters);
+                RegisterRoutes(RouteTable.Routes);
+
+                InitContainer();
+                InitControllerFactory();
+                InitActiveRecord();
+
+                NSNContext.Current.Container = (IWindsorContainer)app.Application[Globals.CTX_NSNCONTAINER];
+                NSNContext.Current.Config = NSNConfig.Instance;
+                NSNContext.Current.SessionManager = NSNContext.Current.Container.Resolve<ISessionManager>();
+            }
+
+            return redirect;
+        }
+
+        private string CheckVersion(HttpApplication app)
+        {
+            return Null.NullString;
+        }
+
         private void InitContainer()
         {
-            this.container = new WindsorContainer(CfgKeys.CONFIG_FOLDER_PATH + "CastleWindsor.xml");
-            this.nsn.Application.Add(CfgKeys.CTX_NSNCONTAINER, this.container);
+            this.container = new WindsorContainer(Globals.CONFIG_FOLDER_PATH + "CastleWindsor.xml");
+            this.nsn.Application.Add(Globals.CTX_NSNCONTAINER, this.container);
             this.container.Install(new LoggerInstaller(),
                          new StandardInstaller(),
                          new RepositoriesInstaller(),
@@ -81,8 +126,8 @@ namespace NSN.Kernel
         {
             INSNConfig config = this.container.Resolve<INSNConfig>();
             ConnectionStringSettingsCollection cfgSettings = WebConfigurationManager.ConnectionStrings;
-            NameValueCollection db = WebConfigurationManager.GetSection("databaseSettings", "/" + CfgKeys.CONFIG_FOLDER_PATH) as NameValueCollection;
-            NameValueCollection ar = WebConfigurationManager.GetSection("activeRecordSettings", "/" + CfgKeys.CONFIG_FOLDER_PATH) as NameValueCollection;
+            NameValueCollection db = WebConfigurationManager.GetSection("databaseSettings", "/" + Globals.CONFIG_FOLDER_PATH) as NameValueCollection;
+            NameValueCollection ar = WebConfigurationManager.GetSection("activeRecordSettings", "/" + Globals.CONFIG_FOLDER_PATH) as NameValueCollection;
 
             IDictionary<string, string> settings = new Dictionary<string, string>();
             foreach (string key in ar.AllKeys)
@@ -98,17 +143,17 @@ namespace NSN.Kernel
             if (!hasConnectionStringName && !hasConnectionString ||
                 hasConnectionStringName && settings[connStrNameKey].Equals("tien.somee.com"))
             {
-                bool isRemote = Convert.ToBoolean(config[CfgKeys.ISREMOTE]);
+                bool isRemote = Convert.ToBoolean(config[Globals.ISREMOTE]);
                 string @connectionString = (isRemote
-                            ? cfgSettings[CfgKeys.CONNECTION_REMOTE_NAME]
-                            : cfgSettings[CfgKeys.CONNECTION_LOCAL_NAME]
+                            ? cfgSettings[Globals.CONNECTION_REMOTE_NAME]
+                            : cfgSettings[Globals.CONNECTION_LOCAL_NAME]
                         ).ConnectionString;
                 connectionString = isRemote
                         ? string.Format(connectionString,
-                                db[CfgKeys.DB_DATASOURCE], db[CfgKeys.DB_PORT], db[CfgKeys.DB_NAME],
-                                db[CfgKeys.DB_USER], db[CfgKeys.DB_PASSWORD])
+                                db[Globals.DB_DATASOURCE], db[Globals.DB_PORT], db[Globals.DB_NAME],
+                                db[Globals.DB_USER], db[Globals.DB_PASSWORD])
                         : string.Format(connectionString,
-                                db[CfgKeys.DB_DATASOURCE], db[CfgKeys.DB_PORT], db[CfgKeys.DB_NAME]);
+                                db[Globals.DB_DATASOURCE], db[Globals.DB_PORT], db[Globals.DB_NAME]);
 
                 if (hasConnectionStringName)
                 {
@@ -119,10 +164,10 @@ namespace NSN.Kernel
 
             InPlaceConfigurationSource configSource = new InPlaceConfigurationSource();
             configSource.Add(typeof(ActiveRecordBase), settings);
-            configSource.IsRunningInWebApp = Convert.ToBoolean(config[CfgKeys.GLOBAL_ACTIVERECORD_ISWEBAPP]);
-            configSource.SetDebugFlag(Convert.ToBoolean(config[CfgKeys.GLOBAL_ACTIVERECORD_DEBUG]));
+            configSource.IsRunningInWebApp = Convert.ToBoolean(config[Globals.GLOBAL_ACTIVERECORD_ISWEBAPP]);
+            configSource.SetDebugFlag(Convert.ToBoolean(config[Globals.GLOBAL_ACTIVERECORD_DEBUG]));
 
-            Assembly asmEntities = Assembly.Load(CfgKeys.ASSEMBLY_NSN_ENTITIES);
+            Assembly asmEntities = Assembly.Load(Globals.ASSEMBLY_NSN_ENTITIES);
             ActiveRecordStarter.Initialize(asmEntities, configSource);
         }
 
@@ -148,9 +193,14 @@ namespace NSN.Kernel
             // Single Sign-On routes
 
             routes.MapRouteLowercase(
-                "SSO",
+                "SSOAction",
                 "Auth/{action}",
                 new { controller = "Auth", action = "Register" }
+            );
+            routes.MapRouteLowercase(
+                "SSOLogout",
+                "Logout",
+                new { controller = "Auth", action = "Logout" }
             );
 
             // Back-end routes

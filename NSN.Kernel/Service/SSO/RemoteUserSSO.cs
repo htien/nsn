@@ -1,4 +1,4 @@
-﻿namespace NSN.Security.SSO
+﻿namespace NSN.Service.SSO
 {
     public class RemoteUserSSO
     {

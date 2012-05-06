@@ -1055,6 +1055,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AbstractController.cs" />
+    <Compile Include="Controllers\AbstractDefaultController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\Helper\ResponseMessage.cs" />

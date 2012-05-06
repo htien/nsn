@@ -2,7 +2,7 @@
 
 namespace NewSocialNetwork.Website.Controllers
 {
-    public class MessageController : AbstractController
+    public class MessageController : AbstractDefaultController
     {
         //
         // GET: /Message/
