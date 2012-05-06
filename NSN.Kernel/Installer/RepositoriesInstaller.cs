@@ -4,7 +4,7 @@ using Castle.Windsor;
 using NewSocialNetwork.DataAccess;
 using NewSocialNetwork.Repositories;
 
-namespace NSN.Kernel.Part.Installers
+namespace NSN.Installer
 {
     public class RepositoriesInstaller : IWindsorInstaller
     {

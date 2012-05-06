@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
 
-namespace NSN.Kernel.HttpModule
+namespace NSN.HttpModule
 {
     public class RequestFilter : IHttpModule
     {
@@ -20,7 +20,7 @@ namespace NSN.Kernel.HttpModule
         {
             HttpContext context = ((HttpApplication)sender).Context;
             HttpRequest request = context.Request;
-            string[] fileExts = { ".css", ".js", ".jpg", ".gif", ".png", ".html" };
+            string[] fileExts = { ".css", ".js", ".png", ".gif", ".jpg", "jpeg", "bmp", "swf", ".html" };
             bool accept = true;
             foreach (string ext in fileExts)
             {

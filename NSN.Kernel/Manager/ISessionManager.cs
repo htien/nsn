@@ -1,7 +1,8 @@
 ﻿using System.Web;
 using NewSocialNetwork.Domain;
+using NSN.Kernel;
 
-namespace NSN.Kernel.Manager
+namespace NSN.Manager
 {
     public interface ISessionManager
     {

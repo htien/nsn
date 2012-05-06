@@ -4,9 +4,10 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using NSN.Framework;
-using NSN.Kernel.Manager;
+using NSN.Kernel;
+using NSN.Manager;
 
-namespace NSN.Kernel.Part.Installers
+namespace NSN.Installer
 {
     public class StandardInstaller : IWindsorInstaller
     {

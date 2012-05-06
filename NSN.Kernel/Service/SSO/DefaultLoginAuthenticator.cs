@@ -3,7 +3,7 @@ using NewSocialNetwork.Repositories;
 using SaberLily.Security.Crypto;
 using SaberLily.Utils;
 
-namespace NSN.Security.SSO
+namespace NSN.Service.SSO
 {
     public class DefaultLoginAuthenticator : ILoginAuthenticator
     {
@@ -13,7 +13,7 @@ namespace NSN.Security.SSO
 
         #region ILoginAuthenticator Members
 
-        public User authenticateUser(string usernameOrEmail, string passwd)
+        public User AuthenticateUser(string usernameOrEmail, string passwd)
         {
             // Kiểm tra phải email không?
             bool isEmail = ValidatorUtils.IsEmail(usernameOrEmail);

@@ -2,8 +2,8 @@
 using NewSocialNetwork.Repositories;
 using NewSocialNetwork.Website.Controllers.Helper;
 using NSN.Kernel;
-using NSN.Kernel.Manager;
-using NSN.Kernel.Part.Services;
+using NSN.Manager;
+using NSN.Service.BusinessService;
 
 namespace NewSocialNetwork.Website.Controllers
 {

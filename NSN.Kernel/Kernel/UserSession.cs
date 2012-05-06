@@ -3,6 +3,7 @@ using System.Collections;
 using System.Web;
 using System.Web.SessionState;
 using NewSocialNetwork.Domain;
+using NSN.Common;
 using SaberLily.Text;
 using SaberLily.Utils;
 
@@ -172,12 +173,12 @@ namespace NSN.Kernel
 
         public void BecomesLogged()
         {
-            this.SetAttribute(CfgKeys.SSO_LOGGED, "1");
+            this.SetAttribute(Globals.SSO_LOGGED, "1");
         }
 
         public bool IsLogged()
         {
-            return "1".Equals(this.GetAttribute(CfgKeys.SSO_LOGGED));
+            return "1".Equals(this.GetAttribute(Globals.SSO_LOGGED));
         }
 
         public Session AsSession()

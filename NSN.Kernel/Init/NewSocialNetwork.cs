@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Web;
-using Castle.Windsor;
 using NSN.Kernel;
-using NSN.Kernel.Manager;
 
 namespace NSN.Init
 {
+    /// <summary>
+    /// Đây là đối tượng HttpHandler chính của ứng dụng, nắm quyền sinh sát toàn bộ
+    /// quá trình khởi tạo mọi đối tượng và thành phần cho ứng dụng :).
+    /// 
+    /// P.S: chú thích document cho class và method chủ yếu dùng English, đôi lúc có dùng cả Vietnamese.
+    /// </summary>
     public class NewSocialNetwork : HttpApplication
     {
         /// <summary>
@@ -13,10 +17,8 @@ namespace NSN.Init
         /// </summary>
         protected void Application_Start(object sender, EventArgs e)
         {
-            Bootstrap.Instance.Init(this);
-            NSNContextAware.Container = (IWindsorContainer)this.Application[CfgKeys.CTX_NSNCONTAINER];
-            NSNContextAware.Config = NSNConfig.Instance;
-            NSNContextAware.SessionManager = NSNContextAware.Container.Resolve<ISessionManager>();
+            // Chuyển Bootstrap Init() tại sự kiện _BeginRequest
+            // Để dành khởi tạo thứ khác quan trọng hơn :)), sau này sẽ nâng cấp ^^~
         }
 
         /// <summary>
@@ -29,7 +31,10 @@ namespace NSN.Init
         /// <summary>
         /// Occurs as the first event in the HTTP pipeline chain of execution when ASP.NET responds to a request.
         /// </summary>
-        protected void Application_BeginRequest(object sender, EventArgs e) { }
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            Bootstrap.Instance.Init(this);
+        }
 
         /// <summary>
         /// Occurs when a security module has established the identity of the user.
@@ -74,7 +79,7 @@ namespace NSN.Init
         /// </summary>
         protected void Application_AcquireRequestState(object sender, EventArgs e)
         {
-            UserSession userSession = NSNContextAware.SessionManager.RefreshSession(HttpContext.Current);
+            UserSession userSession = NSNContext.Current.SessionManager.RefreshSession(HttpContext.Current);
         }
 
         /// <summary>

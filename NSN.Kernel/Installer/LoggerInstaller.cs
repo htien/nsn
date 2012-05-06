@@ -2,8 +2,9 @@
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using NSN.Common;
 
-namespace NSN.Kernel.Part.Installers
+namespace NSN.Installer
 {
     public class LoggerInstaller : IWindsorInstaller
     {
@@ -11,7 +12,7 @@ namespace NSN.Kernel.Part.Installers
 
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.AddFacility<LoggingFacility>(f => f.UseLog4Net(CfgKeys.CONFIG_FOLDER_PATH + "Log4Net.xml"));
+            container.AddFacility<LoggingFacility>(f => f.UseLog4Net(Globals.CONFIG_FOLDER_PATH + "Log4Net.xml"));
         }
 
         #endregion

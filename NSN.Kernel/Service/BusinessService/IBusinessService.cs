@@ -1,4 +1,4 @@
-﻿namespace NSN.Kernel.Part.Services
+﻿namespace NSN.Service.BusinessService
 {
     public interface IBusinessService { }
 }

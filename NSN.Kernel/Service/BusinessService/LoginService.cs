@@ -1,7 +1,7 @@
 ﻿using NewSocialNetwork.Domain;
-using NSN.Security.SSO;
+using NSN.Service.SSO;
 
-namespace NSN.Kernel.Part.Services
+namespace NSN.Service.BusinessService
 {
     public class LoginService : IBusinessService
     {
@@ -11,7 +11,7 @@ namespace NSN.Kernel.Part.Services
 
         public User Authenticate(string usernameOrEmail, string password)
         {
-            return loginAuthenticator.authenticateUser(usernameOrEmail, password);
+            return loginAuthenticator.AuthenticateUser(usernameOrEmail, password);
         }
     }
 }
