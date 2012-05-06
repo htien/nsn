@@ -1,11 +1,13 @@
 ﻿using System.Web.Mvc;
-using SaberLily.Web.Filter.Optimizer;
 
 namespace NewSocialNetwork.Website.Controllers
 {
     [HandleError]
-    public class AdminController : AbstractController
+    public class AdminController : AbstractDefaultController
     {
+        public AdminController()
+        { }
+
         //
         // GET: /Admin/
 

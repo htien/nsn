@@ -134,7 +134,7 @@ namespace NSN.Kernel
 
         public void ping()
         {
-            this.LastAccessedTime = Convert.ToInt32(DateTimeUtils.CurrentTimeMillis);
+            this.LastAccessedTime = Convert.ToInt32(DateTimeUtils.UnixTimestamp);
         }
 
         #endregion

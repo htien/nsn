@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web;
 using NSN.Kernel;
+using NSN.Manager;
 
 namespace NSN.Init
 {
@@ -77,10 +78,7 @@ namespace NSN.Init
         /// Occurs when ASP.NET acquires the current state
         /// (for example, session state) that is associated with the current request.
         /// </summary>
-        protected void Application_AcquireRequestState(object sender, EventArgs e)
-        {
-            UserSession userSession = NSNContext.Current.SessionManager.RefreshSession(HttpContext.Current);
-        }
+        protected void Application_AcquireRequestState(object sender, EventArgs e) { }
 
         /// <summary>
         /// Occurs when the request state (for example, session state) that is associated with
@@ -164,7 +162,27 @@ namespace NSN.Init
         /// </summary>
         protected void Application_PreSendRequestContent(object sender, EventArgs e) { }
 
-        protected void Session_End(object sender, EventArgs e) { }
+        protected void Session_End(object sender, EventArgs e)
+        {
+            if (HttpContext.Current.Session == null)
+                return;
+
+            ISessionManager sessionManager = NSNContext.Current.SessionManager;
+            if (sessionManager == null)
+            {
+                // LOG
+                return;
+            }
+
+            string sessionId = HttpContext.Current.Session.SessionID;
+            try
+            {
+                sessionManager.StoreSession(sessionId);
+            }
+            catch
+            { }
+            sessionManager.Remove(sessionId);
+        }
 
         /// <summary>
         /// Called each time when instance of the HttpApplication is destroyed.

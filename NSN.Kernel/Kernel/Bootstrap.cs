@@ -193,9 +193,14 @@ namespace NSN.Kernel
             // Single Sign-On routes
 
             routes.MapRouteLowercase(
-                "SSO",
+                "SSOAction",
                 "Auth/{action}",
                 new { controller = "Auth", action = "Register" }
+            );
+            routes.MapRouteLowercase(
+                "SSOLogout",
+                "Logout",
+                new { controller = "Auth", action = "Logout" }
             );
 
             // Back-end routes

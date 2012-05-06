@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Web;
+using System.Web.SessionState;
+using NSN.Kernel;
 
 namespace NSN.HttpModule
 {
@@ -9,28 +11,34 @@ namespace NSN.HttpModule
 
         public void Init(HttpApplication context)
         {
-            context.BeginRequest += OnBeginRequest;
+            context.AcquireRequestState += OnAcquireRequestState;
         }
 
         public void Dispose() { }
 
         #endregion
 
-        private void OnBeginRequest(object sender, EventArgs e)
+        private void OnAcquireRequestState(object sender, EventArgs e)
         {
             HttpContext context = ((HttpApplication)sender).Context;
             HttpRequest request = context.Request;
-            string[] fileExts = { ".css", ".js", ".png", ".gif", ".jpg", "jpeg", "bmp", "swf", ".html" };
-            bool accept = true;
+            HttpResponse response = context.Response;
+            HttpSessionState session = context.Session;
+
+            // Quá trình kiểm tra loại bỏ những request đối với những static file
+            string[] fileExts = { ".css", ".js", ".png", ".gif", ".jpg", "jpeg", "bmp", "swf", ".aspx", ".html" };
+            bool acceptRequest = true;
             foreach (string ext in fileExts)
             {
                 if (ext.Equals(request.CurrentExecutionFilePathExtension, StringComparison.OrdinalIgnoreCase))
                 {
-                    accept = false;
+                    acceptRequest = false;
                     break;
                 }
             }
-            if (!accept) return;
+            if (!acceptRequest) return;
+
+            UserSession userSession = NSNContext.Current.SessionManager.RefreshSession(HttpContext.Current);
         }
     }
 }

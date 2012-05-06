@@ -128,7 +128,7 @@ namespace NSN.Manager
                 userSession = new UserSession()
                 {
                     SessionId = session.SessionID,
-                    CreationTime = DateTimeUtils.CurrentTimeMillis
+                    CreationTime = DateTimeUtils.UnixTimestamp
                 };
                 if (true)
                 {

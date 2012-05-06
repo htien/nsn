@@ -3,7 +3,7 @@ using NewSocialNetwork.Repositories;
 
 namespace NewSocialNetwork.Website.Controllers
 {
-    public class PhotoAlbumController : AbstractController
+    public class PhotoAlbumController : AbstractDefaultController
     {
         public IPhotoAlbumRepository photoAlbumRepo { get; set; }
 

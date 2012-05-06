@@ -11,7 +11,7 @@ namespace NewSocialNetwork.Domain
         [PrimaryKey(PrimaryKeyType.Assigned, "UserId")]
         public virtual int UserId { get; set; }
 
-        [Property("Ip", NotNull = false)]
+        [Property("Ip", Length = 15, NotNull = false)]
         public virtual string Ip { get; set; }
 
         [Property("Start", NotNull = false)]
@@ -27,7 +27,7 @@ namespace NewSocialNetwork.Domain
 
         #region Relationship
 
-        [BelongsTo("UserId", NotNull = true)]
+        [BelongsTo("UserId", NotNull = false, Insert = false, Update = false)]
         public virtual User User { get; set; }
 
         #endregion

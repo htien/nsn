@@ -5,7 +5,7 @@ using NSN.Common;
 namespace NewSocialNetwork.Website.Controllers
 {
     [HandleError]
-    public class HomeController : AbstractController
+    public class HomeController : AbstractDefaultController
     {
         public IUserRepository userRepo { private get; set; }
 
