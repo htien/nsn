@@ -137,7 +137,7 @@ namespace NewSocialNetwork.DataAccess
 
         protected ISession Session()
         {
-            return this.sessionFactory.OpenSession();
+            return DAOUtils.CurrentSession;
         }
     }
 }

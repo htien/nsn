@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSN.Framework", "NSN.Framew
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaberLily", "SaberLily\SaberLily.csproj", "{D14D16FE-81B2-499F-A3E7-D8AEDA6E5150}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewSocialNetwork.Data", "NewSocialNetwork.Data\NewSocialNetwork.Data.csproj", "{C1EE8E9B-8ED6-4094-B36A-4FDD3149BF25}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSN.Kernel", "NSN.Kernel\NSN.Kernel.csproj", "{C8DFDE88-5823-48A1-9589-3F48C72F8D1A}"
 EndProject
 Global
@@ -47,10 +45,6 @@ Global
 		{D14D16FE-81B2-499F-A3E7-D8AEDA6E5150}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D14D16FE-81B2-499F-A3E7-D8AEDA6E5150}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D14D16FE-81B2-499F-A3E7-D8AEDA6E5150}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C1EE8E9B-8ED6-4094-B36A-4FDD3149BF25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1EE8E9B-8ED6-4094-B36A-4FDD3149BF25}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1EE8E9B-8ED6-4094-B36A-4FDD3149BF25}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1EE8E9B-8ED6-4094-B36A-4FDD3149BF25}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C8DFDE88-5823-48A1-9589-3F48C72F8D1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C8DFDE88-5823-48A1-9589-3F48C72F8D1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8DFDE88-5823-48A1-9589-3F48C72F8D1A}.Release|Any CPU.ActiveCfg = Release|Any CPU

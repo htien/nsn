@@ -49,6 +49,9 @@
     <Reference Include="Castle.Facilities.Logging">
       <HintPath>..\packages\Castle.LoggingFacility.3.0.0.4001\lib\net40\Castle.Facilities.Logging.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.Services.Transaction, Version=3.0.202.2202, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Services.Transaction.3.0.202.2202\lib\net40\Castle.Services.Transaction.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.Windsor">
       <HintPath>..\packages\Castle.Windsor.3.0.0.4001\lib\net40\Castle.Windsor.dll</HintPath>
     </Reference>
@@ -68,7 +71,9 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -81,6 +86,96 @@
     <Compile Include="HttpModule\RequestFilter.cs" />
     <Compile Include="Application\NSNContext.cs" />
     <Compile Include="Installer\PersistenceInstaller.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\CommentDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\CommentTextDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\CountryChildDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\CountryDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\CustomRelationDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\CustomRelationDataDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\DAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\DAOUtils.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\EmotionDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\EmotionPackageDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\FeedDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\FriendDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\FriendListDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\FriendListDataDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\FriendRequestDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\LikeCacheDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\LikeDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\LinkDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\MailDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\MailFolderDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\MailTextDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\PhotoAlbumDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\PhotoAlbumInfoDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\PhotoDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\PhotoInfoDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\SessionDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\UserCountDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\UserDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\UserGroupDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\UserTweetDAO.cs" />
+    <Compile Include="NewSocialNetwork\DataAccess\VersionDAO.cs" />
+    <Compile Include="NewSocialNetwork\Domain\Comment.cs" />
+    <Compile Include="NewSocialNetwork\Domain\CommentText.cs" />
+    <Compile Include="NewSocialNetwork\Domain\Country.cs" />
+    <Compile Include="NewSocialNetwork\Domain\CountryChild.cs" />
+    <Compile Include="NewSocialNetwork\Domain\CustomRelation.cs" />
+    <Compile Include="NewSocialNetwork\Domain\CustomRelationData.cs" />
+    <Compile Include="NewSocialNetwork\Domain\Emotion.cs" />
+    <Compile Include="NewSocialNetwork\Domain\EmotionPackage.cs" />
+    <Compile Include="NewSocialNetwork\Domain\Feed.cs" />
+    <Compile Include="NewSocialNetwork\Domain\Friend.cs" />
+    <Compile Include="NewSocialNetwork\Domain\FriendList.cs" />
+    <Compile Include="NewSocialNetwork\Domain\FriendListData.cs" />
+    <Compile Include="NewSocialNetwork\Domain\FriendRequest.cs" />
+    <Compile Include="NewSocialNetwork\Domain\Like.cs" />
+    <Compile Include="NewSocialNetwork\Domain\LikeCache.cs" />
+    <Compile Include="NewSocialNetwork\Domain\Link.cs" />
+    <Compile Include="NewSocialNetwork\Domain\Mail.cs" />
+    <Compile Include="NewSocialNetwork\Domain\MailFolder.cs" />
+    <Compile Include="NewSocialNetwork\Domain\MailText.cs" />
+    <Compile Include="NewSocialNetwork\Domain\NSNVersion.cs" />
+    <Compile Include="NewSocialNetwork\Domain\Photo.cs" />
+    <Compile Include="NewSocialNetwork\Domain\PhotoAlbum.cs" />
+    <Compile Include="NewSocialNetwork\Domain\PhotoAlbumInfo.cs" />
+    <Compile Include="NewSocialNetwork\Domain\PhotoInfo.cs" />
+    <Compile Include="NewSocialNetwork\Domain\Session.cs" />
+    <Compile Include="NewSocialNetwork\Domain\User.cs" />
+    <Compile Include="NewSocialNetwork\Domain\UserCount.cs" />
+    <Compile Include="NewSocialNetwork\Domain\UserGroup.cs" />
+    <Compile Include="NewSocialNetwork\Domain\UserGroupLevel.cs" />
+    <Compile Include="NewSocialNetwork\Domain\UserTweet.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\ICommentRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\ICommentTextRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\ICountryChildRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\ICountryRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\ICustomRelationDataRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\ICustomRelationRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IEmotionPackageRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IEmotionRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IFeedRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IFriendListDataRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IFriendListRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IFriendRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IFriendRequestRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\ILikeCacheRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\ILikeRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\ILinkRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IMailFolderRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IMailRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IMailTextRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IPhotoAlbumInfoRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IPhotoAlbumRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IPhotoInfoRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IPhotoRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\ISessionRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IUserCountRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IUserGroupRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IUserRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IUserTweetRepository.cs" />
+    <Compile Include="NewSocialNetwork\Repositories\IVersionRepository.cs" />
     <Compile Include="Sub\Castle\WindsorControllerFactory.cs" />
     <Compile Include="Installer\ControllersInstaller.cs" />
     <Compile Include="Installer\LoggerInstaller.cs" />
@@ -109,10 +204,6 @@
     <ProjectReference Include="..\NSN.Framework\NSN.Framework.csproj">
       <Project>{65C4E0C6-E101-446C-BEC5-AC149BE0AA9F}</Project>
       <Name>NSN.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NewSocialNetwork.Data\NewSocialNetwork.Data.csproj">
-      <Project>{C1EE8E9B-8ED6-4094-B36A-4FDD3149BF25}</Project>
-      <Name>NewSocialNetwork.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\SaberLily\SaberLily.csproj">
       <Project>{D14D16FE-81B2-499F-A3E7-D8AEDA6E5150}</Project>
