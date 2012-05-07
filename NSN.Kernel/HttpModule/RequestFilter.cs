@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Web;
 using System.Web.SessionState;
+using NewSocialNetwork.DataAccess;
 using NSN.Kernel;
-using NHibernate;
 
 namespace NSN.HttpModule
 {
@@ -13,6 +13,7 @@ namespace NSN.HttpModule
         public void Init(HttpApplication context)
         {
             context.AcquireRequestState += OnAcquireRequestState;
+            context.EndRequest += OnEndRequest;
         }
 
         public void Dispose() { }
@@ -39,7 +40,16 @@ namespace NSN.HttpModule
             }
             if (!acceptRequest) return;
 
-            UserSession userSession = NSNContext.Current.SessionManager.RefreshSession(HttpContext.Current);
+            DAOUtils.OpenSession(context);
+            NSNContext.Current.SessionManager.RefreshSession(HttpContext.Current);
         }
+
+        private void OnEndRequest(object sender, EventArgs e)
+        {
+            HttpContext context = ((HttpApplication)sender).Context;
+            DAOUtils.CloseSession(context);
+        }
+
+
     }
 }

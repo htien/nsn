@@ -1096,10 +1096,6 @@
       <Project>{65C4E0C6-E101-446C-BEC5-AC149BE0AA9F}</Project>
       <Name>NSN.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NewSocialNetwork.Data\NewSocialNetwork.Data.csproj">
-      <Project>{C1EE8E9B-8ED6-4094-B36A-4FDD3149BF25}</Project>
-      <Name>NewSocialNetwork.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NSN.Kernel\NSN.Kernel.csproj">
       <Project>{C8DFDE88-5823-48A1-9589-3F48C72F8D1A}</Project>
       <Name>NSN.Kernel</Name>

@@ -14,7 +14,7 @@ namespace NSN.Common
         public const string CTX_NSNCONTAINER = "__NSNContainer";
         public const string CTX_NSNCONFIG = "__NSNConfig";
 
-        public const string ASSEMBLY_NSN_ENTITIES = "Lien.NewSocialNetwork.Data";
+        public const string ASSEMBLY_NSN_ENTITIES = "Lien.NSN.Kernel";
         public const string ASSEMBLY_NSN_WEBSITE = "Lien.NewSocialNetwork.Website";
 
         public const string CONNECTION_REMOTE_NAME = "remote";
@@ -24,6 +24,8 @@ namespace NSN.Common
         public const string DB_NAME = "db.name";
         public const string DB_USER = "db.user";
         public const string DB_PASSWORD = "db.passwd";
+
+        public const string NHIBERNATE_SESSION_KEY = "nsn.nhibernate.session";
 
         public const string SSO_LOGGED = "sso.logged";
         public const string TYPE_SSO = "sso";
