@@ -1077,6 +1077,7 @@
     <Compile Include="Schedules\Scheduler.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Logs\" />
     <Folder Include="static\js\goog\demos\editor\css\" />
     <Folder Include="static\js\goog\demos\fx\css3\" />
     <Folder Include="static\js\goog\demos\images\" />
@@ -1120,7 +1121,9 @@
     </Content>
     <None Include="Config\Custom.properties" />
     <None Include="Config\SystemGlobals.properties" />
-    <None Include="Config\Web.config" />
+    <None Include="Config\Web.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\Web.config.new" />
     <None Include="packages.config" />
     <None Include="static\js\goog\net\iframeio_different_base_test.data" />

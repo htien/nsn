@@ -2,6 +2,7 @@
 using System.Web;
 using System.Web.SessionState;
 using NSN.Kernel;
+using NHibernate;
 
 namespace NSN.HttpModule
 {

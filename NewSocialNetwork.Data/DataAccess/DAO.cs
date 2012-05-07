@@ -2,6 +2,7 @@
 using System.Transactions;
 using Castle.ActiveRecord;
 using Castle.Services.Transaction;
+using NHibernate;
 using NHibernate.Criterion;
 using NSN.Framework;
 
@@ -13,7 +14,12 @@ namespace NewSocialNetwork.DataAccess
     /// <typeparam name="T"></typeparam>
     public abstract class DAO<T> : IRepository<T> where T : class, IEntity
     {
-        public DAO() { }
+        private ISessionFactory sessionFactory;
+
+        public DAO(ISessionFactory sessionFactory)
+        {
+            this.sessionFactory = sessionFactory;
+        }
 
         #region IRepository<T> Members
 
@@ -39,7 +45,7 @@ namespace NewSocialNetwork.DataAccess
 
         public T FindById(object id)
         {
-            return ActiveRecordMediator<T>.FindByPrimaryKey(id);
+            return this.Session().Get<T>(id);
         }
 
         public T FindById(object id, bool throwOnNotFound)
@@ -128,5 +134,10 @@ namespace NewSocialNetwork.DataAccess
         }
 
         #endregion
+
+        protected ISession Session()
+        {
+            return this.sessionFactory.OpenSession();
+        }
     }
 }

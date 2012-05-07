@@ -1,4 +1,5 @@
-﻿using Castle.Facilities.EventWiring;
+﻿using Castle.ActiveRecord.Framework;
+using Castle.Facilities.EventWiring;
 using Castle.Facilities.Startable;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
@@ -29,5 +30,11 @@ namespace NSN.Installer
         }
 
         #endregion
+
+        public static void RegisterSessionFactoryHolder(IWindsorContainer container, ISessionFactoryHolder holder)
+        {
+            container.Register(Component.For<ISessionFactoryHolder>()
+                .Named("activerecord.sessionfactoryholder").Instance(holder));
+        }
     }
 }

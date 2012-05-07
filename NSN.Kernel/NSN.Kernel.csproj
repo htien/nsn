@@ -76,9 +76,11 @@
     <Compile Include="Application\About.cs" />
     <Compile Include="Application\AssemblyStatusAttribute.cs" />
     <Compile Include="Common\Utilities\Null.cs" />
+    <Compile Include="Facility\PersistenceFacility.cs" />
     <Compile Include="Init\NewSocialNetwork.cs" />
     <Compile Include="HttpModule\RequestFilter.cs" />
     <Compile Include="Application\NSNContext.cs" />
+    <Compile Include="Installer\PersistenceInstaller.cs" />
     <Compile Include="Sub\Castle\WindsorControllerFactory.cs" />
     <Compile Include="Installer\ControllersInstaller.cs" />
     <Compile Include="Installer\LoggerInstaller.cs" />
