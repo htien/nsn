@@ -1,5 +1,13 @@
 ﻿@{
     ViewBag.hasLeftCol = true;
     ViewBag.hasRightCol = true;
+    NewSocialNetwork.Domain.User user = ViewBag.LoggedUser;
 }
-@ViewBag.Author<br />
+@(ViewBag.IsLogged?"Đã đăng nhập!":"Chưa đăng nhập!")<br />
+Username: @user.Username<br />
+Full Name: @user.FullName<br />
+Email: @user.Email<br />
+Group: @user.UserGroup.Title
+@Html.ActionLink("(Logout)", "logout", "auth")<br />
+<br />
+@ViewBag.a,@ViewBag.b,@ViewBag.c

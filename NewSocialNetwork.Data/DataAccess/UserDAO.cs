@@ -1,12 +1,14 @@
 ﻿using Castle.ActiveRecord;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
+using NHibernate;
 
 namespace NewSocialNetwork.DataAccess
 {
     public class UserDAO : DAO<User>, IUserRepository
     {
-        public UserDAO() { }
+        public UserDAO(ISessionFactory sessionFactory) : base(sessionFactory)
+        { }
 
         #region UserRepository Members
 

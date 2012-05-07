@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 using NewSocialNetwork.Repositories;
-using NSN.Common;
+using NSN.Manager;
 
 namespace NewSocialNetwork.Website.Controllers
 {
@@ -8,6 +8,7 @@ namespace NewSocialNetwork.Website.Controllers
     public class HomeController : AbstractDefaultController
     {
         public IUserRepository userRepo { private get; set; }
+        public ISessionManager sessionManager { private get; set; }
 
         public HomeController()
         {
@@ -19,7 +20,8 @@ namespace NewSocialNetwork.Website.Controllers
 
         public ActionResult Stream(string userid)
         {
-            ViewBag.Author = config[Globals.ANONYMOUS_USER_ID];
+            ViewBag.IsLogged = sessionManager.GetUserSession().IsLogged();
+            ViewBag.LoggedUser = sessionManager.GetUser();
             return View();
         }
 

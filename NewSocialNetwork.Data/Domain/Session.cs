@@ -27,7 +27,7 @@ namespace NewSocialNetwork.Domain
 
         #region Relationship
 
-        [BelongsTo("UserId", NotNull = false, Insert = false, Update = false)]
+        [BelongsTo("UserId", NotNull = true, Insert = false, Update = false)]
         public virtual User User { get; set; }
 
         #endregion

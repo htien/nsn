@@ -8,6 +8,7 @@ using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Castle.ActiveRecord;
+using Castle.ActiveRecord.Framework;
 using Castle.ActiveRecord.Framework.Config;
 using Castle.Windsor;
 using NSN.Common;
@@ -90,6 +91,7 @@ namespace NSN.Kernel
                 InitContainer();
                 InitControllerFactory();
                 InitActiveRecord();
+                InitContainer2();
 
                 NSNContext.Current.Container = (IWindsorContainer)app.Application[Globals.CTX_NSNCONTAINER];
                 NSNContext.Current.Config = NSNConfig.Instance;
@@ -108,12 +110,18 @@ namespace NSN.Kernel
         {
             this.container = new WindsorContainer(Globals.CONFIG_FOLDER_PATH + "CastleWindsor.xml");
             this.nsn.Application.Add(Globals.CTX_NSNCONTAINER, this.container);
-            this.container.Install(new LoggerInstaller(),
-                         new StandardInstaller(),
-                         new RepositoriesInstaller(),
-                         new ModulesInstaller(),
-                         new ServicesInstaller(),
-                         new ControllersInstaller());
+            this.container.Install(
+                        new LoggerInstaller(),
+                        new StandardInstaller(),
+                        new RepositoriesInstaller(),
+                        new ModulesInstaller(),
+                        new ServicesInstaller(),
+                        new ControllersInstaller());
+        }
+
+        private void InitContainer2()
+        {
+            this.container.Install(new PersistenceInstaller());
         }
 
         private void InitControllerFactory()
@@ -167,8 +175,21 @@ namespace NSN.Kernel
             configSource.IsRunningInWebApp = Convert.ToBoolean(config[Globals.GLOBAL_ACTIVERECORD_ISWEBAPP]);
             configSource.SetDebugFlag(Convert.ToBoolean(config[Globals.GLOBAL_ACTIVERECORD_DEBUG]));
 
-            Assembly asmEntities = Assembly.Load(Globals.ASSEMBLY_NSN_ENTITIES);
-            ActiveRecordStarter.Initialize(asmEntities, configSource);
+            try
+            {
+                Assembly asmEntities = Assembly.Load(Globals.ASSEMBLY_NSN_ENTITIES);
+                ActiveRecordStarter.SessionFactoryHolderCreated += ActiveRecordStarter_SessionFactoryHolderCreated;
+                ActiveRecordStarter.Initialize(asmEntities, configSource);
+            }
+            finally
+            {
+                ActiveRecordStarter.SessionFactoryHolderCreated -= ActiveRecordStarter_SessionFactoryHolderCreated;
+            }
+        }
+
+        private void ActiveRecordStarter_SessionFactoryHolderCreated(ISessionFactoryHolder holder)
+        {
+            StandardInstaller.RegisterSessionFactoryHolder(container, holder);
         }
 
         private void RegisterGlobalFilters(GlobalFilterCollection filters)
