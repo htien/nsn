@@ -45,7 +45,6 @@
 .loggedOut #UIGlobal_BlueBar {
   min-width: 981px;
   background: #f1f1f1 url(images/background1.png) repeat-x;
-  border-bottom: 1px solid #ddd;
 }
 
 #UIGlobal_BlueBar.fixed_always {
@@ -97,7 +96,7 @@
 #UIGlobal_BlueBar .nsn_login_container .uiFormPassword {
   width: 150px;
 }
-#UIGlobal_BlueBar .nsn_login_container #nsn_signin {
+#UIGlobal_BlueBar .nsn_login_container #nsn_login {
   margin-right: 0;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
