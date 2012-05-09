@@ -14,7 +14,8 @@ var s = [];
 var glbDebug = true,
     glbContextPath = 'http://localhost:55555',
     glbDlgOpts, glbValidateOpts,
-    glbDefaultDlgId = "ajax-response";
+    glbDefaultDlgId = "ajax-response",
+    glbYesLog = false;
 
 /* begin NSN/NSN.js */
 (function(window, jQuery) {
@@ -49,6 +50,13 @@ var glbDebug = true,
             this.webkit = contains('WebKit');
             this.mac = contains('Macintosh');
             this.iOS = this.iPhone || this.iPad;
+        };
+        nsn._log = function(message) {
+            if (glbYesLog) {
+                if (typeof message == 'string') {
+                    console.log(message);
+                }
+            }
         };
         nsn.isIE = function(ver) {
             var yes = 'undefined' != typeof jQuery.browser.msie;
@@ -97,6 +105,12 @@ var glbDebug = true,
             });
             return '{ ' + arr.join(', ') + ' }';
         };
+        nsn.resetForm = function(form) {
+            var jqForm = nsn.$id(form);
+            jqForm[0].reset();
+            jqForm.find(':input[class!=noreset]:visible:enabled:first').focus();
+		    return jqForm;
+        };
         nsn.getJSON = function(path) {
             var json;
             jQuery.ajax({
@@ -141,8 +155,11 @@ var glbDebug = true,
         nsn.shakeContainer = function(container) {
             nsn.$id(container).stop(true, true).effect('shake', { times: 2, distance: 5 }, 50);
         };
+        nsn.fnFalse = function() {
+            return false;
+        };
 
-        /* NSN.f prototype */
+        /*=== NSN.f prototype ===*/
         nsn.f.ajaxSubmit = function(form) {
             var jqForm = form instanceof HTMLFormElement ? jQuery(form) : form,
                 settings = {
@@ -154,6 +171,26 @@ var glbDebug = true,
             return jQuery.ajax(settings);
         };
 
+        /** Turn off autocomplete for input text */
+		nsn.f.autoCompleteOff = function() {
+			nsn._log('Assigned autocomplete="off" on input[type=text].');
+			jQuery('form.off').attr('autocomplete', 'off');
+			jQuery('input[type=text].off').attr('autocomplete', 'off');
+		};
+        
+        /** Prevent from dragging <link> and <image> */
+        nsn.f.disableDrag = function(elements) {
+			var json = jQuery.parseJSON(elements); 
+			jQuery.each(json.tags, function(idx, el) {
+				nsn._log('Diabled dragging on tag: "' + el + '"');
+				jQuery(el).live('mousedown', nsn.fnFalse);
+			});
+			jQuery.each(json.classes, function(idx, el) {
+				nsn._log('Diabled dragging on class: ".' + el + '"');
+				jQuery('.' + el).live('mousedown', nsn.fnFalse);
+			});
+		};
+
         window.NSN = nsn;
     }
 })(window, jQuery, undefined);
@@ -162,8 +199,10 @@ var glbDebug = true,
 
 /* begin NSN/init.js */
 (function(nsn, jQuery) {
+    glbYesLog = glbDebug && !nsn.isIE();
     glbDlgOpts = {
         title: 'New Social Network',
+        hasTitle: true,
         autoOpen: false,
         draggable: false,
         modal: true,
@@ -174,8 +213,13 @@ var glbDebug = true,
         width: 'auto',
         height: 'auto',
         closeOnEscape: false,
-        open: function(evt, ui) {
+        create: function(evt, ui) {
+            if (!this.option.hasTitle) {
+                jQuery('.ui-widget-header').remove();
+            }
             jQuery('.ui-dialog-titlebar-close').remove();
+        },
+        open: function(evt, ui) {
         },
         buttons: {
             'Close': function() {
@@ -219,3 +263,11 @@ var glbDebug = true,
 })(NSN, jQuery);
 
 /* end NSN/init.js */
+
+/* begin NSN/ready.js */
+jQuery(function($) {
+    NSN.f.autoCompleteOff();
+	NSN.f.disableDrag('{"tags":["a", "img"], "classes":["guiButton"]}');
+});
+
+/* end NSN/ready.js */

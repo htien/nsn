@@ -1,5 +1,4 @@
 ﻿jQuery(function($) {
-    var allowLog = glbDebug && !NSN.isIE();
 
     /* Login scripts */
     var loginButton = 'nsn_login',
@@ -24,24 +23,23 @@
                         document.location = NSN.url('/');
                     else
                         NSN.callJqDlg(glbDefaultDlgId, loginResponse.Message, {
+                            width: '500',
                             buttons: {
                                 'Close': function() {
                                     jQuery(this).dialog('destroy');
+                                    NSN.resetForm(loginForm);
+                                    NSN.$id(loginForm).submit();
                                 }
                             }
                         }).dialog('open');
                 })
                 .error(function(data) {
                 });
-            if (allowLog) {
-                console.log('__#' + form.id + '__ form is submited.');
-            }
+            NSN._log('__#' + form.id + '__ form is submited.');
         }
     });
     NSN.$id(loginButton).click(function() {
-        if (allowLog) {
-            console.log('__#' + this.id + '__ button is clicked.');
-        }
+        NSN._log('__#' + this.id + '__ button is clicked.');
         NSN.$id(loginForm).submit();
         return false;
     });
