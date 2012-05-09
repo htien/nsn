@@ -46,7 +46,7 @@ namespace NSN.Service.BusinessService
             ISessionManager sessionManager = NSNContext.Current.SessionManager;
             if (!sessionManager.GetUserSession().IsLogged())
             {
-                HttpContext.Current.Response.Redirect("auth");
+                HttpContext.Current.Response.Redirect("/auth");
             }
         }
     }

@@ -210,3 +210,7 @@ table.fixed {
 .nsnCopyright .press:active {
   color: #7d4a42;
 }
+.nsn-popup-msg {
+  padding: 8px 0;
+  color: #222;
+}
