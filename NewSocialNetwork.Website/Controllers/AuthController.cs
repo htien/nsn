@@ -29,7 +29,11 @@ namespace NewSocialNetwork.Website.Controllers
         [HttpPost]
         public JsonResult Login(string nsnId, string nsnPasswd)
         {
-            ResponseMessage msg = new ResponseMessage("Login", RStatus.FAIL, "Wrong ID or password. Access denied.");
+            ResponseMessage msg = new ResponseMessage("Login", RStatus.FAIL,
+                @"<strong>Incorrect ID or password. Access denied.</strong>
+                  <p>The username you entered does not belong to any account.</p>
+                  <p>You can login using any email or username associated with your account.
+                     Make sure that it is typed correctly.</p>");
             try
             {
                 Domain.User user = authService.Login(nsnId, nsnPasswd);
