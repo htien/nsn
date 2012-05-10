@@ -28,12 +28,11 @@
                         document.location = NSN.url('/');
                     else {
                         NSN.callJqDlg(glbDefaultDlgId, loginResponse.Message, {
-                            hasTitle: true,
                             width: 500,
                             draggable: true,
                             buttons: {
                                 'Close': function() {
-                                    jQuery(this).dialog('destroy');
+                                    jQuery(this).dialog('destroy').remove();
                                     NSN.resetForm(loginForm);
                                     NSN.$id(loginForm).submit();
                                 }

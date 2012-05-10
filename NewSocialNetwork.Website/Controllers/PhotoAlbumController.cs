@@ -15,7 +15,7 @@ namespace NewSocialNetwork.Website.Controllers
         //
         // GET: /PhotoAlbum/
 
-        public ActionResult Index()
+        public ActionResult List()
         {
             return View();
         }

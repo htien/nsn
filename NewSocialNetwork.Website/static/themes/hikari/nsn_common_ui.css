@@ -8,8 +8,8 @@
 /* === Override JQuery-UI === */
 
 .ui-widget-overlay {
-  background: #fff;
-  opacity: .5;
+  /*background: #fff;
+  opacity: .5;*/
 }
 .ui-button.ui-state-default {
   background-color: #f5f5f5;
@@ -56,7 +56,7 @@
   background-clip: padding-box;
 }
 .ui-dialog .ui-dialog-titlebar {
-  padding: 20px 42px 8px 40px;
+  padding: 15px 42px 5px 40px;
   background-color: #2271a9;
   background-repeat: repeat-x;
   background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#2F7EB6),color-stop(100%,#2271A9));
@@ -145,6 +145,8 @@
   padding-right: 0;
   padding-left: 0;
 }
+
+.ui-state-highlight.nsn-popup-msg,
 .ui-state-error.nsn-popup-msg {
   padding: 5px 8px;
 }

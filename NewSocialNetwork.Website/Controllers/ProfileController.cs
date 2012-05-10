@@ -5,33 +5,18 @@ namespace NewSocialNetwork.Website.Controllers
 {
     public class ProfileController : AbstractDefaultController
     {
-        public ProfileController() { }
+        public ProfileController()
+        {
+            ViewBag.PageTitle = "NSN: Profile";
+        }
 
         //
         // GET: /Profile/
 
-        public ActionResult Info()
+        public ActionResult Info(string uid)
         {
-            ViewBag.PageTitle = "NSN: Profile Info";
-            return View();
-        }
-
-        public ActionResult Posts(string userid)
-        {
-            ViewBag.PageTitle = "NSN: Posts";
-            ViewBag.abc = userid;
-            return View();
-        }
-
-        public ActionResult Friends()
-        {
-            ViewBag.PageTitle = "NSN: Friends";
-            return View();
-        }
-
-        public ActionResult Links()
-        {
-            ViewBag.PageTitle = "NSN: Links";
+            ViewBag.PageTitle += " Info";
+            ViewBag.Uid = uid;
             return View();
         }
     }

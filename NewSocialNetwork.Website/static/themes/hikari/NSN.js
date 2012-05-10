@@ -278,6 +278,11 @@ var glbDebug = true,
 
 /* end NSN/init.js */
 
+/* begin NSN/globals.js */
+
+
+/* end NSN/globals.js */
+
 /* begin NSN/ready.js */
 jQuery(function($) {
     NSN.f.autoCompleteOff();
