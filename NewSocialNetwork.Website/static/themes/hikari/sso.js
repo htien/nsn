@@ -1,5 +1,4 @@
 ﻿jQuery(function($) {
-    var allowLog = glbDebug && !NSN.isIE();
 
     /* Login scripts */
     var loginButton = 'nsn_login',
@@ -19,31 +18,37 @@
         invalidHandler: function(form, validator) { // xử lý khi form nhập vào không hợp lệ
             NSN.shakeContainer(loginForm);
         },
-        submitHandler: function(form) { // xử lý khi form nhập vào hợp lệ
-            NSN.ajaxSubmit(form) // dùng ajax để submit nội dung form và gửi lên server
-                .success(function(loginResponse) { // server sẽ trả về json, biến loginResponse chứa nội dung json trả về
-                    if (loginResponse.Status == 1) // khi đăng nhập thành công
+        submitHandler: function(form) {
+            NSN.callJqDlg(glbDefaultDlgId,
+                '<h3><img src="/static/themes/hikari/images/loading1.gif" /> Signing in...</h3>',
+                {
+                    buttons: {}
+                }).dialog('open');
+            NSN.ajaxSubmit(form)
+                .success(function(loginResponse) {
+                    if (loginResponse.Status == 1)
                         document.location = NSN.url('/');
-                    else // khi đăng nhập thất bại, gọi ngay dialog thông báo
+                    else {
                         NSN.callJqDlg(glbDefaultDlgId, loginResponse.Message, {
+                            width: 500,
+                            draggable: true,
                             buttons: {
-                                'Close': function() { // tạo ra 1 nút button, ấn vào để tắt dialog
-                                    jQuery(this).dialog('destroy');
+                                'Close': function() {
+                                    jQuery(this).dialog('destroy').remove();
+                                    NSN.resetForm(loginForm);
+                                    NSN.$id(loginForm).submit();
                                 }
                             }
                         }).dialog('open');
+                    }
                 })
                 .error(function(data) { // xử lý khi đường truyền bị lỗi, biến data chứa nội dung thông báo lỗi
                 });
-            if (allowLog) { // log nội dung trên các trình duyệt thuộc webkit
-                console.log('__#' + form.id + '__ form is submited.');
-            }
+            NSN._log('__#' + form.id + '__ form is submited.');
         }
     });
-    NSN.$id(loginButton).click(function() { // gắn sự kiện click cho nút Sign In
-        if (allowLog) {
-            console.log('__#' + this.id + '__ button is clicked.');
-        }
+    NSN.$id(loginButton).click(function() {
+        NSN._log('__#' + this.id + '__ button is clicked.');
         NSN.$id(loginForm).submit();
         return false;
     });

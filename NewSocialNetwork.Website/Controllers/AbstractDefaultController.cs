@@ -6,7 +6,7 @@ namespace NewSocialNetwork.Website.Controllers
     {
         protected internal AbstractDefaultController()
         {
-            AuthService.RequireLogin();
+            AuthService.RequireLoggedIn();
         }
     }
 }

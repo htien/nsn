@@ -41,12 +41,19 @@ namespace NSN.Service.BusinessService
             sessionManager.Add(us);
         }
 
-        public static void RequireLogin()
+        public static void RequireLoggedIn()
         {
-            ISessionManager sessionManager = NSNContext.Current.SessionManager;
-            if (!sessionManager.GetUserSession().IsLogged())
+            if (!NSNContext.Current.SessionManager.GetUserSession().IsLogged())
             {
                 HttpContext.Current.Response.Redirect("/auth");
+            }
+        }
+
+        public static void RequireLoggedOut()
+        {
+            if (NSNContext.Current.SessionManager.GetUserSession().IsLogged())
+            {
+                HttpContext.Current.Response.RedirectToRoute("Root");
             }
         }
     }

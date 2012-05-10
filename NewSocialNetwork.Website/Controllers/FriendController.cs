@@ -2,15 +2,15 @@
 
 namespace NewSocialNetwork.Website.Controllers
 {
-    public class LinkController : AbstractDefaultController
+    public class FriendController : AbstractDefaultController
     {
-        public LinkController()
+        public FriendController()
         {
-            ViewBag.PageTitle = "NSN: Links";
+            ViewBag.PageTitle = "NSN: Friends";
         }
 
         //
-        // GET: /Link/
+        // GET: /Friend/
 
         public ActionResult List()
         {

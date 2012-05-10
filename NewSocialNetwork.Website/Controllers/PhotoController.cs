@@ -20,7 +20,7 @@ namespace NewSocialNetwork.Website.Controllers
         //
         // GET: /Photo/
 
-        public ActionResult Index()
+        public ActionResult Show()
         {
             Domain.User user = sessionManager.GetUser();
             IList<Photo> photos = this.photoRepo.GetPhotosByUser(user.UserId);

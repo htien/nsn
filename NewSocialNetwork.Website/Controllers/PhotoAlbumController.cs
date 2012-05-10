@@ -20,7 +20,7 @@ namespace NewSocialNetwork.Website.Controllers
         //
         // GET: /PhotoAlbum/
 
-        public ActionResult Index()
+        public ActionResult List()
         {
             User user = sessionManager.GetUser();
             IList<PhotoAlbum> albums = photoAlbumRepo.GetPhotoAlbumByUser(user.UserId);
