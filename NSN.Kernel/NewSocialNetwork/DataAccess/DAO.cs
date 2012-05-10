@@ -26,21 +26,21 @@ namespace NewSocialNetwork.DataAccess
         [Transaction(TransactionScopeOption.Required)]
         public T Create(T entity)
         {
-            ActiveRecordMediator<T>.Create(entity);
+            this.Session().Save(entity);
             return entity;
         }
 
         [Transaction(TransactionScopeOption.Required)]
         public T Save(T entity)
         {
-            ActiveRecordMediator<T>.Save(entity);
+            this.Session().SaveOrUpdate(entity);
             return entity;
         }
 
         [Transaction(TransactionScopeOption.Required)]
         public void Delete(T entity)
         {
-            ActiveRecordMediator<T>.Delete(entity);
+            this.Session().Delete(entity);
         }
 
         public T FindById(object id)

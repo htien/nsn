@@ -2,4 +2,111 @@
     ViewBag.hasLeftCol = false;
     ViewBag.hasRightCol = true;
 }
-<h2>Index</h2>
+<h2>Your Photo Albums</h2>
+@{
+    if(ViewBag.Albums != null && ViewBag.Albums.Count > 0)
+    {
+        foreach (var album in ViewBag.Albums)
+        {
+            @:@album.AlbumId, @album.Name   
+        }
+    }
+    else
+    {
+        <p>No albums.</p>
+    }
+    <p>@ViewBag.Total</p>
+    <p>Total Friend @ViewBag.user</p>
+    <p>Total Comment On One Object @ViewBag.totalcomment</p>
+    if (ViewBag.listfriend != null && ViewBag.listfriend.Count > 0)
+    {
+        foreach (var list in ViewBag.listfriend)
+        {
+            @:@list.UserId, @list.FullName   
+        }
+    }
+    else
+    {
+        <p>No Friend.</p>
+    }
+    //Lay photo cua album bat ky cua user bat ky
+    if (ViewBag.friendsearch != null && ViewBag.friendsearch.Count > 0)
+    {
+        foreach (var user in ViewBag.friendsearch)
+        {
+            @:@user.UserId, @user.FullName   
+        }
+    }
+    else
+    {
+        <p>No User Founded.</p>
+    }
+    //Lay comment
+    if (ViewBag.allc != null && ViewBag.allc.Count > 0)
+    {
+        foreach (var c in ViewBag.allc)
+        {
+            @:@c.User.Username, @c.CommentText.Text   
+        }
+    }
+    else
+    {
+        <p>No Comment Founded.</p>
+    }
+    //Others in banner
+    <p>Total Friends Request @ViewBag.friendRequest</p>
+    <p>Total Message @ViewBag.message</p>
+    <p>Total Activity @ViewBag.activity</p>
+    
+    if (ViewBag.friendList != null && ViewBag.friendList.Count > 0)
+    {
+        foreach (var fl in ViewBag.friendList)
+        {
+            @:@fl.ListId, @fl.Name   
+        }
+    }
+     else
+     {
+        <p>No FriendList Founded.</p>
+     }
+     
+     //Get User from Friend List
+    <p>User in Friend List </p>
+    if (ViewBag.userFriendList != null && ViewBag.userFriendList.Count > 0)
+    {
+        foreach (var ufl in ViewBag.userFriendList)
+        {
+            @:@ufl.UserId, @ufl.FullName   
+        }
+    }
+     else
+     {
+        <p>No Friend In List Founded.</p>
+     }
+     //Get RelationShip Between user 1 va user 2
+     <p>Get RelationShip Between user 1 va user 2 </p>
+    if (ViewBag.customRelation != null && ViewBag.customRelation.Count > 0)
+    {
+        foreach (var cr in ViewBag.customRelation)
+        {
+            @:@cr.PhraseVarName  
+        }
+    }
+    else
+    {
+        <p>Not Configured Yet.</p>
+    }
+     //Get RelationShip Between user 1 va user 2
+     <p>Get Not Mutual Friends Between user 1 va user 2 </p>
+    if (ViewBag.notMutualFriend != null && ViewBag.notMutualFriend.Count > 0)
+    {
+        foreach (var nmf in ViewBag.notMutualFriend)
+        {
+            @:@nmf.UserId,@nmf.FullName  
+        }
+    }
+    else
+    {
+        <p>All Mutual Friend.</p>
+    }
+}

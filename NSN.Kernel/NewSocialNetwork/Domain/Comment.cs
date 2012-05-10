@@ -15,7 +15,7 @@ namespace NewSocialNetwork.Domain
         public virtual string TypeId { get; set; }
 
         [Property("ItemId", NotNull = true)]
-        public virtual string Itemid { get; set; }
+        public virtual string ItemId { get; set; }
 
         /// <summary>
         /// Người dùng nhận được comment.
