@@ -30,7 +30,7 @@ namespace NewSocialNetwork.Website.Controllers
         public JsonResult Login(string nsnId, string nsnPasswd)
         {
             ResponseMessage msg = new ResponseMessage("Login", RStatus.FAIL,
-                @"<strong>Incorrect ID or password. Access denied.</strong>
+                @"<p class='nsn-popup-msg ui-state-error'>Incorrect ID or password. Access denied.</p>
                   <p>The username you entered does not belong to any account.</p>
                   <p>You can login using any email or username associated with your account.
                      Make sure that it is typed correctly.</p>");

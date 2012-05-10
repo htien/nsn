@@ -128,9 +128,14 @@ var glbDebug = true,
             return jqXHR;
         };
         nsn.createJqDlg = function(id, data, dlgOpts) {
-            var dlg = (nsn.byId(id) == null)
-                      ? jQuery('<div id="' + id + '"></div>')
-                      : nsn.$id(id);
+            var dlg;
+            if (nsn.byId(id) == null) {
+                dlg = jQuery('<div id="' + id + '"></div>');
+            }
+            else {
+                dlg = nsn.$id(id);
+                dlg.dialog('destroy');
+            }
             dlg.html(data);
             dlg.dialog(glbDlgOpts); // apply default dialog options
             if (typeof dlgOpts === 'object') {
@@ -149,7 +154,7 @@ var glbDebug = true,
             }
             var responseText = isUrl
                     ? jQuery.ajax(url, settings).responseText
-                    : '<p class="nsn-popup-msg">' + url + '</p>';
+                    : url;
             return nsn.createJqDlg(id, responseText, dlgOpts);
         };
         nsn.shakeContainer = function(container) {
@@ -209,17 +214,17 @@ var glbDebug = true,
         resizable: false,
         position: 'center',
         minWidth: 390,
-        minHeight: 190,
+        minHeight: 180,
         width: 'auto',
         height: 'auto',
         closeOnEscape: false,
         create: function(evt, ui) {
-            if (!this.option.hasTitle) {
-                jQuery('.ui-widget-header').remove();
-            }
             jQuery('.ui-dialog-titlebar-close').remove();
         },
         open: function(evt, ui) {
+            if (!jQuery(this).dialog("option", "hasTitle")) {
+                jQuery('.ui-dialog-titlebar').remove();
+            }
         },
         buttons: {
             'Close': function() {
@@ -246,13 +251,22 @@ var glbDebug = true,
 		scriptCharset: 'UTF-8',
 		statusCode: {
 			400: function() {
-				nsn.callJqDlg(glbDefaultDlgId, 'The request cannot be fulfilled due to bad syntax.', {title: 'NSN: HTTP Response 400'}).dialog('open');
+				nsn.callJqDlg(glbDefaultDlgId, 'The request cannot be fulfilled due to bad syntax.', {
+                        title: 'NSN: HTTP Response 400',
+                        width: 350
+                    }).dialog('open');
 			},
 			404: function() {
-				nsn.callJqDlg(glbDefaultDlgId, 'The requested resource could not be found but may be available again in the future.', {title: 'NSN: HTTP Response 404'}).dialog('open');
+				nsn.callJqDlg(glbDefaultDlgId, 'The requested resource could not be found but may be available again in the future.', {
+                        title: 'NSN: HTTP Response 404',
+                        width: 350
+                    }).dialog('open');
 			},
 			500: function() {
-				nsn.callJqDlg(glbDefaultDlgId, 'Internal Server Error. Please try again later.', {title: 'NSN: HTTP Response 500'}).dialog('open');
+				nsn.callJqDlg(glbDefaultDlgId, 'Internal Server Error. Please try again later.', {
+                        title: 'NSN: HTTP Response 500',
+                        width: 350
+                    }).dialog('open');
 			}
 		}
 	});

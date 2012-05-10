@@ -17,13 +17,20 @@
             NSN.shakeContainer(loginForm);
         },
         submitHandler: function(form) {
+            NSN.callJqDlg(glbDefaultDlgId,
+                '<h3><img src="/static/themes/hikari/images/loading1.gif" /> Signing in...</h3>',
+                {
+                    buttons: {}
+                }).dialog('open');
             NSN.ajaxSubmit(form)
                 .success(function(loginResponse) {
                     if (loginResponse.Status == 1)
                         document.location = NSN.url('/');
-                    else
+                    else {
                         NSN.callJqDlg(glbDefaultDlgId, loginResponse.Message, {
-                            width: '500',
+                            hasTitle: true,
+                            width: 500,
+                            draggable: true,
                             buttons: {
                                 'Close': function() {
                                     jQuery(this).dialog('destroy');
@@ -32,6 +39,7 @@
                                 }
                             }
                         }).dialog('open');
+                    }
                 })
                 .error(function(data) {
                 });
