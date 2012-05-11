@@ -18,10 +18,9 @@ namespace NewSocialNetwork.Website.Controllers
         //
         // GET: /Home/
 
-        public ActionResult Stream(string userid)
+        public ActionResult Stream()
         {
-            ViewBag.IsLogged = sessionManager.GetUserSession().IsLogged();
-            ViewBag.LoggedUser = sessionManager.GetUser();
+            ViewBag.UserId = sessionManager.GetUser().UserId;
             return View();
         }
 

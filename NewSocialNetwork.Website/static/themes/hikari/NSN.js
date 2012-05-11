@@ -221,7 +221,7 @@ var glbDebug = true,
         },
         buttons: {
             'Close': function() {
-                jQuery(this).dialog('destroy');
+                jQuery(this).dialog('destroy').remove();
             }
         }
     };

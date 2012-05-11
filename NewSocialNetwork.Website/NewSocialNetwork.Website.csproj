@@ -144,6 +144,8 @@
     <Content Include="static\themes\closure-theme\jquery-ui-1.8.20.css" />
     <Content Include="static\themes\hikari\images\background1.png" />
     <Content Include="static\themes\hikari\images\blank.gif" />
+    <Content Include="static\themes\hikari\images\fb_sprite_icons_2.png" />
+    <Content Include="static\themes\hikari\images\fb_sprite_icons.png" />
     <Content Include="static\themes\hikari\images\indicator_blue_large.gif" />
     <Content Include="static\images\favicon.ico" />
     <Content Include="static\images\tmp\bose_soundlink_wireless_mobile_speaker_300x120._V140173257_.gif" />

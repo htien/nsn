@@ -23,8 +23,6 @@ img,
 .UIPage_Hikari .nsnLeftCol {float:left; width:178px; word-wrap:break-word;}
 .UIPage_Hikari .nsnRightCol {float:right; width:244px; word-wrap:break-word;}
 
-
-
 .UIPage_Hikari .nsn-discovery {zoom:1;}
 .UIPage_Hikari .nsn-navbar-outer {position:relative; background-color:#e26337;}
 .UIPage_Hikari .nsn-navbar-inner {height:38px;}
@@ -59,3 +57,80 @@ img,
 .UIPage_Hikari .nsn-sidebox .navigation-list li a:hover {background-color:#ffebbf; color:#333; text-decoration:none;}
 .UIPage_Hikari .nsn-box .title,
 .UIPage_Hikari .nsn-sidebox .title {user-select:none; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; -o-user-select:none; -khtml-user-select:none;}
+
+#composer-tabs.ui-tabs .ui-tabs-panel {
+  padding: 0;
+}
+#composer-tabs.ui-tabs .ui-tabs-selected,
+#composer-tabs.ui-tabs .ui-tabs-nav,
+#composer-tabs .ui-state-default,
+#composer-tabs .ui-state-hover {
+  border-width: 0;
+}
+#composer-tabs.ui-tabs .ui-tabs-nav {
+  padding: 0 0 0 1px;
+}
+#composer-tabs.ui-tabs .ui-tabs-nav li {
+  margin-left: 10px;
+}
+#composer-tabs.ui-tabs .ui-tabs-nav li a {
+  padding: .5em 0;
+  line-height: 22px;
+  color: #3b5998;
+}
+#composer-tabs.ui-tabs span.uiIconText .icon,
+#composer-tabs.ui-tabs span.uiIconText .text {
+  vertical-align: middle;
+}
+#composer-tabs.ui-tabs span.uiIconText .icon {
+  display: inline-block;
+  margin-right: 2px;
+  width: 16px;
+  height: 16px;
+  background-image: url(/static/themes/hikari/images/fb_sprite_icons.png);
+  background-repeat: no-repeat;
+}
+#composer-tabs .uiComposer-outer {
+  border: 1px solid #b4cbcd !important;
+}
+#composer-tabs .uiComposer .uiInput {
+  padding: 5px;
+}
+#composer-tabs .uiComposer .linkShareStage {
+  border-top: 1px dashed #ccc;
+}
+#composer-tabs .uiComposer .buttons {
+  background-color: #f2f2f2;
+  border-top: 1px solid #e6e6e6;
+}
+#composer-tabs .uiComposer .buttons .buttons-inner {
+  padding: 4px;
+}
+#composer-tabs .buttons .guiButton {
+  float: right;
+}
+#composer-tabs .composer-updatestatus {
+  margin-left: 0 !important;
+}
+#composer-tabs .composer-updatestatus .icon {
+  background-image: url(/static/themes/hikari/images/fb_sprite_icons_2.png) !important;
+  background-position: -19px -393px;
+}
+#composer-tabs .composer-addphoto .icon {
+  background-position: -51px -118px;
+}
+#composer-tabs .composer-addlink .icon {
+  background-position: -87px -135px;
+}
+#inputStatus {
+  display: block;
+  margin: 0 auto !important;
+  padding: 0;
+  width: 494px !important;
+  border-width: 0;
+  outline: none;
+  resize: none;
+}
+#postStatus {
+  margin-right: 0;
+}

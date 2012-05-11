@@ -3,11 +3,87 @@
     ViewBag.hasRightCol = true;
     NewSocialNetwork.Domain.User user = ViewBag.LoggedUser;
 }
-@(ViewBag.IsLogged?"Đã đăng nhập!":"Chưa đăng nhập!")<br />
-Username: @user.Username<br />
-Full Name: @user.FullName<br />
-Email: @user.Email<br />
-Group: @user.UserGroup.Title
-@Html.ActionLink("(Logout)", "logout", "auth")<br />
-<br />
-@ViewBag.a,@ViewBag.b,@ViewBag.c
+<div id="pagelet_composer">
+    <div id="composer-tabs">
+        <ul class="uiList uiListHorizontal clearfix">
+            <li class="uiListItem composer-updatestatus">
+                <a class="uiIconText" href="#composer-updatestatus">
+                    <span class="uiIconText">
+                        <span class="icon"></span>
+                        <span class="text">Update Status</span>
+                    </span>
+                </a>
+            </li>
+            <li class="uiListItem composer-addphoto">
+                <a class="uiIconText" href="#composer-addphoto">
+                    <span class="uiIconText">
+                        <span class="icon"></span>
+                        <span class="text">Add Photo</span>
+                    </span>
+                </a>
+            </li>
+            <li class="uiListItem composer-addlink">
+                <a class="uiIconText" href="#composer-addlink">
+                    <span class="uiIconText">
+                        <span class="icon"></span>
+                        <span class="text">Add Link</span>
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <div class="uiComposer-outer">
+            <div id="composer-updatestatus" class="uiComposer uiTypeahead UIInputText">
+                <form id="composer" action="/@ViewBag.UserId/Posts/Post" method="post">
+                    <div class="wrap">
+                        <div class="innerWrap">
+                            <div class="uiInput">
+                                <textarea id="inputStatus" class="uiInputStatus" name="inputText"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <div class="buttons-inner">
+                            <div id="postStatus" class="guiButton guiBlueButton">Post</div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="composer-addphoto">Photo</div>
+            <div id="composer-addlink" class="uiComposer">
+                <div class="wrap">
+                    <div class="innerWrap">
+                        <div class="uiInput">
+                            <textarea id="inputStatus" class="uiInputStatus" name="inputText"></textarea>
+                        </div>
+                        <div class="linkShareStage">
+                            <div class="UIShareStage clearfix">
+                                <div class="UIShareStage_Image">
+                                </div>
+                                <div class="UIShareStage_ShareContent">
+                                    <div class="UIShareStage_Title">
+                                        New Social Network
+                                    </div>
+                                    <div class="UIShareStage_Subtitle">
+                                        http://www.newsocl.net
+                                    </div>
+                                    <div class="UIShareStage_Summary">
+                                        Open Source New Social Network
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <div class="buttons-inner">
+                        <div id="postStatus" class="guiButton guiBlueButton">Post</div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pagelet_home_stream">
+</div>

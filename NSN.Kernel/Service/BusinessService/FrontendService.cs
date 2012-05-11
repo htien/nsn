@@ -11,7 +11,7 @@ using SaberLily.Security.Crypto;
 
 namespace NSN.Service.BusinessService
 {
-    public class AuthService : IBusinessService
+    public class FrontendService : IBusinessService
     {
         public ILoginAuthenticator loginAuthenticator { private get; set; }
         public ISessionManager sessionManager { private get; set; }
@@ -19,9 +19,9 @@ namespace NSN.Service.BusinessService
         public IUserRepository userRepo { private get; set; }
         public IUserGroupRepository userGroupRepo { private get; set; }
 
-        public AuthService() { }
+        public FrontendService() { }
 
-        public User RegisterUser(string firstName, string lastName, byte gender,
+        public User RegisterNewUser(string firstName, string lastName, byte gender,
             string regEmail, string regPassword, string confirmPassword,
             string birthday)
         {
@@ -65,6 +65,10 @@ namespace NSN.Service.BusinessService
             sessionManager.Add(us);
         }
 
+        
+
+        #region Static Method
+
         public static void RequireLoggedIn()
         {
             if (!NSNContext.Current.SessionManager.GetUserSession().IsLogged())
@@ -80,5 +84,7 @@ namespace NSN.Service.BusinessService
                 HttpContext.Current.Response.RedirectToRoute("Root");
             }
         }
+
+        #endregion
     }
 }

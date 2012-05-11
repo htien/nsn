@@ -9,12 +9,12 @@ namespace NewSocialNetwork.Website.Controllers
     [HandleError]
     public class AuthController : AbstractController
     {
-        public AuthService authService { private get; set; }
+        public FrontendService authService { private get; set; }
         public IUserRepository userRepo { private get; set; }
 
         public AuthController()
         {
-            AuthService.RequireLoggedOut();
+            FrontendService.RequireLoggedOut();
             ViewBag.PageTitle = "NSN: Sign In";
         }
 
@@ -35,7 +35,7 @@ namespace NewSocialNetwork.Website.Controllers
                 @"<p>Quá trình đăng ký gặp trắc trở và đã thất bại. Ôi thê thảm quá!</p>");
             try
             {
-                Domain.User user = authService.RegisterUser(firstname, lastname, gender, reg_email, reg_password, confirm_password,
+                Domain.User user = authService.RegisterNewUser(firstname, lastname, gender, reg_email, reg_password, confirm_password,
                     (birthday_year + "/" + birthday_month + "/" + birthday_day));
                 msg.SetStatusAndMessage(RStatus.SUCCESS,
                     String.Format(@"<p>Register successfully! Welcome to New Social Network.</p>
