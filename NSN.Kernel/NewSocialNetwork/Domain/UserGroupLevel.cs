@@ -1,6 +1,6 @@
 ﻿namespace NewSocialNetwork.Domain
 {
-    public static class UserGroupLevel
+    public class UserGroupLevel
     {
         public const byte None = 0;
         public const byte Administrator = 1;

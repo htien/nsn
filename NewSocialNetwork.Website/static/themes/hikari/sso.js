@@ -5,7 +5,6 @@
         loginForm = 'login_form';
     loginPasswdInput = 'nsn_passwd';
 
-    // Gắn bộ validate cho loginForm
     NSN.$id(loginForm).validate({
         rules: {
             nsnId: { required: true, minlength: 1 }, // yêu cầu độ dài chuỗi nhập > 1 kí tự
@@ -19,16 +18,18 @@
             NSN.shakeContainer(loginForm);
         },
         submitHandler: function(form) {
-            NSN.callJqDlg(glbDefaultDlgId,
+            var dlgLoading = NSN.callJqDlg(glbDefaultDlgId,
                 '<h3><img src="/static/themes/hikari/images/loading1.gif" /> Signing in...</h3>',
                 {
                     buttons: {}
-                }).dialog('open');
+                });
+            dlgLoading.dialog('open');
             NSN.ajaxSubmit(form)
                 .success(function(loginResponse) {
                     if (loginResponse.Status == 1)
                         document.location = NSN.url('/');
                     else {
+                        dlgLoading.dialog('destroy');
                         NSN.callJqDlg(glbDefaultDlgId, loginResponse.Message, {
                             width: 500,
                             draggable: true,
@@ -50,6 +51,47 @@
     NSN.$id(loginButton).click(function() {
         NSN._log('__#' + this.id + '__ button is clicked.');
         NSN.$id(loginForm).submit();
+        return false;
+    });
+
+    /* Register scripts */
+    var regForm = 'reg',
+        regButton = 'signup';
+
+    NSN.$id(regForm).validate({
+        rules: {
+            firstname: { required: true, minlength: 1, maxlength: 30 },
+            lastname: { required: true, minlength: 1, maxlength: 30 },
+            reg_email: { required: true, email: true },
+            reg_password: { required: true, minlength: 6 },
+            confirm_password: { required: true, equalTo: '#reg_password' },
+            gender: { gender: true },
+            birthday_year: { birthdayBox: true },
+            birthday_month: { birthdayBox: true },
+            birthday_day: { birthdayBox: true }
+        },
+        messages: {
+            firstname: { required: '', minlength: '', maxlength: '' },
+            lastname: { required: '', minlength: '', maxlength: '' },
+            reg_email: { required: '', email: '' },
+            reg_password: { required: '', minlength: '' },
+            confirm_password: { required: '', equalTo: '' },
+            gender: { gender: '' },
+            birthday_year: { birthdayBox: '' },
+            birthday_month: { birthdayBox: '' },
+            birthday_day: { birthdayBox: '' }
+        },
+        submitHandler: function(form) {
+            NSN.callJqDlg(glbDefaultDlgId,
+                    '<strong>Are you sure you want to join NSN?</strong>',
+                    buildJqConfirmDlgOpts(NSN.$id(regButton).parents('form'), 'Join NSN!')
+                ).dialog('open');
+        }
+    });
+
+    NSN.$id(regButton).click(function() {
+        NSN._log('__#' + this.id + '__ button is clicked.');
+        NSN.$id(regForm).submit();
         return false;
     });
 });

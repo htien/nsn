@@ -1074,6 +1074,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\FriendController.cs" />
+    <Compile Include="Controllers\Helper\RAction.cs" />
     <Compile Include="Controllers\Helper\ResponseMessage.cs" />
     <Compile Include="Controllers\Helper\RStatus.cs" />
     <Compile Include="Controllers\LinkController.cs" />

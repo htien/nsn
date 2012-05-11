@@ -210,7 +210,8 @@ a.guiRedButton:visited, a.guiBlueButton:visited {
   -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.2);
   box-shadow: inset 0 1px 1px rgba(0,0,0,.2);
 }
-.guiInputText.error, .guiTextArea.error {
+.guiInputText.error, .guiTextArea.error,
+.uiFormText.error, .uiFormSelect.error {
   background-color: #faffbd;
   border: 1px solid #dd4b39 !important;
 }

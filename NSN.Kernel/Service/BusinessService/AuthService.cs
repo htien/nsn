@@ -1,10 +1,13 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using NewSocialNetwork.Domain;
+using NewSocialNetwork.Repositories;
 using NSN.Common;
 using NSN.Framework;
 using NSN.Kernel;
 using NSN.Manager;
 using NSN.Service.SSO;
+using SaberLily.Security.Crypto;
 
 namespace NSN.Service.BusinessService
 {
@@ -13,8 +16,29 @@ namespace NSN.Service.BusinessService
         public ILoginAuthenticator loginAuthenticator { private get; set; }
         public ISessionManager sessionManager { private get; set; }
         public INSNConfig config { private get; set; }
+        public IUserRepository userRepo { private get; set; }
+        public IUserGroupRepository userGroupRepo { private get; set; }
 
         public AuthService() { }
+
+        public User RegisterUser(string firstName, string lastName, byte gender,
+            string regEmail, string regPassword, string confirmPassword,
+            string birthday)
+        {
+            DateTime.Parse(birthday);
+            UserGroup group = userGroupRepo.FindById(UserGroupLevel.RegisteredUser);
+            User user = new User()
+            {
+                Email = regEmail.Trim(),
+                Password = PasswordCryptor.Hash(regPassword, 690),
+                FullName = firstName.Trim() + " " + lastName.Trim(),
+                Gender = gender,
+                Birthday = birthday.Trim(),
+                UserGroup = group
+            };
+            userRepo.Create(user);
+            return user;
+        }
 
         public User Login(string usernameOrEmail, string password)
         {

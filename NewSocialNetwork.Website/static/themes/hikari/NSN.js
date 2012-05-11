@@ -128,15 +128,8 @@ var glbDebug = true,
             return jqXHR;
         };
         nsn.createJqDlg = function(id, data, dlgOpts) {
-            var dlg;
-            if (nsn.byId(id) == null) {
-                dlg = jQuery('<div id="' + id + '"></div>');
-            }
-            else {
-                dlg = nsn.$id(id);
-                dlg.dialog('destroy');
-            }
-            dlg.html(data);
+            var dlg = nsn.byId(id) == null ? jQuery('<div id="' + id + '"></div>') : nsn.$id(id);
+            dlg.html(!data ? '' : data);
             dlg.dialog(glbDlgOpts); // apply default dialog options
             if (typeof dlgOpts === 'object') {
                 dlg.dialog(dlgOpts);
@@ -274,12 +267,55 @@ var glbDebug = true,
 	jQuery.validator.addMethod('vietnameseDate', function(value, element) {
 		return value.match(/^\d\d\d\d\/\d\d?\/\d\d?$/);
 	}, 'Required yyyy/MM/dd.');
+    jQuery.validator.addMethod('gender', function(value, element) {
+        return value != '0';
+    }, 'Required gender.');
+    jQuery.validator.addMethod('birthdayBox', function(value, element) {
+        return value != '-1';
+    }, 'Required.');
 })(NSN, jQuery);
 
 /* end NSN/init.js */
 
 /* begin NSN/globals.js */
-
+(function(nsn, jQuery) {
+    buildJqConfirmDlgOpts = function(targetForm, title, callbackSuccess) {
+		return {
+			title: title,
+			buttons: {
+				'OK':  function(evt) {
+                    buildJqConfirmDlgOpts_OK(this, targetForm, callbackSuccess);
+                },
+				'Cancel': function(evt) {
+                    jQuery(this).dialog('destroy').remove();
+                }
+			}
+		};
+	};
+    buildJqConfirmDlgOpts_OK = function(dlg, targetForm, callbackSuccess) {
+	    if (!targetForm.valid()) {
+		    return;
+	    }
+	    nsn.ajaxSubmit(targetForm)
+		    .success(function(json, textCode, xhr) {
+			    nsn.callJqDlg(glbDefaultDlgId, json.Message, {
+				    buttons: {
+					    'Close': function() {
+						    jQuery(dlg).dialog('destroy').remove();
+                            callbackSuccess.call(this);
+					    }
+				    }
+			    });
+			    // reset form after adding successfully
+			    if (json.Action == 'add' && json.Status == '1') {
+				    nsn.resetForm(targetForm);
+			    }
+		    })
+		    .error(function(data) {
+			    jQuery(this).dialog('destroy').remove();
+		    });
+    };
+})(NSN, jQuery);
 
 /* end NSN/globals.js */
 
