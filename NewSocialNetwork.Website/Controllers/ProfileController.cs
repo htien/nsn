@@ -3,7 +3,7 @@ using NewSocialNetwork.Domain;
 
 namespace NewSocialNetwork.Website.Controllers
 {
-    public class ProfileController : AbstractDefaultController
+    public class ProfileController : ApplicationController
     {
         public ProfileController()
         {

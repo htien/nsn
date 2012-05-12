@@ -7,10 +7,9 @@ using NSN.Manager;
 
 namespace NewSocialNetwork.Website.Controllers
 {
-    public class PhotoController : AbstractDefaultController
+    public class PhotoController : ApplicationController
     {
         public IPhotoRepository photoRepo { private get; set; }
-        public ISessionManager sessionManager { private get; set; }
 
         public PhotoController()
         {

@@ -7,9 +7,8 @@ using NSN.Service.BusinessService;
 
 namespace NewSocialNetwork.Website.Controllers
 {
-    public class UserTweetController : AbstractDefaultController
+    public class UserTweetController : ApplicationController
     {
-        public ISessionManager sessionManager { private get; set; }
         public IUserTweetRepository userTweetRepo { private get; set; }
         public FrontendService frontService { private get; set; }
 

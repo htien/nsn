@@ -2,7 +2,7 @@
 
 namespace NewSocialNetwork.Website.Controllers
 {
-    public class FriendController : AbstractDefaultController
+    public class FriendController : ApplicationController
     {
         public FriendController()
         {
