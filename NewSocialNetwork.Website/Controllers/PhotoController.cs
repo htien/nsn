@@ -1,12 +1,15 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
+using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NewSocialNetwork.Website.Models;
+using NSN.Manager;
 
 namespace NewSocialNetwork.Website.Controllers
 {
-    public class PhotoController : AbstractDefaultController
+    public class PhotoController : ApplicationController
     {
-        public IPhotoRepository photoRepo { get; set; }
+        public IPhotoRepository photoRepo { private get; set; }
 
         public PhotoController()
         {
@@ -16,8 +19,11 @@ namespace NewSocialNetwork.Website.Controllers
         //
         // GET: /Photo/
 
-        public ActionResult Index()
+        public ActionResult Show()
         {
+            Domain.User user = sessionManager.GetUser();
+            IList<Photo> photos = this.photoRepo.GetPhotosByUser(user.UserId);
+            ViewBag.Photos = photos;
             return View();
         }
 

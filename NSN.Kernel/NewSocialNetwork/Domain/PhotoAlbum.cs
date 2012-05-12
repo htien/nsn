@@ -15,7 +15,7 @@ namespace NewSocialNetwork.Domain
         [BelongsTo("UserId", NotNull = true)]
         public virtual User User { get; set; }
 
-        [Property("ProfifeId", NotNull = true, Default = "0")]
+        [Property("ProfileId", NotNull = true, Default = "0")]
         public virtual int ProfileId { get; set; }
 
         [Property("Privacy", NotNull = true, Default = "0")]

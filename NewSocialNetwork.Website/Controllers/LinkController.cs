@@ -2,8 +2,13 @@
 
 namespace NewSocialNetwork.Website.Controllers
 {
-    public class LinkController : AbstractDefaultController
+    public class LinkController : ApplicationController
     {
+        public LinkController()
+        {
+            ViewBag.PageTitle = "NSN: Links";
+        }
+
         //
         // GET: /Link/
 
