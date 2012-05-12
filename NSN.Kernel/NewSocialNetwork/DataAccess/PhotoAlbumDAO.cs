@@ -37,10 +37,7 @@ namespace NewSocialNetwork.DataAccess
 
         public IList<User> GetListFriendByUser(int userId)
         {
-            string sql = "select u from User u inner join (select f.FriendUserId from Friends f where f.User.UserId=:userId) t on u.User.UserId=t.Friends.FriendUserId";
-            string root = "select u from User u inner join u.Friends f where f.User.UserId=:userId";
-            string trueSql = "select f.FriendUser from Friend f where f.User.UserId = :userId";
-            return this.Session().CreateQuery(trueSql)
+            return this.Session().CreateQuery("select f.FriendUser from Friend f where f.User.UserId = :userId")
                 .SetInt32("userId", userId)
                 .List<User>();
         }
@@ -145,6 +142,20 @@ namespace NewSocialNetwork.DataAccess
                 where f.User.UserId = :friendUserId and
                       f.FriendUser.UserId <> :userId and
                       f.FriendUser not in (select ff.FriendUser from Friend ff
+                                           where ff.User.UserId=:userId)";
+            return this.Session().CreateQuery(trueSql)
+                .SetInt32("userId", userId)
+                .SetInt32("friendUserId", friendUserId)
+                .List<User>();
+        }
+
+
+        public IList<User> GetMutualFriend(int userId, int friendUserId)
+        {
+            string trueSql = @"select f.FriendUser from Friend f
+                where f.User.UserId = :friendUserId and
+                      f.FriendUser.UserId <> :userId and
+                      f.FriendUser in (select ff.FriendUser from Friend ff
                                            where ff.User.UserId=:userId)";
             return this.Session().CreateQuery(trueSql)
                 .SetInt32("userId", userId)
