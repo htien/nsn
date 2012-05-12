@@ -1,7 +1,6 @@
 ﻿@{
     ViewBag.hasLeftCol = true;
     ViewBag.hasRightCol = true;
-    NewSocialNetwork.Domain.User user = ViewBag.LoggedUser;
 }
 <div id="pagelet_composer">
     <div id="composer-tabs">
@@ -33,7 +32,7 @@
         </ul>
         <div class="uiComposer-outer">
             <div id="composer-updatestatus" class="uiComposer uiTypeahead UIInputText">
-                <form id="composer" action="/@ViewBag.UserId/Posts/Post" method="post">
+                <form id="composer" action="/@ViewBag.UserLogged.UserId/Posts/Post" method="post">
                     <div class="wrap">
                         <div class="innerWrap">
                             <div class="uiInput">

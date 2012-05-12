@@ -127,7 +127,12 @@
     <Content Include="static\Error404.htm" />
     <Content Include="static\favicon.ico" />
     <Content Include="static\GenericError.htm" />
-    <Content Include="static\images\avatars\lien.png" />
+    <Content Include="static\images\avatars\1_tien.gif" />
+    <Content Include="static\images\avatars\2_lien.png" />
+    <Content Include="static\images\avatars\default_female.gif" />
+    <Content Include="static\images\avatars\default_male.gif" />
+    <Content Include="static\images\avatars\default_medium_female.gif" />
+    <Content Include="static\images\avatars\default_medium_male.gif" />
     <Content Include="static\js\jquery\jquery-ui-1.8.20.js" />
     <Content Include="static\js\jquery\jquery.validate-1.9.js" />
     <Content Include="static\js\jquery\jquery.validate.additional.js" />
@@ -149,10 +154,6 @@
     <Content Include="static\themes\hikari\images\fb_sprite_icons.png" />
     <Content Include="static\themes\hikari\images\indicator_blue_large.gif" />
     <Content Include="static\images\favicon.ico" />
-    <Content Include="static\images\tmp\bose_soundlink_wireless_mobile_speaker_300x120._V140173257_.gif" />
-    <Content Include="static\images\tmp\camera-newincamphoto2_300x75._.png" />
-    <Content Include="static\images\tmp\macbook_air.jpg" />
-    <Content Include="static\images\tmp\mass-effect3-pre-order_300x120._V140235086_.jpg" />
     <Content Include="static\js\goog\array\array.js" />
     <Content Include="static\js\goog\asserts\asserts.js" />
     <Content Include="static\js\goog\async\conditionaldelay.js" />
@@ -1099,6 +1100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Logs\" />
+    <Folder Include="static\images\tmp\" />
     <Folder Include="static\js\goog\demos\editor\css\" />
     <Folder Include="static\js\goog\demos\fx\css3\" />
     <Folder Include="static\js\goog\demos\images\" />
@@ -1158,8 +1160,6 @@
     <Content Include="Views\Shared\Frontend\pagelet\_copyrights_pagelet.cshtml" />
     <Content Include="Views\Shared\Frontend\pagelet\_discovery_pagelet.cshtml" />
     <Content Include="Views\Shared\Frontend\pagelet\_hidden_pagelet.cshtml" />
-    <Content Include="Views\Shared\Frontend\pagelet\_categories_pagelet.cshtml" />
-    <Content Include="Views\Shared\Frontend\pagelet\_ads_pagelet.cshtml" />
     <Content Include="Views\Auth\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_SSOLayout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />

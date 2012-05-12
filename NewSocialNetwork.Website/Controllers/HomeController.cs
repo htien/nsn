@@ -8,7 +8,6 @@ namespace NewSocialNetwork.Website.Controllers
     public class HomeController : ApplicationController
     {
         public IUserRepository userRepo { private get; set; }
-        //public ISessionManager sessionManager { private get; set; }
 
         public HomeController()
         {
@@ -20,7 +19,6 @@ namespace NewSocialNetwork.Website.Controllers
 
         public ActionResult Stream()
         {
-            ViewBag.UserId = sessionManager.GetUser().UserId;
             return View();
         }
 
