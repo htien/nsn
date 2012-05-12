@@ -1,4 +1,5 @@
-﻿using NewSocialNetwork.Domain;
+﻿using System.Collections.Generic;
+using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NHibernate;
 

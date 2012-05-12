@@ -2,11 +2,11 @@
 
 namespace SaberLily.Utils
 {
-    public static class DateTimeUtils
+    public class DateTimeUtils
     {
         public static DateTime Jan1st1970 
         {
-            get { return DateTime.Parse("1970/01/01 00:00:00"); }
+            get { return new DateTime(1970, 1, 1, 0, 0, 0); }
         }
 
         public static long CurrentTimeMillis
@@ -24,5 +24,14 @@ namespace SaberLily.Utils
             get { return Convert.ToInt32(UnixTicks / 10E+6); }
         }
 
+        public static int ConvertToUnixTimestamp(DateTime date)
+        {
+            return Convert.ToInt32(Math.Floor((date - Jan1st1970).TotalSeconds));
+        }
+
+        public static DateTime ConvertFromUnixTimestamp(double timestamp)
+        {
+            return Jan1st1970.AddSeconds(timestamp);
+        }
     }
 }

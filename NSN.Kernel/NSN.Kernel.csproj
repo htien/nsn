@@ -136,6 +136,7 @@
     <Compile Include="NewSocialNetwork\Domain\Mail.cs" />
     <Compile Include="NewSocialNetwork\Domain\MailFolder.cs" />
     <Compile Include="NewSocialNetwork\Domain\MailText.cs" />
+    <Compile Include="NewSocialNetwork\Domain\NSNType.cs" />
     <Compile Include="NewSocialNetwork\Domain\NSNVersion.cs" />
     <Compile Include="NewSocialNetwork\Domain\Photo.cs" />
     <Compile Include="NewSocialNetwork\Domain\PhotoAlbum.cs" />
@@ -191,7 +192,7 @@
     <Compile Include="Kernel\NSNException.cs" />
     <Compile Include="Kernel\UserSession.cs" />
     <Compile Include="Service\BusinessService\IBusinessService.cs" />
-    <Compile Include="Service\BusinessService\AuthService.cs" />
+    <Compile Include="Service\BusinessService\FrontendService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\SSO\DefaultLoginAuthenticator.cs" />
     <Compile Include="Service\SSO\ILoginAuthenticator.cs" />

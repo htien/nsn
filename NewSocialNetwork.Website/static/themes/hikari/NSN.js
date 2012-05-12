@@ -128,10 +128,8 @@ var glbDebug = true,
             return jqXHR;
         };
         nsn.createJqDlg = function(id, data, dlgOpts) {
-            var dlg = (nsn.byId(id) == null)
-                      ? jQuery('<div id="' + id + '"></div>')
-                      : nsn.$id(id);
-            dlg.html(data);
+            var dlg = nsn.byId(id) == null ? jQuery('<div id="' + id + '"></div>') : nsn.$id(id);
+            dlg.html(!data ? '' : data);
             dlg.dialog(glbDlgOpts); // apply default dialog options
             if (typeof dlgOpts === 'object') {
                 dlg.dialog(dlgOpts);
@@ -149,7 +147,7 @@ var glbDebug = true,
             }
             var responseText = isUrl
                     ? jQuery.ajax(url, settings).responseText
-                    : '<p class="nsn-popup-msg">' + url + '</p>';
+                    : url;
             return nsn.createJqDlg(id, responseText, dlgOpts);
         };
         nsn.shakeContainer = function(container) {
@@ -209,21 +207,21 @@ var glbDebug = true,
         resizable: false,
         position: 'center',
         minWidth: 390,
-        minHeight: 190,
+        minHeight: 180,
         width: 'auto',
         height: 'auto',
         closeOnEscape: false,
         create: function(evt, ui) {
-            if (!this.option.hasTitle) {
-                jQuery('.ui-widget-header').remove();
-            }
             jQuery('.ui-dialog-titlebar-close').remove();
         },
         open: function(evt, ui) {
+            if (!jQuery(this).dialog("option", "hasTitle")) {
+                jQuery('.ui-dialog-titlebar').remove();
+            }
         },
         buttons: {
             'Close': function() {
-                jQuery(this).dialog('destroy');
+                jQuery(this).dialog('destroy').remove();
             }
         }
     };
@@ -246,13 +244,22 @@ var glbDebug = true,
 		scriptCharset: 'UTF-8',
 		statusCode: {
 			400: function() {
-				nsn.callJqDlg(glbDefaultDlgId, 'The request cannot be fulfilled due to bad syntax.', {title: 'NSN: HTTP Response 400'}).dialog('open');
+				nsn.callJqDlg(glbDefaultDlgId, 'The request cannot be fulfilled due to bad syntax.', {
+                        title: 'NSN: HTTP Response 400',
+                        width: 350
+                    }).dialog('open');
 			},
 			404: function() {
-				nsn.callJqDlg(glbDefaultDlgId, 'The requested resource could not be found but may be available again in the future.', {title: 'NSN: HTTP Response 404'}).dialog('open');
+				nsn.callJqDlg(glbDefaultDlgId, 'The requested resource could not be found but may be available again in the future.', {
+                        title: 'NSN: HTTP Response 404',
+                        width: 350
+                    }).dialog('open');
 			},
 			500: function() {
-				nsn.callJqDlg(glbDefaultDlgId, 'Internal Server Error. Please try again later.', {title: 'NSN: HTTP Response 500'}).dialog('open');
+				nsn.callJqDlg(glbDefaultDlgId, 'Internal Server Error. Please try again later.', {
+                        title: 'NSN: HTTP Response 500',
+                        width: 350
+                    }).dialog('open');
 			}
 		}
 	});
@@ -260,9 +267,57 @@ var glbDebug = true,
 	jQuery.validator.addMethod('vietnameseDate', function(value, element) {
 		return value.match(/^\d\d\d\d\/\d\d?\/\d\d?$/);
 	}, 'Required yyyy/MM/dd.');
+    jQuery.validator.addMethod('gender', function(value, element) {
+        return value != '0';
+    }, 'Required gender.');
+    jQuery.validator.addMethod('birthdayBox', function(value, element) {
+        return value != '-1';
+    }, 'Required.');
 })(NSN, jQuery);
 
 /* end NSN/init.js */
+
+/* begin NSN/globals.js */
+(function(nsn, jQuery) {
+    buildJqConfirmDlgOpts = function(targetForm, title, callbackSuccess) {
+		return {
+			title: title,
+			buttons: {
+				'OK':  function(evt) {
+                    buildJqConfirmDlgOpts_OK(this, targetForm, callbackSuccess);
+                },
+				'Cancel': function(evt) {
+                    jQuery(this).dialog('destroy').remove();
+                }
+			}
+		};
+	};
+    buildJqConfirmDlgOpts_OK = function(dlg, targetForm, callbackSuccess) {
+	    if (!targetForm.valid()) {
+		    return;
+	    }
+	    nsn.ajaxSubmit(targetForm)
+		    .success(function(json, textCode, xhr) {
+			    nsn.callJqDlg(glbDefaultDlgId, json.Message, {
+				    buttons: {
+					    'Close': function() {
+						    jQuery(dlg).dialog('destroy').remove();
+                            callbackSuccess.call(this);
+					    }
+				    }
+			    });
+			    // reset form after adding successfully
+			    if (json.Action == 'add' && json.Status == '1') {
+				    nsn.resetForm(targetForm);
+			    }
+		    })
+		    .error(function(data) {
+			    jQuery(this).dialog('destroy').remove();
+		    });
+    };
+})(NSN, jQuery);
+
+/* end NSN/globals.js */
 
 /* begin NSN/ready.js */
 jQuery(function($) {

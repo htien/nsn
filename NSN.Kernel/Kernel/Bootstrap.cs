@@ -228,23 +228,18 @@ namespace NSN.Kernel
 
             routes.MapRouteLowercase(
                 "AdminHome",
-                "NSN-Admin",
+                "NSN",
                 new { controller = "Admin", action = "Index" }
             );
             routes.MapRouteLowercase(
                 "Admin",
-                "NSN-Admin/{action}/{id}",
+                "NSN/{action}/{id}",
                 new { controller = "Admin", action = "Index", id = UrlParameter.Optional },
                 new { id = @"^\d+$" }
             );
 
             // Front-end routes
 
-            routes.MapRouteLowercase(
-                "ProfileAction",
-                "{userid}/{action}",
-                new { controller = "Profile", action = "Posts" }
-            );
             routes.MapRouteLowercase(
                 "LinkAction",
                 "Links/{action}",
@@ -256,16 +251,36 @@ namespace NSN.Kernel
                 new { controller = "Message", action = "List" }
             );
             routes.MapRouteLowercase(
+                "PhotoAction",
+                "Photo/{photoid}/{action}",
+                new { controller = "Photo", action = "Show" },
+                new { photoid = @"^\d+$" }
+            );
+            routes.MapRouteLowercase(
+                "PhotoAlbumList",
+                "{uid}/Photos",
+                new { controller = "PhotoAlbum", action = "List" }
+            );
+            routes.MapRouteLowercase(
                 "PhotoAlbumAction",
-                "{userid}/Photos/{albumid}/{action}",
-                new { controller = "PhotoAlbum", action = "Index" },
+                "{uid}/Photos/{albumid}/{action}",
+                new { controller = "PhotoAlbum", action = "List" },
                 new { albumid = @"^\d+$" }
             );
             routes.MapRouteLowercase(
-                "PhotoAction",
-                "Photo/{photoid}/{action}",
-                new { controller = "Photo", action = "Index" },
-                new { photoid = @"^\d+$" }
+                "FriendAction",
+                "{uid}/Friends/{action}",
+                new { controller = "Friend", action = "List" }
+            );
+            routes.MapRouteLowercase(
+                "UserTweetAction",
+                "{uid}/Posts/{action}",
+                new { controller = "UserTweet", action = "Posts" }
+            );
+            routes.MapRouteLowercase(
+                "ProfileAction",
+                "{uid}/{action}",
+                new { controller = "Profile", action = "Info" }
             );
         }
 

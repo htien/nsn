@@ -104,7 +104,6 @@
       <HintPath>..\packages\Castle.Activerecord.3.0.0.1\lib\Net40\NHibernate.Search.dll</HintPath>
     </Reference>
     <Reference Include="Quartz, Version=1.0.3.3, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Quartz.1.0.3\lib\3.5\Quartz.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -128,6 +127,12 @@
     <Content Include="static\Error404.htm" />
     <Content Include="static\favicon.ico" />
     <Content Include="static\GenericError.htm" />
+    <Content Include="static\images\avatars\1_tien.gif" />
+    <Content Include="static\images\avatars\2_lien.png" />
+    <Content Include="static\images\avatars\default_female.gif" />
+    <Content Include="static\images\avatars\default_male.gif" />
+    <Content Include="static\images\avatars\default_medium_female.gif" />
+    <Content Include="static\images\avatars\default_medium_male.gif" />
     <Content Include="static\js\jquery\jquery-ui-1.8.20.js" />
     <Content Include="static\js\jquery\jquery.validate-1.9.js" />
     <Content Include="static\js\jquery\jquery.validate.additional.js" />
@@ -145,12 +150,10 @@
     <Content Include="static\themes\closure-theme\jquery-ui-1.8.20.css" />
     <Content Include="static\themes\hikari\images\background1.png" />
     <Content Include="static\themes\hikari\images\blank.gif" />
+    <Content Include="static\themes\hikari\images\fb_sprite_icons_2.png" />
+    <Content Include="static\themes\hikari\images\fb_sprite_icons.png" />
     <Content Include="static\themes\hikari\images\indicator_blue_large.gif" />
     <Content Include="static\images\favicon.ico" />
-    <Content Include="static\images\tmp\bose_soundlink_wireless_mobile_speaker_300x120._V140173257_.gif" />
-    <Content Include="static\images\tmp\camera-newincamphoto2_300x75._.png" />
-    <Content Include="static\images\tmp\macbook_air.jpg" />
-    <Content Include="static\images\tmp\mass-effect3-pre-order_300x120._V140235086_.jpg" />
     <Content Include="static\js\goog\array\array.js" />
     <Content Include="static\js\goog\asserts\asserts.js" />
     <Content Include="static\js\goog\async\conditionaldelay.js" />
@@ -1073,7 +1076,10 @@
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AbstractDefaultController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\FriendController.cs" />
+    <Compile Include="Controllers\Helper\RAction.cs" />
     <Compile Include="Controllers\Helper\ResponseMessage.cs" />
     <Compile Include="Controllers\Helper\RStatus.cs" />
     <Compile Include="Controllers\LinkController.cs" />
@@ -1083,6 +1089,7 @@
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RedirectorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserTweetController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1093,6 +1100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Logs\" />
+    <Folder Include="static\images\tmp\" />
     <Folder Include="static\js\goog\demos\editor\css\" />
     <Folder Include="static\js\goog\demos\fx\css3\" />
     <Folder Include="static\js\goog\demos\images\" />
@@ -1152,15 +1160,13 @@
     <Content Include="Views\Shared\Frontend\pagelet\_copyrights_pagelet.cshtml" />
     <Content Include="Views\Shared\Frontend\pagelet\_discovery_pagelet.cshtml" />
     <Content Include="Views\Shared\Frontend\pagelet\_hidden_pagelet.cshtml" />
-    <Content Include="Views\Shared\Frontend\pagelet\_categories_pagelet.cshtml" />
-    <Content Include="Views\Shared\Frontend\pagelet\_ads_pagelet.cshtml" />
     <Content Include="Views\Auth\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_SSOLayout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Auth\Register.cshtml" />
-    <Content Include="Views\PhotoAlbum\Index.cshtml" />
-    <Content Include="Views\Photo\Index.cshtml" />
+    <Content Include="Views\PhotoAlbum\List.cshtml" />
+    <Content Include="Views\Photo\Show.cshtml" />
     <Content Include="Views\Photo\Insert.cshtml" />
     <Content Include="Views\Shared\Frontend\pagelet\_bluebar_loggedOut_pagelet.cshtml" />
     <Content Include="Views\Shared\Frontend\pagelet\_bluebar_loggedIn_pagelet.cshtml" />
@@ -1168,12 +1174,14 @@
     <Content Include="Views\Photo\_ViewStart.cshtml" />
     <Content Include="Views\PhotoAlbum\_ViewStart.cshtml" />
     <Content Include="Views\Profile\_ViewStart.cshtml" />
-    <Content Include="Views\Profile\Posts.cshtml" />
     <Content Include="Views\Profile\Info.cshtml" />
-    <Content Include="Views\Profile\Friends.cshtml" />
-    <Content Include="Views\Profile\Links.cshtml" />
     <Content Include="Views\Link\_ViewStart.cshtml" />
     <Content Include="Views\Message\_ViewStart.cshtml" />
+    <Content Include="Views\Friend\_ViewStart.cshtml" />
+    <Content Include="Views\Friend\List.cshtml" />
+    <Content Include="Views\Link\List.cshtml" />
+    <Content Include="Views\UserTweet\_ViewStart.cshtml" />
+    <Content Include="Views\UserTweet\Posts.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

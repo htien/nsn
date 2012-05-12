@@ -189,6 +189,8 @@ namespace NSN.Manager
             }
 
             // TODO: SetRoleManager()
+
+            context.Items[Globals.USER_SESSION] = userSession;
             return userSession;
         }
 

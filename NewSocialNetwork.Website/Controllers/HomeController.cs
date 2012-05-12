@@ -5,10 +5,9 @@ using NSN.Manager;
 namespace NewSocialNetwork.Website.Controllers
 {
     [HandleError]
-    public class HomeController : AbstractDefaultController
+    public class HomeController : ApplicationController
     {
         public IUserRepository userRepo { private get; set; }
-        public ISessionManager sessionManager { private get; set; }
 
         public HomeController()
         {
@@ -18,10 +17,8 @@ namespace NewSocialNetwork.Website.Controllers
         //
         // GET: /Home/
 
-        public ActionResult Stream(string userid)
+        public ActionResult Stream()
         {
-            ViewBag.IsLogged = sessionManager.GetUserSession().IsLogged();
-            ViewBag.LoggedUser = sessionManager.GetUser();
             return View();
         }
 

@@ -1,37 +1,32 @@
 ﻿using System.Web.Mvc;
 using NewSocialNetwork.Domain;
+using NewSocialNetwork.Repositories;
+using NSN.Manager;
+using System.Collections.Generic;
 
 namespace NewSocialNetwork.Website.Controllers
 {
-    public class ProfileController : AbstractDefaultController
-    {
-        public ProfileController() { }
+    public class ProfileController : ApplicationController
+    {        
+        public IPhotoAlbumRepository albumRepo { private get; set; }
+        
+        public ProfileController()
+        {
+            ViewBag.PageTitle = "NSN: Profile";
+        }
 
         //
         // GET: /Profile/
 
         public ActionResult Info()
         {
-            ViewBag.PageTitle = "NSN: Profile Info";
-            return View();
-        }
-
-        public ActionResult Posts(string userid)
-        {
-            ViewBag.PageTitle = "NSN: Posts";
-            ViewBag.abc = userid;
-            return View();
-        }
-
-        public ActionResult Friends()
-        {
-            ViewBag.PageTitle = "NSN: Friends";
-            return View();
-        }
-
-        public ActionResult Links()
-        {
-            ViewBag.PageTitle = "NSN: Links";
+            ViewBag.PageTitle += " Info";
+            //Get User Info            
+            Domain.User userLogin = sessionManager.GetUser();
+            ViewBag.UserLogin = userLogin;
+            //Get List Frieng By User            
+            IList<User> listFriend = albumRepo.GetListFriendByUser(userLogin.UserId);
+            ViewBag.ListFriend = listFriend;
             return View();
         }
     }
