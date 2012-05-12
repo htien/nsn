@@ -151,5 +151,19 @@ namespace NewSocialNetwork.DataAccess
                 .SetInt32("friendUserId", friendUserId)
                 .List<User>();
         }
+
+
+        public IList<User> GetMutualFriend(int userId, int friendUserId)
+        {
+            string trueSql = @"select f.FriendUser from Friend f
+                where f.User.UserId = :friendUserId and
+                      f.FriendUser.UserId <> :userId and
+                      f.FriendUser in (select ff.FriendUser from Friend ff
+                                           where ff.User.UserId=:userId)";
+            return this.Session().CreateQuery(trueSql)
+                .SetInt32("userId", userId)
+                .SetInt32("friendUserId", friendUserId)
+                .List<User>();
+        }
     }
 }

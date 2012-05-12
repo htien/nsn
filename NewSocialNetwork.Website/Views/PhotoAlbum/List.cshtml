@@ -109,4 +109,17 @@
     {
         <p>All Mutual Friend.</p>
     }
+    
+     <p>Get Not Mutual Friends Between user 1 va user 2 </p>
+    if (ViewBag.mutualFriend != null && ViewBag.mutualFriend.Count > 0)
+    {
+        foreach (var mf in ViewBag.mutualFriend)
+        {
+            @:@mf.UserId,@mf.FullName  
+        }
+    }
+    else
+    {
+        <p>No Mutual Friend.</p>
+    }
 }

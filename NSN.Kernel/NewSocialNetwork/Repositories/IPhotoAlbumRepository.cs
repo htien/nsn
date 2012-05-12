@@ -20,6 +20,7 @@ namespace NewSocialNetwork.Repositories
         IList<FriendList> GetAllFriendListByUser(int userId);
         IList<User> GetFriendInListByUser(int listId);
         IList<CustomRelation> GetRelationshipBetweenUsers(int userId, int withUserId);
-        IList<User> GetNotMutualFriend(int userId1, int userId2);
+        IList<User> GetNotMutualFriend(int userId, int friendUserId);
+        IList<User> GetMutualFriend(int userId, int friendUserId);
     }
 }
