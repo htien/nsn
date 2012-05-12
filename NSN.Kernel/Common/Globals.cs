@@ -26,6 +26,7 @@ namespace NSN.Common
         public const string DB_PASSWORD = "db.passwd";
 
         public const string NHIBERNATE_SESSION_KEY = "nsn.nhibernate.session";
+        public const string USER_SESSION = "userSession";
 
         public const string SSO_LOGGED = "sso.logged";
         public const string TYPE_SSO = "sso";

@@ -11,7 +11,7 @@ img,
 .UIPage_Hikari .gA,
 .UIPage_Hikari .gl {position:relative; margin-left:auto; margin-right:auto;}
 .UIPage_Hikari .gA {min-height:100%;}
-.UIPage_Hikari #globalHeader {background-color:#fff; -webkit-box-shadow:0 0 3px rgba(0,0,0,.1); -moz-box-shadow:0 0 3px rgba(0,0,0,.1); box-shadow:0 0 3px rgba(0,0,0,.1);}
+.UIPage_Hikari #globalHeader {background-color:#fff;}
 .UIPage_Hikari #globalContainer {padding-bottom:90px; height:auto; min-height:100%; zoom:1;}
 .UIPage_Hikari #globalFooter {position:absolute; right:0; bottom:0; left:0; clear:left; height:55px;}
 .UIPage_Hikari #mainContainer {}

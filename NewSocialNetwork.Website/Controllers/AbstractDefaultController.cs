@@ -2,7 +2,7 @@
 
 namespace NewSocialNetwork.Website.Controllers
 {
-    public class AbstractDefaultController : AbstractController
+    public abstract class AbstractDefaultController : AbstractController
     {
         protected internal AbstractDefaultController()
         {

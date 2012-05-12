@@ -2,8 +2,8 @@
 
     /* Login scripts */
     var loginButton = 'nsn_login',
-        loginForm = 'login_form';
-    loginPasswdInput = 'nsn_passwd';
+        loginForm = 'login_form',
+        loginPasswdInput = 'nsn_passwd';
 
     NSN.$id(loginForm).validate({
         rules: {

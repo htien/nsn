@@ -65,8 +65,6 @@ namespace NSN.Service.BusinessService
             sessionManager.Add(us);
         }
 
-        
-
         #region Static Method
 
         public static void RequireLoggedIn()

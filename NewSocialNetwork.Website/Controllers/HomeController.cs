@@ -5,10 +5,10 @@ using NSN.Manager;
 namespace NewSocialNetwork.Website.Controllers
 {
     [HandleError]
-    public class HomeController : AbstractDefaultController
+    public class HomeController : ApplicationController
     {
         public IUserRepository userRepo { private get; set; }
-        public ISessionManager sessionManager { private get; set; }
+        //public ISessionManager sessionManager { private get; set; }
 
         public HomeController()
         {
