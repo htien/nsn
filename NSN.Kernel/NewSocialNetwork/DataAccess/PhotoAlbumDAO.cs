@@ -37,10 +37,7 @@ namespace NewSocialNetwork.DataAccess
 
         public IList<User> GetListFriendByUser(int userId)
         {
-            string sql = "select u from User u inner join (select f.FriendUserId from Friends f where f.User.UserId=:userId) t on u.User.UserId=t.Friends.FriendUserId";
-            string root = "select u from User u inner join u.Friends f where f.User.UserId=:userId";
-            string trueSql = "select f.FriendUser from Friend f where f.User.UserId = :userId";
-            return this.Session().CreateQuery(trueSql)
+            return this.Session().CreateQuery("select f.FriendUser from Friend f where f.User.UserId = :userId")
                 .SetInt32("userId", userId)
                 .List<User>();
         }

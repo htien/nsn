@@ -62,6 +62,7 @@ namespace NewSocialNetwork.Website.Controllers
 
             IList<User> MutualFriend = photoAlbumRepo.GetMutualFriend(2, 1);
             ViewBag.mutualFriend = MutualFriend;
+
             return View();
         }
     }

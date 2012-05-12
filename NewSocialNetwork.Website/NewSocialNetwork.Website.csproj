@@ -127,6 +127,7 @@
     <Content Include="static\Error404.htm" />
     <Content Include="static\favicon.ico" />
     <Content Include="static\GenericError.htm" />
+    <Content Include="static\images\avatars\lien.png" />
     <Content Include="static\js\jquery\jquery-ui-1.8.20.js" />
     <Content Include="static\js\jquery\jquery.validate-1.9.js" />
     <Content Include="static\js\jquery\jquery.validate.additional.js" />
