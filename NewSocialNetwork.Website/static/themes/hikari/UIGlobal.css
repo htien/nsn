@@ -24,7 +24,7 @@
   height: 7px;
 }
 #UIGlobal_BlueBarHolder.slimHeader {
-  height: 38px;
+  height: 37px;
 }
 
 .slimHeader #UIGlobal_BlueBar {
@@ -230,6 +230,24 @@
 .slimHeader #pageNav .topNavLink {
   height: 31px;
 }
+.slimHeader #pageNav .topNavLink:hover {
+  background-color: #dadada;
+}
+.slimHeader #pageNav .topNavLink .uiProfilePhoto {
+  margin: 3px 5px 3px 3px;
+  width: 23px;
+  height: 23px;
+}
+.slimHeader #pageNav .topNavLink .tinymanName {
+  display: inline-block;
+  overflow: hidden;
+  max-width: 175px;
+  padding-right: 8px;
+  text-overflow: ellipsis;
+  vertical-align: top;
+  white-space: nowrap;
+}
+.slimHeader #pageNav li.tinyman::before,
 .slimHeader #pageNav li.middleLink::before {
   float: right;
   display: inline-block;
@@ -237,13 +255,14 @@
   width: 1px;
   height: 14px;
   content: " ";
-  background-color: #cfcfcf;
+  background-color: #dadada;
 }
 .slimHeader #pageNav a {
   height: 31px;
   line-height: 29px;
   color: #111;
 }
-.slimHeader #pageNav .middleLink a {
+.slimHeader #pageNav .middleLink a,
+.slimHeader #pageNav .lastLink a {
   padding: 0 8px;
 }

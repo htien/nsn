@@ -30,7 +30,7 @@
     <div id="globalFooter" class="gl">
     </div>
 }
-<div id="hikari" class="@(ViewBag.hasLeftCol?"hasLeftCol":"")">
+<div id="hikari" class="@(ViewBag.hasLeftCol == null ? "" : ViewBag.hasLeftCol ? "hasLeftCol" : "")">
     <div id="globalContainer" class="gl">
         <div id="mainContainer" class="nsnContainer">
             @RenderBody()

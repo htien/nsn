@@ -208,7 +208,7 @@ namespace NSN.Kernel
             routes.MapRouteLowercase(
                 "Root",
                 "",
-                new { controller = "Home", action = "Stream", userid = (string)null }
+                new { controller = "Home", action = "Stream" }
             );
 
             // Single Sign-On routes
@@ -240,6 +240,11 @@ namespace NSN.Kernel
 
             // Front-end routes
 
+            routes.MapRouteLowercase(
+                "Stream",
+                "Stream",
+                new { controller = "Home", action = "Stream" }
+            );
             routes.MapRouteLowercase(
                 "LinkAction",
                 "Links/{action}",
