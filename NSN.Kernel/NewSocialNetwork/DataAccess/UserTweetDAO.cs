@@ -2,6 +2,7 @@
 using NewSocialNetwork.Repositories;
 using NHibernate;
 using SaberLily.Utils;
+using System;
 
 namespace NewSocialNetwork.DataAccess
 {
@@ -14,14 +15,23 @@ namespace NewSocialNetwork.DataAccess
 
         public void Add(User user, string content)
         {
-            string sql = @"insert into [NSN.UserTweet] (UserId, FriendUserId, [Content], Timestamp)
-                           values (:userId, :friendUserId, :content, :timestamp)";
-            this.Session().CreateSQLQuery(sql)
+            int timestamp = DateTimeUtils.UnixTimestamp;
+            int tweetId = Convert.ToInt32(this.Session().CreateSQLQuery(
+                    @"insert into [NSN.UserTweet] (UserId, FriendUserId, [Content], Timestamp)
+                      values (:userId, :friendUserId, :content, :timestamp); select scope_identity()")
                 .SetInt32("userId", user.UserId)
                 .SetInt32("friendUserId", 0)
                 .SetString("content", content)
-                .SetInt32("timestamp", DateTimeUtils.UnixTimestamp)
-                .ExecuteUpdate();
+                .SetInt32("timestamp", timestamp)
+                .UniqueResult());
+            long feedId = Convert.ToInt32(this.Session().CreateSQLQuery(
+                    @"insert into [NSN.Feed] (TypeId, ItemId, UserId, Timestamp)
+                      values (:typeId, :itemId, :userId, :timestamp); select scope_identity()")
+                .SetString("typeId", "user_tweet")
+                .SetInt32("itemId", tweetId)
+                .SetInt32("userId", user.UserId)
+                .SetInt32("timestamp", timestamp)
+                .UniqueResult());
         }
 
         #endregion
