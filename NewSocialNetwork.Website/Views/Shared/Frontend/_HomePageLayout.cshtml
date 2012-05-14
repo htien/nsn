@@ -1,7 +1,5 @@
 ﻿@{
     Layout = "~/Views/Shared/_UserLayout.cshtml";
-    string id = (ViewBag.UserLogged.Username == null || ViewBag.UserLogged.Username.Length == 0)
-        ? ViewBag.UserLogged.Email : ViewBag.UserLogged.Username;
 }
 @section html_head_area {@RenderSection("html_head_area", false)}
 <div class="nsnLeftCol_Container">
@@ -11,15 +9,12 @@
         <div id="pagelet_welcome_box">
             <div class="nsnWelcomeBox uiImageBlock clearfix">
                 <a class="lfloat uiImageBlockImage uiImageBlockMediumImage">
-                    @{
-                        string avatarFileName = SaberLily.Utils.GeneralUtils.UserImage(ViewBag.UserLogged.UserImage, ViewBag.UserLogged.Gender);
-                    }
-                    <img class="img" src="@Url.Content("~/static/images/avatars/" + avatarFileName)" width="40" height="40" />
+                    <img class="img" src="@Url.Content("~/static/images/avatars/" + ViewBag.AvatarFileName)" width="40" height="40" />
                 </a>
                 <div class="uiImageBlockContent">
                     <div class="uiInlineBlock uiInlineBlockMiddle" style="height:40px;"></div>
                     <div class="uiInlineBlock uiInlineBlockMiddle">
-                        <a class="nsnWelcomeBoxName" href="/@id">@ViewBag.UserLogged.FullName</a>
+                        <a class="nsnWelcomeBoxName" href="/@ViewBag.LoginId">@ViewBag.UserLogged.FullName</a>
                     </div>
                 </div>
             </div>

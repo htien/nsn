@@ -2,26 +2,6 @@
  * FREE FOR ALL BUT DOES NOT MEAN THERE IS NO PRICE.
  */
 
-/*::-webkit-scrollbar {
-  overflow: visible;
-  width: 11px;
-  height: 11px;
-}
-::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); 
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb {
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  background: rgba(0,0,0,.4); 
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.5); 
-}
-::-webkit-scrollbar-thumb:window-inactive {
-	background: rgba(0,0,0,.4); 
-}*/
-
 .UIPage_Hikari {
   background: url(images/background1_50.jpg) repeat 50% 50%;
 }
@@ -254,6 +234,9 @@ img,
   background: url(/static/themes/hikari/images/default_coverphoto_940x180.png) no-repeat;
 }
 .UIContent_UserProfile .uiBodyProfile {
+  width: 550px;
+}
+.UIContent_UserProfile .uiBodyProfile .uiBodyProfileContent {
   padding: 19px;
 }
 .UISidebar_Profile {
@@ -299,4 +282,24 @@ img,
 }
 .UISidebar_Profile .uiProfileInfoBox .uiInfoContent .infoContent {
   margin-bottom: 7px;
+}
+.UIFeeds_Content {
+  position: relative;
+  clear: both;
+  word-wrap: break-word;
+}
+.UIFeeds_Content .uiFeedItem {
+  margin: 20px 0 20px 68px;
+}
+.UIFeeds_Content .uiFeedItem .uiFeed {
+  position: relative;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.05);
+  -moz-box-shadow: 0 2px 4px rgba(0,0,0,.05);
+  box-shadow: 0 2px 4px rgba(0,0,0,.05);
+  vertical-align: top;
+  z-index: 1;
 }

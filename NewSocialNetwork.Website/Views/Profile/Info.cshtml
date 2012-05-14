@@ -1,22 +1,21 @@
 ﻿@{
-    NewSocialNetwork.Domain.User user = ViewBag.UserLogged;
-    string gender = SaberLily.Utils.GeneralUtils.Gender(user.Gender);
-    DateTime joined = SaberLily.Utils.DateTimeUtils.ConvertFromUnixTimestamp(user.Joined);
+    NewSocialNetwork.Domain.User userProfile = ViewBag.UserProfile;
+    string gender = SaberLily.Utils.GeneralUtils.Gender(userProfile.Gender);
+    DateTime joined = SaberLily.Utils.DateTimeUtils.ConvertFromUnixTimestamp(userProfile.Joined);
 }
 
 <div class="ML">
-@*<img src="@Url.Content("~/static/images/avatars/")@ViewBag.UserLogin.UserImage" alt="Profile Image" />*@
     <div class="l-up ne jc">
         <div class="Od a-f-e">Short introduction</div>
         <div class="Ga a-f-e">...</div>
     </div>
    <div class="l-up ne jc">
         <div class="Od a-f-e">User group</div>
-        <div class="Ga a-f-e">@ViewBag.UserLogin.UserGroup.Title</div>
+        <div class="Ga a-f-e">@userProfile.UserGroup.Title</div>
     </div>
     <div class="l-up ne jc">
     <div class="Od a-f-e">Email</div>
-    <div class="Ga a-f-e">@ViewBag.UserLogin.Email</div>
+    <div class="Ga a-f-e">@userProfile.Email</div>
     </div>
     <div class="l-up ne jc">
         <div class="Od a-f-e">Gender </div>
@@ -24,11 +23,11 @@
     </div>
     <div class="l-up ne jc">
         <div class="Od a-f-e">Birthday</div>
-        <div class="Ga a-f-e">@ViewBag.UserLogin.Birthday</div>
+        <div class="Ga a-f-e">@userProfile.Birthday</div>
     </div>
     <div class="l-up ne jc">
         <div class="Od a-f-e">Live in</div>
-        <div class="Ga a-f-e">@ViewBag.UserLogin.Country.Name</div>
+        <div class="Ga a-f-e">@userProfile.Country.Name</div>
     </div>
     <div class="l-up ne jc">
         <div class="Od a-f-e">Join date</div>

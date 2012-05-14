@@ -1,7 +1,5 @@
 ﻿@{
-    NewSocialNetwork.Domain.User user = ViewBag.UserLogged;
-    bool hasUsername = user.Username != null && user.Username.Length > 0;
-    string displayId = hasUsername ? user.Username : Convert.ToString(user.UserId);
+    NewSocialNetwork.Domain.User userProfile = ViewBag.UserProfile;
 }
 <div id="pagelet_apps" class="UIContainer_Apps">
     <div class="uiAppListBox">
@@ -14,7 +12,7 @@
             </a>
         </div>
         <div class="uiAppItem">
-            <a class="uiItemBox" href="/@displayId">
+            <a class="uiItemBox" href="/@ViewBag.DisplayId">
                 <div class="uiItem">
                     <div class="uiItemImage itemImage_Profile"></div>
                     <div class="uiItemTitle">Profile</div>
@@ -22,7 +20,7 @@
             </a>
         </div>
         <div class="uiAppItem">
-            <a class="uiItemBox" href="/@displayId/photos">
+            <a class="uiItemBox" href="/@ViewBag.DisplayId/photos">
                 <div class="uiItem">
                     <div class="uiItemImage itemImage_Photos"></div>
                     <div class="uiItemTitle">Photos</div>
@@ -30,7 +28,7 @@
             </a>
         </div>
         <div class="uiAppItem">
-            <a class="uiItemBox" href="/@displayId/friends">
+            <a class="uiItemBox" href="/@ViewBag.DisplayId/friends">
                 <div class="uiItem">
                     <div class="uiItemImage itemImage_Friends"></div>
                     <div class="uiItemTitle">Friends</div>

@@ -1,4 +1,31 @@
-﻿@RenderPage("~/Views/Shared/Frontend/pagelet/_composer_pagelet.cshtml")
-<div id="pagelet_user_feed">
-    Load feed of user!
+﻿@{
+    IList<NSN.Kernel.Manager.FeedItem> feedItems = ViewBag.FeedItems;
+}
+@RenderPage("~/Views/Shared/Frontend/pagelet/_composer_pagelet.cshtml")
+<div id="pagelet_feeds_page">
+    <div class="UIFeeds_Content">
+        <div class="uiFeedItem">
+            <div class="uiFeedItem_Inner">
+                <div class="uiFeed">
+                    a<br />b
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    @foreach (NSN.Kernel.Manager.FeedItem item in feedItems)
+    {
+        <p>
+            <strong>Feed ID:</strong> @item._Feed.FeedId<br />
+            @switch (item._Feed.TypeId)
+            {
+                case NSN.NewSocialNetwork.Domain.NSNType.USER_TWEET:
+                    NewSocialNetwork.Domain.UserTweet tweet = (NewSocialNetwork.Domain.UserTweet)item._Entity;
+                    <strong>Tweet ID:</strong> @tweet.TweetId<br />
+                    <strong>Content:</strong> @tweet.Content<br />
+                    break;
+            }
+        </p>
+    }
 </div>
