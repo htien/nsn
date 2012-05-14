@@ -1,5 +1,6 @@
 ﻿@{
     NewSocialNetwork.Domain.User userLogged = @ViewBag.UserLogged;
+    string avatarFileName = SaberLily.Utils.GeneralUtils.UserImage(userLogged.UserImage, userLogged.Gender);
 }
 <div id="pagelet_bluebar" class="UIPagelet">
     <div id="UIGlobal_BlueBarHolder" class="slimHeader">
@@ -46,12 +47,6 @@
                     </div>
                     <div class="rfloat">
                         <ul id="pageNav">
-                            <li id="navHome" class="topNavLink middleLink">
-                                <a href="@Url.Content("~/")">Home</a>
-                            </li>
-                            <li class="topNavLink middleLink">
-                                <a href="#">Find Friends</a>
-                            </li>
                             <li id="navTinyman" class="topNavLink tinyman">
                                 @{
                                     string loginId = (userLogged.Username != null && userLogged.Username.Length > 0)
@@ -59,11 +54,16 @@
                                         : userLogged.Email;
                                 }
                                 <a href="/@loginId" title="Profile">
-                                    <img class="uiProfilePhoto" />
+                                    <img class="uiProfilePhoto" src="@Url.Content("~/static/images/avatars/" + avatarFileName)" width="25" height="25" />
                                     <span class="tinymanName">@userLogged.FullName</span>
                                 </a>
                             </li>
-                            <div class="clearfix"></div>
+                            <li class="topNavLink middleLink">
+                                <a href="#">Find Friends</a>
+                            </li>
+                            <li id="navHome" class="topNavLink lastLink">
+                                <a href="@Url.Content("~/")">Home</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

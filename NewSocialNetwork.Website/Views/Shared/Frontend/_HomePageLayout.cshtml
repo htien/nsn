@@ -28,6 +28,28 @@
             <div id="pagelet_pinned_nav">
                 <div id="pinnedNav">
                     <div class="navHeader">Favorites</div>
+                    <div class="droppableNav">
+                        <ul class="uiSideNav">
+                            <li class="sideNavItem">
+                                <a class="item" href="@Url.RouteUrl("Stream")">
+                                    <span class="imgWrap itemNewsFeed"></span>
+                                    <span class="linkWrap">News Feed</span>
+                                </a>
+                            </li>
+                            <li class="sideNavItem">
+                                <a class="item">
+                                    <span class="imgWrap itemMessages"></span>
+                                    <span class="linkWrap">Messages</span>
+                                </a>
+                            </li>
+                            <li class="sideNavItem">
+                                <a class="item">
+                                    <span class="imgWrap itemFindFriends"></span>
+                                    <span class="linkWrap">Find Friends</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div id="pagelet_bookmark_nav">
@@ -40,14 +62,11 @@
     @if (ViewBag.hasRightCol)
     {
     <div class="nsnRightCol">
-        Right col
     </div>
     }
     <div class="nsnContentArea">
-        <div id="pagelet_stream" class="nsn-box first">
-            <div class="nsn-bodyrender">
-                @RenderBody()
-            </div>
+        <div class="nsn-bodyrender">
+            @RenderBody()
         </div>
     </div>
     <div class="clearfix"></div>

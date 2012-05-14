@@ -1,0 +1,41 @@
+﻿@{
+    NewSocialNetwork.Domain.User user = ViewBag.UserLogged;
+    bool hasUsername = user.Username != null && user.Username.Length > 0;
+    string displayId = hasUsername ? user.Username : Convert.ToString(user.UserId);
+}
+<div id="pagelet_apps" class="UIContainer_Apps">
+    <div class="uiAppListBox">
+        <div class="uiAppItem">
+            <a class="uiItemBox" href="@Url.RouteUrl("Stream")">
+                <div class="uiItem">
+                    <div class="uiItemImage itemImage_Home"></div>
+                    <div class="uiItemTitle">Home</div>
+                </div>
+            </a>
+        </div>
+        <div class="uiAppItem">
+            <a class="uiItemBox" href="/@displayId">
+                <div class="uiItem">
+                    <div class="uiItemImage itemImage_Profile"></div>
+                    <div class="uiItemTitle">Profile</div>
+                </div>
+            </a>
+        </div>
+        <div class="uiAppItem">
+            <a class="uiItemBox" href="/@displayId/photos">
+                <div class="uiItem">
+                    <div class="uiItemImage itemImage_Photos"></div>
+                    <div class="uiItemTitle">Photos</div>
+                </div>
+            </a>
+        </div>
+        <div class="uiAppItem">
+            <a class="uiItemBox" href="/@displayId/friends">
+                <div class="uiItem">
+                    <div class="uiItemImage itemImage_Friends"></div>
+                    <div class="uiItemTitle">Friends</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

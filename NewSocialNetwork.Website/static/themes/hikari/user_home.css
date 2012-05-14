@@ -2,6 +2,30 @@
  * FREE FOR ALL BUT DOES NOT MEAN THERE IS NO PRICE.
  */
 
+/*::-webkit-scrollbar {
+  overflow: visible;
+  width: 11px;
+  height: 11px;
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); 
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(0,0,0,.4); 
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(0,0,0,.4); 
+}*/
+
+.UIPage_Hikari {
+  background: url(images/background1_50.jpg) repeat 50% 50%;
+}
+
 img,
 .UIPage_Hikari #globalHeader,
 .UIPage_Hikari #globalFooter {
@@ -15,7 +39,7 @@ img,
 .UIPage_Hikari #globalContainer {padding-bottom: 90px;height: auto;min-height: 100%;zoom: 1;}
 .UIPage_Hikari #globalFooter {position: absolute;right: 0;bottom: 0;left: 0;clear: left;height: 55px;}
 .UIPage_Hikari #mainContainer {}
-.UIPage_Hikari .nsnContentCol {border-top: 0 !important;border: 1px solid #ccc;}
+.UIPage_Hikari .nsnContentCol {background-color: #fff;border-top: 0 !important;border: 1px solid #ddd;}
 .UIPage_Hikari .nsnContentCol .nsnContentArea {padding: 0 20px 20px;word-wrap: break-word;}
 .UIPage_Hikari .hasLeftCol .nsnContentCol {margin-left: 178px;}
 .UIPage_Hikari .hasLeftCol .hasRightCol .nsnContentArea {padding: 0 25px 20px 18px;width: 511px;}
@@ -38,10 +62,24 @@ img,
 .uiImageBlockImage, .uiImageBlockImage .img {display: block;}
 .uiImageBlockMediumImage {margin-right: 8px;}
 .uiImageBlockContent {overflow: hidden;}
+.uiSideNav .sideNavItem {}
+.uiSideNav .item, .uiSideNav .subitem {display: block;min-height: 17px;line-height: 13px;padding: 3px 8px 0 28px;color: #333;}
+.uiSideNav .item .imgWrap {width: 18px;}
+.uiSideNav .sideNavItem .imgWrap {float: left;display: inline-block;margin-left: -22px;margin-top: -1px;width: 16px;height: 16px;}
 
 .nsnWelcomeBox .nsnWelcomeBoxName {padding-bottom: 1px;}
-.nsnWelcomeBoxName {display: inline-block;width: 112px;font-size: 11px;font-weight: bold;word-wrap: break-word;}
+.nsnWelcomeBoxName {display: inline-block;width: 112px;font-weight: bold;word-wrap: break-word;}
+.navHeader {font-size: 17px;color: #006e12;}
+.droppableNav {margin-top: 5px;margin-bottom: 10px;}
+.itemNewsFeed {background: url(/static/themes/hikari/images/fb_sprite_icons_2.png) no-repeat -17px -410px;}
+.itemMessages {background: url(/static/themes/hikari/images/fb_sprite_icons_3.png) no-repeat -91px -45px;}
+.itemFindFriends {background: url(/static/themes/hikari/images/fb_sprite_icons_3.png) no-repeat -142px -45px;}
 
+#pinnedNav {margin-top: 16px;}
+
+#composer-tabs {
+  width: 511px;
+}
 #composer-tabs.ui-tabs .ui-tabs-panel {
   padding: 0;
 }
@@ -60,7 +98,7 @@ img,
 #composer-tabs.ui-tabs .ui-tabs-nav li a {
   padding: .5em 0;
   line-height: 22px;
-  color: #3b5998;
+  color: #2e8bcc;
 }
 #composer-tabs.ui-tabs span.uiIconText .icon,
 #composer-tabs.ui-tabs span.uiIconText .text {
@@ -75,7 +113,7 @@ img,
   background-repeat: no-repeat;
 }
 #composer-tabs .uiComposer-outer {
-  border: 1px solid #b4cbcd !important;
+  border: 1px solid #ddd !important;
 }
 #composer-tabs .uiComposer .uiInput {
   padding: 5px;
@@ -90,7 +128,7 @@ img,
 #composer-tabs .uiComposer .buttons .buttons-inner {
   padding: 4px;
 }
-#composer-tabs .buttons .guiButton {
+#composer-tabs .buttons .guiButton2 {
   float: right;
 }
 #composer-tabs .composer-updatestatus {
@@ -106,7 +144,7 @@ img,
 #composer-tabs .composer-addlink .icon {
   background-position: -87px -135px;
 }
-#inputStatus {
+#inputStatus, #inputLink {
   display: block;
   margin: 0 auto !important;
   padding: 0;
@@ -115,6 +153,150 @@ img,
   outline: none;
   resize: none;
 }
-#postStatus {
+#postStatus, #postLink {
   margin-right: 0;
+}
+#composer-addphoto .composerPhotoGrid .borderItem {
+  border-right: 1px solid #e5e5e5;
+}
+#composer-addphoto .composerPhotoGrid .item {
+  display: table;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  height: 79px;
+  font-weight: bold;
+  text-align: center;
+}
+#composer-addphoto .composerPhotoGrid .item:hover {
+  background-color: #ebeef4;
+}
+#composer-addphoto .composerPhotoGrid .title {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.UIContainer_Apps {
+  position: fixed;
+  top: 37px;
+  bottom: 0;
+  width: 100px;
+}
+.UIContainer_Content {
+  position: relative;
+  margin-left: 100px;
+  width: auto;
+  min-height: 320px;
+  background-color: #fff;
+  border: 1px solid #d7d7d7;
+  border-top: none;
+}
+.uiAppListBox .uiAppItem {
+  position: relative;
+  margin: 0 14px;
+  height: 80px;
+}
+.uiAppListBox .uiAppItem .uiItemBox {
+  display: block;
+  height: 80px;
+  color: #333;
+  vertical-align: middle;
+}
+.uiAppListBox .uiAppItem .uiItem {
+  padding: 15px 0 16px 0;
+}
+.uiAppListBox .uiAppItem .uiItemImage {
+  margin: 0 auto;
+  width: 32px;
+  height: 32px;
+  background-image: url(/static/themes/hikari/images/ribbon_nav_common.png);
+  background-repeat: no-repeat;
+}
+.uiAppListBox .uiAppItem .uiItemTitle {
+  overflow: hidden;
+  margin-top: 5px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.itemImage_Home {
+  background-position: 0 -231px;
+}
+.itemImage_Profile {
+  background-position: 0 -891px;
+}
+.itemImage_Photos {
+  background-position: 0 -297px;
+}
+.itemImage_Friends{
+  background-position: 0 -330px;
+}
+.UIContent_UserProfile {
+  position: relative;
+}
+.UIContent_UserProfile .uiHeadProfile {
+  padding: 0 19px;
+  height: 58px;
+  line-height: 58px;
+  background-color: #fff;
+}
+.UIContent_UserProfile .uiProfileTitle {
+  display: inline-block;
+  overflow: hidden;
+  font-size: 21px;
+  text-overflow: ellipsis;
+  white-space: normal;
+  vertical-align: middle;
+}
+.UIContent_UserProfile .uiHeadCoverPhoto {
+  position: relative;
+  height: 180px;
+  background: url(/static/themes/hikari/images/default_coverphoto_940x180.png) no-repeat;
+}
+.UIContent_UserProfile .uiBodyProfile {
+  padding: 19px;
+}
+.UISidebar_Profile {
+  position: absolute;
+  top: 16px;
+  right: 40px;
+  width: 262px;
+}
+.UISidebar_Profile .uiProfileImageBox {
+  position: relative;
+  width: 262px;
+  background-color: #fff;
+  z-index: 20;
+}
+.UISidebar_Profile .uiProfilePictureBox {
+  position: relative;
+  padding: 5px;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  -moz-box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+.UISidebar_Profile .uiProfileInfoBox {
+  position: relative;
+  margin: 0 3px;
+  background-color: #f9f9f9;
+  border-width: 0 1px 1px;
+  border-color: #ccc;
+  border-style: solid;
+  -webkit-border-radius: 0 0 3px 3px;
+  -moz-border-radius: 0 0 3px 3px;
+  border-radius: 0 0 3px 3px;
+  -webkit-box-shadow: 0 1px 0 rgba(101,101,101,.1);
+  -moz-box-shadow: 0 1px 0 rgba(101,101,101,.1);
+  box-shadow: 0 1px 0 rgba(101,101,101,.1);
+  z-index: 19;
+}
+.UISidebar_Profile .uiProfileInfoBox .uiInfoContent {
+  padding: 10px 10px 5px 15px
+}
+.UISidebar_Profile .uiProfileInfoBox .uiInfoContent .infoContent {
+  margin-bottom: 7px;
 }

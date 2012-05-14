@@ -86,6 +86,8 @@
     <Compile Include="HttpModule\RequestFilter.cs" />
     <Compile Include="Application\NSNContext.cs" />
     <Compile Include="Installer\PersistenceInstaller.cs" />
+    <Compile Include="Manager\FeedItem.cs" />
+    <Compile Include="Manager\FeedManager.cs" />
     <Compile Include="NewSocialNetwork\DataAccess\CommentDAO.cs" />
     <Compile Include="NewSocialNetwork\DataAccess\CommentTextDAO.cs" />
     <Compile Include="NewSocialNetwork\DataAccess\CountryChildDAO.cs" />

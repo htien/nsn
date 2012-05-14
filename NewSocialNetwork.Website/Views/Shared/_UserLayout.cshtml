@@ -4,6 +4,8 @@
 @section html_head_area {
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/static/themes/hikari/user.css")" />
     <script type="text/javascript">
+        new Image().src = '@Url.Content("~/static/themes/hikari/images/background1_50.png")';
+        new Image().src = '@Url.Content("~/static/themes/hikari/images/background1_50.jpg")';
         new Image().src = '@Url.Content("~/static/themes/hikari/images/background1.png")';
         new Image().src = '@Url.Content("~/static/themes/hikari/images/nsn.png")';
         new Image().src = '@Url.Content("~/static/themes/hikari/images/fb_sprite.png")';
@@ -30,7 +32,7 @@
     <div id="globalFooter" class="gl">
     </div>
 }
-<div id="hikari" class="@(ViewBag.hasLeftCol?"hasLeftCol":"")">
+<div id="hikari" class="@(ViewBag.hasLeftCol == null ? "" : ViewBag.hasLeftCol ? "hasLeftCol" : "")">
     <div id="globalContainer" class="gl">
         <div id="mainContainer" class="nsnContainer">
             @RenderBody()

@@ -1,9 +1,10 @@
 ﻿@{
-    ViewBag.hasLeftCol = false;
-    ViewBag.hasRightCol = true;
-    string gender = SaberLily.Utils.GeneralUtils.Gender(ViewBag.UserLogin.Gender);
-    DateTime joined = SaberLily.Utils.DateTimeUtils.ConvertFromUnixTimestamp(ViewBag.UserLogin.Joined);
+    NewSocialNetwork.Domain.User user = ViewBag.UserLogged;
+    string gender = SaberLily.Utils.GeneralUtils.Gender(user.Gender);
+    DateTime joined = SaberLily.Utils.DateTimeUtils.ConvertFromUnixTimestamp(user.Joined);
 }
+Load info here!
+@*
 <img src="@Url.Content("~/static/images/avatars/")@ViewBag.UserLogin.UserImage" />
 <div>
 <h2>Basic Info</h2>
@@ -31,8 +32,9 @@
 </tr>
 </table>
 </div>
+*@
 @*List Friends Of User*@
-Friends : @ViewBag.ListFriend.Count
+@*Friends : @ViewBag.ListFriend.Count
 @{
      if (ViewBag.ListFriend != null && ViewBag.ListFriend.Count > 0)
     {
@@ -58,4 +60,4 @@ Friends : @ViewBag.ListFriend.Count
         <p>No Friends.</p>
      }
 }
-
+*@
