@@ -8,12 +8,20 @@ namespace NewSocialNetwork.DataAccess
 {
     public class UserTweetDAO : DAO<UserTweet>, IUserTweetRepository
     {
+        public IFeedRepository feedRepo { private get; set; }
+
         public UserTweetDAO(ISessionFactory sessionFactory) : base(sessionFactory)
         { }
 
         #region IUserTweetRepository Members
 
-        public void Add(User user, string content)
+        /// <summary>
+        /// Add new tweet of user.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public int Add(User user, string content)
         {
             int timestamp = DateTimeUtils.UnixTimestamp;
             int tweetId = Convert.ToInt32(this.Session().CreateSQLQuery(
@@ -24,14 +32,8 @@ namespace NewSocialNetwork.DataAccess
                 .SetString("content", content)
                 .SetInt32("timestamp", timestamp)
                 .UniqueResult());
-            long feedId = Convert.ToInt32(this.Session().CreateSQLQuery(
-                    @"insert into [NSN.Feed] (TypeId, ItemId, UserId, Timestamp)
-                      values (:typeId, :itemId, :userId, :timestamp); select scope_identity()")
-                .SetString("typeId", "user_tweet")
-                .SetInt32("itemId", tweetId)
-                .SetInt32("userId", user.UserId)
-                .SetInt32("timestamp", timestamp)
-                .UniqueResult());
+            feedRepo.AddForUserTweet(tweetId, user.UserId, timestamp);
+            return tweetId;
         }
 
         public UserTweet Get(int tweetId, int userId)

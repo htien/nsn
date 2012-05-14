@@ -2,51 +2,8 @@
     NewSocialNetwork.Domain.User user = ViewBag.UserLogged;
     string gender = SaberLily.Utils.GeneralUtils.Gender(user.Gender);
     DateTime joined = SaberLily.Utils.DateTimeUtils.ConvertFromUnixTimestamp(user.Joined);
-    string avatarFileName = SaberLily.Utils.GeneralUtils.UserImage(user.UserImage, user.Gender);
 }
-<div id="pagelet_user_profile">
-    <div class="UIContent_UserProfile">
-        <div class="uiHeadProfile">
-            <div class="uiProfileTitle">
-                @user.FullName
-            </div>
-        </div>
-        <div class="uiHeadCoverPhoto">
-        </div>
-        <div id="pagelet_profileSidebar" class="UISidebar_Profile">
-            <div class="uiProfileImageBox">
-                <div class="uiProfilePictureBox">
-                    <div class="uiProfilePicture">
-                        <div class="uiPicture">
-                            <img src="@Url.Content("~/static/images/avatars/" + avatarFileName)" title="" width="250" height="250" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="uiProfileInfoBox">
-                <div class="uiProfileInfo">
-                    <div class="uiProfileInfoContent">
-                        <div class="uiInfoContent">
-                            <div class="infoContent">
-                                <span>NSN Group: </span> <strong>@user.UserGroup.Title</strong>
-                            </div>
-                            <div class="infoContent">
-                                <span>Live in</span> <strong>@user.Country.Name</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="uiBodyProfile">
-            @RenderPage("~/Views/Shared/Frontend/pagelet/_composer_pagelet.cshtml")
-            <div id="pagelet_user_feed">
-                Load feed of user!
-            </div>
-        </div>
-    </div>
-</div>
-<div class="clearfix"></div>
+Load info here!
 @*
 <img src="@Url.Content("~/static/images/avatars/")@ViewBag.UserLogin.UserImage" />
 <div>

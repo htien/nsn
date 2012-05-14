@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Web.Mvc;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NSN.Framework;
 using NSN.Kernel.Manager;
 using NSN.NewSocialNetwork.Domain;
-using SaberLily.Web.Mvc;
-using System.Web.Mvc;
 
 namespace NewSocialNetwork.Website.Controllers
 {
@@ -18,7 +17,7 @@ namespace NewSocialNetwork.Website.Controllers
         //
         // GET: /Feed/
 
-        public JsonResult Posts()
+        public JsonResult Feeds()
         {
             Domain.User user = sessionManager.GetUser();
             IList<Feed> feeds = feedRepo.GetUserFeeds(user.UserId, 0, 5);

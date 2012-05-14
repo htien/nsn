@@ -3,47 +3,51 @@
     NewSocialNetwork.Domain.User user = ViewBag.UserLogged;
     bool hasUsername = user.Username != null && user.Username.Length > 0;
     string id = hasUsername ? user.Username : user.Email;
-    string displayId = hasUsername ? user.Username : Convert.ToString(user.UserId);
+    string avatarFileName = SaberLily.Utils.GeneralUtils.UserImage(user.UserImage, user.Gender);
 }
 @section html_head_area {@RenderSection("html_head_area", false)}
-<div id="pagelet_apps" class="UIContainer_Apps">
-    <div class="uiAppListBox">
-        <div class="uiAppItem">
-            <a class="uiItemBox" href="@Url.RouteUrl("Stream")">
-                <div class="uiItem">
-                    <div class="uiItemImage itemImage_Home"></div>
-                    <div class="uiItemTitle">Home</div>
-                </div>
-            </a>
-        </div>
-        <div class="uiAppItem">
-            <a class="uiItemBox" href="/@displayId">
-                <div class="uiItem">
-                    <div class="uiItemImage itemImage_Profile"></div>
-                    <div class="uiItemTitle">Profile</div>
-                </div>
-            </a>
-        </div>
-        <div class="uiAppItem">
-            <a class="uiItemBox" href="/@displayId/photos">
-                <div class="uiItem">
-                    <div class="uiItemImage itemImage_Photos"></div>
-                    <div class="uiItemTitle">Photos</div>
-                </div>
-            </a>
-        </div>
-        <div class="uiAppItem">
-            <a class="uiItemBox" href="/@displayId/friends">
-                <div class="uiItem">
-                    <div class="uiItemImage itemImage_Friends"></div>
-                    <div class="uiItemTitle">Friends</div>
-                </div>
-            </a>
-        </div>
-    </div>
-</div>
+@RenderPage("~/Views/Shared/Frontend/pagelet/_apps_bar_pagelet.cshtml")
 <div id="pagelet_app_content" class="UIContainer_Content">
     <div id="contentPane">
-        @RenderBody()
-    </div>
+        <div id="pagelet_user_profile">
+            <div class="UIContent_UserProfile">
+                <div class="uiHeadProfile">
+                    <div class="uiProfileTitle">
+                        @user.FullName
+                    </div>
+                </div>
+                <div class="uiHeadCoverPhoto">
+                </div>
+                <div id="pagelet_profileSidebar" class="UISidebar_Profile">
+                    <div class="uiProfileImageBox">
+                        <div class="uiProfilePictureBox">
+                            <div class="uiProfilePicture">
+                                <div class="uiPicture">
+                                    <img src="@Url.Content("~/static/images/avatars/" + avatarFileName)" title="" width="250" height="250" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uiProfileInfoBox">
+                        <div class="uiProfileInfo">
+                            <div class="uiProfileInfoContent">
+                                <div class="uiInfoContent">
+                                    <div class="infoContent">
+                                        <span>NSN Group: </span> <strong>@user.UserGroup.Title</strong>
+                                    </div>
+                                    <div class="infoContent">
+                                        <span>Live in</span> <strong>@user.Country.Name</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="uiBodyProfile">
+                    @RenderBody()
+                </div>
+            </div>
+        </div> @* pagelet_user_profile *@
+        <div class="clearfix"></div>
+    </div> @* contentPane *@
 </div>

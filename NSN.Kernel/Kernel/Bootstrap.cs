@@ -246,6 +246,15 @@ namespace NSN.Kernel
                 new { controller = "Home", action = "Stream" }
             );
             routes.MapRouteLowercase(
+                "AjaxAction",
+                "AjaxLoad/{action}",
+                new { controller = "Ajax", action = "Index" }
+            );
+            routes.MapRouteLowercase(
+                "Go",
+                "NSN/Go/To/{controller}/{action}"
+            );
+            routes.MapRouteLowercase(
                 "LinkAction",
                 "Links/{action}",
                 new { controller = "Link", action = "List" }
@@ -286,11 +295,6 @@ namespace NSN.Kernel
                 "ProfileAction",
                 "{uid}/{action}",
                 new { controller = "Profile", action = "Info" }
-            );
-            routes.MapRouteLowercase(
-                "AjaxFeedPosts",
-                "AjaxLoad/Feed/Posts",
-                new { controller = "Feed", action = "Posts" }
             );
         }
 

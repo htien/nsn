@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NHibernate;
-using System;
+using NSN.NewSocialNetwork.Domain;
 
 namespace NewSocialNetwork.DataAccess
 {
@@ -15,6 +16,25 @@ namespace NewSocialNetwork.DataAccess
         { }
 
         #region IFeedRepository Members
+
+        /// <summary>
+        /// Add UserTweet.
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="userId"></param>
+        /// <param name="timestamp"></param>
+        /// <returns></returns>
+        public long AddForUserTweet(int itemId, int userId, int timestamp)
+        {
+            return Convert.ToInt64(this.Session().CreateSQLQuery(
+                    @"insert into [NSN.Feed] (TypeId, ItemId, UserId, Timestamp)
+                      values (:typeId, :itemId, :userId, :timestamp); select scope_identity()")
+                .SetString("typeId", NSNType.USER_TWEET)
+                .SetInt32("itemId", itemId)
+                .SetInt32("userId", userId)
+                .SetInt32("timestamp", timestamp)
+                .UniqueResult());
+        }
 
         public IList<Feed> GetUserFeeds(int userId)
         {
