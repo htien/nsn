@@ -3,36 +3,43 @@
     string gender = SaberLily.Utils.GeneralUtils.Gender(user.Gender);
     DateTime joined = SaberLily.Utils.DateTimeUtils.ConvertFromUnixTimestamp(user.Joined);
 }
-Load info here!
-@*
-<img src="@Url.Content("~/static/images/avatars/")@ViewBag.UserLogin.UserImage" />
-<div>
-<h2>Basic Info</h2>
-<table style="margin-left: 80px">
-<tr>
-<td>User Group :</td><td>@ViewBag.UserLogin.UserGroup.Title</td>
-</tr>
-<tr>
-<td>Email :</td><td>@ViewBag.UserLogin.Email</td>
-</tr>
-<tr>
-<td>Gender :</td><td>@gender</td>
-</tr>
-<tr>
-<td>Birthday :</td><td>@ViewBag.UserLogin.Birthday</td>
-</tr>
-<tr>
-<td>Country :</td><td>@ViewBag.UserLogin.Country.Name</td>
-</tr>
-<tr>
-<td>Join Date :</td><td>@joined.ToShortDateString()</td>
-</tr>
-<tr>
-<td>Status :</td><td>...</td>
-</tr>
-</table>
+
+<div class="ML">
+@*<img src="@Url.Content("~/static/images/avatars/")@ViewBag.UserLogin.UserImage" alt="Profile Image" />*@
+    <div class="l-up ne jc">
+        <div class="Od a-f-e">Short introduction</div>
+        <div class="Ga a-f-e">...</div>
+    </div>
+   <div class="l-up ne jc">
+        <div class="Od a-f-e">User group</div>
+        <div class="Ga a-f-e">@ViewBag.UserLogin.UserGroup.Title</div>
+    </div>
+    <div class="l-up ne jc">
+    <div class="Od a-f-e">Email</div>
+    <div class="Ga a-f-e">@ViewBag.UserLogin.Email</div>
+    </div>
+    <div class="l-up ne jc">
+        <div class="Od a-f-e">Gender </div>
+        <div class="Ga a-f-e">@gender</div>
+    </div>
+    <div class="l-up ne jc">
+        <div class="Od a-f-e">Birthday</div>
+        <div class="Ga a-f-e">@ViewBag.UserLogin.Birthday</div>
+    </div>
+    <div class="l-up ne jc">
+        <div class="Od a-f-e">Live in</div>
+        <div class="Ga a-f-e">@ViewBag.UserLogin.Country.Name</div>
+    </div>
+    <div class="l-up ne jc">
+        <div class="Od a-f-e">Join date</div>
+        <div class="Ga a-f-e">@joined.ToShortDateString()</div>
+    </div>
+    <div class="l-up ne jc">
+        <div class="Od a-f-e">Status</div>
+        <div class="Ga a-f-e">...</div>
+    </div>
 </div>
-*@
+
 @*List Friends Of User*@
 @*Friends : @ViewBag.ListFriend.Count
 @{

@@ -8,3 +8,48 @@
 .UIPage_Hikari #hikari {margin: 0 auto;min-width: 981px;max-width: 1910px;}
 .UIPage_Hikari #globalContainer,
 .UIPage_Hikari #globalFooter {width: 981px;min-width: 981px;}
+
+/*CSS Profile*/
+
+.ML {
+float: left;
+max-width: 565px;
+min-width: 191px;
+white-space: normal;
+width: 100%;
+/*word-wrap: break-word;*/
+display: block;
+}
+
+.ne {
+border-top: 1px solid none;
+color: #333;
+font: normal 13px arial,sans-serif;
+margin: 0;
+padding: 10px 0;
+text-align: left;
+}
+
+.Od {
+font-size: 15px;
+font-weight: normal;
+line-height: 1.2em;
+margin-bottom: 0;
+text-align: right;
+vertical-align: top;
+width: 110px;
+}
+
+.a-f-e {
+position: relative;
+display: -moz-inline-box;
+display: inline-block;
+}
+
+.Ga {
+padding: 0 0 0 7px;
+width: 441px;
+vertical-align: top;
+line-height: 1.39em;
+color:Gray;
+}
