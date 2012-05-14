@@ -1,4 +1,5 @@
-﻿using Castle.ActiveRecord;
+﻿using System.Web.Script.Serialization;
+using Castle.ActiveRecord;
 using NSN.Framework;
 
 namespace NewSocialNetwork.Domain
@@ -9,9 +10,11 @@ namespace NewSocialNetwork.Domain
         [PrimaryKey(PrimaryKeyType.Identity, "TweetId")]
         public virtual int TweetId { get; set; }
 
+        [ScriptIgnore]
         [BelongsTo("UserId", NotNull = true)]
         public virtual User User { get; set; }
 
+        [ScriptIgnore]
         [BelongsTo("FriendUserId", NotNull = true)]
         public virtual User FriendUser { get; set; }
 

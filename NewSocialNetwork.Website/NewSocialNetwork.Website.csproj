@@ -94,8 +94,8 @@
       <HintPath>..\packages\Meleze.Web.1.4.3\lib\NET40\Meleze.Web.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.4\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.5\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=3.3.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\NHibernate.3.3.0.4000\lib\Net35\NHibernate.dll</HintPath>
@@ -149,6 +149,8 @@
     <Content Include="static\themes\closure-theme\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="static\themes\closure-theme\jquery-ui-1.8.20.css" />
     <Content Include="static\themes\hikari\images\background1.png" />
+    <Content Include="static\themes\hikari\images\background1_50.jpg" />
+    <Content Include="static\themes\hikari\images\background1_50.png" />
     <Content Include="static\themes\hikari\images\blank.gif" />
     <Content Include="static\themes\hikari\images\default_coverphoto_940x180.png" />
     <Content Include="static\themes\hikari\images\fb_sprite_icons_2.png" />
@@ -1081,6 +1083,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\FriendController.cs" />
     <Compile Include="Controllers\Helper\RAction.cs" />
     <Compile Include="Controllers\Helper\ResponseMessage.cs" />

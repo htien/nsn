@@ -34,6 +34,15 @@ namespace NewSocialNetwork.DataAccess
                 .UniqueResult());
         }
 
+        public UserTweet Get(int tweetId, int userId)
+        {
+            return this.Session().CreateQuery(
+                @"from UserTweet tw where tw.TweetId = :tweetId and tw.User.UserId = :userId")
+                .SetInt32("tweetId", tweetId)
+                .SetInt32("userId", userId)
+                .UniqueResult<UserTweet>();
+        }
+
         #endregion
     }
 }

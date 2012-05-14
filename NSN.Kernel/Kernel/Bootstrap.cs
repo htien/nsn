@@ -287,6 +287,11 @@ namespace NSN.Kernel
                 "{uid}/{action}",
                 new { controller = "Profile", action = "Info" }
             );
+            routes.MapRouteLowercase(
+                "AjaxFeedPosts",
+                "AjaxLoad/Feed/Posts",
+                new { controller = "Feed", action = "Posts" }
+            );
         }
 
         #region ----- BootstrapHolder Class
