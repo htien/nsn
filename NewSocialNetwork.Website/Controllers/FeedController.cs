@@ -7,6 +7,11 @@ namespace NewSocialNetwork.Website.Controllers
 {
     public class FeedController : ApplicationController
     {
+        public FeedController()
+        {
+            ViewBag.PageTitle = "NSN: Posts";
+        }
+
         //
         // GET: /Feed/
 

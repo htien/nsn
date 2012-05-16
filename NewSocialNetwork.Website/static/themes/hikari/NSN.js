@@ -89,7 +89,7 @@ var glbDebug = true,
         };
         nsn.url = function(path) {
             if (typeof path === 'string')
-                return glbContextPath.concat(path);
+                return glbContextPath == '/' && path == '/' ? '/' : glbContextPath.concat(path);
             else
                 return glbContextPath;
         };

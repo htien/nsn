@@ -28,7 +28,7 @@ namespace NSN.HttpModule
             HttpSessionState session = context.Session;
 
             // Quá trình kiểm tra loại bỏ những request đối với những static file
-            string[] fileExts = { ".css", ".js", ".png", ".gif", ".jpg", "jpeg", "bmp", "swf", ".aspx", ".html" };
+            string[] fileExts = { ".css", ".js", ".png", ".gif", ".jpg", "jpeg", "bmp", "swf", ".aspx", ".html", ".woff" };
             bool acceptRequest = true;
             foreach (string ext in fileExts)
             {

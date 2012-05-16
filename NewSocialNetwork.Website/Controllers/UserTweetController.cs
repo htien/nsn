@@ -11,7 +11,7 @@ namespace NewSocialNetwork.Website.Controllers
 
         public UserTweetController()
         {
-            ViewBag.PageTitle = "NSN: Posts";
+            ViewBag.PageTitle = "NSN: UserTweet";
         }
 
         //

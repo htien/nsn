@@ -1156,7 +1156,7 @@
     <Content Include="Config\Web.config.new" />
     <None Include="packages.config" />
     <None Include="static\js\goog\net\iframeio_different_base_test.data" />
-    <None Include="static\themes\hikari\images\fonts\open-sans.woff" />
+    <Content Include="static\themes\hikari\images\fonts\open-sans.woff" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>

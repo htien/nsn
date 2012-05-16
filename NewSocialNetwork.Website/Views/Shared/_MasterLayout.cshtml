@@ -8,7 +8,7 @@
     <meta name="generator" content="@ViewBag.PageGenerator" />
     <meta name="keywords" content="@ViewBag.PageKeywords" />
     <meta name="viewport" content="width=device-width" />
-    <base href="@NSN.Common.Globals.ApplicationPath/" />
+    <base href="@(NSN.Common.Globals.ApplicationPath.Equals("/") ? "" : NSN.Common.Globals.ApplicationPath)/" />
     <title>@ViewBag.PageTitle</title>
     <script type="text/javascript">
         document.contextPath = '@NSN.Common.Globals.ApplicationPath';
