@@ -139,7 +139,7 @@ Yêu cầu hiệu chỉnh lại tính năng `Format Document` trong Visual Studi
 MÔ TẢ PROJECT
 -------------
 
-### URL ROUTES
+### URL Routes
 
 Nếu ở localhost, đường dẫn mặc định là `http://localhost:55555`.
 Nếu ở remotehost, đường dẫn sẽ là `http://yourdomain`.
@@ -152,6 +152,25 @@ Sau đây là các đường dẫn đến các trang:
     /photo/{photoid}    ...Show a photo
     /{userid}/photos    ...List of Photo Albums
 
+
+HƯỚNG DẪN PUBLISH LÊN IIS 7.5
+-----------------------------
+
+### Cài đặt IIS 7.5 (Windows 7)
+
+### Đăng ký .NET Framework 4.0 vào IIS
+
+### Đăng ký MIME Type
+
+Để thêm một MIME type cho website bằng cách sử dụng công cụ command-line là `appcmd.exe`.
+
+Sử dụng cú pháp để thêm một MIME type (thực thi với quyền Administrator):
+
+`%SystemRoot%\windows\system32\inetsrv\appcmd set config /section:staticContent /+[fileExtension='string',mimeType='string']`
+
+Ví dụ đăng ký MIME type cho tập tin có phần mở rộng ".xyz":
+
+`appcmd set config /section:staticContent /+[fileExtension='.xyz',mimeType='text/plain']`
 
 Đang cập nhật...
 
