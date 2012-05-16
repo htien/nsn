@@ -3,7 +3,7 @@
  */
 
 .UIPage_Hikari {
-  background: url(images/background1_50.jpg) repeat 50% 50%;
+  background: url(images/background1_2.png) repeat 50% 50%;
 }
 
 img,
@@ -89,7 +89,7 @@ img,
   margin-right: 2px;
   width: 16px;
   height: 16px;
-  background-image: url(/static/themes/hikari/images/fb_sprite_icons.png);
+  background-image: url(/static/themes/hikari/images/fb_sprite_icons_1.png);
   background-repeat: no-repeat;
 }
 #composer-tabs .uiComposer-outer {

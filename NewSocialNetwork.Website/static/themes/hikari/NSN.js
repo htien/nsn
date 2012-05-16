@@ -197,6 +197,7 @@ var glbDebug = true,
     glbYesLog = glbDebug && !nsn.isIE();
     glbDlgOpts = {
         title: 'New Social Network',
+        dialogClass: 'alert',
         hasTitle: true,
         autoOpen: false,
         draggable: false,
@@ -205,7 +206,7 @@ var glbDebug = true,
         position: 'center',
         minWidth: 390,
         minHeight: 180,
-        width: 'auto',
+        width: 450,
         height: 'auto',
         closeOnEscape: false,
         create: function(evt, ui) {
@@ -216,11 +217,15 @@ var glbDebug = true,
                 jQuery('.ui-dialog-titlebar').remove();
             }
         },
-        buttons: {
-            'Close': function() {
-                jQuery(this).dialog('destroy').remove();
+        buttons: [
+            {
+                text: 'Close',
+                class: 'guiBlueButton',
+                click: function() {
+                    jQuery(this).dialog('destroy').remove();
+                }
             }
-        }
+        ]
     };
     glbValidateOpts = {
         debug: glbDebug,

@@ -154,8 +154,9 @@
     <Content Include="static\themes\hikari\images\background1_50.png" />
     <Content Include="static\themes\hikari\images\blank.gif" />
     <Content Include="static\themes\hikari\images\default_coverphoto_940x180.png" />
+    <Content Include="static\themes\hikari\images\fb_sprite_icons_4.png" />
     <Content Include="static\themes\hikari\images\fb_sprite_icons_2.png" />
-    <Content Include="static\themes\hikari\images\fb_sprite_icons.png" />
+    <Content Include="static\themes\hikari\images\fb_sprite_icons_1.png" />
     <Content Include="static\themes\hikari\images\fb_sprite_icons_3.png" />
     <Content Include="static\themes\hikari\images\indicator_blue_large.gif" />
     <Content Include="static\images\favicon.ico" />
@@ -1045,6 +1046,7 @@
     <Content Include="static\themes\hikari\images\logo64_white.png" />
     <Content Include="static\themes\hikari\images\nsn.png" />
     <Content Include="static\themes\hikari\images\ribbon_nav_common.png" />
+    <Content Include="static\themes\hikari\images\uiSearchButton.png" />
     <Content Include="static\themes\hikari\images\worldmap_2.png" />
     <Content Include="static\themes\hikari\images\worldmap_1.png" />
     <Content Include="static\themes\hikari\images\newsoclnet.png" />
