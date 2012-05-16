@@ -8,8 +8,12 @@
     <meta name="generator" content="@ViewBag.PageGenerator" />
     <meta name="keywords" content="@ViewBag.PageKeywords" />
     <meta name="viewport" content="width=device-width" />
-    <base href="@Url.Content("~/")" />
+    <base href="@NSN.Common.Globals.ApplicationPath/" />
     <title>@ViewBag.PageTitle</title>
+    <script type="text/javascript">
+        document.contextPath = '@NSN.Common.Globals.ApplicationPath';
+        document.startTime = document.startTime || (new Date).getTime();
+    </script>
     <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/static/images/favicon.ico")" />
     @RenderSection("html_head_area", false)
 </head>

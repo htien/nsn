@@ -20,7 +20,7 @@
             <strong>Feed ID:</strong> @item._Feed.FeedId<br />
             @switch (item._Feed.TypeId)
             {
-                case NSN.NewSocialNetwork.Domain.NSNType.USER_TWEET:
+                case NewSocialNetwork.Domain.NSNType.USER_TWEET:
                     NewSocialNetwork.Domain.UserTweet tweet = (NewSocialNetwork.Domain.UserTweet)item._Entity;
                     <strong>Tweet ID:</strong> @tweet.TweetId<br />
                     <strong>Content:</strong> @tweet.Content<br />

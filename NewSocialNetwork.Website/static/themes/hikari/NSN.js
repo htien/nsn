@@ -1,7 +1,4 @@
-﻿document.domain = 'localhost';
-document.startTime = document.startTime || (new Date).getTime();
-
-function f(x) {
+﻿function f(x) {
     return function() {
         x.push(arguments);
     }
@@ -12,7 +9,7 @@ function ch(n) {
 
 var s = [];
 var glbDebug = true,
-    glbContextPath = 'http://localhost:55555',
+    glbContextPath = document.contextPath,
     glbDlgOpts, glbValidateOpts,
     glbDefaultDlgId = "ajax-response",
     glbYesLog = false;

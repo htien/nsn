@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using NSN.Kernel.Manager;
-using NSN.Service.BusinessService;
 
 namespace NewSocialNetwork.Website.Controllers
 {
@@ -11,10 +10,11 @@ namespace NewSocialNetwork.Website.Controllers
         //
         // GET: /Feed/
 
-        public JsonResult Feeds()
+        public ActionResult Feeds()
         {
-            IList<FeedItem> feedItems = frontendService.LoadFeedItems(0, 5);
-            return Json(feedItems, JsonRequestBehavior.AllowGet);
+            IList<FeedItem> feedItems = frontendService.LoadFeedItems(0, 20);
+            ViewBag.FeedItems = feedItems;
+            return View();
         }
 
     }

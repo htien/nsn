@@ -1146,12 +1146,12 @@
     <Content Include="Config\Log4Net.xml">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Config\Custom.properties" />
-    <None Include="Config\SystemGlobals.properties" />
-    <None Include="Config\Web.config">
+    <Content Include="Config\Custom.properties" />
+    <Content Include="Config\SystemGlobals.properties" />
+    <Content Include="Config\Web.config">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Config\Web.config.new" />
+    </Content>
+    <Content Include="Config\Web.config.new" />
     <None Include="packages.config" />
     <None Include="static\js\goog\net\iframeio_different_base_test.data" />
     <None Include="static\themes\hikari\images\fonts\open-sans.woff" />
@@ -1189,10 +1189,11 @@
     <Content Include="Views\Friend\List.cshtml" />
     <Content Include="Views\Link\List.cshtml" />
     <Content Include="Views\UserTweet\_ViewStart.cshtml" />
-    <Content Include="Views\UserTweet\Posts.cshtml" />
+    <Content Include="Views\Feed\Feeds.cshtml" />
     <Content Include="Views\Shared\Frontend\_ProfilePageLayout.cshtml" />
     <Content Include="Views\Shared\Frontend\pagelet\_composer_pagelet.cshtml" />
     <Content Include="Views\Shared\Frontend\pagelet\_apps_bar_pagelet.cshtml" />
+    <Content Include="Views\Feed\_ViewStart.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

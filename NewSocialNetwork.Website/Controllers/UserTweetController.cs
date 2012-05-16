@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
 using NewSocialNetwork.Repositories;
 using NewSocialNetwork.Website.Controllers.Helper;
-using NSN.Kernel.Manager;
-using NSN.Service.BusinessService;
 
 namespace NewSocialNetwork.Website.Controllers
 {
@@ -45,13 +42,5 @@ namespace NewSocialNetwork.Website.Controllers
             }
             return Json(msg);
         }
-
-        public ActionResult Posts()
-        {
-            IList<FeedItem> feedItems = frontendService.LoadFeedItems(0, 20);
-            ViewBag.FeedItems = feedItems;
-            return View();
-        }
-
     }
 }

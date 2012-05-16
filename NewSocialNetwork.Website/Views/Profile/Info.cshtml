@@ -1,5 +1,5 @@
 ﻿@{
-    NewSocialNetwork.Domain.User userProfile = ViewBag.UserProfile;
+    NewSocialNetwork.Domain.User userProfile = ViewBag.UProfile;
     string gender = SaberLily.Utils.GeneralUtils.Gender(userProfile.Gender);
     DateTime joined = SaberLily.Utils.DateTimeUtils.ConvertFromUnixTimestamp(userProfile.Joined);
 }

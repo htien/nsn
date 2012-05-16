@@ -28,7 +28,7 @@
         </ul>
         <div class="uiComposer-outer">
             <div id="composer-updatestatus" class="uiComposer uiTypeahead UIInputText">
-                <form id="composer" action="/@ViewBag.UserLogged.UserId/Posts/Post" method="post">
+                <form id="composer" action="@Url.RouteUrl("Go", new { controller = "UserTweet", action = "Post" })" method="post">
                     <div class="wrap">
                         <div class="innerWrap">
                             <div class="uiInput">

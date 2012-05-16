@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_UserLayout.cshtml";
-    NewSocialNetwork.Domain.User userProfile = ViewBag.UserProfile;
+    NewSocialNetwork.Domain.User userProfile = ViewBag.UProfile;
 }
 @section html_head_area {@RenderSection("html_head_area", false)}
 @RenderPage("~/Views/Shared/Frontend/pagelet/_apps_bar_pagelet.cshtml")
@@ -20,7 +20,7 @@
                         <div class="uiProfilePictureBox">
                             <div class="uiProfilePicture">
                                 <div class="uiPicture">
-                                    <img src="@Url.Content("~/static/images/avatars/" + ViewBag.AvatarFileName)" title="" width="250" height="250" />
+                                    <img src="@Url.Content("~/static/images/avatars/" + ViewBag.UAvatarFileName)" title="" width="250" height="250" />
                                 </div>
                             </div>
                         </div>

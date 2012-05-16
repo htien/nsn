@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NHibernate;
-using NSN.NewSocialNetwork.Domain;
 
 namespace NewSocialNetwork.DataAccess
 {

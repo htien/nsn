@@ -8,7 +8,6 @@ using NSN.Framework;
 using NSN.Kernel;
 using NSN.Kernel.Manager;
 using NSN.Manager;
-using NSN.NewSocialNetwork.Domain;
 using NSN.Service.SSO;
 using SaberLily.Security.Crypto;
 
@@ -128,7 +127,7 @@ namespace NSN.Service.BusinessService
         {
             if (!NSNContext.Current.SessionManager.GetUserSession().IsLogged())
             {
-                HttpContext.Current.Response.Redirect("/auth");
+                HttpContext.Current.Response.Redirect("~/auth");
             }
         }
 
