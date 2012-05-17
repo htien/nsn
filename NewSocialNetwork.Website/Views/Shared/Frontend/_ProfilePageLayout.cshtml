@@ -32,9 +32,12 @@
                                     <div class="infoContent">
                                         <span>NSN Group: </span> <strong>@userProfile.UserGroup.Title</strong>
                                     </div>
+                                    @if (userProfile.Country != null)
+                                    {
                                     <div class="infoContent">
                                         <span>Live in</span> <strong>@userProfile.Country.Name</strong>
                                     </div>
+                                    }
                                 </div>
                             </div>
                         </div>

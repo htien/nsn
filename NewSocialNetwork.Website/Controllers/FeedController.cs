@@ -17,7 +17,8 @@ namespace NewSocialNetwork.Website.Controllers
 
         public ActionResult Feeds()
         {
-            IList<FeedItem> feedItems = frontendService.LoadFeedItems(0, 20);
+            Domain.User userProfile = ViewBag.UProfile;
+            IList<FeedItem> feedItems = frontendService.LoadFeedItems(userProfile.UserId, 0, 20);
             ViewBag.FeedItems = feedItems;
             return View();
         }

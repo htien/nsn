@@ -92,18 +92,16 @@ namespace NSN.Service.BusinessService
                 if (userId != userLogged.UserId)
                     userProfile = userRepo.FindById(userId);
             }
-            userProfile = userProfile ?? userLogged;
             return userProfile;
         }
 
-        public IList<FeedItem> LoadFeedItems(int start, int size)
+        public IList<FeedItem> LoadFeedItems(int userId, int start, int size)
         {
             if (start < 0)
                 start = 0;
             if (size < 1)
                 size = 5;
-            User user = sessionManager.GetUser();
-            IList<Feed> feeds = feedRepo.GetUserFeeds(user.UserId, start, size);
+            IList<Feed> feeds = feedRepo.GetUserFeeds(userId, start, size);
             FeedManager feedManager = new FeedManager();
             foreach (Feed feed in feeds)
             {
@@ -111,7 +109,7 @@ namespace NSN.Service.BusinessService
                 switch (feed.TypeId)
                 {
                     case NSNType.USER_TWEET:
-                        entity = userTweetRepo.Get(feed.ItemId, user.UserId);
+                        entity = userTweetRepo.Get(feed.ItemId, userId);
                         break;
                     case NSNType.PHOTO:
                         break;

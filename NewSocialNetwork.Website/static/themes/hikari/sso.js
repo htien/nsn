@@ -88,8 +88,8 @@
         },
         submitHandler: function(form) {
             NSN.callJqDlg(glbDefaultDlgId,
-                    '<strong>Are you sure you want to join NSN?</strong>',
-                    buildJqConfirmDlgOpts(NSN.$id(regButton).parents('form'), 'Join NSN!')
+                    '<strong>Are you sure you want to join New Social Network?</strong>',
+                    buildJqConfirmDlgOpts(NSN.$id(regButton).parents('form'), '<img src="' + NSN.smileImage('pidgin', 'default', 'giggle.png') + '" alt="giggle" /> Join New Social Network!')
                 ).dialog('open');
         }
     });

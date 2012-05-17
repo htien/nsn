@@ -47,7 +47,7 @@ namespace NewSocialNetwork.DataAccess
         {
             IList list = this.Session().CreateSQLQuery(
                     @"select FeedId, Privacy, TypeId, ItemId, ParentUserId, [Timestamp]
-                      from [NSN.Feed] f where f.UserId = :userId order by f.Timestamp
+                      from [NSN.Feed] f where f.UserId = :userId order by f.Timestamp desc
                       offset :start rows fetch next :size rows only")
                 .SetInt32("userId", userId)
                 .SetInt32("start", start)

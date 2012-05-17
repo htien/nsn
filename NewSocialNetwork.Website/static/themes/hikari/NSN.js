@@ -93,6 +93,10 @@ var glbDebug = true,
             else
                 return glbContextPath;
         };
+        nsn.smileImage = function(category, type, name) {
+            var smilesPath = glbContextPath + '/static/smiles/' + category + '/' + type + '/' + name;
+            return smilesPath;
+        };
         nsn.printObj = typeof JSON != 'undefined' ? JSON.stringify : function(obj) {
             var arr = [];
             jQuery.each(obj, function(key, val) {
@@ -284,14 +288,21 @@ var glbDebug = true,
     buildJqConfirmDlgOpts = function(targetForm, title, callbackSuccess) {
 		return {
 			title: title,
-			buttons: {
-				'OK':  function(evt) {
-                    buildJqConfirmDlgOpts_OK(this, targetForm, callbackSuccess);
+			buttons: [
+                {
+                    text: 'OK',
+                    class: 'guiBlueButton',
+                    click: function(evt) {
+                        buildJqConfirmDlgOpts_OK(this, targetForm, callbackSuccess);
+                    }
                 },
-				'Cancel': function(evt) {
-                    jQuery(this).dialog('destroy').remove();
+                {
+                    text: 'Cancel',
+                    click: function(evt) {
+                        jQuery(this).dialog('destroy').remove();
+                    }
                 }
-			}
+			]
 		};
 	};
     buildJqConfirmDlgOpts_OK = function(dlg, targetForm, callbackSuccess) {
@@ -301,12 +312,16 @@ var glbDebug = true,
 	    nsn.ajaxSubmit(targetForm)
 		    .success(function(json, textCode, xhr) {
 			    nsn.callJqDlg(glbDefaultDlgId, json.Message, {
-				    buttons: {
-					    'Close': function() {
-						    jQuery(dlg).dialog('destroy').remove();
-                            callbackSuccess.call(this);
-					    }
-				    }
+				    buttons: [
+                        {
+                            text: 'Close',
+                            class: 'guiBlueButton',
+                            click: function() {
+                                jQuery(dlg).dialog('destroy').remove();
+                                callbackSuccess.call(this);
+                            }
+                        }
+				    ]
 			    });
 			    // reset form after adding successfully
 			    if (json.Action == 'add' && json.Status == '1') {

@@ -39,7 +39,7 @@ namespace NewSocialNetwork.Website.Controllers
                     (birthday_year + "/" + birthday_month + "/" + birthday_day));
                 msg.SetStatusAndMessage(RStatus.SUCCESS,
                     String.Format(@"<p>Register successfully! Welcome to New Social Network.</p>
-                                    <p>Your email is <strong>{0}</strong>.</p>", user.Email));
+                                    <p>Your login ID is <strong>{0}</strong>.</p>", user.Email));
             }
             catch (Exception e)
             {

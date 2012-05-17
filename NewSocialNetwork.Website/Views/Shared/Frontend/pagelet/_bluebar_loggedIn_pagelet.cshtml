@@ -1,5 +1,5 @@
 ﻿@{
-    NewSocialNetwork.Domain.User myProfile = @ViewBag.MyProfile;
+    NewSocialNetwork.Domain.User myProfile = ViewBag.MyProfile;
 }
 <div id="pagelet_bluebar" class="UIPagelet">
     <div id="UIGlobal_BlueBarHolder" class="slimHeader">
@@ -47,7 +47,7 @@
                     <div class="rfloat">
                         <ul id="pageNav">
                             <li id="navTinyman" class="topNavLink tinyman">
-                                <a href="@Url.RouteUrl("Profile", new { uid = ViewBag.MyLoginId })" title="Profile">
+                                <a href="@Url.RouteUrl("Profile", new { uid = ViewBag.MyDisplayId })" title="Profile">
                                     <img class="uiProfilePhoto" src="@Url.Content("~/static/images/avatars/" + ViewBag.MyAvatarFileName)" width="25" height="25" />
                                     <span class="tinymanName">@myProfile.FullName</span>
                                 </a>

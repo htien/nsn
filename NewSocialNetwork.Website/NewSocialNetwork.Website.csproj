@@ -136,6 +136,14 @@
     <Content Include="static\js\jquery\jquery-ui-1.8.20.js" />
     <Content Include="static\js\jquery\jquery.validate-1.9.js" />
     <Content Include="static\js\jquery\jquery.validate.additional.js" />
+    <Content Include="static\smiles\pidgin\default\amorous.png" />
+    <Content Include="static\smiles\pidgin\default\blowkiss.png" />
+    <Content Include="static\smiles\pidgin\default\embarrassed.png" />
+    <Content Include="static\smiles\pidgin\default\excited.png" />
+    <Content Include="static\smiles\pidgin\default\giggle.png" />
+    <Content Include="static\smiles\pidgin\default\go-away.png" />
+    <Content Include="static\smiles\pidgin\default\happy.png" />
+    <Content Include="static\smiles\pidgin\default\in_love.png" />
     <Content Include="static\themes\closure-theme\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
     <Content Include="static\themes\closure-theme\images\ui-bg_flat_100_f9edbe_40x100.png" />
     <Content Include="static\themes\closure-theme\images\ui-bg_flat_100_ffebe8_40x100.png" />
