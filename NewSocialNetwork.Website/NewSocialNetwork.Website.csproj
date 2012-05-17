@@ -144,6 +144,7 @@
     <Content Include="static\smiles\pidgin\default\go-away.png" />
     <Content Include="static\smiles\pidgin\default\happy.png" />
     <Content Include="static\smiles\pidgin\default\in_love.png" />
+    <Content Include="static\smiles\pidgin\small\in_love.png" />
     <Content Include="static\themes\closure-theme\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
     <Content Include="static\themes\closure-theme\images\ui-bg_flat_100_f9edbe_40x100.png" />
     <Content Include="static\themes\closure-theme\images\ui-bg_flat_100_ffebe8_40x100.png" />
@@ -166,6 +167,7 @@
     <Content Include="static\themes\hikari\images\fb_sprite_icons_2.png" />
     <Content Include="static\themes\hikari\images\fb_sprite_icons_1.png" />
     <Content Include="static\themes\hikari\images\fb_sprite_icons_3.png" />
+    <Content Include="static\themes\hikari\images\gp_sprite_icons_stream_1.png" />
     <Content Include="static\themes\hikari\images\indicator_blue_large.gif" />
     <Content Include="static\images\favicon.ico" />
     <Content Include="static\js\goog\array\array.js" />

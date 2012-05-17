@@ -89,7 +89,7 @@ namespace NSN.Service.BusinessService
             }
             else // uid is userId
             {
-                if (userId != userLogged.UserId)
+                //if (userId != userLogged.UserId)
                     userProfile = userRepo.FindById(userId);
             }
             return userProfile;
