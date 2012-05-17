@@ -15,10 +15,11 @@ namespace NewSocialNetwork.Website.Controllers
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             string uid = (string)filterContext.RouteData.Values["uid"];
-            ViewBag.IsMyProfile = uid == null || uid.Equals;
 
             Domain.User myProfile = sessionManager.GetUser();
             Domain.User userProfile = frontendService.GetUserProfile(uid);
+
+            ViewBag.IsMyProfile = uid == null || uid.Equals(myProfile.UserId) || uid.Equals(myProfile.Username, StringComparison.OrdinalIgnoreCase);
             if (!ViewBag.IsMyProfile && userProfile == null)
             {
                 filterContext.Result = new HttpNotFoundResult("Profile not found!");

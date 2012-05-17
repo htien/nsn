@@ -89,12 +89,12 @@ var glbDebug = true,
         };
         nsn.url = function(path) {
             if (typeof path === 'string')
-                return glbContextPath == '/' && path == '/' ? '/' : glbContextPath.concat(path);
+                return glbContextPath == '/' ? ''.concat(path) : glbContextPath.concat(path);
             else
                 return glbContextPath;
         };
         nsn.smileImage = function(category, type, name) {
-            var smilesPath = glbContextPath + '/static/smiles/' + category + '/' + type + '/' + name;
+            var smilesPath = nsn.url('/static/smiles/' + category + '/' + type + '/' + name);
             return smilesPath;
         };
         nsn.printObj = typeof JSON != 'undefined' ? JSON.stringify : function(obj) {
