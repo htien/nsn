@@ -1,5 +1,7 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Web;
+using NewSocialNetwork.Domain;
 
 namespace NSN.Common
 {
@@ -139,6 +141,28 @@ namespace NSN.Common
                 strServerPath += "\\";
             }
             return strServerPath;
+        }
+
+        public static bool HasUsername(User user)
+        {
+            return user.Username != null && user.Username.Length > 0;
+        }
+
+        public static string GetDisplayId(User user)
+        {
+            return HasUsername(user) ? user.Username : Convert.ToString(user.UserId);
+        }
+
+        public static DateTime GetBirthday(string birthday)
+        {
+            if (birthday == null || birthday.Trim().Length != 8)
+            {
+                throw new Exception("Invalid birthday string.");
+            }
+            int year = Int32.Parse(birthday.Substring(0, 4));
+            int month = Int32.Parse(birthday.Substring(4, 2));
+            int day = Int32.Parse(birthday.Substring(6, 2));
+            return new DateTime(year, month, day);
         }
 
         /// <summary>
