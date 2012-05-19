@@ -29,7 +29,7 @@ namespace NSN.Service.BusinessService
             string regEmail, string regPassword, string confirmPassword,
             string birthday)
         {
-            DateTime.Parse(birthday);
+            DateTime birthDay = DateTime.Parse(birthday);
             UserGroup group = userGroupRepo.FindById(UserGroupLevel.RegisteredUser);
             User user = new User()
             {
@@ -37,7 +37,10 @@ namespace NSN.Service.BusinessService
                 Password = PasswordCryptor.Hash(regPassword, 690),
                 FullName = firstName.Trim() + " " + lastName.Trim(),
                 Gender = gender,
-                Birthday = birthday.Trim(),
+                Birthday = String.Format("{0}{1}{2}",
+                                birthDay.Year,
+                                birthDay.Month < 10 ? "0" + birthDay.Month.ToString() : birthDay.Month.ToString(),
+                                birthDay.Day < 10 ? "0" + birthDay.Day.ToString() : birthDay.Day.ToString()),
                 UserGroup = group
             };
             userRepo.Create(user);

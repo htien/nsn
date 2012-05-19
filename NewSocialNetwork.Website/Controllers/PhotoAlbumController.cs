@@ -9,6 +9,7 @@ namespace NewSocialNetwork.Website.Controllers
     public class PhotoAlbumController : ApplicationController
     {
         public IPhotoAlbumRepository photoAlbumRepo { private get; set; }
+        public IPhotoRepository photoRepo { private get; set; }
         public IFriendRepository friendRepo { private get; set; }
 
         public PhotoAlbumController()
@@ -18,7 +19,7 @@ namespace NewSocialNetwork.Website.Controllers
 
         //
         // GET: /PhotoAlbum/
-
+        
         public ActionResult List()
         {
             User user = sessionManager.GetUser();
@@ -63,7 +64,16 @@ namespace NewSocialNetwork.Website.Controllers
             IList<User> MutualFriend = photoAlbumRepo.GetMutualFriend(2, 1);
             ViewBag.mutualFriend = MutualFriend;
 
+
+            Photo firstPhoto = photoRepo.GetFirstPhotoByAlbum(1);
+            ViewBag.FirstPhoto = firstPhoto;
+
             return View();
+        }
+
+        public dynamic GetFirstPhoto(int albumId)
+        {
+            return photoRepo.GetFirstPhotoByAlbum(albumId);
         }
     }
 }

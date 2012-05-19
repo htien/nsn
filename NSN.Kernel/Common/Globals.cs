@@ -2,6 +2,8 @@
 using System.Data;
 using System.Web;
 using NewSocialNetwork.Domain;
+using NewSocialNetwork.Repositories;
+using NSN.Kernel;
 
 namespace NSN.Common
 {
@@ -163,6 +165,12 @@ namespace NSN.Common
             int month = Int32.Parse(birthday.Substring(4, 2));
             int day = Int32.Parse(birthday.Substring(6, 2));
             return new DateTime(year, month, day);
+        }
+
+        public static Photo GetAlbumAvatar(int albumId)
+        {
+            IPhotoRepository photoRepo = NSNContext.Current.Container.Resolve<IPhotoRepository>();
+            return photoRepo.GetFirstPhotoByAlbum(albumId);
         }
 
         /// <summary>
