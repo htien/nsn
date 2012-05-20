@@ -1069,6 +1069,7 @@
     <Content Include="static\themes\hikari\images\newsoclnet.png" />
     <Content Include="static\themes\hikari\images\worldmap_2_1.png" />
     <Content Include="static\themes\hikari\images\worldmap_2_2.png" />
+    <Content Include="static\themes\hikari\images\x_off.png" />
     <Content Include="static\themes\hikari\nsn_common_ui.css" />
     <Content Include="static\themes\hikari\images\stripe.gif" />
     <Content Include="static\themes\hikari\nsn_common.css" />

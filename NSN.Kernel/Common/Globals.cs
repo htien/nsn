@@ -5,6 +5,7 @@ using System.Web;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NSN.Kernel;
+using SaberLily.Utils;
 
 namespace NSN.Common
 {
@@ -170,6 +171,31 @@ namespace NSN.Common
             int month = Int32.Parse(birthday.Substring(4, 2));
             int day = Int32.Parse(birthday.Substring(6, 2));
             return new DateTime(year, month, day);
+        }
+
+        public static string ShowBirthday(string birthday)
+        {
+            return ShowBirthday(GetBirthday(birthday));
+        }
+
+        public static string ShowBirthday(DateTime birthday)
+        {
+            return birthday.ToString("MMM dd, yyyy");
+        }
+
+        public static DateTime GetDateTime(int timestamp)
+        {
+            return DateTimeUtils.ConvertFromUnixTimestamp(timestamp);
+        }
+
+        public static string ShowDate(int timestamp)
+        {
+            return GetDateTime(timestamp).ToString("MMM dd, yyyy");
+        }
+
+        public static string ShowDateTime(int timestamp)
+        {
+            return GetDateTime(timestamp).ToString("MMM dd, yyyy hh:mm:ss tt");
         }
 
         public static string Gender(int gender)

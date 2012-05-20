@@ -2,5 +2,17 @@
     NewSocialNetwork.Domain.Comment comment = ViewBag.Comment;
 }
 <div id="comment-@comment.CommentId" class="uiCommentItem">
-    @comment.CommentText.Text
+    <div class="uiComment">
+        <a class="userImage" href="@Url.RouteUrl("Profile", new { uid = NSN.Common.Globals.GetDisplayId(comment.User) })">
+            <img src="@Url.Content("~/static/images/avatars/" + NSN.Common.Globals.UserImage(comment.User.UserImage, comment.User.Gender))" alt="" width="32" height="32" />
+        </a>
+        <div>
+            <a class="userFullName" href="@Url.RouteUrl("Profile", new { uid = NSN.Common.Globals.GetDisplayId(comment.User) })">@comment.User.FullName</a>
+            <span class="commentInfo">
+                <span class="time" title="@NSN.Common.Globals.ShowDateTime(comment.Timestamp)">@NSN.Common.Globals.ShowDate(comment.Timestamp)</span>
+                <span class="commentActions"><div class="delete"></div></span>
+            </span>
+            <div class="commentText">@comment.CommentText.Text</div>
+        </div>
+    </div>
 </div>

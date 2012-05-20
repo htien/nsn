@@ -18,18 +18,29 @@
                             <div class="uiFeed">
                                 @{
                                     string feedAvatarFileName;
+                                    string privacyMode;
                                     if (String.IsNullOrEmpty(item._Feed.User.UserImage)) {
                                         feedAvatarFileName = Url.Content("~/static/images/avatars/default_medium_male.gif");
                                     }
                                     else {
                                         feedAvatarFileName = Url.Content("~/static/images/avatars/" + item._Feed.User.UserImage);
                                     }
+                                    switch (item._Feed.Privacy) {
+                                        case 0: privacyMode = "Public"; break;
+                                        case 1: privacyMode = "Friends Only"; break;
+                                        case 4: privacyMode = "Only Me"; break;
+                                        default: privacyMode = "Unknown"; break;
+                                    }
                                 }
                                 <a class="feedAvatar" href="#"><img src="@feedAvatarFileName" alt="" width="48" height="48" /></a>
                                 <div class="userPost">
                                     <header>
                                         <h3 class="fname"><a href="@Url.RouteUrl("Profile", new { uid = item._Feed.User.UserId })">@item._Feed.User.FullName</a></h3>
-                                        <span class="postInfo"><a class="time" target="_blank" title="@item._Feed.Timestamp">@item._Feed.Timestamp</a></span>
+                                        <span class="postInfo">
+                                            <a class="time" target="_blank" title="@NSN.Common.Globals.ShowDateTime(item._Feed.Timestamp)">@NSN.Common.Globals.ShowDate(item._Feed.Timestamp)</a>
+                                            &nbsp&nbsp-&nbsp&nbsp
+                                            <span class="privacyMode">@privacyMode</span>
+                                        </span>
                                     </header>
                                 </div>
                                 <div class="feedArrow"></div>
@@ -54,7 +65,19 @@
                                                 @foreach (NewSocialNetwork.Domain.Comment comment in comments)
                                                 {
                                                 <div id="comment-@comment.CommentId" class="uiCommentItem">
-                                                    @comment.CommentText.Text
+                                                    <div class="uiComment">
+                                                        <a class="userImage" href="@Url.RouteUrl("Profile", new { uid = NSN.Common.Globals.GetDisplayId(comment.User) })">
+                                                            <img src="@Url.Content("~/static/images/avatars/" + NSN.Common.Globals.UserImage(comment.User.UserImage, comment.User.Gender))" alt="" width="32" height="32" />
+                                                        </a>
+                                                        <div>
+                                                            <a class="userFullName" href="@Url.RouteUrl("Profile", new { uid = NSN.Common.Globals.GetDisplayId(comment.User) })">@comment.User.FullName</a>
+                                                            <span class="commentInfo">
+                                                                <span class="time" title="@NSN.Common.Globals.ShowDateTime(comment.Timestamp)">@NSN.Common.Globals.ShowDate(comment.Timestamp)</span>
+                                                                <span class="commentActions"><div class="delete"></div></span>
+                                                            </span>
+                                                            <div class="commentText">@comment.CommentText.Text</div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 }
                                                 @*append comment here*@
