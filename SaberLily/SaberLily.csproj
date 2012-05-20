@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Utils\GeneralUtils.cs" />
     <Compile Include="Web\Extension\LowercaseRouteMVC\LowercaseRoute.cs" />
     <Compile Include="Web\Extension\LowercaseRouteMVC\RouteCollectionExtensions.cs" />
     <Compile Include="Helpers\ModelCopier.cs" />

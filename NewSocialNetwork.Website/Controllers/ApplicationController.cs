@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using NSN.Common;
 using NSN.Manager;
 using NSN.Service.BusinessService;
-using SaberLily.Utils;
 
 namespace NewSocialNetwork.Website.Controllers
 {
@@ -33,14 +32,14 @@ namespace NewSocialNetwork.Website.Controllers
                 ViewBag.UserSession = sessionManager.GetUserSession();
                 ViewBag.MyProfile = myProfile;
                 ViewBag.UProfile = userProfile;
-                ViewBag.MyProfileHasUsername = myProfile.Username != null && myProfile.Username.Length > 0;
-                ViewBag.MyLoginId = ViewBag.MyProfileHasUsername ? myProfile.Username : myProfile.Email;
-                ViewBag.MyDisplayId = ViewBag.MyProfileHasUsername ? myProfile.Username : Convert.ToString(myProfile.UserId);
-                ViewBag.MyAvatarFileName = GeneralUtils.UserImage(myProfile.UserImage, myProfile.Gender);
-                ViewBag.UProfileHasUsername = userProfile.Username != null && userProfile.Username.Length > 0;
-                ViewBag.ULoginId = ViewBag.UProfileHasUsername ? userProfile.Username : userProfile.Email;
-                ViewBag.UDisplayId = ViewBag.UProfileHasUsername ? userProfile.Username : Convert.ToString(userProfile.UserId);
-                ViewBag.UAvatarFileName = GeneralUtils.UserImage(userProfile.UserImage, userProfile.Gender);
+                ViewBag.MyProfileHasUsername = Globals.HasUsername(myProfile);
+                ViewBag.MyLoginId = Globals.GetLoginId(myProfile);
+                ViewBag.MyDisplayId = Globals.GetDisplayId(myProfile);
+                ViewBag.MyAvatarFileName = Globals.UserImage(myProfile.UserImage, myProfile.Gender);
+                ViewBag.UProfileHasUsername = Globals.HasUsername(userProfile);
+                ViewBag.ULoginId = Globals.GetLoginId(userProfile);
+                ViewBag.UDisplayId = Globals.GetDisplayId(userProfile);
+                ViewBag.UAvatarFileName = Globals.UserImage(userProfile.UserImage, userProfile.Gender);
                 ViewBag.ContextPath = Globals.ApplicationPath;
             }
             base.OnActionExecuting(filterContext);

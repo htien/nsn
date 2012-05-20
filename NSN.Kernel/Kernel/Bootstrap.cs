@@ -247,8 +247,8 @@ namespace NSN.Kernel
             );
             routes.MapRouteLowercase(
                 "AjaxAction",
-                "AjaxLoad/{action}",
-                new { controller = "Ajax", action = "Index" }
+                "Ajax/{action}",
+                new { controller = "Ajax" }
             );
             routes.MapRouteLowercase(
                 "Go",

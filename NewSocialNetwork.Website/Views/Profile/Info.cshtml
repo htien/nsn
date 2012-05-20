@@ -1,6 +1,6 @@
 ﻿@{
     NewSocialNetwork.Domain.User userProfile = ViewBag.UProfile;
-    string gender = SaberLily.Utils.GeneralUtils.Gender(userProfile.Gender);
+    string gender = NSN.Common.Globals.Gender(userProfile.Gender);
     DateTime joined = SaberLily.Utils.DateTimeUtils.ConvertFromUnixTimestamp(userProfile.Joined);
 }
 
@@ -38,32 +38,3 @@
         <div class="Ga a-f-e">...</div>
     </div>
 </div>
-
-@*List Friends Of User*@
-@*Friends : @ViewBag.ListFriend.Count
-@{
-     if (ViewBag.ListFriend != null && ViewBag.ListFriend.Count > 0)
-    {
-        foreach (var user in ViewBag.ListFriend)
-        {
-            <div>
-                <div style="display:inline-block">
-                @if(user.UserImage!=null)
-                {
-                    <img src="@Url.Content("~/static/images/avatars/")@user.UserImage" />   
-                }
-                else
-                {
-                    <img src="@Url.Content("~/static/images/avatars/1_tien.gif")" />
-                }
-                </div>
-                <div style="display:inline-block">@user.FullName<br />@user.Country.Name</div>
-            </div>
-        }
-    }
-     else
-     {
-        <p>No Friends.</p>
-     }
-}
-*@

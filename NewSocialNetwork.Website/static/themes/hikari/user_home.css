@@ -365,6 +365,11 @@ img,
   margin-left: 7px;
   line-height: 22px;
 }
+.UIFeeds_Content .uiFeed .lnkButton img {
+  float: left;
+  margin-top: 2px;
+  margin-right: 3px;
+}
 .UIFeeds_Content .uiFeedComment {
   position: relative;
   top: -3px;

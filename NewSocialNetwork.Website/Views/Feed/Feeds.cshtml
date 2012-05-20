@@ -6,11 +6,13 @@
     <div class="UIFeeds_Content">
         @foreach (NSN.Kernel.Manager.FeedItem item in feedItems)
         {
+            string divFeedId = "update-" + item._Feed.FeedId;
+            string editorFeedId = "editor-update-" + item._Feed.FeedId; ;
             switch (item._Feed.TypeId)
             {
                 case NewSocialNetwork.Domain.NSNType.USER_TWEET:
                     NewSocialNetwork.Domain.UserTweet tweet = (NewSocialNetwork.Domain.UserTweet)item._Entity;
-                    <div class="uiFeedItem">
+                    <div id="@divFeedId" class="uiFeedItem">
                         <div class="uiFeedItem_Inner">
                             <div class="uiFeed">
                                 @{
@@ -38,22 +40,31 @@
                                 <div class="feedActionBlock">
                                     <a class="lnkButton likeAction">
                                         <span class="default_message" style="display:none">Unlike</span>
-                                        <span class="saving_message"><img src="@Url.Content("~/static/smiles/pidgin/small/in_love.png")" alt="" /> Like</span>
+                                        <span class="saving_message"><img src="@Url.Content("~/static/smiles/pidgin/default/in_love.png")" alt="" width="16" height="16" /> Like</span>
                                     </a>
                                 </div>
                             </div> @*uiFeed*@
                             <div class="uiFeedComment">
                                 <div class="top"></div>
                                 <div class="commentBoxOuter">
+                                    <div class="commentListTree">
+                                        <div class="uiListTree">
+                                            <div class="uiListTreeInner">
+                                                <div class="uiCommentItem">
+                                                </div>
+                                                @*append comment here*@
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="commentBox">
                                         <a class="commentAvatar" href=""><img src="@Url.Content("~/static/images/avatars/" + ViewBag.MyAvatarFileName)" alt="" width="32" height="32" /></a>
                                         <div class="commentEditorBox">
                                             <div class="commentEditorBoxInner">
-                                                <textarea class="commentEditor" rows="4"></textarea>
+                                                <textarea id="@editorFeedId" class="commentEditor" rows="4"></textarea>
                                             </div>
                                         </div>
                                         <div class="commentButtons">
-                                            <div class="guiButton guiBlueButton">Post comment</div>
+                                            <div class="guiButton guiBlueButton post">Post comment</div>
                                             <div class="guiButton">Cancel</div>
                                         </div>
                                     </div>
