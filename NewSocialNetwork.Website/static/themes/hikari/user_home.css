@@ -364,6 +364,9 @@ img,
   margin-top: 7px;
   margin-left: 7px;
   line-height: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 .UIFeeds_Content .uiFeed .lnkButton img {
   float: left;

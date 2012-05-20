@@ -43,6 +43,25 @@ namespace NewSocialNetwork.DataAccess
                 .List<Feed>();
         }
 
+        public Feed GetFeed(long feedId)
+        {
+            object[] o =  (object[])this.Session().CreateSQLQuery(
+                @"select FeedId, Privacy, TypeId, ItemId, UserId, ParentUserId, [Timestamp]
+                  from [NSN.Feed] f where f.FeedId = :feedId")
+                .SetInt64("feedId", feedId)
+                .UniqueResult();
+            return new Feed()
+            {
+                FeedId = Convert.ToInt64(o[0]),
+                Privacy = Convert.ToByte(o[1]),
+                TypeId = Convert.ToString(o[2]),
+                ItemId = Convert.ToInt32(o[3]),
+                User = userRepo.FindById(Convert.ToInt32(o[4])),
+                ParentUser = Convert.ToInt32(o[5]) == 0 ? null : userRepo.FindById(Convert.ToInt32(o[5])),
+                Timestamp = Convert.ToInt32(o[6])
+            };
+        }
+
         public IList<Feed> GetUserFeeds(int userId, int start, int size)
         {
             IList list = this.Session().CreateSQLQuery(

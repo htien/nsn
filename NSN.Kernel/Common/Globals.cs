@@ -243,6 +243,12 @@ namespace NSN.Common
             return commentRepo.GetCommentsByFeed(typeId, itemId, ownerUserId);
         }
 
+        public static bool isLikeForFeed(string typeId, int itemId, int userId)
+        {
+            ILikeRepository likeRepo = NSNContext.Current.Container.Resolve<ILikeRepository>();
+            return likeRepo.Exists(typeId, itemId, userId);
+        }
+
         /// <summary>
         /// Converts the datareader to dataset.
         /// </summary>

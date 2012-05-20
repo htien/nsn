@@ -7,6 +7,7 @@
         @foreach (NSN.Kernel.Manager.FeedItem item in feedItems)
         {
             IList<NewSocialNetwork.Domain.Comment> comments = NSN.Common.Globals.GetCommentsByFeed(item._Feed.TypeId, item._Feed.ItemId, item._Feed.User.UserId);
+            bool isLiked = NSN.Common.Globals.isLikeForFeed(item._Feed.TypeId, item._Feed.ItemId, ViewBag.MyProfile.UserId);
             string divFeedId = "update-" + item._Feed.FeedId;
             string editorFeedId = "editor-update-" + item._Feed.FeedId;
             switch (item._Feed.TypeId)
@@ -50,10 +51,18 @@
                                     </div>
                                 </div>
                                 <div class="feedActionBlock">
-                                    <a class="lnkButton likeAction">
-                                        <span class="default_message" style="display:none">Unlike</span>
-                                        <span class="saving_message"><img src="@Url.Content("~/static/smiles/pidgin/default/in_love.png")" alt="" width="16" height="16" /> Like</span>
-                                    </a>
+                                    @if (!isLiked) {
+                                        <a class="lnkButton likeAction">
+                                            <span class="default_message" style="display:none">Unlike</span>
+                                            <span class="saving_message"><img src="@Url.Content("~/static/smiles/pidgin/default/in_love.png")" alt="" width="16" height="16" /> Like</span>
+                                        </a>
+                                    }
+                                    else {
+                                        <a class="lnkButton unlikeAction">
+                                            <span class="default_message">Unlike</span>
+                                            <span class="saving_message" style="display:none"><img src="@Url.Content("~/static/smiles/pidgin/default/in_love.png")" alt="" width="16" height="16" /> Like</span>
+                                        </a>
+                                    }
                                 </div>
                             </div> @*uiFeed*@
                             <div class="uiFeedComment">

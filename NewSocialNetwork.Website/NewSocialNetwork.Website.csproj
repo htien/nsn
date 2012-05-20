@@ -1111,6 +1111,7 @@
     <Compile Include="Controllers\Helper\RAction.cs" />
     <Compile Include="Controllers\Helper\ResponseMessage.cs" />
     <Compile Include="Controllers\Helper\RStatus.cs" />
+    <Compile Include="Controllers\LikeController.cs" />
     <Compile Include="Controllers\LinkController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\PhotoAlbumController.cs" />

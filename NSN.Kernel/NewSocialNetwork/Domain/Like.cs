@@ -9,7 +9,7 @@ namespace NewSocialNetwork.Domain
         #region Properties
 
         [PrimaryKey(PrimaryKeyType.Identity, "LikeId")]
-        public virtual int LikeId { get; set; }
+        public virtual long LikeId { get; set; }
 
         [Property("TypeId", Length = 75, NotNull = true)]
         public virtual string TypeId { get; set; }
