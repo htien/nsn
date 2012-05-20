@@ -4,28 +4,79 @@
 @RenderPage("~/Views/Shared/Frontend/pagelet/_composer_pagelet.cshtml")
 <div id="pagelet_feeds_page">
     <div class="UIFeeds_Content">
-        <div class="uiFeedItem">
-            <div class="uiFeedItem_Inner">
-                <div class="uiFeed">
-                    a<br />b
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-    @foreach (NSN.Kernel.Manager.FeedItem item in feedItems)
-    {
-        <p>
-            <strong>Feed ID:</strong> @item._Feed.FeedId<br />
-            @switch (item._Feed.TypeId)
+        @foreach (NSN.Kernel.Manager.FeedItem item in feedItems)
+        {
+            string divFeedId = "update-" + item._Feed.FeedId;
+            string editorFeedId = "editor-update-" + item._Feed.FeedId; ;
+            switch (item._Feed.TypeId)
             {
                 case NewSocialNetwork.Domain.NSNType.USER_TWEET:
                     NewSocialNetwork.Domain.UserTweet tweet = (NewSocialNetwork.Domain.UserTweet)item._Entity;
-                    <strong>Tweet ID:</strong> @tweet.TweetId<br />
-                    <strong>Content:</strong> @tweet.Content<br />
+                    <div id="@divFeedId" class="uiFeedItem">
+                        <div class="uiFeedItem_Inner">
+                            <div class="uiFeed">
+                                @{
+                                    string feedAvatarFileName;
+                                    if (String.IsNullOrEmpty(item._Feed.User.UserImage)) {
+                                        feedAvatarFileName = Url.Content("~/static/images/avatars/default_medium_male.gif");
+                                    }
+                                    else {
+                                        feedAvatarFileName = Url.Content("~/static/images/avatars/" + item._Feed.User.UserImage);
+                                    }
+                                }
+                                <a class="feedAvatar" href="#"><img src="@feedAvatarFileName" alt="" width="48" height="48" /></a>
+                                <div class="userPost">
+                                    <header>
+                                        <h3 class="fname"><a href="@Url.RouteUrl("Profile", new { uid = item._Feed.User.UserId })">@item._Feed.User.FullName</a></h3>
+                                        <span class="postInfo"><a class="time" target="_blank" title="@item._Feed.Timestamp">@item._Feed.Timestamp</a></span>
+                                    </header>
+                                </div>
+                                <div class="feedArrow"></div>
+                                <div class="feedDetail">
+                                    <div class="feedDetailContent">
+                                        @tweet.Content
+                                    </div>
+                                </div>
+                                <div class="feedActionBlock">
+                                    <a class="lnkButton likeAction">
+                                        <span class="default_message" style="display:none">Unlike</span>
+                                        <span class="saving_message"><img src="@Url.Content("~/static/smiles/pidgin/default/in_love.png")" alt="" width="16" height="16" /> Like</span>
+                                    </a>
+                                </div>
+                            </div> @*uiFeed*@
+                            <div class="uiFeedComment">
+                                <div class="top"></div>
+                                <div class="commentBoxOuter">
+                                    <div class="commentListTree">
+                                        <div class="uiListTree">
+                                            <div class="uiListTreeInner">
+                                                <div class="uiCommentItem">
+                                                </div>
+                                                @*append comment here*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="commentBox">
+                                        <a class="commentAvatar" href=""><img src="@Url.Content("~/static/images/avatars/" + ViewBag.MyAvatarFileName)" alt="" width="32" height="32" /></a>
+                                        <div class="commentEditorBox">
+                                            <div class="commentEditorBoxInner">
+                                                <textarea id="@editorFeedId" class="commentEditor" rows="4"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="commentButtons">
+                                            <div class="guiButton guiBlueButton post">Post comment</div>
+                                            <div class="guiButton">Cancel</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="maskAddComment" style="display:none">
+                                    <div class="maskText">Add a comment...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     break;
             }
-        </p>
-    }
+        }
+    </div>
 </div>

@@ -11,6 +11,5 @@ namespace NewSocialNetwork.Website.Controllers
         {
             return RedirectToRoute("Go", new { controller = "Feed", action = "Feeds" });
         }
-
     }
 }

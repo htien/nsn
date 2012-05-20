@@ -46,7 +46,7 @@ namespace NewSocialNetwork.DataAccess
         public IList<Feed> GetUserFeeds(int userId, int start, int size)
         {
             IList list = this.Session().CreateSQLQuery(
-                    @"select FeedId, Privacy, TypeId, ItemId, ParentUserId, [Timestamp]
+                    @"select FeedId, Privacy, TypeId, ItemId, UserId, ParentUserId, [Timestamp]
                       from [NSN.Feed] f where f.UserId = :userId order by f.Timestamp desc
                       offset :start rows fetch next :size rows only")
                 .SetInt32("userId", userId)
@@ -63,8 +63,9 @@ namespace NewSocialNetwork.DataAccess
                 feed.Privacy = Convert.ToByte(o[1]);
                 feed.TypeId = Convert.ToString(o[2]);
                 feed.ItemId = Convert.ToInt32(o[3]);
-                feed.ParentUser = Convert.ToInt32(o[4]) == 0 ? null : userRepo.FindById(Convert.ToInt32(o[4]));
-                feed.Timestamp = Convert.ToInt32(o[5]);
+                feed.User = userRepo.FindById(Convert.ToInt32(o[4]));
+                feed.ParentUser = Convert.ToInt32(o[5]) == 0 ? null : userRepo.FindById(Convert.ToInt32(o[5]));
+                feed.Timestamp = Convert.ToInt32(o[6]);
                 feeds.Add(feed);
             }
             return feeds;

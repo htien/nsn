@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
+using Microsoft.Security.Application;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NSN.Common;
@@ -10,6 +11,7 @@ using NSN.Kernel.Manager;
 using NSN.Manager;
 using NSN.Service.SSO;
 using SaberLily.Security.Crypto;
+using SaberLily.Utils;
 
 namespace NSN.Service.BusinessService
 {
@@ -22,6 +24,8 @@ namespace NSN.Service.BusinessService
         public IUserGroupRepository userGroupRepo { private get; set; }
         public IFeedRepository feedRepo { private get; set; }
         public IUserTweetRepository userTweetRepo { private get; set; }
+        public ICommentRepository commentRepo { private get; set; }
+        public ICommentTextRepository commentTextRepo { private get; set; }
 
         public FrontendService() { }
 
@@ -92,7 +96,7 @@ namespace NSN.Service.BusinessService
             }
             else // uid is userId
             {
-                if (userId != userLogged.UserId)
+                //if (userId != userLogged.UserId)
                     userProfile = userRepo.FindById(userId);
             }
             return userProfile;
@@ -120,6 +124,16 @@ namespace NSN.Service.BusinessService
                 feedManager.AddFeedItem(feed, entity);
             }
             return feedManager.GetItems();
+        }
+
+        public long AddComment(long feedId, int userId, string commentText)
+        {
+            Feed feed = feedRepo.FindById(feedId);
+            string ipAddr = HttpContext.Current.Request.UserHostAddress;
+            int timestamp = DateTimeUtils.UnixTimestamp;
+            long commentId = commentRepo.Add(feed.TypeId, feed.ItemId, userId, feed.User.UserId, commentText, ipAddr, timestamp);
+            string originCommentText = HttpUtility.UrlDecode(commentText, System.Text.Encoding.GetEncoding("ISO-8859-1"));
+            return commentTextRepo.Add(commentId, originCommentText, Encoder.HtmlEncode(originCommentText));
         }
 
         #region Static Method

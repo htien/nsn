@@ -1,0 +1,6 @@
+﻿@{
+    NewSocialNetwork.Domain.Comment comment = ViewBag.Comment;
+}
+<div id="comment-@comment.CommentId" class="uiCommentItem">
+    @comment.CommentText.Text
+</div>
