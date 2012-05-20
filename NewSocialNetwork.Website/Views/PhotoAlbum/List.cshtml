@@ -1,31 +1,29 @@
 ﻿<div class="UIGrid_Album">
-<h2 class="title">Your Photo Albums (@ViewBag.Albums.Count)</h2>
-@{
+    <h2 class="title">Your Photo Albums (@ViewBag.Albums.Count)</h2>
     <div class="UIAlbumContainer">
-    @if(ViewBag.Albums != null && ViewBag.Albums.Count > 0)
-    {
-       <div class="album"> 
-        @foreach (NewSocialNetwork.Domain.PhotoAlbum album in ViewBag.Albums)
+        @if(ViewBag.Albums != null && ViewBag.Albums.Count > 0)
         {
-            NewSocialNetwork.Domain.Photo albumAvatar = NSN.Common.Globals.GetAlbumAvatar(album.AlbumId);
-            <div class="albumItem">
-                <a class="albumImage" tabindex="-1">
-                    <span class="frontImageAlbum">
-                        @if (albumAvatar != null && !String.IsNullOrEmpty(albumAvatar.Image))
-                        {
-                            <img alt="" src="@Url.Content("~/static/images/avatars/" + albumAvatar.Image)" height="111px" width="141px" />
-                        }
-                    </span>
-                </a>
-                <div style="margin-top: 5px"><b style="font-weight:bold">@album.Name</b><br />@album.TotalPhoto photos</div>
-            </div>   
+            <div class="album">
+				@foreach (NewSocialNetwork.Domain.PhotoAlbum album in ViewBag.Albums)
+				{
+					NewSocialNetwork.Domain.Photo albumAvatar = NSN.Common.Globals.GetAlbumAvatar(album.AlbumId);
+					<div class="albumItem">
+					    <a class="albumImage" tabindex="-1">
+						    <span class="frontImageAlbum">
+							    @if (albumAvatar != null && !String.IsNullOrEmpty(albumAvatar.Image))
+							    {
+								    <img alt="" src="@Url.Content("~/static/images/avatars/" + albumAvatar.Image)" height="111px" width="167px" />
+							    }
+						    </span>
+					    </a>
+					    <div style="margin-top: 5px"><b style="font-weight:bold">@album.Name</b><br />@album.TotalPhoto photos</div>
+                    </div>
+                }
+			</div>
         }
-        </div>
-    }
-    else
-    {
-        <p>No albums.</p>
-    }   
-    </div> 
-}
+		else
+		{
+			<p>No albums.</p>
+        }
+	</div>
 </div>
