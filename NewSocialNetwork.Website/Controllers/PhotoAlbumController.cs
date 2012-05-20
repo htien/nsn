@@ -37,9 +37,9 @@ namespace NewSocialNetwork.Website.Controllers
             ViewBag.listphotoalbum = listphotoalbum;
             IList<User> friendsearch = photoAlbumRepo.SearchFriendByName("l", 1);
             ViewBag.friendsearch = friendsearch;
-            int totalcomment = commentRepo.GetTotalComment(1, "Photo", 1);
+            int totalcomment = commentRepo.GetTotalComment("photo", 1, 1);
             ViewBag.totalcomment = totalcomment;
-            IList<Comment> allc = commentRepo.GetCommentsByFeed(1, "photo", 1);
+            IList<Comment> allc = commentRepo.GetCommentsByFeed("photo", 1, 1);
             ViewBag.allc = allc;
             int friendRequest = photoAlbumRepo.GetTotalFriendRequestPending(1);
             ViewBag.friendRequest = friendRequest;

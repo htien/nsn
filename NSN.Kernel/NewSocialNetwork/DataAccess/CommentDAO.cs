@@ -28,7 +28,7 @@ namespace NewSocialNetwork.DataAccess
                 .UniqueResult());
         }
 
-        public int GetTotalComment(int ownerUserId, string typeId, int itemId)
+        public int GetTotalComment(string typeId, int itemId, int ownerUserId)
         {
             return Convert.ToInt32(this.Session().CreateQuery(
                 @"select count(c.CommentId) from Comment c
@@ -39,7 +39,7 @@ namespace NewSocialNetwork.DataAccess
                 .UniqueResult());
         }
 
-        public IList<Comment> GetCommentsByFeed(int ownerUserId, string typeId, int itemId)
+        public IList<Comment> GetCommentsByFeed(string typeId, int itemId, int ownerUserId)
         {
             return this.Session().CreateQuery(
                 @"from Comment c inner join fetch c.CommentText

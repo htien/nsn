@@ -6,8 +6,9 @@
     <div class="UIFeeds_Content">
         @foreach (NSN.Kernel.Manager.FeedItem item in feedItems)
         {
+            IList<NewSocialNetwork.Domain.Comment> comments = NSN.Common.Globals.GetCommentsByFeed(item._Feed.TypeId, item._Feed.ItemId, item._Feed.User.UserId);
             string divFeedId = "update-" + item._Feed.FeedId;
-            string editorFeedId = "editor-update-" + item._Feed.FeedId; ;
+            string editorFeedId = "editor-update-" + item._Feed.FeedId;
             switch (item._Feed.TypeId)
             {
                 case NewSocialNetwork.Domain.NSNType.USER_TWEET:
@@ -50,8 +51,12 @@
                                     <div class="commentListTree">
                                         <div class="uiListTree">
                                             <div class="uiListTreeInner">
-                                                <div class="uiCommentItem">
+                                                @foreach (NewSocialNetwork.Domain.Comment comment in comments)
+                                                {
+                                                <div id="comment-@comment.CommentId" class="uiCommentItem">
+                                                    @comment.CommentText.Text
                                                 </div>
+                                                }
                                                 @*append comment here*@
                                             </div>
                                         </div>

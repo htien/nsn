@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Web;
 using NewSocialNetwork.Domain;
@@ -136,8 +137,7 @@ namespace NSN.Common
         /// <returns>absolute server path</returns>
         public static string GetAbsoluteServerPath(HttpRequest Request)
         {
-            string strServerPath;
-            strServerPath = Request.MapPath(Request.ApplicationPath);
+            string strServerPath = Request.MapPath(Request.ApplicationPath);
             if (!strServerPath.EndsWith("\\"))
             {
                 strServerPath += "\\";
@@ -172,12 +172,6 @@ namespace NSN.Common
             return new DateTime(year, month, day);
         }
 
-        public static Photo GetAlbumAvatar(int albumId)
-        {
-            IPhotoRepository photoRepo = NSNContext.Current.Container.Resolve<IPhotoRepository>();
-            return photoRepo.GetFirstPhotoByAlbum(albumId);
-        }
-
         public static string Gender(int gender)
         {
             switch (gender)
@@ -209,6 +203,18 @@ namespace NSN.Common
             {
                 return userImage;
             }
+        }
+
+        public static Photo GetAlbumAvatar(int albumId)
+        {
+            IPhotoRepository photoRepo = NSNContext.Current.Container.Resolve<IPhotoRepository>();
+            return photoRepo.GetFirstPhotoByAlbum(albumId);
+        }
+
+        public static IList<Comment> GetCommentsByFeed(string typeId, int itemId, int ownerUserId)
+        {
+            ICommentRepository commentRepo = NSNContext.Current.Container.Resolve<ICommentRepository>();
+            return commentRepo.GetCommentsByFeed(typeId, itemId, ownerUserId);
         }
 
         /// <summary>
