@@ -38,8 +38,8 @@
                                     <header>
                                         <h3 class="fname"><a href="@Url.RouteUrl("Profile", new { uid = item._Feed.User.UserId })">@item._Feed.User.FullName</a></h3>
                                         <span class="postInfo">
-                                            <a class="time" target="_blank" title="@NSN.Common.Globals.ShowDateTime(item._Feed.Timestamp)">@NSN.Common.Globals.ShowDate(item._Feed.Timestamp)</a>
-                                            &nbsp&nbsp-&nbsp&nbsp
+                                            <a class="time" target="_blank" title="@NSN.Common.Globals.ShowFullDateTime(item._Feed.Timestamp)">@NSN.Common.Globals.ShowDate(item._Feed.Timestamp)</a>
+                                            &nbsp;-&nbsp;
                                             <span class="privacyMode">@privacyMode</span>
                                         </span>
                                     </header>
@@ -81,10 +81,10 @@
                                                         <div>
                                                             <a class="userFullName" href="@Url.RouteUrl("Profile", new { uid = NSN.Common.Globals.GetDisplayId(comment.User) })">@comment.User.FullName</a>
                                                             <span class="commentInfo">
-                                                                <span class="time" title="@NSN.Common.Globals.ShowDateTime(comment.Timestamp)">@NSN.Common.Globals.ShowDate(comment.Timestamp)</span>
-                                                                <span class="commentActions"><div class="delete"></div></span>
+                                                                <span class="time" title="@NSN.Common.Globals.ShowFullDateTime(comment.Timestamp)">@NSN.Common.Globals.ShowDateTime(comment.Timestamp)</span>
+                                                                <span class="commentActions"><span class="delete"></span></span>
                                                             </span>
-                                                            <div class="commentText">@comment.CommentText.Text</div>
+                                                            <div class="commentText">@Html.Raw(comment.CommentText.TextParsed.Replace(" ", "&nbsp;").Replace("&#10;", "<br />"))</div>
                                                         </div>
                                                     </div>
                                                 </div>

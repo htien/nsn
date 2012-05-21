@@ -185,17 +185,26 @@ namespace NSN.Common
 
         public static DateTime GetDateTime(int timestamp)
         {
-            return DateTimeUtils.ConvertFromUnixTimestamp(timestamp);
+            TimeZoneInfo utc7 = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            DateTime dt = DateTimeUtils.ConvertFromUnixTimestamp(timestamp);
+            return TimeZoneInfo.ConvertTimeFromUtc(dt, utc7);
         }
 
         public static string ShowDate(int timestamp)
         {
-            return GetDateTime(timestamp).ToString("MMM dd, yyyy");
+            return GetDateTime(timestamp).ToString("MMMM dd, yyyy");
         }
 
         public static string ShowDateTime(int timestamp)
         {
-            return GetDateTime(timestamp).ToString("MMM dd, yyyy hh:mm:ss tt");
+            DateTime dt = GetDateTime(timestamp);
+            return String.Format("{0} at {1}", dt.ToString("MMMM dd, yyyy"), dt.ToString("HH:mmtt").ToLower());
+        }
+
+        public static string ShowFullDateTime(int timestamp)
+        {
+            DateTime dt = GetDateTime(timestamp);
+            return String.Format("{0} at {1}", dt.ToString("dddd, MMMM dd, yyyy"), dt.ToString("HH:mm:sstt").ToLower());
         }
 
         public static string Gender(int gender)

@@ -1178,6 +1178,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="ping_session.html" />
     <None Include="static\js\goog\net\iframeio_different_base_test.data" />
     <Content Include="static\themes\hikari\images\fonts\open-sans.woff" />
     <Content Include="Views\Web.config">
