@@ -8,6 +8,7 @@ namespace NewSocialNetwork.Website.Controllers
     public class FriendController : ApplicationController
     {
         public IPhotoAlbumRepository photoAlbumRepo { private get; set; }
+
         public FriendController()
         {
             ViewBag.PageTitle = "NSN: Friends";
