@@ -1077,6 +1077,7 @@
     <Content Include="static\themes\hikari\images\newsoclnet.png" />
     <Content Include="static\themes\hikari\images\worldmap_2_1.png" />
     <Content Include="static\themes\hikari\images\worldmap_2_2.png" />
+    <Content Include="static\themes\hikari\images\x_off.png" />
     <Content Include="static\themes\hikari\nsn_common_ui.css" />
     <Content Include="static\themes\hikari\images\stripe.gif" />
     <Content Include="static\themes\hikari\nsn_common.css" />
@@ -1118,6 +1119,7 @@
     <Compile Include="Controllers\Helper\RAction.cs" />
     <Compile Include="Controllers\Helper\ResponseMessage.cs" />
     <Compile Include="Controllers\Helper\RStatus.cs" />
+    <Compile Include="Controllers\LikeController.cs" />
     <Compile Include="Controllers\LinkController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\PhotoAlbumController.cs" />
@@ -1184,6 +1186,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="ping_session.html" />
     <None Include="static\js\goog\net\iframeio_different_base_test.data" />
     <Content Include="static\themes\hikari\images\fonts\open-sans.woff" />
     <Content Include="Views\Web.config">

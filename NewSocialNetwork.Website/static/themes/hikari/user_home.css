@@ -51,9 +51,9 @@ img,
 .nsnWelcomeBoxName {display: inline-block;width: 112px;font-weight: bold;word-wrap: break-word;}
 .navHeader {font-size: 17px;color: #006e12;}
 .droppableNav {margin-top: 5px;margin-bottom: 10px;}
-.itemNewsFeed {background: url(/static/themes/hikari/images/fb_sprite_icons_2.png) no-repeat -17px -410px;}
-.itemMessages {background: url(/static/themes/hikari/images/fb_sprite_icons_3.png) no-repeat -91px -45px;}
-.itemFindFriends {background: url(/static/themes/hikari/images/fb_sprite_icons_3.png) no-repeat -142px -45px;}
+.itemNewsFeed {background: url(images/fb_sprite_icons_2.png) no-repeat -17px -410px;}
+.itemMessages {background: url(images/fb_sprite_icons_3.png) no-repeat -91px -45px;}
+.itemFindFriends {background: url(images/fb_sprite_icons_3.png) no-repeat -142px -45px;}
 
 #pinnedNav {margin-top: 16px;}
 
@@ -89,7 +89,7 @@ img,
   margin-right: 2px;
   width: 16px;
   height: 16px;
-  background-image: url(/static/themes/hikari/images/fb_sprite_icons_1.png);
+  background-image: url(images/fb_sprite_icons_1.png);
   background-repeat: no-repeat;
 }
 #composer-tabs .uiComposer-outer {
@@ -115,7 +115,7 @@ img,
   margin-left: 0 !important;
 }
 #composer-tabs .composer-updatestatus .icon {
-  background-image: url(/static/themes/hikari/images/fb_sprite_icons_2.png) !important;
+  background-image: url(images/fb_sprite_icons_2.png) !important;
   background-position: -19px -393px;
 }
 #composer-tabs .composer-addphoto .icon {
@@ -189,7 +189,7 @@ img,
   margin: 0 auto;
   width: 32px;
   height: 32px;
-  background-image: url(/static/themes/hikari/images/ribbon_nav_common.png);
+  background-image: url(images/ribbon_nav_common.png);
   background-repeat: no-repeat;
 }
 .uiAppListBox .uiAppItem .uiItemTitle {
@@ -231,7 +231,7 @@ img,
 .UIContent_UserProfile .uiHeadCoverPhoto {
   position: relative;
   height: 180px;
-  background: url(/static/themes/hikari/images/default_coverphoto_940x180.png) no-repeat;
+  background: url(images/default_coverphoto_940x180.png) no-repeat;
 }
 .UIContent_UserProfile .uiBodyProfile {
   width: 550px;
@@ -346,7 +346,7 @@ img,
   display: block;
   width: 10px;
   height: 21px;
-  background: url(/static/themes/hikari/images/gp_sprite_icons_stream_1.png) no-repeat -96px -22px;
+  background: url(images/gp_sprite_icons_stream_1.png) no-repeat -96px -22px;
 }
 .UIFeeds_Content .uiFeed .feedDetail {
   padding: 3px 16px 0;
@@ -364,6 +364,9 @@ img,
   margin-top: 7px;
   margin-left: 7px;
   line-height: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 .UIFeeds_Content .uiFeed .lnkButton img {
   float: left;
@@ -419,8 +422,6 @@ img,
   background-color: #fff;
   border: 1px solid #ddd;
 }
-.UIFeeds_Content .uiFeedComment .commentEditorBoxInner {
-}
 .UIFeeds_Content .uiFeedComment .commentEditor {
   display: block;
   margin: 0;
@@ -429,4 +430,57 @@ img,
   outline: none;
   border-width: 0;
   resize: none;
+}
+.UIFeeds_Content .uiCommentItem {
+  position: relative;
+}
+.UIFeeds_Content .uiCommentItem .uiComment {
+  padding: 0 14px 20px 56px;
+  vertical-align: top;
+}
+.UIFeeds_Content .uiCommentItem .userImage {
+  float: left;
+  margin: 2px 0 0 -40px;
+}
+.UIFeeds_Content .uiCommentItem .userImage img {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.UIFeeds_Content .uiCommentItem .userFullName {
+  -webkit-transition: color .218s;
+  -moz-transition: color .218s;
+  -ms-transition: color .218s;
+  -o-transition: color .218s;
+  transition: color .218s;
+  color: #222;
+}
+.UIFeeds_Content .uiCommentItem .commentInfo .time {
+  margin-left: 10px;
+  font-size: 11px;
+  color: #999;
+}
+.UIFeeds_Content .uiCommentItem .commentText {
+  padding-top: 2px;
+  color: #555;
+}
+.UIFeeds_Content .uiCommentItem .commentActions {
+  float: right;
+}
+.UIFeeds_Content .uiCommentItem:hover .commentActions > * {
+  visibility: visible !important;
+}
+.UIFeeds_Content .uiCommentItem .commentActions .delete {
+  position: relative;
+  float: left;
+  display: inline-block;
+  margin-top: 2px;
+  width: 10px;
+  height: 10px;
+  background: url(images/x_off.png) no-repeat;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  visibility: hidden;
 }

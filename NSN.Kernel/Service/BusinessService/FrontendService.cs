@@ -26,6 +26,8 @@ namespace NSN.Service.BusinessService
         public IUserTweetRepository userTweetRepo { private get; set; }
         public ICommentRepository commentRepo { private get; set; }
         public ICommentTextRepository commentTextRepo { private get; set; }
+        public ILikeRepository likeRepo { private get; set; }
+        public ILikeCacheRepository likeCacheRepo { private get; set; }
 
         public FrontendService() { }
 
@@ -134,6 +136,32 @@ namespace NSN.Service.BusinessService
             long commentId = commentRepo.Add(feed.TypeId, feed.ItemId, userId, feed.User.UserId, commentText, ipAddr, timestamp);
             string originCommentText = HttpUtility.UrlDecode(commentText, System.Text.Encoding.GetEncoding("ISO-8859-1"));
             return commentTextRepo.Add(commentId, originCommentText, Encoder.HtmlEncode(originCommentText));
+        }
+
+        public long LikeForFeed(long feedId, int userId)
+        {
+            int timestamp = DateTimeUtils.UnixTimestamp;
+            Feed feed = feedRepo.FindById(feedId);
+            if (!likeRepo.Exists(feed.TypeId, feed.ItemId, userId))
+            {
+                long likeId = likeRepo.Add(feed.TypeId, feed.ItemId, userId, timestamp);
+                likeCacheRepo.Add(feed.TypeId, feed.ItemId, userId);
+                return likeId;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        public void UnlikeForFeed(long feedId, int userId)
+        {
+            Feed feed = feedRepo.FindById(feedId);
+            if (likeRepo.Exists(feed.TypeId, feed.ItemId, userId))
+            {
+                likeRepo.Remove(feed.TypeId, feed.ItemId, userId);
+                likeCacheRepo.Remove(feed.TypeId, feed.ItemId, userId);
+            }
         }
 
         #region Static Method

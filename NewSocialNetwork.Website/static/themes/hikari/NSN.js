@@ -345,6 +345,12 @@ var glbDebug = true,
 			    jQuery(this).dialog('destroy').remove();
 		    });
     };
+    NSN_getFeedItem = function(ofObj) {
+        return jQuery(ofObj).parents('.uiFeedItem');
+    };
+    NSN_getFeedId = function(feedItem) {
+        return parseInt(feedItem.attr('id').slice(7), 10);
+    };
     NSN_postComment = function(feedId, commentText) {
         jQuery.ajax({
             url: nsn.url('/nsn/go/to/comment/addsave'),
@@ -366,6 +372,9 @@ var glbDebug = true,
                 }
             }
         })
+    };
+    NSN_like = function(evtObj) {
+        // TODO
     };
 })(NSN, jQuery);
 

@@ -5,6 +5,7 @@ using System.Web;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NSN.Kernel;
+using SaberLily.Utils;
 
 namespace NSN.Common
 {
@@ -172,6 +173,40 @@ namespace NSN.Common
             return new DateTime(year, month, day);
         }
 
+        public static string ShowBirthday(string birthday)
+        {
+            return ShowBirthday(GetBirthday(birthday));
+        }
+
+        public static string ShowBirthday(DateTime birthday)
+        {
+            return birthday.ToString("MMM dd, yyyy");
+        }
+
+        public static DateTime GetDateTime(int timestamp)
+        {
+            TimeZoneInfo utc7 = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            DateTime dt = DateTimeUtils.ConvertFromUnixTimestamp(timestamp);
+            return TimeZoneInfo.ConvertTimeFromUtc(dt, utc7);
+        }
+
+        public static string ShowDate(int timestamp)
+        {
+            return GetDateTime(timestamp).ToString("MMMM dd, yyyy");
+        }
+
+        public static string ShowDateTime(int timestamp)
+        {
+            DateTime dt = GetDateTime(timestamp);
+            return String.Format("{0} at {1}", dt.ToString("MMMM dd, yyyy"), dt.ToString("HH:mmtt").ToLower());
+        }
+
+        public static string ShowFullDateTime(int timestamp)
+        {
+            DateTime dt = GetDateTime(timestamp);
+            return String.Format("{0} at {1}", dt.ToString("dddd, MMMM dd, yyyy"), dt.ToString("HH:mm:sstt").ToLower());
+        }
+
         public static string Gender(int gender)
         {
             switch (gender)
@@ -215,6 +250,12 @@ namespace NSN.Common
         {
             ICommentRepository commentRepo = NSNContext.Current.Container.Resolve<ICommentRepository>();
             return commentRepo.GetCommentsByFeed(typeId, itemId, ownerUserId);
+        }
+
+        public static bool isLikeForFeed(string typeId, int itemId, int userId)
+        {
+            ILikeRepository likeRepo = NSNContext.Current.Container.Resolve<ILikeRepository>();
+            return likeRepo.Exists(typeId, itemId, userId);
         }
 
         /// <summary>

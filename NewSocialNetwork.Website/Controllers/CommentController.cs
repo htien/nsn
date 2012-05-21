@@ -7,7 +7,6 @@ namespace NewSocialNetwork.Website.Controllers
 {
     public class CommentController : ApplicationController
     {
-        public FrontendService frontService { private get; set; }
         public ICommentRepository commentRepo { private get; set; }
 
         //
@@ -17,7 +16,7 @@ namespace NewSocialNetwork.Website.Controllers
         public ActionResult AddSave(long fid, string c)
         {
             Domain.User myUser = sessionManager.GetUser();
-            long commentId = frontService.AddComment(fid, myUser.UserId, c);
+            long commentId = frontendService.AddComment(fid, myUser.UserId, c);
             Comment comment = commentRepo.FindById(commentId);
             if (comment != null)
             {
