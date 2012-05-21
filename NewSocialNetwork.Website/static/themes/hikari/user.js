@@ -1,6 +1,7 @@
 ﻿jQuery(function($) {
     /* init */
     NSN.$id('composer-tabs').tabs();
+    $('textarea.autogrow').autogrow();
 
     /* User post status scripts */
     var postStatusButton = 'postStatus';

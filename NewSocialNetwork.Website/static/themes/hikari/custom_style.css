@@ -11,47 +11,50 @@
 
 /*CSS Profile*/
 
-.UIProfile {
+.UIProfileInfo {
   float: left;
+  display: block;
   max-width: 565px;
   min-width: 191px;
   white-space: normal;
-  width: 100%;
-  /*word-wrap: break-word;*/
-  display: block;
 }
-
-.UIProfileItem {
-  border-top: 1px solid none;
-  color: #333;
-  font: normal 13px arial,sans-serif;
-  margin: 0;
+.UIProfileInfo .uiBoxTop .title {
+  margin-bottom: 20px;
+  line-height: 32px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 17px;
+  font-variant: small-caps;
+  border-bottom: 1px solid #e7ebee;
+  text-transform: lowercase;
+}
+.uiProfileBasic .row {
   padding: 10px 0;
+  font: normal 13px arial, sans-serif;
+  color: #333;
+  border-top: none;
   text-align: left;
 }
-
-.UIProfileText {
-  font-size: 15px;
-  font-weight: normal;
-  line-height: 1.2em;
-  margin-bottom: 0;
-  text-align: right;
-  vertical-align: top;
-  width: 110px;
-}
-
-.a-f-e {
+.uiProfileBasic .row .label,
+.uiProfileBasic .row .text {
   position: relative;
   display: -moz-inline-box;
   display: inline-block;
 }
-
-.UIProfileData {
-  padding: 0 0 0 7px;
-  width: 390px;
+.uiProfileBasic .row .label {
+  margin-bottom: 0;
+  width: 110px;
+  line-height: 1.2em;
+  font-size: 15px;
+  font-weight: normal;
+  text-align: right;
   vertical-align: top;
+}
+.uiProfileBasic .row .text {
+  padding-left: 7px;
+  width: 390px;
   line-height: 1.39em;
-  color:Gray;
+  color: gray;
+  vertical-align: top;
 }
 
 .UIGrid_Friends {

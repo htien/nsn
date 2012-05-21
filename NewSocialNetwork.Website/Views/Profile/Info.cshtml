@@ -1,40 +1,47 @@
 ﻿@{
     NewSocialNetwork.Domain.User userProfile = ViewBag.UProfile;
-    string gender = NSN.Common.Globals.Gender(userProfile.Gender);
-    DateTime joined = SaberLily.Utils.DateTimeUtils.ConvertFromUnixTimestamp(userProfile.Joined);
 }
-
-<div class="UIProfile">
-    <div class="UIProfileItem">
-        <div class="UIProfileText a-f-e">Short introduction</div>
-        <div class="UIProfileData a-f-e">...</div>
+<div class="UIProfileInfo">
+    <div class="uiProfileBasic">
+        <div class="uiBoxTop">
+            <h2 class="title">Basic Information</h2>
+        </div>
+        <div class="row">
+            <div class="label">Introduction</div>
+            <div class="text">...</div>
+        </div>
+        <div class="row">
+            <div class="label">Primary group</div>
+            <div class="text">@userProfile.UserGroup.Title</div>
+        </div>
+        <div class="row">
+            <div class="label">Email</div>
+            <div class="text">@userProfile.Email</div>
+        </div>
+        <div class="row">
+            <div class="label">Gender</div>
+            <div class="text">@NSN.Common.Globals.Gender(userProfile.Gender)</div>
+        </div>
+        <div class="row">
+            <div class="label">Birthday</div>
+            <div class="text">@NSN.Common.Globals.ShowBirthday(userProfile.Birthday)</div>
+        </div>
+        <div class="row">
+            <div class="label">Live in</div>
+            <div class="text">@userProfile.Country.Name</div>
+        </div>
+        <div class="row">
+            <div class="label">Join date</div>
+            <div class="text">@NSN.Common.Globals.ShowDate(userProfile.Joined)</div>
+        </div>
+        <div class="row">
+            <div class="label"></div>
+            <div class="text"></div>
+        </div>
     </div>
-   <div class="UIProfileItem">
-        <div class="UIProfileText a-f-e">User group</div>
-        <div class="UIProfileData a-f-e">@userProfile.UserGroup.Title</div>
-    </div>
-    <div class="UIProfileItem">
-    <div class="UIProfileText a-f-e">Email</div>
-    <div class="UIProfileData a-f-e">@userProfile.Email</div>
-    </div>
-    <div class="UIProfileItem">
-        <div class="UIProfileText a-f-e">Gender </div>
-        <div class="UIProfileData a-f-e">@gender</div>
-    </div>
-    <div class="UIProfileItem">
-        <div class="UIProfileText a-f-e">Birthday</div>
-        <div class="UIProfileData a-f-e">@userProfile.Birthday</div>
-    </div>
-    <div class="UIProfileItem">
-        <div class="UIProfileText a-f-e">Live in</div>
-        <div class="UIProfileData a-f-e">@userProfile.Country.Name</div>
-    </div>
-    <div class="UIProfileItem">
-        <div class="UIProfileText a-f-e">Join date</div>
-        <div class="UIProfileData a-f-e">@joined.ToShortDateString()</div>
-    </div>
-    <div class="UIProfileItem">
-        <div class="UIProfileText a-f-e">Status</div>
-        <div class="UIProfileData a-f-e">....</div>
+    <div class="uiProfileRelation">
+        <div class="uiBoxTop">
+            <h2 class="title">Relationship</h2>
+        </div>
     </div>
 </div>
