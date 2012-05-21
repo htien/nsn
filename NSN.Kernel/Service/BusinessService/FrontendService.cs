@@ -118,7 +118,8 @@ namespace NSN.Service.BusinessService
                 switch (feed.TypeId)
                 {
                     case NSNType.USER_TWEET:
-                        entity = userTweetRepo.Get(feed.ItemId, userId);
+                        
+                        entity = userTweetRepo.FindById(feed.ItemId);
                         break;
                     case NSNType.PHOTO:
                         break;
@@ -161,6 +162,27 @@ namespace NSN.Service.BusinessService
             {
                 likeRepo.Remove(feed.TypeId, feed.ItemId, userId);
                 likeCacheRepo.Remove(feed.TypeId, feed.ItemId, userId);
+            }
+        }
+
+        public void PostUserTweet(int userId, string content)
+        {
+            int timestamp = DateTimeUtils.UnixTimestamp;
+            User receiver = userRepo.FindById(userId);
+            User sender = sessionManager.GetUser();
+            content = content.Trim();
+
+            if (String.IsNullOrEmpty(content))
+            {
+                throw new Exception("<p>Invalid content.</p>");
+            }
+            if (receiver.UserId == sender.UserId)
+            {
+                userTweetRepo.Add(sender.UserId, 0, content, timestamp);
+            }
+            else
+            {
+                userTweetRepo.Add(sender.UserId, receiver.UserId, content, timestamp);
             }
         }
 

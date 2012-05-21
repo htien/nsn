@@ -14,7 +14,7 @@ namespace NewSocialNetwork.Website.Controllers
 
         public PhotoAlbumController()
         {
-            ViewBag.PageTitle = "NSN: Photo Album";
+            ViewBag.PageTitle = "NSN: Photo Albums";
         }
 
         //
@@ -33,7 +33,7 @@ namespace NewSocialNetwork.Website.Controllers
             ViewBag.user = totalfriends;
             IList<User> listfriend = photoAlbumRepo.GetListFriendByUser(1);
             ViewBag.listfriend = listfriend;
-            IList<Photo> listphotoalbum = photoAlbumRepo.GetPhotoByAlbum(2, 1);
+            IList<Photo> listphotoalbum = photoAlbumRepo.GetPhotoByAlbum(2);
             ViewBag.listphotoalbum = listphotoalbum;
             IList<User> friendsearch = photoAlbumRepo.SearchFriendByName("l", 1);
             ViewBag.friendsearch = friendsearch;
@@ -64,6 +64,20 @@ namespace NewSocialNetwork.Website.Controllers
             IList<User> MutualFriend = photoAlbumRepo.GetMutualFriend(2, 1);
             ViewBag.mutualFriend = MutualFriend;
 
+            return View();
+        }
+
+        public ActionResult ListPhotos(int albumid)
+        {
+            PhotoAlbum album = photoAlbumRepo.FindById(albumid);
+            IList<Photo> photos = album.Photos;
+            ViewBag.Album = album;
+            ViewBag.Photos = photos;
+            return View();
+        }
+
+        public ActionResult Uploader()
+        {
             return View();
         }
     }

@@ -18,23 +18,14 @@ namespace NewSocialNetwork.Website.Controllers
         // GET: /UserTweet/
 
         [HttpPost]
-        public JsonResult Post(string inputText)
+        public JsonResult Post(int uid, string inputText)
         {
             ResponseMessage msg = new ResponseMessage("UserPostTweet", RAction.ADD, RStatus.FAIL,
                 "<p>Incomplete post.</p>");
             try
             {
-                Domain.User user = sessionManager.GetUser();
-                inputText = inputText.Trim();
-                if (String.IsNullOrEmpty(inputText))
-                {
-                    throw new Exception("<p>Invalid content.</p>");
-                }
-                else
-                {
-                    userTweetRepo.Add(user, inputText.Trim());
-                    msg.SetStatusAndMessage(RStatus.SUCCESS, "<p>Posted.</p>");
-                }
+                frontendService.PostUserTweet(uid, inputText);
+                msg.SetStatusAndMessage(RStatus.SUCCESS, "<p>Posted.</p>");
             }
             catch (Exception e)
             {

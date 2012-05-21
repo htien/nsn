@@ -7,8 +7,6 @@ namespace NewSocialNetwork.Website.Controllers
 {
     public class LikeController : ApplicationController
     {
-        public FrontendService frontService { private get; set; }
-
         //
         // GET: /Like/
 

@@ -23,21 +23,35 @@ namespace NewSocialNetwork.DataAccess
         /// <param name="userId"></param>
         /// <param name="timestamp"></param>
         /// <returns></returns>
-        public long AddForUserTweet(int itemId, int userId, int timestamp)
+        public long Add(string typeId, int itemId, int userId, int parentUserId, int timestamp)
         {
             return Convert.ToInt64(this.Session().CreateSQLQuery(
-                    @"insert into [NSN.Feed] (TypeId, ItemId, UserId, Timestamp)
-                      values (:typeId, :itemId, :userId, :timestamp); select scope_identity()")
-                .SetString("typeId", NSNType.USER_TWEET)
+                    @"insert into [NSN.Feed] (TypeId, ItemId, UserId, ParentUserId, Timestamp)
+                      values (:typeId, :itemId, :userId, :parentUserId, :timestamp); select scope_identity()")
+                .SetString("typeId", typeId)
                 .SetInt32("itemId", itemId)
                 .SetInt32("userId", userId)
+                .SetInt32("parentUserId", parentUserId)
                 .SetInt32("timestamp", timestamp)
                 .UniqueResult());
         }
 
         public IList<Feed> GetUserFeeds(int userId)
         {
-            string hql = @"select f from Feed f where f.User.UserId = :userId";
+            return GetUserFeeds(userId, true);
+        }
+
+        public IList<Feed> GetUserFeeds(int userId, bool onlyme)
+        {
+            string hql = "";
+            if (onlyme)
+            {
+                hql = @"select f from Feed f where f.User.UserId = :userId where f.ParentUser.UserId = 0";
+            }
+            else
+            {
+                hql = @"select f from Feed f where f.User.UserId = :userId";
+            }            
             return this.Session().CreateQuery(hql)
                 .SetInt32("userId", userId)
                 .List<Feed>();
@@ -64,10 +78,29 @@ namespace NewSocialNetwork.DataAccess
 
         public IList<Feed> GetUserFeeds(int userId, int start, int size)
         {
-            IList list = this.Session().CreateSQLQuery(
-                    @"select FeedId, Privacy, TypeId, ItemId, UserId, ParentUserId, [Timestamp]
-                      from [NSN.Feed] f where f.UserId = :userId order by f.Timestamp desc
-                      offset :start rows fetch next :size rows only")
+            return GetUserFeeds(userId, start, size, true);
+        }
+
+        public IList<Feed> GetUserFeeds(int userId, int start, int size, bool onlyme)
+        {
+            string hql = "";
+            if (onlyme)
+            {
+                hql = @"select FeedId, Privacy, TypeId, ItemId, UserId, ParentUserId, [Timestamp]
+                        from [NSN.Feed] f
+                        where (f.UserId = :userId and f.ParentUserId = 0) or (f.ParentUserId = :userId)
+                        order by f.Timestamp desc
+                        offset :start rows fetch next :size rows only";
+            }
+            else
+            {
+                hql = @"select FeedId, Privacy, TypeId, ItemId, UserId, ParentUserId, [Timestamp]
+                        from [NSN.Feed] f
+                        where f.UserId = :userId or (f.ParentUserId = :userId
+                        order by f.Timestamp desc
+                        offset :start rows fetch next :size rows only";
+            }
+            IList list = this.Session().CreateSQLQuery(hql)
                 .SetInt32("userId", userId)
                 .SetInt32("start", start)
                 .SetInt32("size", size)

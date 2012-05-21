@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+<div id="pagelet_photoalbumuploader">
+    <div class="UIUploader_PhotoAlbum">
+        <h2 class="title">Upload Photo</h2>
+        <div class="uiUploaderForm">
+            @*<form id="photoalbum-uploader-form" action="@Url.RouteUrl("Go", new { controller = "Photo", action = "UploadSave" })" method="post" enctype="multipart/form-data">*@
+            <div class="uiForm">
+                <div class="uiControls">
+                    <input id="photoalbum-fileupload" type="file" name="files[]" />
+                </div>
+            </div>
+            <div class="uploadActions">
+                <div class="guiButton2 guiBlueButton upload">Upload</div>
+                <div class="guiButton2 guiBlueButton xdlg">Cancel</div>
+            </div>
+            @*</form>*@
+        </div>
+    </div>
+</div>

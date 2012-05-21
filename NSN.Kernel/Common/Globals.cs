@@ -198,13 +198,13 @@ namespace NSN.Common
         public static string ShowDateTime(int timestamp)
         {
             DateTime dt = GetDateTime(timestamp);
-            return String.Format("{0} at {1}", dt.ToString("MMMM dd, yyyy"), dt.ToString("HH:mmtt").ToLower());
+            return String.Format("{0} at {1}", dt.ToString("MMMM dd, yyyy"), dt.ToString("hh:mmtt").ToLower());
         }
 
         public static string ShowFullDateTime(int timestamp)
         {
             DateTime dt = GetDateTime(timestamp);
-            return String.Format("{0} at {1}", dt.ToString("dddd, MMMM dd, yyyy"), dt.ToString("HH:mm:sstt").ToLower());
+            return String.Format("{0} at {1}", dt.ToString("dddd, MMMM dd, yyyy"), dt.ToString("hh:mm:sstt").ToLower());
         }
 
         public static string Gender(int gender)
@@ -256,6 +256,12 @@ namespace NSN.Common
         {
             ILikeRepository likeRepo = NSNContext.Current.Container.Resolve<ILikeRepository>();
             return likeRepo.Exists(typeId, itemId, userId);
+        }
+
+        public static int GetTotalLike(string typeId, int itemId)
+        {
+            ILikeRepository likeRepo = NSNContext.Current.Container.Resolve<ILikeRepository>();
+            return likeRepo.GetTotalLike(typeId, itemId);
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+# Visual Web Developer Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{ED97D02D-0F7C-403C-ABBB-931C76DF95B5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewSocialNetwork.Website", "NewSocialNetwork.Website\NewSocialNetwork.Website.csproj", "{7C5EF84E-FC2A-48A4-904E-1BE78D490C97}"

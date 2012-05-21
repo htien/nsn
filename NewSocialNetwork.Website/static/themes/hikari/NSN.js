@@ -381,9 +381,15 @@ var glbDebug = true,
 /* end NSN/globals.js */
 
 /* begin NSN/ready.js */
-jQuery(function($) {
-    NSN.f.autoCompleteOff();
-	NSN.f.disableDrag('{"tags":["a", "img"], "classes":["guiButton"]}');
+jQuery(function ($) {
+    try {
+        NSN.f.autoCompleteOff();
+        NSN.f.disableDrag('{"tags":["a", "img"], "classes":["guiButton"]}');
+        $('textarea.autogrow').elastic();
+    }
+    catch (e) {
+        NSN._log(e);
+    }
 });
 
 /* end NSN/ready.js */

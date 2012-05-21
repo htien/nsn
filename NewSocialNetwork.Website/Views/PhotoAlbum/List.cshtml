@@ -1,5 +1,10 @@
 ﻿<div class="UIGrid_Album">
-    <h2 class="title">Your Photo Albums (@ViewBag.Albums.Count)</h2>
+    <div class="uiBoxTop">
+        <div class="albumActions">
+            <div id="createAlbum" class="guiButton guiRedButton">Create Album</div>
+        </div>
+        <h2 class="title">Albums (@ViewBag.Albums.Count)</h2>
+    </div>
     <div class="UIAlbumContainer">
         @if(ViewBag.Albums != null && ViewBag.Albums.Count > 0)
         {
@@ -8,12 +13,19 @@
 				{
 					NewSocialNetwork.Domain.Photo albumAvatar = NSN.Common.Globals.GetAlbumAvatar(album.AlbumId);
 					<div class="albumItem">
-					    <a class="albumImage" tabindex="-1">
+					    <a class="albumImage" href="@Url.RouteUrl("PhotoAlbumAction", new { albumid = album.AlbumId, action = "ListPhotos" })" tabindex="-1">
 						    <span class="frontImageAlbum">
 							    @if (albumAvatar != null && !String.IsNullOrEmpty(albumAvatar.Image))
 							    {
-								    <img alt="" src="@Url.Content("~/static/images/avatars/" + albumAvatar.Image)" height="111px" width="167px" />
-							    }
+                                    if (albumAvatar.Album.ProfileId > 0)
+                                    {
+								        <img alt="" src="@Url.Content("~/static/images/avatars/" + albumAvatar.Image)" height="111px" width="167px" />
+                                    }
+                                    else
+                                    {
+                                         <img alt="" src="@Url.Content("~/static/images/photos/" + albumAvatar.Image)" height="111px" width="167px" />
+                                    }
+                                }
 						    </span>
 					    </a>
 					    <div style="margin-top: 5px"><b style="font-weight:bold">@album.Name</b><br />@album.TotalPhoto photos</div>
@@ -21,8 +33,8 @@
                 }
 			</div>
         }
-		else
-		{
+        else
+        {
 			<p>No albums.</p>
         }
 	</div>

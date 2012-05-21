@@ -1,4 +1,4 @@
-﻿jQuery(function($) {
+﻿jQuery(function ($) {
 
     /* Login scripts */
     var loginButton = 'nsn_login',
@@ -14,10 +14,10 @@
             nsnId: { required: '', minlength: '' }, // message thông báo khi nhập không đúng yêu cầu
             nsnPasswd: { required: '', minlength: '' }
         },
-        invalidHandler: function(form, validator) { // xử lý khi form nhập vào không hợp lệ
+        invalidHandler: function (form, validator) { // xử lý khi form nhập vào không hợp lệ
             NSN.shakeContainer(loginForm);
         },
-        submitHandler: function(form) {
+        submitHandler: function (form) {
             var dlgLoading = NSN.callJqDlg(glbDefaultDlgId,
                 '<h3><img src="/static/themes/hikari/images/loading1.gif" /> Signing in...</h3>',
                 {
@@ -25,7 +25,7 @@
                 });
             dlgLoading.dialog('open');
             NSN.ajaxSubmit(form)
-                .success(function(loginResponse) {
+                .success(function (loginResponse) {
                     if (loginResponse.Status == 1) {
                         document.location = NSN.url('/');
                     }
@@ -38,7 +38,7 @@
                                 {
                                     text: 'Close',
                                     class: 'guiBlueButton',
-                                    click: function() {
+                                    click: function () {
                                         jQuery(this).dialog('destroy').remove();
                                         NSN.resetForm(loginForm);
                                         NSN.$id(loginForm).submit();
@@ -48,12 +48,12 @@
                         }).dialog('open');
                     }
                 })
-                .error(function(data) { // xử lý khi đường truyền bị lỗi, biến data chứa nội dung thông báo lỗi
+                .error(function (data) { // xử lý khi đường truyền bị lỗi, biến data chứa nội dung thông báo lỗi
                 });
             NSN._log('__#' + form.id + '__ form is submited.');
         }
     });
-    NSN.$id(loginButton).click(function() {
+    NSN.$id(loginButton).click(function () {
         NSN._log('__#' + this.id + '__ button is clicked.');
         NSN.$id(loginForm).submit();
         return false;
@@ -86,7 +86,7 @@
             birthday_month: { birthdayBox: '' },
             birthday_day: { birthdayBox: '' }
         },
-        submitHandler: function(form) {
+        submitHandler: function (form) {
             NSN.callJqDlg(glbDefaultDlgId,
                     '<strong>Are you sure you want to join New Social Network?</strong>',
                     buildJqConfirmDlgOpts(NSN.$id(regButton).parents('form'), '<img src="' + NSN.smileImage('pidgin', 'default', 'giggle.png') + '" alt="giggle" /> Join New Social Network!')
@@ -94,9 +94,11 @@
         }
     });
 
-    NSN.$id(regButton).click(function() {
+    NSN.$id(regButton).click(function () {
         NSN._log('__#' + this.id + '__ button is clicked.');
         NSN.$id(regForm).submit();
         return false;
     });
+
+    /* Assign input hint */
 });
