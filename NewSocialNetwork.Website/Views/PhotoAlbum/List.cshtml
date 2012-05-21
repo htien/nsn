@@ -1,5 +1,10 @@
 ﻿<div class="UIGrid_Album">
-    <h2 class="title">Albums (@ViewBag.Albums.Count)</h2>
+    <div class="uiBoxTop">
+        <div class="albumActions">
+            <div id="createAlbum" class="guiButton guiRedButton">Create Album</div>
+        </div>
+        <h2 class="title">Albums (@ViewBag.Albums.Count)</h2>
+    </div>
     <div class="UIAlbumContainer">
         @if(ViewBag.Albums != null && ViewBag.Albums.Count > 0)
         {

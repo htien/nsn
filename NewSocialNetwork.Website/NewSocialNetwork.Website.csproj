@@ -150,8 +150,13 @@
     <Content Include="static\images\photos\f.jpg" />
     <Content Include="static\js\jquery\jquery-ui-1.8.20.js" />
     <Content Include="static\js\jquery\jquery.elastic-1.6.11.js" />
+    <Content Include="static\js\jquery\jquery.fileupload-fp.js" />
+    <Content Include="static\js\jquery\jquery.fileupload-ui.js" />
+    <Content Include="static\js\jquery\jquery.fileupload.js" />
+    <Content Include="static\js\jquery\jquery.iframe-transport.js" />
     <Content Include="static\js\jquery\jquery.validate-1.9.js" />
     <Content Include="static\js\jquery\jquery.validate.additional.js" />
+    <Content Include="static\js\jquery\tmpl.js" />
     <Content Include="static\smiles\pidgin\default\amorous.png" />
     <Content Include="static\smiles\pidgin\default\blowkiss.png" />
     <Content Include="static\smiles\pidgin\default\embarrassed.png" />
@@ -173,6 +178,7 @@
     <Content Include="static\themes\closure-theme\images\ui-icons_847e71_256x240.png" />
     <Content Include="static\themes\closure-theme\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="static\themes\closure-theme\jquery-ui-1.8.20.css" />
+    <Content Include="static\themes\closure-theme\jquery.fileupload-ui.css" />
     <Content Include="static\themes\hikari\images\background1.png" />
     <Content Include="static\themes\hikari\images\background1_2.png" />
     <Content Include="static\themes\hikari\images\background1_50.jpg" />
@@ -1232,6 +1238,7 @@
     <Content Include="Views\Shared\Frontend\_StandardPageLayout.cshtml" />
     <Content Include="Views\Comment\AddSave.cshtml" />
     <Content Include="Views\PhotoAlbum\ListPhotos.cshtml" />
+    <Content Include="Views\PhotoAlbum\Uploader.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

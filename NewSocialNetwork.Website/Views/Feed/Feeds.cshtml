@@ -10,6 +10,7 @@
             NewSocialNetwork.Domain.User parentUser = item._Feed.ParentUser;
             IList<NewSocialNetwork.Domain.Comment> comments = NSN.Common.Globals.GetCommentsByFeed(item._Feed.TypeId, item._Feed.ItemId, user.UserId);
             bool isLiked = NSN.Common.Globals.isLikeForFeed(item._Feed.TypeId, item._Feed.ItemId, ViewBag.MyProfile.UserId);
+            int totalLike = NSN.Common.Globals.GetTotalLike(item._Feed.TypeId, item._Feed.ItemId);
             string feedAvatarFileName;
             string privacyMode;
             string divFeedId = "update-" + item._Feed.FeedId;
@@ -71,6 +72,10 @@
                                     <span class="default_message">Unlike</span>
                                     <span class="saving_message" style="display:none"><img src="@Url.Content("~/static/smiles/pidgin/default/in_love.png")" alt="" width="16" height="16" /> Like</span>
                                 </a>
+                            }
+                            @if (totalLike > 0)
+                            {
+                                <span class="literal">(@totalLike liked)</span>
                             }
                         </div>
                     </div> @*uiFeed*@

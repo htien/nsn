@@ -258,6 +258,12 @@ namespace NSN.Common
             return likeRepo.Exists(typeId, itemId, userId);
         }
 
+        public static int GetTotalLike(string typeId, int itemId)
+        {
+            ILikeRepository likeRepo = NSNContext.Current.Container.Resolve<ILikeRepository>();
+            return likeRepo.GetTotalLike(typeId, itemId);
+        }
+
         /// <summary>
         /// Converts the datareader to dataset.
         /// </summary>

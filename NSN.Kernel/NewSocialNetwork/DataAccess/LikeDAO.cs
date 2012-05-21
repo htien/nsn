@@ -47,6 +47,15 @@ namespace NewSocialNetwork.DataAccess
                 .UniqueResult()) > 0;
         }
 
+        public int GetTotalLike(string typeId, int itemId)
+        {
+            return Convert.ToInt32(this.Session().CreateQuery(
+                @"select count(lc.User) from LikeCache lc where lc.Key.TypeId = :typeId and lc.Key.ItemId = :itemId")
+                .SetString("typeId", typeId)
+                .SetInt32("itemId", itemId)
+                .UniqueResult());
+        }
+
         #endregion
     }
 }

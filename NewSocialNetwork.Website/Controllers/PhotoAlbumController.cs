@@ -75,5 +75,10 @@ namespace NewSocialNetwork.Website.Controllers
             ViewBag.Photos = photos;
             return View();
         }
+
+        public ActionResult Uploader()
+        {
+            return View();
+        }
     }
 }

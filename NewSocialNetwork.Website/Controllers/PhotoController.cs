@@ -1,9 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
+using NewSocialNetwork.Website.Controllers.Helper;
 using NewSocialNetwork.Website.Models;
-using NSN.Manager;
+using System.IO;
+using NSN.Common;
+using SaberLily.Utils;
 
 namespace NewSocialNetwork.Website.Controllers
 {
@@ -59,6 +64,40 @@ namespace NewSocialNetwork.Website.Controllers
                 ViewBag.Message = "Insert Error";
             }
             return View("Insert");
+        }
+
+        [HttpPost]
+        public JsonResult UploadSave()
+        {
+            ResponseMessage msg = new ResponseMessage("PhotoAlbumUploader", RAction.ADD, RStatus.FAIL,
+                "Error when processing your request.");
+            try
+            {
+                foreach (string upload in Request.Files)
+                {
+                    HttpPostedFileBase file = Request.Files[upload];
+                    if (file.ContentLength == 0)
+                    {
+                        continue;
+                    }
+                    int sizeInKB = file.ContentLength / 1024;
+                    if (sizeInKB > 2048)
+                    {
+                        continue;
+                    }
+                    string fileName = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(file.FileName);
+                    string folderUpload = Globals.ApplicationMapPath + "\\static\\images\\photos\\";
+                    string linkAccess = Path.Combine(folderUpload, fileName);
+                    int uploadTimestamp = DateTimeUtils.UnixTimestamp;
+                    file.SaveAs(linkAccess);
+                }
+                msg.SetStatusAndMessage(RStatus.SUCCESS, Request.Files.Count.ToString());
+            }
+            catch (Exception e)
+            {
+                msg.Message = e.Message;
+            }
+            return Json(msg);
         }
     }
 }

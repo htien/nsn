@@ -143,6 +143,40 @@
   padding: 30px 0 0 30px;
 }
 
+.UIGrid_Album .albumActions {
+  position: relative;
+  float: right;
+  top: 19px;
+  right: 30px;
+}
+
+.UIGrid_Album #createAlbum {
+  margin-right: 0;
+}
+
+.UIUploader_PhotoAlbum {
+  position: relative;
+  width: 600px;
+}
+.UIUploader_PhotoAlbum h2.title {
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-size: 23px;
+}
+.UIUploader_PhotoAlbum .uiUploaderForm {
+  position: relative;
+  padding-top: 17px;
+  padding-bottom: 25px;
+}
+.UIUploader_PhotoAlbum .uiForm {
+  padding: 0 17px 17px;
+}
+.UIUploader_PhotoAlbum .uploadActions {
+  margin-top: 15px;
+}
+.UIUploader_PhotoAlbum input {
+  outline: 0;
+}
+
 /*Photos By Album*/
 .UIGrid_Photo {
   position: relative;
