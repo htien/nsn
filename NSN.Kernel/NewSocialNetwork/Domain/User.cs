@@ -13,7 +13,7 @@ namespace NewSocialNetwork.Domain
         [PrimaryKey(PrimaryKeyType.Identity, "UserId")]
         public virtual int UserId { get; set; }
 
-        [BelongsTo("UserGroupId", NotNull = true)]
+        [BelongsTo("UserGroupId", NotNull = true, Lazy = FetchWhen.Immediate)]
         public virtual UserGroup UserGroup { get; set; }
 
         [Property("Email", Unique = true, Length = 255, NotNull = false)]
@@ -22,6 +22,7 @@ namespace NewSocialNetwork.Domain
         [Property("Username", Unique = true, Length = 100, NotNull = false)]
         public virtual string Username { get; set; }
 
+        [ScriptIgnore]
         [Property("Passwd", Length = 1024, NotNull = false)]
         public virtual string Password { get; set; }
 
@@ -34,7 +35,7 @@ namespace NewSocialNetwork.Domain
         [Property("Birthday", Length = 10, NotNull = false)]
         public virtual string Birthday { get; set; }
 
-        [BelongsTo("CountryIso", NotNull = false)]
+        [BelongsTo("CountryIso", NotNull = false, Lazy = FetchWhen.Immediate)]
         public virtual Country Country { get; set; }
 
         [Property("Joined", NotNull = true)]

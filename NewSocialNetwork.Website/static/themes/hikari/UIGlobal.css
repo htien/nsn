@@ -24,7 +24,7 @@
   height: 7px;
 }
 #UIGlobal_BlueBarHolder.slimHeader {
-  height: 38px;
+  height: 37px;
 }
 
 .slimHeader #UIGlobal_BlueBar {
@@ -141,7 +141,7 @@
   margin: 0 0 0 1px;
   width: 24px;
   height: 31px;
-  background-image: url(images/fb_sprite.png);
+  background-image: url(images/fb_sprite_icons_4.png);
   background-repeat: no-repeat;
   text-decoration: none;
 }
@@ -185,7 +185,7 @@
 
 #navSearchForm {
   position: relative;
-  margin: 9px 0 0 4px;
+  margin: 9px 0 0 2px;
   width: 350px;
 }
 
@@ -230,6 +230,24 @@
 .slimHeader #pageNav .topNavLink {
   height: 31px;
 }
+.slimHeader #pageNav .topNavLink:hover {
+  background-color: #dadada;
+}
+.slimHeader #pageNav .topNavLink .uiProfilePhoto {
+  margin: 3px 5px 3px 3px;
+  width: 23px;
+  height: 23px;
+}
+.slimHeader #pageNav .topNavLink .tinymanName {
+  display: inline-block;
+  overflow: hidden;
+  max-width: 175px;
+  padding-right: 8px;
+  text-overflow: ellipsis;
+  vertical-align: top;
+  white-space: nowrap;
+}
+.slimHeader #pageNav li.tinyman::before,
 .slimHeader #pageNav li.middleLink::before {
   float: right;
   display: inline-block;
@@ -237,13 +255,14 @@
   width: 1px;
   height: 14px;
   content: " ";
-  background-color: #cfcfcf;
+  background-color: #dadada;
 }
 .slimHeader #pageNav a {
   height: 31px;
   line-height: 29px;
   color: #111;
 }
-.slimHeader #pageNav .middleLink a {
+.slimHeader #pageNav .middleLink a,
+.slimHeader #pageNav .lastLink a {
   padding: 0 8px;
 }

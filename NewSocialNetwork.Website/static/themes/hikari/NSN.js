@@ -1,5 +1,12 @@
-﻿document.domain = 'localhost';
-document.startTime = document.startTime || (new Date).getTime();
+﻿/**
+ * endsWith method for javascript String object, same as Java.
+ * 
+ * @param suffix
+ * @returns {Boolean}
+ */
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
 
 function f(x) {
     return function() {
@@ -12,7 +19,7 @@ function ch(n) {
 
 var s = [];
 var glbDebug = true,
-    glbContextPath = 'http://localhost:55555',
+    glbContextPath = document.contextPath,
     glbDlgOpts, glbValidateOpts,
     glbDefaultDlgId = "ajax-response",
     glbYesLog = false;
@@ -73,7 +80,7 @@ var glbDebug = true,
             return 'number' == typeof num;
         };
         nsn.isBlank = function(text) {
-            return text == null ||
+            return !text ||
                    (typeof text === 'string' &&
                     /^\s*$/.test(text));
         };
@@ -92,9 +99,16 @@ var glbDebug = true,
         };
         nsn.url = function(path) {
             if (typeof path === 'string')
-                return glbContextPath.concat(path);
+                return glbContextPath.endsWith('/') ? ''.concat(path) : glbContextPath.concat(path);
             else
                 return glbContextPath;
+        };
+        nsn.staticResource = function(path) {
+            return nsn.url('/static/').concat(path);
+        };
+        nsn.smileImage = function(category, type, name) {
+            var smilesPath = nsn.staticResource('smiles/' + category + '/' + type + '/' + name);
+            return smilesPath;
         };
         nsn.printObj = typeof JSON != 'undefined' ? JSON.stringify : function(obj) {
             var arr = [];
@@ -200,6 +214,7 @@ var glbDebug = true,
     glbYesLog = glbDebug && !nsn.isIE();
     glbDlgOpts = {
         title: 'New Social Network',
+        dialogClass: 'alert',
         hasTitle: true,
         autoOpen: false,
         draggable: false,
@@ -208,7 +223,7 @@ var glbDebug = true,
         position: 'center',
         minWidth: 390,
         minHeight: 180,
-        width: 'auto',
+        width: 400,
         height: 'auto',
         closeOnEscape: false,
         create: function(evt, ui) {
@@ -219,11 +234,15 @@ var glbDebug = true,
                 jQuery('.ui-dialog-titlebar').remove();
             }
         },
-        buttons: {
-            'Close': function() {
-                jQuery(this).dialog('destroy').remove();
+        buttons: [
+            {
+                text: 'Close',
+                class: 'guiBlueButton',
+                click: function() {
+                    jQuery(this).dialog('destroy').remove();
+                }
             }
-        }
+        ]
     };
     glbValidateOpts = {
         debug: glbDebug,
@@ -282,14 +301,21 @@ var glbDebug = true,
     buildJqConfirmDlgOpts = function(targetForm, title, callbackSuccess) {
 		return {
 			title: title,
-			buttons: {
-				'OK':  function(evt) {
-                    buildJqConfirmDlgOpts_OK(this, targetForm, callbackSuccess);
+			buttons: [
+                {
+                    text: 'OK',
+                    class: 'guiBlueButton',
+                    click: function(evt) {
+                        buildJqConfirmDlgOpts_OK(this, targetForm, callbackSuccess);
+                    }
                 },
-				'Cancel': function(evt) {
-                    jQuery(this).dialog('destroy').remove();
+                {
+                    text: 'Cancel',
+                    click: function(evt) {
+                        jQuery(this).dialog('destroy').remove();
+                    }
                 }
-			}
+			]
 		};
 	};
     buildJqConfirmDlgOpts_OK = function(dlg, targetForm, callbackSuccess) {
@@ -299,12 +325,16 @@ var glbDebug = true,
 	    nsn.ajaxSubmit(targetForm)
 		    .success(function(json, textCode, xhr) {
 			    nsn.callJqDlg(glbDefaultDlgId, json.Message, {
-				    buttons: {
-					    'Close': function() {
-						    jQuery(dlg).dialog('destroy').remove();
-                            callbackSuccess.call(this);
-					    }
-				    }
+				    buttons: [
+                        {
+                            text: 'Close',
+                            class: 'guiBlueButton',
+                            click: function() {
+                                jQuery(dlg).dialog('destroy').remove();
+                                callbackSuccess.call(this);
+                            }
+                        }
+				    ]
 			    });
 			    // reset form after adding successfully
 			    if (json.Action == 'add' && json.Status == '1') {
@@ -314,6 +344,37 @@ var glbDebug = true,
 		    .error(function(data) {
 			    jQuery(this).dialog('destroy').remove();
 		    });
+    };
+    NSN_getFeedItem = function(ofObj) {
+        return jQuery(ofObj).parents('.uiFeedItem');
+    };
+    NSN_getFeedId = function(feedItem) {
+        return parseInt(feedItem.attr('id').slice(7), 10);
+    };
+    NSN_postComment = function(feedId, commentText) {
+        jQuery.ajax({
+            url: nsn.url('/nsn/go/to/comment/addsave'),
+            type: 'post',
+            contentType: "application/x-www-form-urlencoded;charset=utf-8",
+            data: { fid: feedId, c: escape(commentText) },
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+            },
+            success: function(data) {
+                if (data != null && data.length > 0) {
+                    var editor = nsn.$id('editor-update-' + feedId);
+                    editor.val('');
+                    nsn.$id('update-' + feedId).find('.uiListTreeInner').append(data);
+                    editor.focus();
+                }
+                else {
+                    nsn.createJqDlg(glbDefaultDlgId, 'Cannot process your comment. Please try again!').dialog('open');
+                }
+            }
+        })
+    };
+    NSN_like = function(evtObj) {
+        // TODO
     };
 })(NSN, jQuery);
 

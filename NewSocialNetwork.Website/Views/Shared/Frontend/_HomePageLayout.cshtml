@@ -1,7 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_UserLayout.cshtml";
-    string id = (ViewBag.UserLogged.Username == null || ViewBag.UserLogged.Username.Length == 0)
-        ? ViewBag.UserLogged.Email : ViewBag.UserLogged.Username;
+    NewSocialNetwork.Domain.User myProfile = ViewBag.MyProfile;
 }
 @section html_head_area {@RenderSection("html_head_area", false)}
 <div class="nsnLeftCol_Container">
@@ -11,15 +10,12 @@
         <div id="pagelet_welcome_box">
             <div class="nsnWelcomeBox uiImageBlock clearfix">
                 <a class="lfloat uiImageBlockImage uiImageBlockMediumImage">
-                    @{
-                        string avatarFileName = SaberLily.Utils.GeneralUtils.UserImage(ViewBag.UserLogged.UserImage, ViewBag.UserLogged.Gender);
-                    }
-                    <img class="img" src="@Url.Content("~/static/images/avatars/" + avatarFileName)" width="40" height="40" />
+                    <img class="img" src="@Url.Content("~/static/images/avatars/" + ViewBag.MyAvatarFileName)" width="40" height="40" />
                 </a>
                 <div class="uiImageBlockContent">
                     <div class="uiInlineBlock uiInlineBlockMiddle" style="height:40px;"></div>
                     <div class="uiInlineBlock uiInlineBlockMiddle">
-                        <a class="nsnWelcomeBoxName" href="/@id">@ViewBag.UserLogged.FullName</a>
+                        <a class="nsnWelcomeBoxName" href="@Url.RouteUrl("ProfileAction", new { uid = ViewBag.MyDisplayId, action = UrlParameter.Optional })">@myProfile.FullName</a>
                     </div>
                 </div>
             </div>
@@ -28,6 +24,28 @@
             <div id="pagelet_pinned_nav">
                 <div id="pinnedNav">
                     <div class="navHeader">Favorites</div>
+                    <div class="droppableNav">
+                        <ul class="uiSideNav">
+                            <li class="sideNavItem">
+                                <a class="item" href="@Url.RouteUrl("Stream")">
+                                    <span class="imgWrap itemNewsFeed"></span>
+                                    <span class="linkWrap">News Feed</span>
+                                </a>
+                            </li>
+                            <li class="sideNavItem">
+                                <a class="item">
+                                    <span class="imgWrap itemMessages"></span>
+                                    <span class="linkWrap">Messages</span>
+                                </a>
+                            </li>
+                            <li class="sideNavItem">
+                                <a class="item">
+                                    <span class="imgWrap itemFindFriends"></span>
+                                    <span class="linkWrap">Find Friends</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div id="pagelet_bookmark_nav">
@@ -40,14 +58,11 @@
     @if (ViewBag.hasRightCol)
     {
     <div class="nsnRightCol">
-        Right col
     </div>
     }
     <div class="nsnContentArea">
-        <div id="pagelet_stream" class="nsn-box first">
-            <div class="nsn-bodyrender">
-                @RenderBody()
-            </div>
+        <div class="nsn-bodyrender">
+            @RenderBody()
         </div>
     </div>
     <div class="clearfix"></div>

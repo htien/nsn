@@ -134,8 +134,8 @@ namespace NSN.Kernel
         {
             INSNConfig config = this.container.Resolve<INSNConfig>();
             ConnectionStringSettingsCollection cfgSettings = WebConfigurationManager.ConnectionStrings;
-            NameValueCollection db = WebConfigurationManager.GetSection("databaseSettings", "/" + Globals.CONFIG_FOLDER_PATH) as NameValueCollection;
-            NameValueCollection ar = WebConfigurationManager.GetSection("activeRecordSettings", "/" + Globals.CONFIG_FOLDER_PATH) as NameValueCollection;
+            NameValueCollection db = WebConfigurationManager.GetSection("databaseSettings", "~/" + Globals.CONFIG_FOLDER_PATH) as NameValueCollection;
+            NameValueCollection ar = WebConfigurationManager.GetSection("activeRecordSettings", "~/" + Globals.CONFIG_FOLDER_PATH) as NameValueCollection;
 
             IDictionary<string, string> settings = new Dictionary<string, string>();
             foreach (string key in ar.AllKeys)
@@ -208,7 +208,7 @@ namespace NSN.Kernel
             routes.MapRouteLowercase(
                 "Root",
                 "",
-                new { controller = "Home", action = "Stream", userid = (string)null }
+                new { controller = "Home", action = "Stream" }
             );
 
             // Single Sign-On routes
@@ -241,6 +241,20 @@ namespace NSN.Kernel
             // Front-end routes
 
             routes.MapRouteLowercase(
+                "Stream",
+                "Stream",
+                new { controller = "Home", action = "Stream" }
+            );
+            routes.MapRouteLowercase(
+                "AjaxAction",
+                "Ajax/{action}",
+                new { controller = "Ajax" }
+            );
+            routes.MapRouteLowercase(
+                "Go",
+                "NSN/Go/To/{controller}/{action}"
+            );
+            routes.MapRouteLowercase(
                 "LinkAction",
                 "Links/{action}",
                 new { controller = "Link", action = "List" }
@@ -268,14 +282,24 @@ namespace NSN.Kernel
                 new { albumid = @"^\d+$" }
             );
             routes.MapRouteLowercase(
+                "FriendList",
+                "{uid}/Friends",
+                new { controller = "Friend", action = "List" }
+            );
+            routes.MapRouteLowercase(
                 "FriendAction",
                 "{uid}/Friends/{action}",
                 new { controller = "Friend", action = "List" }
             );
             routes.MapRouteLowercase(
-                "UserTweetAction",
+                "FeedAction",
                 "{uid}/Posts/{action}",
-                new { controller = "UserTweet", action = "Posts" }
+                new { controller = "Feed", action = "Feeds" }
+            );
+            routes.MapRouteLowercase(
+                "Profile",
+                "{uid}",
+                new { controller = "Feed", action = "Feeds" }
             );
             routes.MapRouteLowercase(
                 "ProfileAction",

@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    NewSocialNetwork.Domain.User userProfile = ViewBag.UProfile;
+}
+@section html_head_area {@RenderSection("html_head_area", false)}
+@RenderPage("~/Views/Shared/Frontend/pagelet/_apps_bar_pagelet.cshtml")
+<div id="pagelet_app_content" class="UIContainer_Content">
+    <div id="contentPane">
+        <div id="pagelet_user_profile">
+            <div class="UIContent_UserProfile">
+                <div class="uiHeadProfile">
+                    <div class="uiProfileTitle">
+                        @userProfile.FullName
+                    </div>
+                </div>
+                <div class="uiHeadCoverPhoto">
+                </div>
+                <div id="pagelet_profileSidebar" class="UISidebar_Profile">
+                    <div class="uiProfileImageBox">
+                        <div class="uiProfilePictureBox">
+                            <div class="uiProfilePicture">
+                                <div class="uiPicture">
+                                    <img src="@Url.Content("~/static/images/avatars/" + ViewBag.UAvatarFileName)" title="" width="250" height="250" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uiProfileInfoBox">
+                        <div class="uiProfileInfo">
+                            <div class="uiProfileInfoContent">
+                                <div class="uiInfoContent">
+                                    <div class="infoContent">
+                                        <span>NSN Group: </span> <strong>@userProfile.UserGroup.Title</strong>
+                                    </div>
+                                    @if (userProfile.Country != null)
+                                    {
+                                    <div class="infoContent">
+                                        <span>Live in</span> <strong>@userProfile.Country.Name</strong>
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="uiBodyProfile">
+                    <div class="uiBodyProfileContent">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div> @* pagelet_user_profile *@
+        <div class="clearfix"></div>
+    </div> @* contentPane *@
+</div>

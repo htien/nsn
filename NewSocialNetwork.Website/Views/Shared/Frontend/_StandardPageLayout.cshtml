@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+@section html_head_area {@RenderSection("html_head_area", false)}
+@RenderPage("~/Views/Shared/Frontend/pagelet/_apps_bar_pagelet.cshtml")
+<div id="pagelet_app_content" class="UIContainer_Content">
+    <div id="contentPane">
+        <div id="pagelet_standard">
+            <div class="UIContent">
+                <div class="uiBodyStandard">
+                    <div class="uiBodyStandardContent">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div> @* contentPane *@
+</div>

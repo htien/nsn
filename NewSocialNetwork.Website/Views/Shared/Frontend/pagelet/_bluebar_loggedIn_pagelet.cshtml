@@ -1,5 +1,5 @@
 ﻿@{
-    NewSocialNetwork.Domain.User userLogged = @ViewBag.UserLogged;
+    NewSocialNetwork.Domain.User myProfile = ViewBag.MyProfile;
 }
 <div id="pagelet_bluebar" class="UIPagelet">
     <div id="UIGlobal_BlueBarHolder" class="slimHeader">
@@ -46,24 +46,18 @@
                     </div>
                     <div class="rfloat">
                         <ul id="pageNav">
-                            <li id="navHome" class="topNavLink middleLink">
-                                <a href="@Url.Content("~/")">Home</a>
+                            <li id="navTinyman" class="topNavLink tinyman">
+                                <a href="@Url.RouteUrl("Profile", new { uid = ViewBag.MyDisplayId })" title="Profile">
+                                    <img class="uiProfilePhoto" src="@Url.Content("~/static/images/avatars/" + ViewBag.MyAvatarFileName)" width="25" height="25" />
+                                    <span class="tinymanName">@myProfile.FullName</span>
+                                </a>
                             </li>
                             <li class="topNavLink middleLink">
                                 <a href="#">Find Friends</a>
                             </li>
-                            <li id="navTinyman" class="topNavLink tinyman">
-                                @{
-                                    string loginId = (userLogged.Username != null && userLogged.Username.Length > 0)
-                                        ? userLogged.Username
-                                        : userLogged.Email;
-                                }
-                                <a href="/@loginId" title="Profile">
-                                    <img class="uiProfilePhoto" />
-                                    <span class="tinymanName">@userLogged.FullName</span>
-                                </a>
+                            <li id="navHome" class="topNavLink lastLink">
+                                <a href="@ViewBag.ContextPath">Home</a>
                             </li>
-                            <div class="clearfix"></div>
                         </ul>
                     </div>
                 </div>

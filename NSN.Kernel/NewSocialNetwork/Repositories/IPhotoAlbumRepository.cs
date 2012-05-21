@@ -12,8 +12,6 @@ namespace NewSocialNetwork.Repositories
         IList<User> GetListFriendByUser(int userId);
         IList<Photo> GetPhotoByAlbum(int userId, int albumId);
         IList<User> SearchFriendByName(string friendName, int userId);
-        int GetTotalComment(int ownerUserId, string typeId, int itemId);
-        IList<Comment> GetAllComment(int ownerUserId, string typeId, int itemId);
         int GetTotalFriendRequestPending(int userId);
         int GetTotalMessagePending(int userId);
         int GetTotalActivityPendingRelativeUser(int userId);

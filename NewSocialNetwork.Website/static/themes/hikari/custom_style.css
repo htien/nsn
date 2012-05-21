@@ -8,3 +8,138 @@
 .UIPage_Hikari #hikari {margin: 0 auto;min-width: 981px;max-width: 1910px;}
 .UIPage_Hikari #globalContainer,
 .UIPage_Hikari #globalFooter {width: 981px;min-width: 981px;}
+
+/*CSS Profile*/
+
+.ML {
+  float: left;
+  max-width: 565px;
+  min-width: 191px;
+  white-space: normal;
+  width: 100%;
+  /*word-wrap: break-word;*/
+  display: block;
+}
+
+.ne {
+  border-top: 1px solid none;
+  color: #333;
+  font: normal 13px arial,sans-serif;
+  margin: 0;
+  padding: 10px 0;
+  text-align: left;
+}
+
+.Od {
+  font-size: 15px;
+  font-weight: normal;
+  line-height: 1.2em;
+  margin-bottom: 0;
+  text-align: right;
+  vertical-align: top;
+  width: 110px;
+}
+
+.a-f-e {
+  position: relative;
+  display: -moz-inline-box;
+  display: inline-block;
+}
+
+.Ga {
+  padding: 0 0 0 7px;
+  width: 390px;
+  vertical-align: top;
+  line-height: 1.39em;
+  color:Gray;
+}
+
+.UIGrid_Friends {
+  position: relative;
+}
+.UIGrid_Friends h2.title {
+  padding: 19px 30px 0;
+}
+.UIGrid_Friends .uiFriendsContainer {
+  display: table;
+  padding: 30px;
+}
+.UIGrid_Friends .uiFriendItem {
+  position: relative;
+  float: left;
+  padding-right: 23px;
+  padding-bottom: 10px;
+  width: 250px;
+}
+.UIGrid_Friends .friendAvatar {
+  float: left;
+  overflow: hidden;
+  margin-right: 10px;
+  width: 100px;
+  height: 100px;
+}
+.UIGrid_Friends .friendInfo {
+  display: table-cell;
+  vertical-align: top;
+}
+.UIGrid_Friends .friendInfo .name {
+  overflow: hidden;
+  word-wrap: nowrap;
+}
+
+/*Photo Album By User*/
+.album
+{
+  position: relative;
+  padding: 0px 0px 0px 0px;
+}
+.album .albumItem
+{
+    position: relative;
+    float: left;
+    height: 163px;
+    width: 186px;
+    margin: 0px 26px 20px 0px;
+    display: table-cell;
+}
+.album .albumItem.last {
+  margin-right: 0;
+}
+.album .albumItem .albumImage
+{
+    margin-right: 9px;
+    height: 120px;
+    width: 177px;
+    margin-bottom: 4px;
+    background: white;
+    border: 1px solid #CCC;
+    display: inline-block;
+    outline: none;
+    position: relative;
+    vertical-align: bottom;
+}
+
+.album .albumItem .albumImage .frontImageAlbum
+{
+    background: white;
+    border: 1px solid #CCC;
+    padding: 4px;
+    top: 4px;
+    left: 4px;
+    position: absolute;
+    height: 111px;
+    width: 167px;
+    z-index: 2;
+}
+.UIGrid_Album {
+  position: relative;
+}
+
+.UIGrid_Album h2.title {
+  padding: 19px 30px 0;
+}
+
+.UIGrid_Album .UIAlbumContainer {
+  display: table;
+  padding: 30px 0px 0px 30px;
+}

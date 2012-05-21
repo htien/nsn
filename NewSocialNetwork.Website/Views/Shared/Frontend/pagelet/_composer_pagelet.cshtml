@@ -1,0 +1,105 @@
+﻿<div id="pagelet_composer">
+    <div id="composer-tabs">
+        <ul class="uiList uiListHorizontal clearfix">
+            <li class="uiListItem composer-updatestatus">
+                <a class="uiIconText" href="#composer-updatestatus">
+                    <span class="uiIconText">
+                        <span class="icon"></span>
+                        <span class="text">Update Status</span>
+                    </span>
+                </a>
+            </li>
+            <li class="uiListItem composer-addphoto">
+                <a class="uiIconText" href="#composer-addphoto">
+                    <span class="uiIconText">
+                        <span class="icon"></span>
+                        <span class="text">Add Photo</span>
+                    </span>
+                </a>
+            </li>
+            <li class="uiListItem composer-addlink">
+                <a class="uiIconText" href="#composer-addlink">
+                    <span class="uiIconText">
+                        <span class="icon"></span>
+                        <span class="text">Add Link</span>
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <div class="uiComposer-outer">
+            <div id="composer-updatestatus" class="uiComposer uiTypeahead UIInputText">
+                <form id="composer" action="@Url.RouteUrl("Go", new { controller = "UserTweet", action = "Post" })" method="post">
+                    <div class="wrap">
+                        <div class="innerWrap">
+                            <div class="uiInput">
+                                <textarea id="inputStatus" class="uiInputStatus" name="inputText"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <div class="buttons-inner">
+                            <div id="postStatus" class="guiButton2 guiRedButton">Post</div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="composer-addphoto">
+                <div class="attachmentFrame">
+                    <div class="attachmentContent">
+                        <div class="mas">
+                            <table class="composerPhotoGrid w100">
+                                <tbody>
+                                    <tr>
+                                        <td class="borderItem prs" style="width:49%">
+                                            <a class="item" href="#">
+                                                <div class="title">Upload Photo</div>
+                                            </a>
+                                        </td>
+                                        <td class="pls" style="width:49%">
+                                            <a class="item" href="#">
+                                                <div class="title">Create Photo Album</div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="composer-addlink" class="uiComposer">
+                <div class="wrap">
+                    <div class="innerWrap">
+                        <div class="uiInput">
+                            <textarea id="inputLink" class="uiInputStatus" name="inputText"></textarea>
+                        </div>
+                        <div class="linkShareStage">
+                            <div class="UIShareStage clearfix">
+                                <div class="UIShareStage_Image">
+                                </div>
+                                <div class="UIShareStage_ShareContent">
+                                    <div class="UIShareStage_Title">
+                                        New Social Network
+                                    </div>
+                                    <div class="UIShareStage_Subtitle">
+                                        http://www.newsocl.net
+                                    </div>
+                                    <div class="UIShareStage_Summary">
+                                        Open Source New Social Network
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <div class="buttons-inner">
+                        <div id="postLink" class="guiButton2 guiRedButton">Post</div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
