@@ -5,7 +5,6 @@ namespace NewSocialNetwork.Repositories
 {
     public interface IUserTweetRepository : IRepository<UserTweet>
     {
-        int Add(User user, string content);
-        UserTweet Get(int tweetId, int userId);
+        int Add(int userId, int friendUserId, string content, int timestamp);
     }
 }

@@ -101,5 +101,4 @@
     });
 
     /* Assign input hint */
-    $('#login_form .guiInputText[title]').inputHint();
 });

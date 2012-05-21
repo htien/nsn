@@ -149,8 +149,7 @@
     <Content Include="static\images\photos\e.jpg" />
     <Content Include="static\images\photos\f.jpg" />
     <Content Include="static\js\jquery\jquery-ui-1.8.20.js" />
-    <Content Include="static\js\jquery\jquery.autogrow-textarea.js" />
-    <Content Include="static\js\jquery\jquery.input-hint.js" />
+    <Content Include="static\js\jquery\jquery.elastic-1.6.11.js" />
     <Content Include="static\js\jquery\jquery.validate-1.9.js" />
     <Content Include="static\js\jquery\jquery.validate.additional.js" />
     <Content Include="static\smiles\pidgin\default\amorous.png" />
