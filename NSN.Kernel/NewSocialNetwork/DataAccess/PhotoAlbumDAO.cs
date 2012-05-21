@@ -45,11 +45,10 @@ namespace NewSocialNetwork.DataAccess
         }
 
 
-        public IList<Photo> GetPhotoByAlbum(int userId, int albumId)
+        public IList<Photo> GetPhotoByAlbum(int albumId)
         {
             return this.Session().CreateQuery(
-                @"select p from Photo p where p.User.UserId = :userId and p.Album.AlbumId = :albumId ")
-                .SetInt32("userId", userId)
+                @"select p from Photo p where p.Album.AlbumId = :albumId")
                 .SetInt32("albumId", albumId)
                 .List<Photo>();
         }

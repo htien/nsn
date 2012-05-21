@@ -11,7 +11,7 @@
 
 /*CSS Profile*/
 
-.ML {
+.UIProfile {
   float: left;
   max-width: 565px;
   min-width: 191px;
@@ -21,7 +21,7 @@
   display: block;
 }
 
-.ne {
+.UIProfileItem {
   border-top: 1px solid none;
   color: #333;
   font: normal 13px arial,sans-serif;
@@ -30,7 +30,7 @@
   text-align: left;
 }
 
-.Od {
+.UIProfileText {
   font-size: 15px;
   font-weight: normal;
   line-height: 1.2em;
@@ -46,7 +46,7 @@
   display: inline-block;
 }
 
-.Ga {
+.UIProfileData {
   padding: 0 0 0 7px;
   width: 390px;
   vertical-align: top;
@@ -88,48 +88,44 @@
 }
 
 /*Photo Album By User*/
-.album
-{
+.album {
   position: relative;
-  padding: 0px 0px 0px 0px;
+  padding: 0;
 }
-.album .albumItem
-{
-    position: relative;
-    float: left;
-    height: 163px;
-    width: 186px;
-    margin: 0px 26px 20px 0px;
-    display: table-cell;
+.album .albumItem {
+  position: relative;
+  float: left;
+  display: table-cell;
+  margin: 0 26px 20px 0;
+  width: 186px;
+  height: 163px;
 }
 .album .albumItem.last {
   margin-right: 0;
 }
-.album .albumItem .albumImage
-{
-    margin-right: 9px;
-    height: 120px;
-    width: 177px;
-    margin-bottom: 4px;
-    background: white;
-    border: 1px solid #CCC;
-    display: inline-block;
-    outline: none;
-    position: relative;
-    vertical-align: bottom;
+.album .albumItem .albumImage {
+  position: relative;
+  display: inline-block;
+  margin-right: 9px;
+  margin-bottom: 4px;
+  height: 120px;
+  width: 177px;
+  background: #fff;
+  border: 1px solid #ccc;
+  outline: none;
+  vertical-align: bottom;
 }
 
-.album .albumItem .albumImage .frontImageAlbum
-{
-    background: white;
-    border: 1px solid #CCC;
-    padding: 4px;
-    top: 4px;
-    left: 4px;
-    position: absolute;
-    height: 111px;
-    width: 167px;
-    z-index: 2;
+.album .albumItem .albumImage .frontImageAlbum {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  padding: 4px;
+  width: 167px;
+  height: 111px;
+  background: #fff;
+  border: 1px solid #ccc;  
+  z-index: 2;
 }
 .UIGrid_Album {
   position: relative;
@@ -141,5 +137,38 @@
 
 .UIGrid_Album .UIAlbumContainer {
   display: table;
-  padding: 30px 0px 0px 30px;
+  padding: 30px 0 0 30px;
+}
+
+/*Photos By Album*/
+.UIGrid_Photo {
+  position: relative;
+}
+
+.UIGrid_Photo h2.title {
+  padding: 19px 30px 0;
+}
+
+.UIGrid_Photo .UIPhotoContainer {
+  display: table;
+  padding: 30px 0 0 30px;
+}
+
+.UIGrid_Photo .UIPhotoContainer .UIPhotoItem {
+  position: relative;
+  display: inline-block;
+  margin: 0 12px 20px 0;
+  padding: 4px;
+  width: 185px;
+  height: 139px;
+  background: white;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  outline: none;
+  vertical-align: bottom;
+}
+
+.UIPhotoItem .UIPhotoWrapper {
+  position: relative;
+  overflow: hidden;
 }

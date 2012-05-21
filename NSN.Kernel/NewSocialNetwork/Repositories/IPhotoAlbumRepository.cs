@@ -10,7 +10,7 @@ namespace NewSocialNetwork.Repositories
         int GetTotalPhotoAlbumByUser(int userId);
         int GetTotalFriendsByUser(int userId);
         IList<User> GetListFriendByUser(int userId);
-        IList<Photo> GetPhotoByAlbum(int userId, int albumId);
+        IList<Photo> GetPhotoByAlbum(int albumId);
         IList<User> SearchFriendByName(string friendName, int userId);
         int GetTotalFriendRequestPending(int userId);
         int GetTotalMessagePending(int userId);

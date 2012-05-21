@@ -140,6 +140,14 @@
     <Content Include="static\images\avatars\default_male.gif" />
     <Content Include="static\images\avatars\default_medium_female.gif" />
     <Content Include="static\images\avatars\default_medium_male.gif" />
+    <Content Include="static\images\photos\1_tien.gif" />
+    <Content Include="static\images\photos\2_lien.png" />
+    <Content Include="static\images\photos\a.jpg" />
+    <Content Include="static\images\photos\b.jpg" />
+    <Content Include="static\images\photos\c.jpg" />
+    <Content Include="static\images\photos\d.jpg" />
+    <Content Include="static\images\photos\e.jpg" />
+    <Content Include="static\images\photos\f.jpg" />
     <Content Include="static\js\jquery\jquery-ui-1.8.20.js" />
     <Content Include="static\js\jquery\jquery.validate-1.9.js" />
     <Content Include="static\js\jquery\jquery.validate.additional.js" />
@@ -1219,6 +1227,7 @@
     <Content Include="Views\Feed\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Frontend\_StandardPageLayout.cshtml" />
     <Content Include="Views\Comment\AddSave.cshtml" />
+    <Content Include="Views\PhotoAlbum\ListPhotos.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
