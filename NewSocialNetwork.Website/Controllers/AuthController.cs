@@ -9,7 +9,7 @@ namespace NewSocialNetwork.Website.Controllers
     [HandleError]
     public class AuthController : AbstractController
     {
-        public FrontendService authService { private get; set; }
+        public FrontendService frontService { private get; set; }
         public IUserRepository userRepo { private get; set; }
 
         public AuthController()
@@ -35,11 +35,11 @@ namespace NewSocialNetwork.Website.Controllers
                 @"<p>Quá trình đăng ký gặp trắc trở và đã thất bại. Ôi thê thảm quá!</p>");
             try
             {
-                Domain.User user = authService.RegisterNewUser(firstname, lastname, gender, reg_email, reg_password, confirm_password,
+                Domain.User user = frontService.RegisterNewUser(firstname, lastname, gender, reg_email, reg_password, confirm_password,
                     (birthday_year + "/" + birthday_month + "/" + birthday_day));
                 msg.SetStatusAndMessage(RStatus.SUCCESS,
                     String.Format(@"<p>Register successfully! Welcome to New Social Network.</p>
-                                    <p>Your email is <strong>{0}</strong>.</p>", user.Email));
+                                    <p>Your login ID is <strong>{0}</strong>.</p>", user.Email));
             }
             catch (Exception e)
             {
@@ -58,7 +58,7 @@ namespace NewSocialNetwork.Website.Controllers
                      Make sure that it is typed correctly.</p>");
             try
             {
-                Domain.User user = authService.Login(nsnId, nsnPasswd);
+                Domain.User user = frontService.Login(nsnId, nsnPasswd);
                 if (user != null)
                 {
                     msg.SetStatusAndMessage(RStatus.SUCCESS, "Authenticated!");
@@ -73,7 +73,7 @@ namespace NewSocialNetwork.Website.Controllers
 
         public ActionResult Logout()
         {
-            authService.Logout();
+            frontService.Logout();
             return RedirectToRoute("Root");
         }
     }

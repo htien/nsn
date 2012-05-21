@@ -2,14 +2,15 @@
 using System.Web.Mvc;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
-using NSN.Manager;
 
 namespace NewSocialNetwork.Website.Controllers
 {
     public class PhotoAlbumController : ApplicationController
     {
         public IPhotoAlbumRepository photoAlbumRepo { private get; set; }
+        public IPhotoRepository photoRepo { private get; set; }
         public IFriendRepository friendRepo { private get; set; }
+        public ICommentRepository commentRepo { private get; set; }
 
         public PhotoAlbumController()
         {
@@ -18,7 +19,7 @@ namespace NewSocialNetwork.Website.Controllers
 
         //
         // GET: /PhotoAlbum/
-
+        
         public ActionResult List()
         {
             User user = sessionManager.GetUser();
@@ -36,9 +37,9 @@ namespace NewSocialNetwork.Website.Controllers
             ViewBag.listphotoalbum = listphotoalbum;
             IList<User> friendsearch = photoAlbumRepo.SearchFriendByName("l", 1);
             ViewBag.friendsearch = friendsearch;
-            int totalcomment = photoAlbumRepo.GetTotalComment(1, "Photo", 1);
+            int totalcomment = commentRepo.GetTotalComment("photo", 1, 1);
             ViewBag.totalcomment = totalcomment;
-            IList<Comment> allc = photoAlbumRepo.GetAllComment(1, "photo", 1);
+            IList<Comment> allc = commentRepo.GetCommentsByFeed("photo", 1, 1);
             ViewBag.allc = allc;
             int friendRequest = photoAlbumRepo.GetTotalFriendRequestPending(1);
             ViewBag.friendRequest = friendRequest;

@@ -1,9 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_UserLayout.cshtml";
-    NewSocialNetwork.Domain.User user = ViewBag.UserLogged;
-    bool hasUsername = user.Username != null && user.Username.Length > 0;
-    string id = hasUsername ? user.Username : user.Email;
-    string avatarFileName = SaberLily.Utils.GeneralUtils.UserImage(user.UserImage, user.Gender);
+    NewSocialNetwork.Domain.User userProfile = ViewBag.UProfile;
 }
 @section html_head_area {@RenderSection("html_head_area", false)}
 @RenderPage("~/Views/Shared/Frontend/pagelet/_apps_bar_pagelet.cshtml")
@@ -13,7 +10,7 @@
             <div class="UIContent_UserProfile">
                 <div class="uiHeadProfile">
                     <div class="uiProfileTitle">
-                        @user.FullName
+                        @userProfile.FullName
                     </div>
                 </div>
                 <div class="uiHeadCoverPhoto">
@@ -23,7 +20,7 @@
                         <div class="uiProfilePictureBox">
                             <div class="uiProfilePicture">
                                 <div class="uiPicture">
-                                    <img src="@Url.Content("~/static/images/avatars/" + avatarFileName)" title="" width="250" height="250" />
+                                    <img src="@Url.Content("~/static/images/avatars/" + ViewBag.UAvatarFileName)" title="" width="250" height="250" />
                                 </div>
                             </div>
                         </div>
@@ -33,18 +30,23 @@
                             <div class="uiProfileInfoContent">
                                 <div class="uiInfoContent">
                                     <div class="infoContent">
-                                        <span>NSN Group: </span> <strong>@user.UserGroup.Title</strong>
+                                        <span>NSN Group: </span> <strong>@userProfile.UserGroup.Title</strong>
                                     </div>
+                                    @if (userProfile.Country != null)
+                                    {
                                     <div class="infoContent">
-                                        <span>Live in</span> <strong>@user.Country.Name</strong>
+                                        <span>Live in</span> <strong>@userProfile.Country.Name</strong>
                                     </div>
+                                    }
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="uiBodyProfile">
-                    @RenderBody()
+                    <div class="uiBodyProfileContent">
+                        @RenderBody()
+                    </div>
                 </div>
             </div>
         </div> @* pagelet_user_profile *@

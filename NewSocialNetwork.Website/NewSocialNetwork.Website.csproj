@@ -47,6 +47,9 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AntiXssLibrary">
+      <HintPath>..\packages\AntiXSS.4.2.1\lib\net40\AntiXssLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.ActiveRecord">
       <HintPath>..\packages\Castle.Activerecord.3.0.0.1\lib\Net40\Castle.ActiveRecord.dll</HintPath>
     </Reference>
@@ -57,6 +60,7 @@
       <HintPath>..\packages\Castle.Components.Validator.2.5.0\lib\NET40\Castle.Components.Validator.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Castle.Core.3.0.0.4001\lib\net40-client\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Facilities.EventWiring">
@@ -78,11 +82,13 @@
       <HintPath>..\packages\Castle.Windsor.3.0.0.4001\lib\net40\Castle.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Common.Logging.2.0.0\lib\2.0\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="dotless.Core">
       <HintPath>..\packages\dotless.1.3.0.3\lib\dotless.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlSanitizationLibrary">
+      <HintPath>..\packages\AntiXSS.4.2.1\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
@@ -94,16 +100,16 @@
       <HintPath>..\packages\Meleze.Web.1.4.3\lib\NET40\Meleze.Web.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.5\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate, Version=3.3.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+    <Reference Include="NHibernate">
       <HintPath>..\packages\NHibernate.3.3.0.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate.Search">
       <HintPath>..\packages\Castle.Activerecord.3.0.0.1\lib\Net40\NHibernate.Search.dll</HintPath>
     </Reference>
-    <Reference Include="Quartz, Version=1.0.3.3, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+    <Reference Include="Quartz">
       <HintPath>..\packages\Quartz.1.0.3\lib\3.5\Quartz.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -111,6 +117,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web" />
@@ -136,6 +143,15 @@
     <Content Include="static\js\jquery\jquery-ui-1.8.20.js" />
     <Content Include="static\js\jquery\jquery.validate-1.9.js" />
     <Content Include="static\js\jquery\jquery.validate.additional.js" />
+    <Content Include="static\smiles\pidgin\default\amorous.png" />
+    <Content Include="static\smiles\pidgin\default\blowkiss.png" />
+    <Content Include="static\smiles\pidgin\default\embarrassed.png" />
+    <Content Include="static\smiles\pidgin\default\excited.png" />
+    <Content Include="static\smiles\pidgin\default\giggle.png" />
+    <Content Include="static\smiles\pidgin\default\go-away.png" />
+    <Content Include="static\smiles\pidgin\default\happy.png" />
+    <Content Include="static\smiles\pidgin\default\in_love.png" />
+    <Content Include="static\smiles\pidgin\small\in_love.png" />
     <Content Include="static\themes\closure-theme\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
     <Content Include="static\themes\closure-theme\images\ui-bg_flat_100_f9edbe_40x100.png" />
     <Content Include="static\themes\closure-theme\images\ui-bg_flat_100_ffebe8_40x100.png" />
@@ -154,9 +170,11 @@
     <Content Include="static\themes\hikari\images\background1_50.png" />
     <Content Include="static\themes\hikari\images\blank.gif" />
     <Content Include="static\themes\hikari\images\default_coverphoto_940x180.png" />
+    <Content Include="static\themes\hikari\images\fb_sprite_icons_4.png" />
     <Content Include="static\themes\hikari\images\fb_sprite_icons_2.png" />
-    <Content Include="static\themes\hikari\images\fb_sprite_icons.png" />
+    <Content Include="static\themes\hikari\images\fb_sprite_icons_1.png" />
     <Content Include="static\themes\hikari\images\fb_sprite_icons_3.png" />
+    <Content Include="static\themes\hikari\images\gp_sprite_icons_stream_1.png" />
     <Content Include="static\themes\hikari\images\indicator_blue_large.gif" />
     <Content Include="static\images\favicon.ico" />
     <Content Include="static\js\goog\array\array.js" />
@@ -1045,11 +1063,13 @@
     <Content Include="static\themes\hikari\images\logo64_white.png" />
     <Content Include="static\themes\hikari\images\nsn.png" />
     <Content Include="static\themes\hikari\images\ribbon_nav_common.png" />
+    <Content Include="static\themes\hikari\images\uiSearchButton.png" />
     <Content Include="static\themes\hikari\images\worldmap_2.png" />
     <Content Include="static\themes\hikari\images\worldmap_1.png" />
     <Content Include="static\themes\hikari\images\newsoclnet.png" />
     <Content Include="static\themes\hikari\images\worldmap_2_1.png" />
     <Content Include="static\themes\hikari\images\worldmap_2_2.png" />
+    <Content Include="static\themes\hikari\images\x_off.png" />
     <Content Include="static\themes\hikari\nsn_common_ui.css" />
     <Content Include="static\themes\hikari\images\stripe.gif" />
     <Content Include="static\themes\hikari\nsn_common.css" />
@@ -1085,11 +1105,13 @@
     <Compile Include="Controllers\AjaxController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\FriendController.cs" />
     <Compile Include="Controllers\Helper\RAction.cs" />
     <Compile Include="Controllers\Helper\ResponseMessage.cs" />
     <Compile Include="Controllers\Helper\RStatus.cs" />
+    <Compile Include="Controllers\LikeController.cs" />
     <Compile Include="Controllers\LinkController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\PhotoAlbumController.cs" />
@@ -1105,6 +1127,7 @@
     <Compile Include="Models\PhotoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schedules\Scheduler.cs" />
+    <Content Include="static\js\jquery\tooltips.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Logs\" />
@@ -1146,15 +1169,18 @@
     <Content Include="Config\Log4Net.xml">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Config\Custom.properties" />
-    <None Include="Config\SystemGlobals.properties" />
-    <None Include="Config\Web.config">
+    <Content Include="Config\Custom.properties" />
+    <Content Include="Config\SystemGlobals.properties" />
+    <Content Include="Config\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Config\Web.config.new" />
+    <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\Web.config.new" />
-    <None Include="packages.config" />
+    <Content Include="ping_session.html" />
     <None Include="static\js\goog\net\iframeio_different_base_test.data" />
-    <None Include="static\themes\hikari\images\fonts\open-sans.woff" />
+    <Content Include="static\themes\hikari\images\fonts\open-sans.woff" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1189,10 +1215,13 @@
     <Content Include="Views\Friend\List.cshtml" />
     <Content Include="Views\Link\List.cshtml" />
     <Content Include="Views\UserTweet\_ViewStart.cshtml" />
-    <Content Include="Views\UserTweet\Posts.cshtml" />
+    <Content Include="Views\Feed\Feeds.cshtml" />
     <Content Include="Views\Shared\Frontend\_ProfilePageLayout.cshtml" />
     <Content Include="Views\Shared\Frontend\pagelet\_composer_pagelet.cshtml" />
     <Content Include="Views\Shared\Frontend\pagelet\_apps_bar_pagelet.cshtml" />
+    <Content Include="Views\Feed\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Frontend\_StandardPageLayout.cshtml" />
+    <Content Include="Views\Comment\AddSave.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -35,7 +35,7 @@ namespace NewSocialNetwork.Domain
         [Property("Birthday", Length = 10, NotNull = false)]
         public virtual string Birthday { get; set; }
 
-        [BelongsTo("CountryIso", NotNull = false)]
+        [BelongsTo("CountryIso", NotNull = false, Lazy = FetchWhen.Immediate)]
         public virtual Country Country { get; set; }
 
         [Property("Joined", NotNull = true)]

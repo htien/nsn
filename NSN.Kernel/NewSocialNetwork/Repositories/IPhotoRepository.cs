@@ -7,5 +7,6 @@ namespace NewSocialNetwork.Repositories
     public interface IPhotoRepository : IRepository<Photo>
     {
         IList<Photo> GetPhotosByUser(int userId);
+        Photo GetFirstPhotoByAlbum(int albumId);
     }
 }

@@ -1,43 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using NewSocialNetwork.Domain;
-using NewSocialNetwork.Repositories;
-using NSN.Framework;
 using NSN.Kernel.Manager;
-using NSN.NewSocialNetwork.Domain;
 
 namespace NewSocialNetwork.Website.Controllers
 {
     public class FeedController : ApplicationController
     {
-        public IFeedRepository feedRepo { private get; set; }
-        public IUserTweetRepository userTweetRepo { private get; set; }
+        public FeedController()
+        {
+            ViewBag.PageTitle = "NSN: Posts";
+        }
 
         //
         // GET: /Feed/
 
-        public JsonResult Feeds()
+        public ActionResult Feeds()
         {
-            Domain.User user = sessionManager.GetUser();
-            IList<Feed> feeds = feedRepo.GetUserFeeds(user.UserId, 0, 5);
-            FeedManager feedManager = new FeedManager();
-
-            foreach (Feed feed in feeds)
-            {
-                IEntity entity = null;
-                switch (feed.TypeId)
-                {
-                    case NSNType.USER_TWEET:
-                        entity = userTweetRepo.Get(feed.ItemId, user.UserId);
-                        break;
-                    case NSNType.PHOTO:
-                        break;
-                }
-                feedManager.AddFeedItem(feed, entity);
-            }
-
-            return Json(feedManager.GetItems(), JsonRequestBehavior.AllowGet);
+            Domain.User userProfile = ViewBag.UProfile;
+            IList<FeedItem> feedItems = frontendService.LoadFeedItems(userProfile.UserId, 0, 20);
+            ViewBag.FeedItems = feedItems;
+            return View();
         }
 
     }

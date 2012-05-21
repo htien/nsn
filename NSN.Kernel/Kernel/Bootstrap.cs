@@ -134,8 +134,8 @@ namespace NSN.Kernel
         {
             INSNConfig config = this.container.Resolve<INSNConfig>();
             ConnectionStringSettingsCollection cfgSettings = WebConfigurationManager.ConnectionStrings;
-            NameValueCollection db = WebConfigurationManager.GetSection("databaseSettings", "/" + Globals.CONFIG_FOLDER_PATH) as NameValueCollection;
-            NameValueCollection ar = WebConfigurationManager.GetSection("activeRecordSettings", "/" + Globals.CONFIG_FOLDER_PATH) as NameValueCollection;
+            NameValueCollection db = WebConfigurationManager.GetSection("databaseSettings", "~/" + Globals.CONFIG_FOLDER_PATH) as NameValueCollection;
+            NameValueCollection ar = WebConfigurationManager.GetSection("activeRecordSettings", "~/" + Globals.CONFIG_FOLDER_PATH) as NameValueCollection;
 
             IDictionary<string, string> settings = new Dictionary<string, string>();
             foreach (string key in ar.AllKeys)
@@ -247,8 +247,8 @@ namespace NSN.Kernel
             );
             routes.MapRouteLowercase(
                 "AjaxAction",
-                "AjaxLoad/{action}",
-                new { controller = "Ajax", action = "Index" }
+                "Ajax/{action}",
+                new { controller = "Ajax" }
             );
             routes.MapRouteLowercase(
                 "Go",
@@ -282,14 +282,24 @@ namespace NSN.Kernel
                 new { albumid = @"^\d+$" }
             );
             routes.MapRouteLowercase(
+                "FriendList",
+                "{uid}/Friends",
+                new { controller = "Friend", action = "List" }
+            );
+            routes.MapRouteLowercase(
                 "FriendAction",
                 "{uid}/Friends/{action}",
                 new { controller = "Friend", action = "List" }
             );
             routes.MapRouteLowercase(
-                "UserTweetAction",
+                "FeedAction",
                 "{uid}/Posts/{action}",
-                new { controller = "UserTweet", action = "Posts" }
+                new { controller = "Feed", action = "Feeds" }
+            );
+            routes.MapRouteLowercase(
+                "Profile",
+                "{uid}",
+                new { controller = "Feed", action = "Feeds" }
             );
             routes.MapRouteLowercase(
                 "ProfileAction",

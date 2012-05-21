@@ -1,4 +1,4 @@
-﻿namespace NSN.NewSocialNetwork.Domain
+﻿namespace NewSocialNetwork.Domain
 {
     public class NSNType
     {
