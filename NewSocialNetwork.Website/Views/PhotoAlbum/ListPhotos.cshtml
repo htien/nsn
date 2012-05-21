@@ -1,0 +1,23 @@
+﻿@{
+    NewSocialNetwork.Domain.PhotoAlbum album = ViewBag.Album;
+}
+<div class="UIGrid_Photo">
+<h2 class="title">@album.Name (@ViewBag.Photos.Count)</h2>
+    <div class="UIPhotoContainer">
+            @foreach (NewSocialNetwork.Domain.Photo photo in ViewBag.Photos)
+            {
+                <div class="UIPhotoItem">
+                    <div class="UIPhotoWrapper">
+                    @if (photo.Album.ProfileId > 0)
+                    {
+                        <img alt="" src="@Url.Content("~/static/images/avatars/" + photo.Image)" width="185" height="139"  />
+                    }
+                    else
+                    {
+                         <img alt="" src="@Url.Content("~/static/images/photos/" + photo.Image)" width="185" height="139"  />
+                    }
+                    </div>
+                </div>
+            }
+    </div>
+</div>
