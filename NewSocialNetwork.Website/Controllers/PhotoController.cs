@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NewSocialNetwork.Website.Controllers.Helper;
 using NewSocialNetwork.Website.Models;
-using System.IO;
 using NSN.Common;
 using SaberLily.Utils;
 
@@ -91,7 +91,7 @@ namespace NewSocialNetwork.Website.Controllers
                     int uploadTimestamp = DateTimeUtils.UnixTimestamp;
                     file.SaveAs(linkAccess);
                 }
-                msg.SetStatusAndMessage(RStatus.SUCCESS, Request.Files.Count.ToString());
+                msg.SetStatusAndMessage(RStatus.SUCCESS, "Uploaded.");
             }
             catch (Exception e)
             {

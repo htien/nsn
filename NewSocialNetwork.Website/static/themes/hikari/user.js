@@ -1,13 +1,13 @@
-﻿jQuery(function ($) {
+﻿jQuery(function($) {
     /* init */
     NSN.$id('composer-tabs').tabs();
 
     /* User post status scripts */
     var postStatusButton = 'postStatus';
-    NSN.$id(postStatusButton).click(function (evt) {
+    NSN.$id(postStatusButton).click(function(evt) {
         var composerForm = jQuery(this).parents('form');
         NSN.ajaxSubmit(composerForm)
-            .success(function (json) {
+            .success(function(json) {
                 NSN.callJqDlg(glbDefaultDlgId, json.Message, {
                     hasTitle: false,
                     width: 'auto',
@@ -15,7 +15,7 @@
                         {
                             text: 'Close',
                             class: 'guiBlueButton',
-                            click: function () {
+                            click: function() {
                                 jQuery(this).dialog('destroy').remove();
                                 NSN.resetForm(composerForm);
                             }
@@ -23,12 +23,12 @@
                     ]
                 }).dialog('open');
             })
-            .error(function (json) {
+            .error(function(json) {
                 NSN.callJqDlg(glbDefaultDlgId, json.Message).dialog('open');
             });
     });
 
-    jQuery('.uiFeedItem').on('click', '.guiButton.post', function (evtObj) {
+    jQuery('.uiFeedItem').on('click', '.guiButton.post', function(evtObj) {
         var feedItem = NSN_getFeedItem(this),
             feedId = NSN_getFeedId(feedItem),
             commentText = jQuery.trim(feedItem.find('.commentEditor')[0].value);
@@ -39,7 +39,7 @@
         NSN_postComment(feedId, commentText);
     });
 
-    jQuery('.uiFeedItem .feedActionBlock').on('click', '.likeAction', function (evtObj) {
+    jQuery('.uiFeedItem .feedActionBlock').on('click', '.likeAction', function(evtObj) {
         var feedItem = NSN_getFeedItem(this),
             feedId = NSN_getFeedId(feedItem),
             likeButton = jQuery(this);
@@ -47,7 +47,7 @@
             url: NSN.url('/ajax/likeforfeed'),
             type: 'get',
             data: { feedId: feedId },
-            success: function (json) {
+            success: function(json) {
                 if (json.Status == 1) {
                     likeButton.find('.saving_message').hide();
                     likeButton.find('.default_message').show();
@@ -62,7 +62,7 @@
             }
         });
     });
-    jQuery('.uiFeedItem .feedActionBlock').on('click', '.unlikeAction', function (evtObj) {
+    jQuery('.uiFeedItem .feedActionBlock').on('click', '.unlikeAction', function(evtObj) {
         var feedItem = NSN_getFeedItem(this),
             feedId = NSN_getFeedId(feedItem),
             likeButton = jQuery(this);
@@ -70,7 +70,7 @@
             url: NSN.url('/ajax/unlikeforfeed'),
             type: 'get',
             data: { feedId: feedId },
-            success: function (json) {
+            success: function(json) {
                 if (json.Status == 1) {
                     likeButton.find('.default_message').hide();
                     likeButton.find('.saving_message').show();
@@ -85,53 +85,55 @@
             }
         });
     });
-    jQuery('.UIGrid_Album #createAlbum').click(function () {
+    jQuery('.UIGrid_Album #createAlbum').click(function() {
         NSN.callJqDlg('ajax-uploader-form', NSN.url('/ajax/photoalbumuploader'), {
             title: 'Upload Photo',
             hasTitle: false,
             width: 'auto',
             buttons: {},
-            open: function (evt, ui) {
+            open: function(evt, ui) {
                 if (!jQuery(this).dialog("option", "hasTitle")) {
                     jQuery('.ui-dialog-titlebar').remove();
                 }
                 NSN.$id('photoalbum-fileupload').fileupload({
                     url: NSN.url('/nsn/go/to/photo/uploadsave'),
                     dataType: 'json',
-                    maxFileSize: 2000000, // 20MB
-                    acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-                    process: [
-                        {
-                            action: 'load',
-                            fileTypes: /^image\/(gif|jpeg|png)$/,
-                            maxFileSize: 2000000
-                        },
-                        {
-                            action: 'resize',
-                            maxWidth: 1024,
-                            maxHeight: 768
-                        },
-                        {
-                            action: 'save'
-                        }
-                    ],
-                    done: function (e, data) {
-                        jQuery.each(data.result, function (index, file) {
+                    done: function(e, data) {
+                        jQuery.each(data.result, function(index, file) {
                             alert(file.name);
                         });
                     }
                 });
-                NSN.$id('photoalbum-fileupload').bind('fileuploadprogress', function (e, data) {
+                NSN.$id('photoalbum-fileupload').fileupload('option', {
+                    maxFileSize: 2000000, // 2MB
+                    acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+                    process: [
+                        {
+                            action: 'load',
+                            filetypes: /^image\/(gif|jpeg|png)$/,
+                            maxfilesize: 2000000
+                        },
+                        {
+                            action: 'resize',
+                            maxwidth: 1024,
+                            maxheight: 768
+                        },
+                        {
+                            action: 'save'
+                        }
+                    ]
+                });
+                NSN.$id('photoalbum-fileupload').bind('fileuploadprogress', function(e, data) {
                     console.log(data.bitrate);
                 });
             }
         }).dialog('open');
     });
-    jQuery('.UIUploader_PhotoAlbum .xdlg').live('click', function () {
+    jQuery('.UIUploader_PhotoAlbum .xdlg').live('click', function() {
         NSN.$id('photoalbum-fileupload').fileupload('destroy');
         NSN.$id('ajax-uploader-form').dialog('destroy').remove();
     });
-    jQuery('.UIUploader_PhotoAlbum .upload').live('click', function () {
+    jQuery('.UIUploader_PhotoAlbum .upload').live('click', function() {
 
     });
 });
