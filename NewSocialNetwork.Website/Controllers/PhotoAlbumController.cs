@@ -1,7 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.Mvc;
+using Microsoft.Security.Application;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
+using NewSocialNetwork.Website.Controllers.Helper;
+using NSN.Common;
+using NSN.Common.Utilities;
+using SaberLily.Utils;
 
 namespace NewSocialNetwork.Website.Controllers
 {
@@ -9,6 +19,7 @@ namespace NewSocialNetwork.Website.Controllers
     {
         public IPhotoAlbumRepository photoAlbumRepo { private get; set; }
         public IPhotoRepository photoRepo { private get; set; }
+        public IPhotoInfoRepository photoInfoRepo { private get; set; }
         public IFriendRepository friendRepo { private get; set; }
         public ICommentRepository commentRepo { private get; set; }
 
@@ -78,7 +89,77 @@ namespace NewSocialNetwork.Website.Controllers
 
         public ActionResult Uploader()
         {
+            frontendService.RemoveImagesFromDisk(this.Session);
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult SaveUploadedPhotos(string albumTitle, byte privacy = 0)
+        {
+            ResponseMessage msg = new ResponseMessage("PhotoAlbum", RAction.ADD, RStatus.FAIL,
+                "Error when creating your album. Please try again.");
+            try
+            {
+                string privacyRegex = @"^(0|1|10)$";
+                if (String.IsNullOrWhiteSpace(albumTitle)
+                    || !Regex.IsMatch(privacy.ToString(), privacyRegex))
+                {
+                    throw new Exception("You are hacking.");
+                }
+                IList<ImageInfo> uploadedImages = (IList<ImageInfo>)Session[Globals.SESSIONKEY_UPLOADED_PHOTOS + sessionManager.GetUser().UserId];
+                if (uploadedImages == null || uploadedImages.Count == 0)
+                {
+                    throw new Exception("Have no any uploaded photo. Please add at least a photo or more.");
+                }
+                // Insert new photo album
+                string orginAlbumTitle = HttpUtility.UrlDecode(albumTitle, System.Text.Encoding.GetEncoding("ISO-8859-1"));
+                int timestamp = DateTimeUtils.UnixTimestamp;
+                PhotoAlbum photoAlbum = new PhotoAlbum()
+                {
+                    Name = Encoder.HtmlEncode(orginAlbumTitle),
+                    User = sessionManager.GetUser(),
+                    ProfileId = 0,
+                    Privacy = privacy,
+                    PrivacyComment = NSNPrivacyCommentMode.PUBLIC,
+                    Timestamp = timestamp
+                };
+                PhotoAlbum newPhotoAlbum = photoAlbumRepo.Create(photoAlbum);
+                // Insert new photo images
+                foreach (ImageInfo image in uploadedImages)
+                {
+                    Photo photo = new Photo()
+                    {
+                        Album = newPhotoAlbum,
+                        User = sessionManager.GetUser(),
+                        Privacy = NSNPrivacyMode.PUBLIC,
+                        Image = image.FileName,
+                        AllowComment = true,
+                        Timestamp = image.UploadTimestamp
+                    };
+                    Photo newPhoto = photoRepo.Create(photo);
+                    Image sImg = Image.FromStream(image.ImageStream);
+                    PhotoInfo photoInfo = new PhotoInfo()
+                    {
+                        Photo = newPhoto,
+                        FileName = image.FileName,
+                        FileSize = image.FileSize,
+                        MimeType = image.MimeType,
+                        Extension = Path.GetExtension(image.FileName),
+                        Description = "",
+                        Width = sImg.Width,
+                        Height = sImg.Height
+                    };
+                    photoInfoRepo.Create(photoInfo);
+                }
+                // Remove session for photo images
+                frontendService.RemoveImagesFromSession(this.Session);
+                msg.SetStatusAndMessage(RStatus.SUCCESS, String.Format("Uploaded your photos to album: <strong>{0}</strong>", albumTitle));
+            }
+            catch (Exception e)
+            {
+                msg.Message = e.Message;
+            }
+            return Json(msg);
         }
     }
 }

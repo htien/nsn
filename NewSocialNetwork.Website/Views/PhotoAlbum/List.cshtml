@@ -1,4 +1,6 @@
-﻿<div class="UIGrid_Album">
+﻿@using NSN.Common;
+@using NewSocialNetwork.Domain;
+<div class="UIGrid_Album">
     <div class="uiBoxTop">
         <div class="albumActions">
             <div id="createAlbum" class="guiButton guiRedButton">Create Album</div>
@@ -9,9 +11,9 @@
         @if(ViewBag.Albums != null && ViewBag.Albums.Count > 0)
         {
             <div class="album">
-				@foreach (NewSocialNetwork.Domain.PhotoAlbum album in ViewBag.Albums)
+				@foreach (PhotoAlbum album in ViewBag.Albums)
 				{
-					NewSocialNetwork.Domain.Photo albumAvatar = NSN.Common.Globals.GetAlbumAvatar(album.AlbumId);
+					Photo albumAvatar = Globals.GetAlbumAvatar(album.AlbumId);
 					<div class="albumItem">
 					    <a class="albumImage" href="@Url.RouteUrl("PhotoAlbumAction", new { albumid = album.AlbumId, action = "ListPhotos" })" tabindex="-1">
 						    <span class="frontImageAlbum">
@@ -28,7 +30,7 @@
                                 }
 						    </span>
 					    </a>
-					    <div style="margin-top: 5px"><b style="font-weight:bold">@album.Name</b><br />@album.TotalPhoto photos</div>
+					    <div style="margin-top: 5px"><b style="font-weight:bold">@Html.Raw(album.Name.Replace(" ", "&nbsp;").Replace("&#10;", "<br />"))</b><br />@album.Photos.Count photos</div>
                     </div>
                 }
 			</div>

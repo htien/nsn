@@ -1,6 +1,7 @@
-﻿@{
+﻿@using Domain = NewSocialNetwork.Domain;
+@{
     Layout = "~/Views/Shared/_UserLayout.cshtml";
-    NewSocialNetwork.Domain.User myProfile = ViewBag.MyProfile;
+    Domain.User myProfile = ViewBag.MyProfile;
 }
 @section html_head_area {@RenderSection("html_head_area", false)}
 <div class="nsnLeftCol_Container">

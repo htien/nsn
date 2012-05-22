@@ -168,7 +168,7 @@
   padding-bottom: 25px;
 }
 .UIUploader_PhotoAlbum .uiForm {
-  padding: 0 17px 17px;
+  padding-bottom: 17px;
 }
 .UIUploader_PhotoAlbum .uploadActions {
   margin-top: 15px;
@@ -176,8 +176,35 @@
 .UIUploader_PhotoAlbum input {
   outline: 0;
 }
+.UIUploader_PhotoAlbum .uiGrid {
+  margin-top: 15px;
+}
+.UIUploader_PhotoAlbum .uiGrid td {
+  padding: 5px 5px 5px 0;
+  vertical-align: top;
+}
 
-/*Photos By Album*/
+.UIUploader_PhotoAlbum .uiGrid .uiFormText,
+.UIUploader_PhotoAlbum .uiGrid .uiFormSelect,
+.UIUploader_PhotoAlbum .uiGrid input[type=file] {
+  height: 28px;
+}
+.UIUploader_PhotoAlbum .uiGrid .browse-button {
+  height: 26px;
+}
+.UIUploader_PhotoAlbum .uiGrid .browse-button input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  line-height: 28px;
+  opacity: 0;
+  filter: alpha(opacity = 0);
+  cursor: pointer;
+}
+
+/*Photos By Album*
 .UIGrid_Photo {
   position: relative;
 }

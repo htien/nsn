@@ -1,15 +1,17 @@
-﻿@{
-    NewSocialNetwork.Domain.Comment comment = ViewBag.Comment;
+﻿@using NSN.Common;
+@using NewSocialNetwork.Domain;
+@{
+    Comment comment = ViewBag.Comment;
 }
 <div id="comment-@comment.CommentId" class="uiCommentItem">
     <div class="uiComment">
         <a class="userImage" href="@Url.RouteUrl("Profile", new { uid = NSN.Common.Globals.GetDisplayId(comment.User) })">
-            <img src="@Url.Content("~/static/images/avatars/" + NSN.Common.Globals.UserImage(comment.User.UserImage, comment.User.Gender))" alt="" width="32" height="32" />
+            <img src="@Url.Content("~/static/images/avatars/" + Globals.UserImage(comment.User.UserImage, comment.User.Gender))" alt="" width="32" height="32" />
         </a>
         <div>
-            <a class="userFullName" href="@Url.RouteUrl("Profile", new { uid = NSN.Common.Globals.GetDisplayId(comment.User) })">@comment.User.FullName</a>
+            <a class="userFullName" href="@Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(comment.User) })">@comment.User.FullName</a>
             <span class="commentInfo">
-                <span class="time" title="@NSN.Common.Globals.ShowFullDateTime(comment.Timestamp)">@NSN.Common.Globals.ShowDateTime(comment.Timestamp)</span>
+                <span class="time" title="Globals.ShowFullDateTime(comment.Timestamp)">@Globals.ShowDateTime(comment.Timestamp)</span>
                 <span class="commentActions"><div class="delete"></div></span>
             </span>
             <div class="commentText">@Html.Raw(comment.CommentText.TextParsed.Replace(" ", "&nbsp;").Replace("&#10;", "<br />"))</div>

@@ -30,10 +30,10 @@ namespace NewSocialNetwork.Domain
         public virtual string Description { get; set; }
 
         [Property("Width", NotNull = true, Default = "0")]
-        public virtual short Width { get; set; }
+        public virtual int Width { get; set; }
 
         [Property("Height", NotNull = true, Default = "0")]
-        public virtual short Height { get; set; }
+        public virtual int Height { get; set; }
 
         #endregion
 

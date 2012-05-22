@@ -5,6 +5,7 @@ using Microsoft.Security.Application;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NSN.Common;
+using NSN.Common.Utilities;
 using NSN.Framework;
 using NSN.Kernel;
 using NSN.Kernel.Manager;
@@ -184,6 +185,74 @@ namespace NSN.Service.BusinessService
             {
                 userTweetRepo.Add(sender.UserId, receiver.UserId, content, timestamp);
             }
+        }
+
+        public IList<ImageInfo> SaveImages(HttpFileCollectionBase imageCollection)
+        {
+            IList<ImageInfo> images = new List<ImageInfo>();
+            foreach (string upload in imageCollection)
+            {
+                HttpPostedFileBase file = imageCollection[upload];
+                try {
+                    ImageInfo image = Globals.SaveImageInPlace(file, "/static/images/photos/");
+                    images.Add(image);
+                }
+                catch {
+                    continue;
+                }
+            }
+            return images;
+        }
+
+        public void SaveImagesInSession(HttpSessionStateBase session, IList<ImageInfo> images)
+        {
+            int userId = sessionManager.GetUser().UserId;
+            string sesKey = Globals.SESSIONKEY_UPLOADED_PHOTOS + userId.ToString();
+            if (session[sesKey] == null)
+            {
+                session[sesKey] = images;
+            }
+            else
+            {
+                IList<ImageInfo> _images = session[Globals.SESSIONKEY_UPLOADED_PHOTOS + userId.ToString()] as IList<ImageInfo>;
+                foreach (ImageInfo image in images)
+                {
+                    _images.Add(image);
+                }
+            }
+        }
+
+        public void RemoveImagesFromSession(HttpSessionStateBase session)
+        {
+            int userId = sessionManager.GetUser().UserId;
+            string sesKey = Globals.SESSIONKEY_UPLOADED_PHOTOS + userId.ToString();
+            if (session[sesKey] != null)
+            {
+                session.Remove(sesKey);
+            }
+        }
+
+        public void RemoveImagesFromDisk(HttpSessionStateBase session)
+        {
+            int userId = sessionManager.GetUser().UserId;
+            string sesKey = Globals.SESSIONKEY_UPLOADED_PHOTOS + userId.ToString();
+            if (session[sesKey] == null)
+            {
+                return;
+            }
+            IList<ImageInfo> images = session[sesKey] as IList<ImageInfo>;
+            foreach (ImageInfo image in images)
+            {
+                try
+                {
+                    System.IO.File.Delete(image.LinkAccess);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            session.Remove(sesKey);
         }
 
         #region Static Method

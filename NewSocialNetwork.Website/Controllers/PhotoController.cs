@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Web;
 using System.Web.Mvc;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NewSocialNetwork.Website.Controllers.Helper;
 using NewSocialNetwork.Website.Models;
-using NSN.Common;
-using SaberLily.Utils;
+using NSN.Common.Utilities;
 
 namespace NewSocialNetwork.Website.Controllers
 {
@@ -73,25 +70,30 @@ namespace NewSocialNetwork.Website.Controllers
                 "Error when processing your request.");
             try
             {
-                foreach (string upload in Request.Files)
+                IList<ImageInfo> images = frontendService.SaveImages(Request.Files);
+                if (images.Count == 0)
                 {
-                    HttpPostedFileBase file = Request.Files[upload];
-                    if (file.ContentLength == 0)
-                    {
-                        continue;
-                    }
-                    int sizeInKB = file.ContentLength / 1024;
-                    if (sizeInKB > 2048)
-                    {
-                        continue;
-                    }
-                    string fileName = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(file.FileName);
-                    string folderUpload = Globals.ApplicationMapPath + "\\static\\images\\photos\\";
-                    string linkAccess = Path.Combine(folderUpload, fileName);
-                    int uploadTimestamp = DateTimeUtils.UnixTimestamp;
-                    file.SaveAs(linkAccess);
+                    throw new Exception("Cannot process your request.");
                 }
+                // Save list of uploaded images to HttpSession
+                frontendService.SaveImagesInSession(this.Session, images);
                 msg.SetStatusAndMessage(RStatus.SUCCESS, "Uploaded.");
+            }
+            catch (Exception e)
+            {
+                msg.Message = e.Message;
+            }
+            return Json(msg);
+        }
+
+        public JsonResult CancelUpload()
+        {
+            ResponseMessage msg = new ResponseMessage("PhotoAlbumUploader", RAction.REMOVE, RStatus.FAIL,
+                "Error when processing your request.");
+            try
+            {
+                frontendService.RemoveImagesFromDisk(this.Session);
+                msg.SetStatusAndMessage(RStatus.SUCCESS, "Canceled.");
             }
             catch (Exception e)
             {
