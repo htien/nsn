@@ -178,7 +178,7 @@ var glbDebug = true,
                     async: false,
                     type: jqForm.attr('method'),
                     url: jqForm.attr('action'),
-                    data: jqForm.serialize()
+                    data: encodeURI(decodeURI(jqForm.serialize()))
                 };
             return jQuery.ajax(settings);
         };

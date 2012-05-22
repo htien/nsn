@@ -39,6 +39,20 @@
         NSN_postComment(feedId, commentText);
     });
 
+    jQuery('.uiFeedItem').on('click', '.guiButton.cancel', function (evtObj) {
+        var commentBox = jQuery(this).parents('.commentBox'),
+            maskCommentBox = commentBox.parent().next();
+        commentBox.hide();
+        maskCommentBox.show();
+    });
+
+    jQuery('.uiFeedItem').on('mousedown', '.maskText', function (evtObj) {
+        var maskCommentBox = jQuery(this).parent(),
+            commentBox = jQuery(maskCommentBox.prev().children()[1]);
+        maskCommentBox.hide();
+        commentBox.slideDown(100);
+    });
+
     jQuery('.uiFeedItem .feedActionBlock').on('click', '.likeAction', function (evtObj) {
         var feedItem = NSN_getFeedItem(this),
             feedId = NSN_getFeedId(feedItem),

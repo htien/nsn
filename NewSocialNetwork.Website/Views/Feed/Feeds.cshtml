@@ -55,7 +55,7 @@
                                     case NSNType.USER_TWEET:
                                         UserTweet tweet = (UserTweet)item._Entity;
                                         <div class="fTypeTweet">
-                                            @tweet.Content
+                                            @Html.Raw(tweet.Content.Replace(" ", "&nbsp;").Replace("&#10;", "<br />"))
                                         </div>
                                         break;
                                 }
@@ -110,7 +110,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="commentBox">
+                            <div class="commentBox" style="display:none">
                                 <a class="commentAvatar" href=""><img src="@Url.Content("~/static/images/avatars/" + ViewBag.MyAvatarFileName)" alt="" width="32" height="32" /></a>
                                 <div class="commentEditorBox">
                                     <div class="commentEditorBoxInner">
@@ -119,11 +119,11 @@
                                 </div>
                                 <div class="commentButtons">
                                     <div class="guiButton guiBlueButton post">Post comment</div>
-                                    <div class="guiButton">Cancel</div>
+                                    <div class="guiButton cancel">Cancel</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="maskAddComment" style="display:none">
+                        <div class="maskAddComment">
                             <div class="maskText">Add a comment...</div>
                         </div>
                     </div>

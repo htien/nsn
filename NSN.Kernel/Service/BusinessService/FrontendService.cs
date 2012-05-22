@@ -171,19 +171,19 @@ namespace NSN.Service.BusinessService
             int timestamp = DateTimeUtils.UnixTimestamp;
             User receiver = userRepo.FindById(userId);
             User sender = sessionManager.GetUser();
-            content = content.Trim();
+            string originContent = HttpUtility.UrlDecode(content.Trim(), System.Text.Encoding.GetEncoding("ISO-8859-1"));
 
-            if (String.IsNullOrEmpty(content))
+            if (String.IsNullOrEmpty(originContent))
             {
                 throw new Exception("<p>Invalid content.</p>");
             }
             if (receiver.UserId == sender.UserId)
             {
-                userTweetRepo.Add(sender.UserId, 0, content, timestamp);
+                userTweetRepo.Add(sender.UserId, 0, Encoder.HtmlEncode(originContent), timestamp);
             }
             else
             {
-                userTweetRepo.Add(sender.UserId, receiver.UserId, content, timestamp);
+                userTweetRepo.Add(sender.UserId, receiver.UserId, Encoder.HtmlEncode(originContent), timestamp);
             }
         }
 
