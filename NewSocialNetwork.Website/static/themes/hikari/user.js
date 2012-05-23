@@ -115,9 +115,10 @@
                     url: NSN.url('/nsn/go/to/photo/uploadsave'),
                     dataType: 'json',
                     done: function (e, data) {
-                        jQuery.each(data.result, function (index, file) {
-                            alert(NSN.printObj(data.result));
-                        });
+                        var result = data.result,
+                            img = '<img src="' + NSN.staticUploadedImage('photos/' + result[0].FileName) + '" alt="" />',
+                            item = '<div class="uploadedItem">' + img + '</div>';
+                        jQuery(this).parents('.uiControls').find('.uploadedQueue').append(item);
                     }
                 });
                 NSN.$id('photoalbum-fileupload').fileupload('option', {
@@ -170,7 +171,17 @@
                 if (json.Status == 1) {
                     NSN.$id('ajax-uploader-form').dialog('destroy').remove();
                 }
-                NSN.createJqDlg(glbDefaultDlgId, json.Message).dialog('open');
+                NSN.createJqDlg(glbDefaultDlgId, json.Message, {
+                    buttons: [
+                        {
+                            text: 'Go to album',
+                            class: 'guiBlueButton',
+                            click: function () {
+                                document.location = json.ReturnedPath;
+                            }
+                        }
+                    ]
+                }).dialog('open');
             },
             error: function (data) {
                 NSN.createJqDlg(glbDefaultDlgId, data);

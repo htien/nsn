@@ -1141,6 +1141,7 @@
     </Compile>
     <Compile Include="Models\CountryModel.cs" />
     <Compile Include="Models\PhotoModel.cs" />
+    <Compile Include="Models\UploadedPhotoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schedules\Scheduler.cs" />
     <Content Include="static\js\jquery\tooltips.js" />

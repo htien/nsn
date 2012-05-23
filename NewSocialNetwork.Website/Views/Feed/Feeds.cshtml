@@ -12,7 +12,7 @@
             Domain.User user = item._Feed.User;
             Domain.User parentUser = item._Feed.ParentUser;
             IList<Comment> comments = Globals.GetCommentsByFeed(item._Feed.TypeId, item._Feed.ItemId, user.UserId);
-            bool isLiked =Globals.isLikeForFeed(item._Feed.TypeId, item._Feed.ItemId, ViewBag.MyProfile.UserId);
+            bool isLiked = Globals.isLikeForFeed(item._Feed.TypeId, item._Feed.ItemId, ViewBag.MyProfile.UserId);
             int totalLike = Globals.GetTotalLike(item._Feed.TypeId, item._Feed.ItemId);
             string feedAvatarFileName;
             string privacyMode;
@@ -30,7 +30,7 @@
             {
                 case 0: privacyMode = "Public"; break;
                 case 1: privacyMode = "Friends Only"; break;
-                case 4: privacyMode = "Only Me"; break;
+                case 10: privacyMode = "Only Me"; break;
                 default: privacyMode = "Unknown"; break;
             }
             <div id="@divFeedId" class="uiFeedItem">
@@ -56,6 +56,32 @@
                                         UserTweet tweet = (UserTweet)item._Entity;
                                         <div class="fTypeTweet">
                                             @Html.Raw(tweet.Content.Replace(" ", "&nbsp;").Replace("&#10;", "<br />"))
+                                        </div>
+                                        break;
+                                    case NSNType.PHOTO_ALBUM:
+                                        PhotoAlbum album = (PhotoAlbum)item._Entity;
+                                        <div class="fTypePhotoAlbum">
+                                            @{
+                                               string href = Url.RouteUrl("PhotoAlbumAction", new { uid = "", albumid = album.AlbumId, action = "ListPhotos" });
+                                               int totalPhoto = Globals.GetTotalPhoto(album.AlbumId);
+                                               IList<Photo> fetchedPhotos = Globals.GetNewPhotosByTimestamp(item._Feed.Timestamp, 4);
+                                            }
+                                            <div>
+                                                <a class="albumName" href="@href"><strong>@album.Name</strong></a> <span class="count">(@totalPhoto @(totalPhoto > 1 ? "photos" : "photo"))</span>
+                                            </div>
+                                            <div class="description">
+                                            </div>
+                                            <div class="photoUnit clearfix">
+                                                <div>
+                                                    @{Photo first = fetchedPhotos[0];}
+                                                    <img src="@Url.Content("~/static/images/photos/" + first.Image)" alt="" />
+                                                </div>
+                                                @foreach (Photo photo in fetchedPhotos)
+	                                            {
+                                                    if (photo.PhotoId == first.PhotoId) { continue; }
+                                                    <img src="@Url.Content("~/static/images/photos/" + photo.Image)" alt="" width="133" height="133" />
+                                                }
+                                            </div>
                                         </div>
                                         break;
                                 }

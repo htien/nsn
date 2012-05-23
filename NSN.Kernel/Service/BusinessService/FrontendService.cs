@@ -29,6 +29,7 @@ namespace NSN.Service.BusinessService
         public ICommentTextRepository commentTextRepo { private get; set; }
         public ILikeRepository likeRepo { private get; set; }
         public ILikeCacheRepository likeCacheRepo { private get; set; }
+        public IPhotoAlbumRepository photoAlbumRepo { private get; set; }
 
         public FrontendService() { }
 
@@ -122,7 +123,8 @@ namespace NSN.Service.BusinessService
                         
                         entity = userTweetRepo.FindById(feed.ItemId);
                         break;
-                    case NSNType.PHOTO:
+                    case NSNType.PHOTO_ALBUM:
+                        entity = photoAlbumRepo.FindById(feed.ItemId);
                         break;
                 }
                 feedManager.AddFeedItem(feed, entity);
@@ -204,7 +206,7 @@ namespace NSN.Service.BusinessService
             return images;
         }
 
-        public void SaveImagesInSession(HttpSessionStateBase session, IList<ImageInfo> images)
+        public int SaveImagesInSession(HttpSessionStateBase session, IList<ImageInfo> images)
         {
             int userId = sessionManager.GetUser().UserId;
             string sesKey = Globals.SESSIONKEY_UPLOADED_PHOTOS + userId.ToString();
@@ -220,6 +222,7 @@ namespace NSN.Service.BusinessService
                     _images.Add(image);
                 }
             }
+            return images.Count;
         }
 
         public void RemoveImagesFromSession(HttpSessionStateBase session)

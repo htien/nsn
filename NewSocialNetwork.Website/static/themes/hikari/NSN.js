@@ -106,6 +106,9 @@ var glbDebug = true,
         nsn.staticResource = function(path) {
             return nsn.url('/static/').concat(path);
         };
+        nsn.staticUploadedImage = function(path) {
+            return nsn.staticResource('images/').concat(path);
+        };
         nsn.smileImage = function(category, type, name) {
             var smilesPath = nsn.staticResource('smiles/' + category + '/' + type + '/' + name);
             return smilesPath;

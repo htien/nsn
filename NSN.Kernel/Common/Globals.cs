@@ -265,6 +265,18 @@ namespace NSN.Common
             return likeRepo.Exists(typeId, itemId, userId);
         }
 
+        public static IList<Photo> GetNewPhotosByTimestamp(int timestamp, int size)
+        {
+            IPhotoRepository photoRepo = NSNContext.Current.Container.Resolve<IPhotoRepository>();
+            return photoRepo.GetPhotosByTimestamp(timestamp, size);
+        }
+
+        public static int GetTotalPhoto(int albumId)
+        {
+            IPhotoRepository photoRepo = NSNContext.Current.Container.Resolve<IPhotoRepository>();
+            return photoRepo.GetTotalPhoto(albumId);
+        }
+
         public static int GetTotalLike(string typeId, int itemId)
         {
             ILikeRepository likeRepo = NSNContext.Current.Container.Resolve<ILikeRepository>();

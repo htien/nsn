@@ -22,6 +22,7 @@ namespace NewSocialNetwork.Website.Controllers
         public IPhotoInfoRepository photoInfoRepo { private get; set; }
         public IFriendRepository friendRepo { private get; set; }
         public ICommentRepository commentRepo { private get; set; }
+        public IFeedRepository feedRepo { private get; set; }
 
         public PhotoAlbumController()
         {
@@ -153,7 +154,10 @@ namespace NewSocialNetwork.Website.Controllers
                 }
                 // Remove session for photo images
                 frontendService.RemoveImagesFromSession(this.Session);
+                // Insert to feed
+                feedRepo.Add(NSNType.PHOTO_ALBUM, newPhotoAlbum.AlbumId, sessionManager.GetUser().UserId, 0, timestamp);
                 msg.SetStatusAndMessage(RStatus.SUCCESS, String.Format("Uploaded your photos to album: <strong>{0}</strong>", albumTitle));
+                msg.ReturnedPath = Url.RouteUrl("PhotoAlbumAction", new { uid = Globals.GetDisplayId(sessionManager.GetUser()), albumid = newPhotoAlbum.AlbumId, action = "ListPhotos" });
             }
             catch (Exception e)
             {

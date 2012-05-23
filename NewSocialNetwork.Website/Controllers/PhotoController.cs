@@ -66,8 +66,9 @@ namespace NewSocialNetwork.Website.Controllers
         [HttpPost]
         public JsonResult UploadSave()
         {
-            ResponseMessage msg = new ResponseMessage("PhotoAlbumUploader", RAction.ADD, RStatus.FAIL,
-                "Error when processing your request.");
+            //ResponseMessage msg = new ResponseMessage("PhotoAlbumUploader", RAction.ADD, RStatus.FAIL,
+            //    "Error when processing your request.");
+            UploadedPhotoModel[] photosModel = null;
             try
             {
                 IList<ImageInfo> images = frontendService.SaveImages(Request.Files);
@@ -77,13 +78,26 @@ namespace NewSocialNetwork.Website.Controllers
                 }
                 // Save list of uploaded images to HttpSession
                 frontendService.SaveImagesInSession(this.Session, images);
-                msg.SetStatusAndMessage(RStatus.SUCCESS, "Uploaded.");
+                //msg.SetStatusAndMessage(RStatus.SUCCESS, "Uploaded.");
+                photosModel = new UploadedPhotoModel[images.Count];
+                int i = 0;
+                foreach (ImageInfo image in images)
+                {
+                    UploadedPhotoModel model = new UploadedPhotoModel()
+                    {
+                        FileName = image.FileName,
+                        FileSize = image.FileSize,
+                        MimeType = image.MimeType,
+                        UploadTimestamp = image.UploadTimestamp
+                    };
+                    photosModel[i++] = model;
+                }
             }
-            catch (Exception e)
+            catch// (Exception e)
             {
-                msg.Message = e.Message;
+                //msg.Message = e.Message;
             }
-            return Json(msg);
+            return Json(photosModel);
         }
 
         public JsonResult CancelUpload()
