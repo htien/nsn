@@ -1,6 +1,8 @@
-﻿@using Domain = NewSocialNetwork.Domain;
+﻿@using NewSocialNetwork.Domain;
+@using Domain = NewSocialNetwork.Domain;
 @{
     Domain.User myProfile = ViewBag.MyProfile;
+    UserCount userCount = ViewBag.CountPending;
 }
 <div id="pagelet_bluebar" class="UIPagelet">
     <div id="UIGlobal_BlueBarHolder" class="slimHeader">
@@ -11,21 +13,21 @@
                     <div id="nsnRequestsJewel" class="nsnJewel">
                         <a class="jewelButton" href="#">
                             <span class="jewelCount">
-                                <span>7</span>
+                                @Html.Raw(userCount.FriendRequest > 0 ? "<span>" + userCount.FriendRequest + "</span>" : "")
                             </span>
                         </a>
                     </div>
                     <div id="nsnMessagesJewel" class="nsnJewel">
                         <a class="jewelButton" href="#">
                             <span class="jewelCount">
-                                <span>8</span>
+                                @Html.Raw(userCount.MailNew > 0 ? "<span>" + userCount.MailNew + "</span>" : "")
                             </span>
                         </a>
                     </div>
                     <div id="nsnNotificationsJewel" class="nsnJewel">
                         <a class="jewelButton" href="#">
                             <span class="jewelCount">
-                                <span>9</span>
+                                @Html.Raw(userCount.CommentPending > 0 ? "<span>" + userCount.CommentPending + "</span>" : "")
                             </span>
                         </a>
                     </div>

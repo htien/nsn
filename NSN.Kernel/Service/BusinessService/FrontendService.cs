@@ -18,12 +18,17 @@ namespace NSN.Service.BusinessService
 {
     public class FrontendService : IBusinessService
     {
+        #region Injects
+
         public ILoginAuthenticator loginAuthenticator { private get; set; }
         public ISessionManager sessionManager { private get; set; }
         public INSNConfig config { private get; set; }
+        public IUserCountRepository userCountRepo { get; set; }
         public IUserRepository userRepo { private get; set; }
         public IUserGroupRepository userGroupRepo { private get; set; }
         public IFeedRepository feedRepo { private get; set; }
+        public IFriendRepository friendRepo { private get; set; }
+        public IFriendRequestRepository friendRequestRepo { get; set; }
         public IUserTweetRepository userTweetRepo { private get; set; }
         public ICommentRepository commentRepo { private get; set; }
         public ICommentTextRepository commentTextRepo { private get; set; }
@@ -31,7 +36,11 @@ namespace NSN.Service.BusinessService
         public ILikeCacheRepository likeCacheRepo { private get; set; }
         public IPhotoAlbumRepository photoAlbumRepo { private get; set; }
 
+        #endregion
+
         public FrontendService() { }
+
+        #region Register, Login, Logout
 
         public User RegisterNewUser(string firstName, string lastName, byte gender,
             string regEmail, string regPassword, string confirmPassword,
@@ -80,6 +89,25 @@ namespace NSN.Service.BusinessService
             sessionManager.Add(us);
         }
 
+        #endregion
+
+        #region Create default value
+
+        public UserCount CreateUserCount(User user)
+        {
+            return userCountRepo.Create(new UserCount()
+            {
+                User = user,
+                FriendRequest = 0,
+                CommentPending = 0,
+                MailNew = 0
+            });
+        }
+
+        #endregion
+
+        #region Generals
+
         public User GetUserProfile(string uid)
         {
             if (String.IsNullOrEmpty(uid))
@@ -106,6 +134,32 @@ namespace NSN.Service.BusinessService
             return userProfile;
         }
 
+        public FriendRequest AddRequestFriend(int friendUserId, string message)
+        {
+            User friendUser = userRepo.FindById(friendUserId);
+            if (friendUser == null)
+            {
+                throw new Exception("Cannot request not existed user.");
+            }
+            User myUser = sessionManager.GetUser();
+            if (friendUserId == myUser.UserId
+                || friendRepo.IsFriend(myUser.UserId, friendUserId)
+                || friendRequestRepo.IsConfirmingFriendRequest(myUser.UserId, friendUserId))
+            {
+                throw new Exception("Error when processing your request friend.");
+            }
+            string originMessage = HttpUtility.UrlDecode(message.Trim(), System.Text.Encoding.GetEncoding("ISO-8859-1"));
+            int timestamp = DateTimeUtils.UnixTimestamp;
+            FriendRequest friendRequest = new FriendRequest()
+            {
+                User = myUser,
+                FriendUser = friendUser,
+                Message = Encoder.HtmlEncode(message),
+                Timestamp = timestamp
+            };
+            return friendRequestRepo.Create(friendRequest);
+        }
+
         public IList<FeedItem> LoadFeedItems(int userId, int start, int size)
         {
             if (start < 0)
@@ -130,6 +184,25 @@ namespace NSN.Service.BusinessService
                 feedManager.AddFeedItem(feed, entity);
             }
             return feedManager.GetItems();
+        }
+
+        public IList<ImageInfo> SaveImages(HttpFileCollectionBase imageCollection)
+        {
+            IList<ImageInfo> images = new List<ImageInfo>();
+            foreach (string upload in imageCollection)
+            {
+                HttpPostedFileBase file = imageCollection[upload];
+                try
+                {
+                    ImageInfo image = Globals.SaveImageInPlace(file, "/static/images/photos/");
+                    images.Add(image);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            return images;
         }
 
         public long AddComment(long feedId, int userId, string commentText)
@@ -189,21 +262,25 @@ namespace NSN.Service.BusinessService
             }
         }
 
-        public IList<ImageInfo> SaveImages(HttpFileCollectionBase imageCollection)
+        public void IncreaseCountOfFriendRequest(int userId)
         {
-            IList<ImageInfo> images = new List<ImageInfo>();
-            foreach (string upload in imageCollection)
-            {
-                HttpPostedFileBase file = imageCollection[upload];
-                try {
-                    ImageInfo image = Globals.SaveImageInPlace(file, "/static/images/photos/");
-                    images.Add(image);
-                }
-                catch {
-                    continue;
-                }
-            }
-            return images;
+            UserCount userCount = userCountRepo.FindById(userId);
+            userCount.FriendRequest++;
+            userCountRepo.Save(userCount);
+        }
+
+        public void IncreaseCountOfCommentPending(int userId)
+        {
+            UserCount userCount = userCountRepo.FindById(userId);
+            userCount.CommentPending++;
+            userCountRepo.Save(userCount);
+        }
+
+        public void IncreaseCountOfMailNew(int userId)
+        {
+            UserCount userCount = userCountRepo.FindById(userId);
+            userCount.MailNew++;
+            userCountRepo.Save(userCount);
         }
 
         public int SaveImagesInSession(HttpSessionStateBase session, IList<ImageInfo> images)
@@ -257,6 +334,8 @@ namespace NSN.Service.BusinessService
             }
             session.Remove(sesKey);
         }
+
+        #endregion
 
         #region Static Method
 

@@ -12,7 +12,7 @@
             Domain.User user = item._Feed.User;
             Domain.User parentUser = item._Feed.ParentUser;
             IList<Comment> comments = Globals.GetCommentsByFeed(item._Feed.TypeId, item._Feed.ItemId, user.UserId);
-            bool isLiked = Globals.isLikeForFeed(item._Feed.TypeId, item._Feed.ItemId, ViewBag.MyProfile.UserId);
+            bool isLiked = Globals.IsLikeForFeed(item._Feed.TypeId, item._Feed.ItemId, ViewBag.MyProfile.UserId);
             int totalLike = Globals.GetTotalLike(item._Feed.TypeId, item._Feed.ItemId);
             string displayId = Globals.GetDisplayId(user);
             string feedAvatarFileName;

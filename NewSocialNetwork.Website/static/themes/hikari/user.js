@@ -1,4 +1,8 @@
-﻿jQuery(function ($) {
+﻿jQuery(window).load(function() {
+    setInterval(ajaxCount, 1000);
+});
+
+jQuery(function ($) {
     /* init */
     NSN.$id('composer-tabs').tabs();
 
@@ -188,4 +192,86 @@
             }
         });
     });
+
+    jQuery('.UIContent_UserProfile .profileActions').on('click', '.guiButton.addFriend', function (evtObj) {
+        var profileItem = NSN_getProfileItem(this),
+            profileId = NSN_getProfileId(profileItem);
+        NSN.callJqDlg('request-friend-form', NSN.url('/nsn/go/to/friendrequest/add'),
+        {
+            type: 'post',
+            data: { friendUserId: profileId },
+        },
+        {
+            title: 'Request Friend',
+            buttons: {}
+        }).dialog('open');
+    });
+
+    jQuery('.UIForm_RequestFriend .requestActions .cancelBtn').live('click', function (evtObj) {
+        NSN.$id('request-friend-form').dialog('destroy').remove();
+    });
+
+    jQuery('.UIForm_RequestFriend .requestActions .requestBtn').live('click', function (evtObj) {
+        var friendUserId = jQuery('.UIForm_RequestFriend input[name=friendUserId]').val(),
+            message = jQuery('.UIForm_RequestFriend textarea[name=message]').val();
+        jQuery.ajax({
+            url: NSN.url('/nsn/go/to/friendrequest/addsave'),
+            type: 'post',
+            data: { friendUserId: friendUserId, message: escape(message) },
+            success: function(json) {
+                if (json.Status == 1) {
+                    NSN.$id('request-friend-form').dialog('destroy').remove();
+                    NSN.createJqDlg(glbDefaultDlgId, json.Message, {
+                        buttons: [
+                            {
+                                text: 'Close',
+                                class: 'guiBlueButton',
+                                click: function() {
+                                    jQuery('.UIContent_UserProfile .requestFriendAction')
+                                        .html('<div class="guiButton guiRedButton confirmingFriend">+1 Friend Request Sent</div>');
+                                    jQuery(this).dialog('destroy').remove();
+                                }
+                            }
+                        ]
+                    }).dialog('open');
+                }
+                else {
+                    NSN.createJqDlg(glbDefaultDlgId, json.Message).dialog('open');
+                }
+            }
+        });
+    });
+
+    NSN.$id('nsnRequestsJewel').click(function(evt) {
+        jQuery.ajax({
+            url: NSN.url('/nsn/go/to/jewels/showfriendrequests'),
+            type: 'post',
+            success: function(result) {
+                NSN.createJqDlg('friend-request-stream', result, {
+                    hasTitle: false,
+                    width: 'auto'
+                }).dialog('open');
+            }
+        });
+        evt.preventDefault();
+    });
+
 });
+
+function ajaxCount() {
+    jQuery.ajax({
+        url: NSN.url('/nsn/go/to/usercount/countpending'),
+        type: 'post',
+        success: function(countOf) {
+            var mailNew = countOf.MailNew,
+                commentPedding = countOf.CommentPending,
+                friendRequest = countOf.FriendRequest;
+            var jewelRequests = NSN.$id('nsnRequestsJewel'),
+                jewelMessages = NSN.$id('nsnMessagesJewel'),
+                jewelNotifs = NSN.$id('nsnNotificationsJewel');
+            jewelRequests.find('.jewelCount').html((friendRequest > 0) ? ('<span>' + friendRequest + '</span>') : (''));
+            jewelMessages.find('.jewelCount').html((mailNew > 0) ? ('<span>' + mailNew + '</span>') : (''));
+            jewelNotifs.find('.jewelCount').html((commentPedding > 0) ? ('<span>' + commentPedding + '</span>') : (''));
+        }
+    });
+}

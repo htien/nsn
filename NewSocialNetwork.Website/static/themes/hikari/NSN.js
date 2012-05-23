@@ -181,7 +181,7 @@ var glbDebug = true,
                     async: false,
                     type: jqForm.attr('method'),
                     url: jqForm.attr('action'),
-                    data: encodeURI(decodeURI(jqForm.serialize()))
+                    data: jqForm.serialize()
                 };
             return jQuery.ajax(settings);
         };
@@ -353,6 +353,12 @@ var glbDebug = true,
     };
     NSN_getFeedId = function(feedItem) {
         return parseInt(feedItem.attr('id').slice(7), 10);
+    };
+    NSN_getProfileItem = function(ofObj) {
+        return jQuery(ofObj).parents('.UIContent_UserProfile');
+    };
+    NSN_getProfileId = function(profileItem) {
+        return parseInt(profileItem.attr('id').slice(8), 10);
     };
     NSN_postComment = function(feedId, commentText) {
         jQuery.ajax({

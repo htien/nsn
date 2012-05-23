@@ -259,10 +259,22 @@ namespace NSN.Common
             return commentRepo.GetCommentsByFeed(typeId, itemId, ownerUserId);
         }
 
-        public static bool isLikeForFeed(string typeId, int itemId, int userId)
+        public static bool IsLikeForFeed(string typeId, int itemId, int userId)
         {
             ILikeRepository likeRepo = NSNContext.Current.Container.Resolve<ILikeRepository>();
             return likeRepo.Exists(typeId, itemId, userId);
+        }
+
+        public static bool IsFriend(int userId, int friendUserId)
+        {
+            IFriendRepository friendRepo = NSNContext.Current.Container.Resolve<IFriendRepository>();
+            return friendRepo.IsFriend(userId, friendUserId);
+        }
+
+        public static bool IsConfirmingFriendRequest(int userId, int friendUserId)
+        {
+            IFriendRequestRepository friendRequestRepo = NSNContext.Current.Container.Resolve<IFriendRequestRepository>();
+            return friendRequestRepo.IsConfirmingFriendRequest(userId, friendUserId);
         }
 
         public static IList<Photo> GetNewPhotosByTimestamp(int timestamp, int size)
@@ -281,6 +293,12 @@ namespace NSN.Common
         {
             ILikeRepository likeRepo = NSNContext.Current.Container.Resolve<ILikeRepository>();
             return likeRepo.GetTotalLike(typeId, itemId);
+        }
+
+        public static UserCount GetUserCount(int userId)
+        {
+            IUserCountRepository userCountRepo = NSNContext.Current.Container.Resolve<IUserCountRepository>();
+            return userCountRepo.FindById(userId);
         }
 
         public static ImageInfo SaveImageInPlace(HttpPostedFileBase file, string intoPath)
@@ -307,7 +325,8 @@ namespace NSN.Common
             int uploadTimestamp = DateTimeUtils.UnixTimestamp;
             file.SaveAs(linkAccess);
 
-            return new ImageInfo() {
+            return new ImageInfo()
+            {
                 FileName = fileName,
                 FileSize = file.ContentLength,
                 MimeType = file.ContentType,

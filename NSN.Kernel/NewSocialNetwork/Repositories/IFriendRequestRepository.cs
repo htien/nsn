@@ -5,5 +5,6 @@ namespace NewSocialNetwork.Repositories
 {
     public interface IFriendRequestRepository : IRepository<FriendRequest>
     {
+        bool IsConfirmingFriendRequest(int userId, int friendUserId);
     }
 }

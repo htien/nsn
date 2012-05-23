@@ -1,6 +1,8 @@
-﻿@using Domain = NewSocialNetwork.Domain;
+﻿@using NSN.Common;
+@using Domain = NewSocialNetwork.Domain;
 @{
     Layout = "~/Views/Shared/_UserLayout.cshtml";
+    Domain.User myProfile = ViewBag.MyProfile;
     Domain.User userProfile = ViewBag.UProfile;
 }
 @section html_head_area {@RenderSection("html_head_area", false)}
@@ -8,8 +10,32 @@
 <div id="pagelet_app_content" class="UIContainer_Content">
     <div id="contentPane">
         <div id="pagelet_user_profile">
-            <div class="UIContent_UserProfile">
+            @{
+                string divProfile = "profile-" + userProfile.UserId;
+            }
+            <div id="@divProfile" class="UIContent_UserProfile">
                 <div class="uiHeadProfile">
+                    <div class="profileActions">
+                        <div class="requestFriendAction">
+                            @if (userProfile.UserId != myProfile.UserId)
+                            {
+                                bool isFriend = Globals.IsFriend(myProfile.UserId, userProfile.UserId);
+                                bool isConfirming = Globals.IsConfirmingFriendRequest(myProfile.UserId, userProfile.UserId);
+                                if (!isFriend && !isConfirming)
+                                {
+                                    <div class="guiButton guiRedButton addFriend">Add Friend</div>
+                                }
+                                else if (!isFriend && isConfirming)
+                                {
+                                    <div class="guiButton guiRedButton confirmingFriend">+1 Friend Request Sent</div>
+                                }
+                                else
+                                {
+                                    <div class="guiButton guiRedButton">Please contact administrator for request friend</div>
+                                }
+                            }
+                        </div>
+                    </div>
                     <div class="uiProfileTitle">
                         @userProfile.FullName
                     </div>

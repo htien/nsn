@@ -35,8 +35,12 @@ namespace NewSocialNetwork.Website.Controllers
                 @"<p>Quá trình đăng ký gặp trắc trở và đã thất bại. Ôi thê thảm quá!</p>");
             try
             {
+                // Add new user
                 Domain.User user = frontendService.RegisterNewUser(firstname, lastname, gender, reg_email, reg_password, confirm_password,
                     (birthday_year + "/" + birthday_month + "/" + birthday_day));
+                // Init user count pending
+                frontendService.CreateUserCount(user);
+                // Returns
                 msg.SetStatusAndMessage(RStatus.SUCCESS,
                     String.Format(@"<p>Register successfully! Welcome to New Social Network.</p>
                                     <p>Your login ID is <strong>{0}</strong>.</p>", user.Email));

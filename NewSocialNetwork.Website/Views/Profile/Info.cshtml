@@ -28,10 +28,13 @@
             <div class="label">Birthday</div>
             <div class="text">@Globals.ShowBirthday(userProfile.Birthday)</div>
         </div>
-        <div class="row">
-            <div class="label">Live in</div>
-            <div class="text">@userProfile.Country.Name</div>
-        </div>
+        @if (userProfile.Country != null)
+        {
+            <div class="row">
+                <div class="label">Live in</div>
+                <div class="text">@userProfile.Country.Name</div>
+            </div>
+        }
         <div class="row">
             <div class="label">Join date</div>
             <div class="text">@Globals.ShowDate(userProfile.Joined)</div>

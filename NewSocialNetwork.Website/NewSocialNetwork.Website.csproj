@@ -133,6 +133,7 @@
     <Content Include="Global.asax" />
     <Content Include="static\Error404.htm" />
     <Content Include="static\favicon.ico" />
+    <Content Include="static\favicon1.ico" />
     <Content Include="static\GenericError.htm" />
     <Content Include="static\images\avatars\1_tien.gif" />
     <Content Include="static\images\avatars\2_lien.png" />
@@ -192,7 +193,6 @@
     <Content Include="static\themes\hikari\images\fb_sprite_icons_3.png" />
     <Content Include="static\themes\hikari\images\gp_sprite_icons_stream_1.png" />
     <Content Include="static\themes\hikari\images\indicator_blue_large.gif" />
-    <Content Include="static\images\favicon.ico" />
     <Content Include="static\js\goog\array\array.js" />
     <Content Include="static\js\goog\asserts\asserts.js" />
     <Content Include="static\js\goog\async\conditionaldelay.js" />
@@ -1124,9 +1124,11 @@
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\FriendController.cs" />
+    <Compile Include="Controllers\FriendRequestController.cs" />
     <Compile Include="Controllers\Helper\RAction.cs" />
     <Compile Include="Controllers\Helper\ResponseMessage.cs" />
     <Compile Include="Controllers\Helper\RStatus.cs" />
+    <Compile Include="Controllers\JewelsController.cs" />
     <Compile Include="Controllers\LikeController.cs" />
     <Compile Include="Controllers\LinkController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
@@ -1135,10 +1137,12 @@
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RedirectorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserCountController.cs" />
     <Compile Include="Controllers\UserTweetController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CountPendingModel.cs" />
     <Compile Include="Models\CountryModel.cs" />
     <Compile Include="Models\PhotoModel.cs" />
     <Compile Include="Models\UploadedPhotoModel.cs" />
@@ -1241,6 +1245,8 @@
     <Content Include="Views\Comment\AddSave.cshtml" />
     <Content Include="Views\PhotoAlbum\ListPhotos.cshtml" />
     <Content Include="Views\PhotoAlbum\Uploader.cshtml" />
+    <Content Include="Views\FriendRequest\Add.cshtml" />
+    <Content Include="Views\Jewels\ShowFriendRequests.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

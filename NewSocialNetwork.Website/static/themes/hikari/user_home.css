@@ -216,9 +216,14 @@ img,
 }
 .UIContent_UserProfile .uiHeadProfile {
   padding: 0 19px;
+  width: 540px;
   height: 58px;
   line-height: 58px;
   background-color: #fff;
+}
+.UIContent_UserProfile .profileActions {
+  float: right;
+  white-space: nowrap;
 }
 .UIContent_UserProfile .uiProfileTitle {
   display: inline-block;
@@ -484,4 +489,42 @@ img,
   -moz-user-select: none;
   user-select: none;
   visibility: hidden;
+}
+.UIForm_RequestFriend {
+  position: relative;
+}
+.UIForm_RequestFriend .row {
+  clear: both;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.UIForm_RequestFriend .row h3 {
+  font-size: 100%;
+  font-weight: normal;
+}
+.UIForm_RequestFriend .uiFriendProfile {
+  float: left;
+}
+.UIForm_RequestFriend .uiFriendProfile span {
+  vertical-align: top;
+}
+.UIForm_RequestFriend .uiFriendProfile span.block {
+  display: inline-block;
+}
+.UIForm_RequestFriend .uiFriendProfile .avatar {
+  margin-right: 4px;
+}
+.UIForm_RequestFriend .uiFriendProfile .title {
+  display: block;
+  margin-bottom: 3px;
+  font-weight: bold;
+}
+.UIForm_RequestFriend .uiFormTextArea {
+  width: 100%;
+  resize: none;
+}
+.UIForm_RequestFriend .requestActions {
+  clear: left;
+  padding-top: 20px;
+  padding-bottom: 30px;
 }
