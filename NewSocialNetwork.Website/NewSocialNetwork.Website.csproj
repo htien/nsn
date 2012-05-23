@@ -156,6 +156,7 @@
     <Content Include="static\js\jquery\jquery.iframe-transport.js" />
     <Content Include="static\js\jquery\jquery.validate-1.9.js" />
     <Content Include="static\js\jquery\jquery.validate.additional.js" />
+    <Content Include="static\js\json2.js" />
     <Content Include="static\js\jquery\tmpl.js" />
     <Content Include="static\smiles\pidgin\default\amorous.png" />
     <Content Include="static\smiles\pidgin\default\blowkiss.png" />

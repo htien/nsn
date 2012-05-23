@@ -48,9 +48,11 @@
 
     jQuery('.uiFeedItem').on('mousedown', '.maskText', function (evtObj) {
         var maskCommentBox = jQuery(this).parent(),
-            commentBox = jQuery(maskCommentBox.prev().children()[1]);
+            commentBox = jQuery(maskCommentBox.prev().children()[1]),
+            commentEditor = commentBox.find('.commentEditor');
         maskCommentBox.hide();
-        commentBox.slideDown(100);
+        commentBox.show();
+        commentEditor.focus();
     });
 
     jQuery('.uiFeedItem .feedActionBlock').on('click', '.likeAction', function (evtObj) {
@@ -114,6 +116,7 @@
                     dataType: 'json',
                     done: function (e, data) {
                         jQuery.each(data.result, function (index, file) {
+                            alert(NSN.printObj(data.result));
                         });
                     }
                 });

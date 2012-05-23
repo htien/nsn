@@ -362,10 +362,11 @@ var glbDebug = true,
             },
             success: function(data) {
                 if (data != null && data.length > 0) {
-                    var editor = nsn.$id('editor-update-' + feedId);
+                    var editor = nsn.$id('editor-update-' + feedId),
+                        cancelBtn = editor.parents('.commentBox').find('.guiButton.cancel');
                     editor.val('');
                     nsn.$id('update-' + feedId).find('.uiListTreeInner').append(data);
-                    editor.focus();
+                    cancelBtn.click();
                 }
                 else {
                     nsn.createJqDlg(glbDefaultDlgId, 'Cannot process your comment. Please try again!').dialog('open');
