@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using NewSocialNetwork.Domain;
@@ -245,19 +246,7 @@ namespace NSN.Common
             {
                 return userImage;
             }
-        }
-
-        public static Photo GetAlbumAvatar(int albumId)
-        {
-            IPhotoRepository photoRepo = NSNContext.Current.Container.Resolve<IPhotoRepository>();
-            return photoRepo.GetFirstPhotoByAlbum(albumId);
-        }
-
-        public static IList<Comment> GetCommentsByFeed(string typeId, int itemId, int ownerUserId)
-        {
-            ICommentRepository commentRepo = NSNContext.Current.Container.Resolve<ICommentRepository>();
-            return commentRepo.GetCommentsByFeed(typeId, itemId, ownerUserId);
-        }
+        }        
 
         public static bool IsLikeForFeed(string typeId, int itemId, int userId)
         {
@@ -277,6 +266,12 @@ namespace NSN.Common
             return friendRequestRepo.IsConfirmingFriendRequest(userId, friendUserId);
         }
 
+        public static IList<Comment> GetCommentsByFeed(string typeId, int itemId, int ownerUserId)
+        {
+            ICommentRepository commentRepo = NSNContext.Current.Container.Resolve<ICommentRepository>();
+            return commentRepo.GetCommentsByFeed(typeId, itemId, ownerUserId);
+        }
+
         public static IList<Photo> GetNewPhotosByTimestamp(int timestamp, int size)
         {
             IPhotoRepository photoRepo = NSNContext.Current.Container.Resolve<IPhotoRepository>();
@@ -293,6 +288,12 @@ namespace NSN.Common
         {
             ILikeRepository likeRepo = NSNContext.Current.Container.Resolve<ILikeRepository>();
             return likeRepo.GetTotalLike(typeId, itemId);
+        }
+
+        public static Photo GetAlbumAvatar(int albumId)
+        {
+            IPhotoRepository photoRepo = NSNContext.Current.Container.Resolve<IPhotoRepository>();
+            return photoRepo.GetFirstPhotoByAlbum(albumId);
         }
 
         public static UserCount GetUserCount(int userId)
@@ -334,6 +335,21 @@ namespace NSN.Common
                 UploadTimestamp = uploadTimestamp,
                 ImageStream = file.InputStream
             };
+        }
+
+        public static string HtmlEncode(string text)
+        {
+            return Microsoft.Security.Application.Encoder.HtmlEncode(text);
+        }
+
+        public static string UrlDecode(string text)
+        {
+            return HttpUtility.UrlDecode(text, Encoding.GetEncoding("ISO-8859-1"));
+        }
+
+        public static string ApplyHtmlFrom(string text)
+        {
+            return text.Replace(" ", "&nbsp;").Replace("&#10;", "<br />");
         }
 
         /// <summary>

@@ -56,7 +56,7 @@
                                     case NSNType.USER_TWEET:
                                         UserTweet tweet = (UserTweet)item._Entity;
                                         <div class="fTypeTweet">
-                                            @Html.Raw(tweet.Content.Replace(" ", "&nbsp;").Replace("&#10;", "<br />"))
+                                            @Html.Raw(Globals.ApplyHtmlFrom(tweet.Content))
                                         </div>
                                         break;
                                     case NSNType.PHOTO_ALBUM:
@@ -129,7 +129,7 @@
                                                         <span class="time" title="@Globals.ShowFullDateTime(comment.Timestamp)">@Globals.ShowDateTime(comment.Timestamp)</span>
                                                         <span class="commentActions"><span class="delete"></span></span>
                                                     </span>
-                                                    <div class="commentText">@Html.Raw(comment.CommentText.TextParsed.Replace(" ", "&nbsp;").Replace("&#10;", "<br />"))</div>
+                                                    <div class="commentText">@Html.Raw(Globals.ApplyHtmlFrom(comment.CommentText.TextParsed))</div>
                                                 </div>
                                             </div>
                                         </div>

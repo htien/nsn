@@ -22,7 +22,7 @@ namespace NewSocialNetwork.DataAccess
         public IList<Photo> GetPhotosByTimestamp(int timestamp, int size)
         {
             return this.Session().CreateQuery(
-                @"from Photo p where p.Timestamp <= :timestamp order by p.Timestamp desc")
+                @"from Photo p where p.Timestamp = :timestamp order by p.Timestamp desc")
                 .SetInt32("timestamp", timestamp)
                 .SetMaxResults(size)
                 .List<Photo>();

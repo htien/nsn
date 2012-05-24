@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Mvc;
-using Microsoft.Security.Application;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NewSocialNetwork.Website.Controllers.Helper;
 using NSN.Common;
-using NSN.Common.Utilities;
 using SaberLily.Utils;
 
 namespace NewSocialNetwork.Website.Controllers
@@ -82,6 +76,10 @@ namespace NewSocialNetwork.Website.Controllers
         public ActionResult ListPhotos(int albumid)
         {
             PhotoAlbum album = photoAlbumRepo.FindById(albumid);
+            if (album == null)
+            {
+                return HttpNotFound("Album not found.");
+            }
             IList<Photo> photos = album.Photos;
             ViewBag.Album = album;
             ViewBag.Photos = photos;
@@ -101,57 +99,10 @@ namespace NewSocialNetwork.Website.Controllers
                 "Error when creating your album. Please try again.");
             try
             {
-                string privacyRegex = @"^(0|1|10)$";
-                if (String.IsNullOrWhiteSpace(albumTitle)
-                    || !Regex.IsMatch(privacy.ToString(), privacyRegex))
-                {
-                    throw new Exception("You are hacking.");
-                }
-                IList<ImageInfo> uploadedImages = (IList<ImageInfo>)Session[Globals.SESSIONKEY_UPLOADED_PHOTOS + sessionManager.GetUser().UserId];
-                if (uploadedImages == null || uploadedImages.Count == 0)
-                {
-                    throw new Exception("Have no any uploaded photo. Please add at least a photo or more.");
-                }
-                // Insert new photo album
-                string orginAlbumTitle = HttpUtility.UrlDecode(albumTitle, System.Text.Encoding.GetEncoding("ISO-8859-1"));
                 int timestamp = DateTimeUtils.UnixTimestamp;
-                PhotoAlbum photoAlbum = new PhotoAlbum()
-                {
-                    Name = Encoder.HtmlEncode(orginAlbumTitle),
-                    User = sessionManager.GetUser(),
-                    ProfileId = 0,
-                    Privacy = privacy,
-                    PrivacyComment = NSNPrivacyCommentMode.PUBLIC,
-                    Timestamp = timestamp
-                };
-                PhotoAlbum newPhotoAlbum = photoAlbumRepo.Create(photoAlbum);
+                PhotoAlbum newPhotoAlbum = frontendService.AddPhotoAlbum(this.Session, timestamp, albumTitle, privacy);
                 // Insert new photo images
-                foreach (ImageInfo image in uploadedImages)
-                {
-                    Photo photo = new Photo()
-                    {
-                        Album = newPhotoAlbum,
-                        User = sessionManager.GetUser(),
-                        Privacy = NSNPrivacyMode.PUBLIC,
-                        Image = image.FileName,
-                        AllowComment = true,
-                        Timestamp = image.UploadTimestamp
-                    };
-                    Photo newPhoto = photoRepo.Create(photo);
-                    Image sImg = Image.FromStream(image.ImageStream);
-                    PhotoInfo photoInfo = new PhotoInfo()
-                    {
-                        Photo = newPhoto,
-                        FileName = image.FileName,
-                        FileSize = image.FileSize,
-                        MimeType = image.MimeType,
-                        Extension = Path.GetExtension(image.FileName),
-                        Description = "",
-                        Width = sImg.Width,
-                        Height = sImg.Height
-                    };
-                    photoInfoRepo.Create(photoInfo);
-                }
+                frontendService.AddPhotosFromSession(this.Session, newPhotoAlbum, timestamp);
                 // Remove session for photo images
                 frontendService.RemoveImagesFromSession(this.Session);
                 // Insert to feed
