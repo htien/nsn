@@ -490,6 +490,14 @@ img,
   user-select: none;
   visibility: hidden;
 }
+.UIFeeds_Content .fTypeFriend {
+  margin-bottom: -8px;
+}
+.UIFeeds_Content .fTypeFriend .subinfo {
+  font-size: 11px;
+  color: #999;
+  text-align: right;
+}
 .UIForm_RequestFriend {
   position: relative;
 }
@@ -527,4 +535,25 @@ img,
   clear: left;
   padding-top: 20px;
   padding-bottom: 30px;
+}
+.UIStream_FriendRequests {
+  width: 350px;
+}
+.UIStream_FriendRequests .uiFriendRequestItem {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.UIStream_FriendRequests .profileItem {
+  display: inline-block;
+}
+.UIStream_FriendRequests .profileItem img {
+  float: left;
+  margin-right: 5px;
+}
+.UIStream_FriendRequests .profileItem .title {
+  font-weight: bold;
+}
+.UIStream_FriendRequests .actions {
+  float: right;
 }

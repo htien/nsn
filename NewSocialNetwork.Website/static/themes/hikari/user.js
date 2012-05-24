@@ -255,7 +255,24 @@ jQuery(function ($) {
         });
         evt.preventDefault();
     });
-
+    jQuery('.UIStream_FriendRequests .confirmBtn').live('click', function(evt) {
+        var divActions = jQuery(this).parent();
+        var requestId = parseInt(divActions.prev().attr('id').slice(15), 10);
+        jQuery.ajax({
+            url: NSN.request('friendrequest/accept'),
+            type: 'post',
+            data: { requestId: requestId },
+            success: function(json) {
+                divActions.html(json.Message);
+            }
+        });
+        evt.preventDefault();
+    });
+    jQuery('.UIStream_FriendRequests .notNowBtn').live('click', function(evt) {
+        var requestId = parseInt(jQuery(this).parent().prev().attr('id').slice(15), 10);
+        alert(userId);
+        evt.preventDefault();
+    });
 });
 
 function ajaxCount() {

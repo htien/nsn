@@ -153,11 +153,13 @@ namespace NSN.Service.BusinessService
                 switch (feed.TypeId)
                 {
                     case NSNType.USER_TWEET:
-                        
                         entity = userTweetRepo.FindById(feed.ItemId);
                         break;
                     case NSNType.PHOTO_ALBUM:
                         entity = photoAlbumRepo.FindById(feed.ItemId);
+                        break;
+                    case NSNType.FRIEND:
+                        entity = friendRepo.FindById(feed.ItemId);
                         break;
                 }
                 feedManager.AddFeedItem(feed, entity);
@@ -182,6 +184,11 @@ namespace NSN.Service.BusinessService
                 }
             }
             return images;
+        }
+
+        public IList<FriendRequest> ListFriendRequests(int userId)
+        {
+            return friendRequestRepo.List(userId);
         }
 
         public void PostUserTweet(int userId, string content)
@@ -239,6 +246,42 @@ namespace NSN.Service.BusinessService
                 Timestamp = timestamp
             };
             return friendRequestRepo.Create(friendRequest);
+        }
+
+        public Friend AcceptFriendRequest(int requestId, int timestamp)
+        {
+            FriendRequest friendRequest = friendRequestRepo.FindById(requestId);
+            if (friendRequest == null)
+            {
+                throw new Exception("Friend request is not exists.");
+            }
+            // Thêm vào bạn mới
+            User myUser = sessionManager.GetUser(); // người accepted
+            User friendUser = friendRequest.User; // người requested
+            Friend newFriend1 = new Friend()
+            {
+                User = friendUser,
+                FriendUser = myUser,
+                Timestamp = timestamp
+            };
+            Friend newFriend2 = new Friend()
+            {
+                User = myUser, // User
+                FriendUser = friendUser, // ParentUser
+                Timestamp = timestamp
+            };
+            Friend newFriend = null;
+            try
+            {
+                friendRepo.Create(newFriend1);
+                newFriend = friendRepo.Create(newFriend2);
+            }
+            catch { }
+            // Nếu chấp nhận làm bạn, đặt IsIgnore = true
+            friendRequest.IsIgnore = true;
+            friendRequest.IsSeen = true;
+            friendRequestRepo.Save(friendRequest);
+            return newFriend;
         }
 
         public PhotoAlbum AddPhotoAlbum(HttpSessionStateBase session, int timestamp,
@@ -331,24 +374,24 @@ namespace NSN.Service.BusinessService
             }
         }
 
-        public void IncreaseCountOfFriendRequest(int userId)
+        public void IncreaseCountOfFriendRequest(int userId, int count = 1)
         {
             UserCount userCount = userCountRepo.FindById(userId);
-            userCount.FriendRequest++;
+            userCount.FriendRequest += count;
             userCountRepo.Save(userCount);
         }
 
-        public void IncreaseCountOfCommentPending(int userId)
+        public void IncreaseCountOfCommentPending(int userId, int count = 1)
         {
             UserCount userCount = userCountRepo.FindById(userId);
-            userCount.CommentPending++;
+            userCount.CommentPending += count;
             userCountRepo.Save(userCount);
         }
 
-        public void IncreaseCountOfMailNew(int userId)
+        public void IncreaseCountOfMailNew(int userId, int count = 1)
         {
             UserCount userCount = userCountRepo.FindById(userId);
-            userCount.MailNew++;
+            userCount.MailNew += count;
             userCountRepo.Save(userCount);
         }
 

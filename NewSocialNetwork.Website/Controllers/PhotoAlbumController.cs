@@ -103,7 +103,7 @@ namespace NewSocialNetwork.Website.Controllers
                 PhotoAlbum newPhotoAlbum = frontendService.AddPhotoAlbum(this.Session, timestamp, albumTitle, privacy);
                 // Insert new photo images
                 frontendService.AddPhotosFromSession(this.Session, newPhotoAlbum, timestamp);
-                // Remove session for photo images
+                // Remove photo images from session
                 frontendService.RemoveImagesFromSession(this.Session);
                 // Insert to feed
                 feedRepo.Add(NSNType.PHOTO_ALBUM, newPhotoAlbum.AlbumId, sessionManager.GetUser().UserId, 0, timestamp);

@@ -103,6 +103,9 @@ var glbDebug = true,
             else
                 return glbContextPath;
         };
+        nsn.request = function(path) {
+            return nsn.url('/nsn/go/to/').concat(path);
+        };
         nsn.staticResource = function(path) {
             return nsn.url('/static/').concat(path);
         };

@@ -1,7 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
+using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NewSocialNetwork.Website.Controllers.Helper;
-using System;
+using SaberLily.Utils;
 
 namespace NewSocialNetwork.Website.Controllers
 {
@@ -10,6 +12,7 @@ namespace NewSocialNetwork.Website.Controllers
         public IUserRepository userRepo { get; set; }
         public IFriendRepository friendRepo { get; set; }
         public IFriendRequestRepository friendRequestRepo { get; set; }
+        public IFeedRepository feedRepo { private get; set; }
 
         //
         // GET: /FriendRequest/
@@ -42,6 +45,30 @@ namespace NewSocialNetwork.Website.Controllers
                 frontendService.IncreaseCountOfFriendRequest(friendUserId);
                 // Returns
                 msg.SetStatusAndMessage(RStatus.SUCCESS, "Request friend sent.");
+            }
+            catch (Exception e)
+            {
+                msg.Message = e.Message;
+            }
+            return Json(msg);
+        }
+
+        [HttpPost]
+        public JsonResult Accept(int requestId)
+        {
+            ResponseMessage msg = new ResponseMessage("Friend", RAction.ADD, RStatus.FAIL,
+                "Cannot accept this friend request.");
+            try
+            {
+                int timestamp = DateTimeUtils.UnixTimestamp;
+                // Chấp nhận làm bạn
+                Friend friend = frontendService.AcceptFriendRequest(requestId, timestamp);
+                // Giảm số FriendRequest trong bảng UserCount
+                frontendService.IncreaseCountOfFriendRequest(sessionManager.GetUser().UserId, -1);
+                // Thông báo lên Feed
+                feedRepo.Add(NSNType.FRIEND, friend.FriendId, friend.User.UserId, friend.FriendUser.UserId, timestamp);
+
+                msg.SetStatusAndMessage(RStatus.SUCCESS, "Accepted.");
             }
             catch (Exception e)
             {
