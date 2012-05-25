@@ -297,6 +297,11 @@ namespace NSN.Kernel
                 new { controller = "Feed", action = "Feeds" }
             );
             routes.MapRouteLowercase(
+                "ProfileInfo",
+                "{uid}/Info",
+                new { controller = "Profile", action = "Info" }
+            );
+            routes.MapRouteLowercase(
                 "Profile",
                 "{uid}",
                 new { controller = "Feed", action = "Feeds" }
@@ -304,7 +309,7 @@ namespace NSN.Kernel
             routes.MapRouteLowercase(
                 "ProfileAction",
                 "{uid}/{action}",
-                new { controller = "Profile", action = "Info" }
+                new { controller = "Profile" }
             );
         }
 

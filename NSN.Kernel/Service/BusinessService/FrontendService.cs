@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Web;
 using Microsoft.Security.Application;
@@ -14,8 +16,6 @@ using NSN.Manager;
 using NSN.Service.SSO;
 using SaberLily.Security.Crypto;
 using SaberLily.Utils;
-using System.Drawing;
-using System.IO;
 
 namespace NSN.Service.BusinessService
 {
@@ -51,7 +51,15 @@ namespace NSN.Service.BusinessService
             string regEmail, string regPassword, string confirmPassword,
             string birthday)
         {
+            if (userRepo.IsExistEmail(regEmail.Trim()))
+            {
+                throw new Exception("Cannot accept dupplicated email.");
+            }
             DateTime birthDay = DateTime.Parse(birthday);
+            if (gender != 1 && gender != 2)
+            {
+                throw new Exception("Please choose your gender.");
+            }
             UserGroup group = userGroupRepo.FindById(UserGroupLevel.RegisteredUser);
             User user = new User()
             {
@@ -220,6 +228,48 @@ namespace NSN.Service.BusinessService
             long commentId = commentRepo.Add(feed.TypeId, feed.ItemId, userId, feed.User.UserId, commentText, ipAddr, timestamp);
             string originCommentText = HttpUtility.UrlDecode(commentText, System.Text.Encoding.GetEncoding("ISO-8859-1"));
             return commentTextRepo.Add(commentId, originCommentText, Encoder.HtmlEncode(originCommentText));
+        }
+
+        public User UpdateProfileInfo(string username, string fullName, string email, byte gender,
+            string birthday, string countryiso)
+        {
+            User user = sessionManager.GetUser();
+
+            // Validate
+            if (String.IsNullOrWhiteSpace(user.Username))
+            {
+                if (userRepo.IsExistUsername(username.Trim()))
+                {
+                    throw new Exception("Username is exists. Please choose another.");
+                }
+                else
+                {
+                    if (!Regex.IsMatch(username, Globals.glbUserNameRegEx))
+                    {
+                        throw new Exception("Username is invalid. Allow A-Z, a-z, 0-9. First letter must be alphabet character. At least 5 characters.");
+                    }
+                    user.Username = username.Trim();
+                }
+            }
+            if (!Regex.IsMatch(email.Trim(), Globals.glbEmailRegEx))
+            {
+                throw new Exception("Email is invalid format.");
+            }
+            DateTime birthDay = DateTime.Parse(birthday);
+            if (gender != 1 && gender != 2)
+            {
+                throw new Exception("Please choose your gender.");
+            }
+
+            // Update
+            user.Email = email.Trim();
+            user.FullName = fullName.Trim();
+            user.Gender = gender;
+            user.Birthday = String.Format("{0}{1}{2}",
+                                birthDay.Year,
+                                birthDay.Month < 10 ? "0" + birthDay.Month.ToString() : birthDay.Month.ToString(),
+                                birthDay.Day < 10 ? "0" + birthDay.Day.ToString() : birthDay.Day.ToString());
+            return userRepo.Save(user);
         }
 
         public FriendRequest AddRequestFriend(int friendUserId, string message)

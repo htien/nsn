@@ -36,6 +36,22 @@ namespace NewSocialNetwork.DataAccess
             return this.GetUserByUsername(username).Password;
         }
 
+        public bool IsExistUsername(string username)
+        {
+            return Convert.ToInt32(this.Session().CreateQuery(
+                @"select count(Email) from User where Username = :username")
+                .SetString("username", username)
+                .UniqueResult()) > 0;
+        }
+
+        public bool IsExistEmail(string email)
+        {
+            return Convert.ToInt32(this.Session().CreateQuery(
+                @"select count(Email) from User where Email = :email")
+                .SetString("email", email)
+                .UniqueResult()) > 0;
+        }
+
         public IList<User> ListFriends(int userId)
         {
             return this.Session().CreateQuery(

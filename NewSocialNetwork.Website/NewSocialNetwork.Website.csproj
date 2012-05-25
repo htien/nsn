@@ -1247,6 +1247,7 @@
     <Content Include="Views\PhotoAlbum\Uploader.cshtml" />
     <Content Include="Views\FriendRequest\Add.cshtml" />
     <Content Include="Views\Jewels\ShowFriendRequests.cshtml" />
+    <Content Include="Views\Profile\EditInfo.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
