@@ -30,13 +30,13 @@ namespace NewSocialNetwork.Domain
         [Property("Timestamp", NotNull = true)]
         public virtual int Timestamp { get; set; }
 
-        [Property("TotalPhoto", NotNull = true, Default = "0")]
+        [Property("TotalPhoto", NotNull = true, Default = "0", Insert = false)]
         public virtual int TotalPhoto { get; set; }
 
-        [Property("TotalComment", NotNull = true, Default = "0")]
+        [Property("TotalComment", NotNull = true, Default = "0", Insert = false)]
         public virtual int TotalComment { get; set; }
 
-        [Property("TotalLike", NotNull = true, Default = "0")]
+        [Property("TotalLike", NotNull = true, Default = "0", Insert = false)]
         public virtual int TotalLike { get; set; }
 
         #endregion

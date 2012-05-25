@@ -78,6 +78,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -87,6 +88,7 @@
   <ItemGroup>
     <Compile Include="Application\About.cs" />
     <Compile Include="Application\AssemblyStatusAttribute.cs" />
+    <Compile Include="Common\Utilities\ImageInfo.cs" />
     <Compile Include="Common\Utilities\Null.cs" />
     <Compile Include="Facility\PersistenceFacility.cs" />
     <Compile Include="Init\NewSocialNetwork.cs" />
@@ -145,6 +147,8 @@
     <Compile Include="NewSocialNetwork\Domain\Mail.cs" />
     <Compile Include="NewSocialNetwork\Domain\MailFolder.cs" />
     <Compile Include="NewSocialNetwork\Domain\MailText.cs" />
+    <Compile Include="NewSocialNetwork\Domain\NSNPrivacyCommentMode.cs" />
+    <Compile Include="NewSocialNetwork\Domain\NSNPrivacyMode.cs" />
     <Compile Include="NewSocialNetwork\Domain\NSNType.cs" />
     <Compile Include="NewSocialNetwork\Domain\NSNVersion.cs" />
     <Compile Include="NewSocialNetwork\Domain\Photo.cs" />

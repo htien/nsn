@@ -41,6 +41,11 @@ namespace NewSocialNetwork.Website.Controllers
                 ViewBag.UDisplayId = Globals.GetDisplayId(userProfile);
                 ViewBag.UAvatarFileName = Globals.UserImage(userProfile.UserImage, userProfile.Gender);
                 ViewBag.ContextPath = Globals.ApplicationPath;
+                ViewBag.CountPending = Globals.GetUserCount(myProfile.UserId);
+                if (myProfile.UserId != userProfile.UserId)
+                {
+                    ViewBag.IsFriend = Globals.IsFriend(myProfile.UserId, userProfile.UserId);
+                }
             }
             base.OnActionExecuting(filterContext);
         }

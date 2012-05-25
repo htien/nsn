@@ -133,6 +133,7 @@
     <Content Include="Global.asax" />
     <Content Include="static\Error404.htm" />
     <Content Include="static\favicon.ico" />
+    <Content Include="static\favicon1.ico" />
     <Content Include="static\GenericError.htm" />
     <Content Include="static\images\avatars\1_tien.gif" />
     <Content Include="static\images\avatars\2_lien.png" />
@@ -140,9 +141,24 @@
     <Content Include="static\images\avatars\default_male.gif" />
     <Content Include="static\images\avatars\default_medium_female.gif" />
     <Content Include="static\images\avatars\default_medium_male.gif" />
+    <Content Include="static\images\photos\1_tien.gif" />
+    <Content Include="static\images\photos\2_lien.png" />
+    <Content Include="static\images\photos\a.jpg" />
+    <Content Include="static\images\photos\b.jpg" />
+    <Content Include="static\images\photos\c.jpg" />
+    <Content Include="static\images\photos\d.jpg" />
+    <Content Include="static\images\photos\e.jpg" />
+    <Content Include="static\images\photos\f.jpg" />
     <Content Include="static\js\jquery\jquery-ui-1.8.20.js" />
+    <Content Include="static\js\jquery\jquery.elastic-1.6.11.js" />
+    <Content Include="static\js\jquery\jquery.fileupload-fp.js" />
+    <Content Include="static\js\jquery\jquery.fileupload-ui.js" />
+    <Content Include="static\js\jquery\jquery.fileupload.js" />
+    <Content Include="static\js\jquery\jquery.iframe-transport.js" />
     <Content Include="static\js\jquery\jquery.validate-1.9.js" />
     <Content Include="static\js\jquery\jquery.validate.additional.js" />
+    <Content Include="static\js\json2.js" />
+    <Content Include="static\js\jquery\tmpl.js" />
     <Content Include="static\smiles\pidgin\default\amorous.png" />
     <Content Include="static\smiles\pidgin\default\blowkiss.png" />
     <Content Include="static\smiles\pidgin\default\embarrassed.png" />
@@ -164,6 +180,7 @@
     <Content Include="static\themes\closure-theme\images\ui-icons_847e71_256x240.png" />
     <Content Include="static\themes\closure-theme\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="static\themes\closure-theme\jquery-ui-1.8.20.css" />
+    <Content Include="static\themes\closure-theme\jquery.fileupload-ui.css" />
     <Content Include="static\themes\hikari\images\background1.png" />
     <Content Include="static\themes\hikari\images\background1_2.png" />
     <Content Include="static\themes\hikari\images\background1_50.jpg" />
@@ -176,7 +193,6 @@
     <Content Include="static\themes\hikari\images\fb_sprite_icons_3.png" />
     <Content Include="static\themes\hikari\images\gp_sprite_icons_stream_1.png" />
     <Content Include="static\themes\hikari\images\indicator_blue_large.gif" />
-    <Content Include="static\images\favicon.ico" />
     <Content Include="static\js\goog\array\array.js" />
     <Content Include="static\js\goog\asserts\asserts.js" />
     <Content Include="static\js\goog\async\conditionaldelay.js" />
@@ -1108,9 +1124,11 @@
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\FriendController.cs" />
+    <Compile Include="Controllers\FriendRequestController.cs" />
     <Compile Include="Controllers\Helper\RAction.cs" />
     <Compile Include="Controllers\Helper\ResponseMessage.cs" />
     <Compile Include="Controllers\Helper\RStatus.cs" />
+    <Compile Include="Controllers\JewelsController.cs" />
     <Compile Include="Controllers\LikeController.cs" />
     <Compile Include="Controllers\LinkController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
@@ -1119,12 +1137,15 @@
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RedirectorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserCountController.cs" />
     <Compile Include="Controllers\UserTweetController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CountPendingModel.cs" />
     <Compile Include="Models\CountryModel.cs" />
     <Compile Include="Models\PhotoModel.cs" />
+    <Compile Include="Models\UploadedPhotoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schedules\Scheduler.cs" />
     <Content Include="static\js\jquery\tooltips.js" />
@@ -1222,6 +1243,10 @@
     <Content Include="Views\Feed\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Frontend\_StandardPageLayout.cshtml" />
     <Content Include="Views\Comment\AddSave.cshtml" />
+    <Content Include="Views\PhotoAlbum\ListPhotos.cshtml" />
+    <Content Include="Views\PhotoAlbum\Uploader.cshtml" />
+    <Content Include="Views\FriendRequest\Add.cshtml" />
+    <Content Include="Views\Jewels\ShowFriendRequests.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -28,11 +28,11 @@
         </ul>
         <div class="uiComposer-outer">
             <div id="composer-updatestatus" class="uiComposer uiTypeahead UIInputText">
-                <form id="composer" action="@Url.RouteUrl("Go", new { controller = "UserTweet", action = "Post" })" method="post">
+                <form id="composer" action="@Url.RouteUrl("Go", new { controller = "UserTweet", action = "Post", uid = @ViewBag.UProfile.UserId })" method="post">
                     <div class="wrap">
                         <div class="innerWrap">
                             <div class="uiInput">
-                                <textarea id="inputStatus" class="uiInputStatus" name="inputText"></textarea>
+                                <textarea id="inputStatus" class="uiInputStatus autogrow" name="inputText" rows="2" cols="20"></textarea>
                             </div>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                 <div class="wrap">
                     <div class="innerWrap">
                         <div class="uiInput">
-                            <textarea id="inputLink" class="uiInputStatus" name="inputText"></textarea>
+                            <textarea id="inputLink" class="uiInputStatus" name="inputText" rows="2" cols="20"></textarea>
                         </div>
                         <div class="linkShareStage">
                             <div class="UIShareStage clearfix">

@@ -1,4 +1,4 @@
-﻿ <!--Lay danh sach friend-->
+﻿@using NSN.Common;
 <div id="pagelet_friends">
     <div class="UIGrid_Friends">
         <h2 class="title">Friends (@ViewBag.totalFriends)</h2>
@@ -23,7 +23,7 @@
                             }
                             
                             <div class="friendInfo">
-                                <div class="name"><b style="font-weight:bold"><a href="@Url.RouteUrl("Profile", new { uid = NSN.Common.Globals.GetDisplayId(user) })">@user.FullName</a></b><br />@NSN.Common.Globals.ShowBirthday(user.Birthday)</div>
+                                <div class="name"><b style="font-weight:bold"><a href="@Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(user) })">@user.FullName</a></b><br />@Globals.ShowBirthday(user.Birthday)</div>
                             </div>
                         </div>
                     </div>

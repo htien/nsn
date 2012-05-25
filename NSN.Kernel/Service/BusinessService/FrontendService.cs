@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Web;
 using Microsoft.Security.Application;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NSN.Common;
+using NSN.Common.Utilities;
 using NSN.Framework;
 using NSN.Kernel;
 using NSN.Kernel.Manager;
@@ -12,24 +14,38 @@ using NSN.Manager;
 using NSN.Service.SSO;
 using SaberLily.Security.Crypto;
 using SaberLily.Utils;
+using System.Drawing;
+using System.IO;
 
 namespace NSN.Service.BusinessService
 {
     public class FrontendService : IBusinessService
     {
+        #region Injects
+
         public ILoginAuthenticator loginAuthenticator { private get; set; }
         public ISessionManager sessionManager { private get; set; }
         public INSNConfig config { private get; set; }
+        public IUserCountRepository userCountRepo { get; set; }
         public IUserRepository userRepo { private get; set; }
         public IUserGroupRepository userGroupRepo { private get; set; }
         public IFeedRepository feedRepo { private get; set; }
+        public IFriendRepository friendRepo { private get; set; }
+        public IFriendRequestRepository friendRequestRepo { get; set; }
         public IUserTweetRepository userTweetRepo { private get; set; }
         public ICommentRepository commentRepo { private get; set; }
         public ICommentTextRepository commentTextRepo { private get; set; }
         public ILikeRepository likeRepo { private get; set; }
         public ILikeCacheRepository likeCacheRepo { private get; set; }
+        public IPhotoAlbumRepository photoAlbumRepo { private get; set; }
+        public IPhotoRepository photoRepo { get; set; }
+        public IPhotoInfoRepository photoInfoRepo { get; set; }
+
+        #endregion
 
         public FrontendService() { }
+
+        #region Register, Login, Logout
 
         public User RegisterNewUser(string firstName, string lastName, byte gender,
             string regEmail, string regPassword, string confirmPassword,
@@ -78,6 +94,25 @@ namespace NSN.Service.BusinessService
             sessionManager.Add(us);
         }
 
+        #endregion
+
+        #region Create default value
+
+        public UserCount CreateUserCount(User user)
+        {
+            return userCountRepo.Create(new UserCount()
+            {
+                User = user,
+                FriendRequest = 0,
+                CommentPending = 0,
+                MailNew = 0
+            });
+        }
+
+        #endregion
+
+        #region Generals
+
         public User GetUserProfile(string uid)
         {
             if (String.IsNullOrEmpty(uid))
@@ -118,14 +153,63 @@ namespace NSN.Service.BusinessService
                 switch (feed.TypeId)
                 {
                     case NSNType.USER_TWEET:
-                        entity = userTweetRepo.Get(feed.ItemId, userId);
+                        entity = userTweetRepo.FindById(feed.ItemId);
                         break;
-                    case NSNType.PHOTO:
+                    case NSNType.PHOTO_ALBUM:
+                        entity = photoAlbumRepo.FindById(feed.ItemId);
+                        break;
+                    case NSNType.FRIEND:
+                        entity = friendRepo.FindById(feed.ItemId);
                         break;
                 }
                 feedManager.AddFeedItem(feed, entity);
             }
             return feedManager.GetItems();
+        }
+
+        public IList<ImageInfo> SaveImages(HttpFileCollectionBase imageCollection)
+        {
+            IList<ImageInfo> images = new List<ImageInfo>();
+            foreach (string upload in imageCollection)
+            {
+                HttpPostedFileBase file = imageCollection[upload];
+                try
+                {
+                    ImageInfo image = Globals.SaveImageInPlace(file, "/static/images/photos/");
+                    images.Add(image);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            return images;
+        }
+
+        public IList<FriendRequest> ListFriendRequests(int userId)
+        {
+            return friendRequestRepo.List(userId);
+        }
+
+        public void PostUserTweet(int userId, string content)
+        {
+            int timestamp = DateTimeUtils.UnixTimestamp;
+            User receiver = userRepo.FindById(userId);
+            User sender = sessionManager.GetUser();
+            string originContent = HttpUtility.UrlDecode(content.Trim(), System.Text.Encoding.GetEncoding("ISO-8859-1"));
+
+            if (String.IsNullOrEmpty(originContent))
+            {
+                throw new Exception("<p>Invalid content.</p>");
+            }
+            if (receiver.UserId == sender.UserId)
+            {
+                userTweetRepo.Add(sender.UserId, 0, Encoder.HtmlEncode(originContent), timestamp);
+            }
+            else
+            {
+                userTweetRepo.Add(sender.UserId, receiver.UserId, Encoder.HtmlEncode(originContent), timestamp);
+            }
         }
 
         public long AddComment(long feedId, int userId, string commentText)
@@ -136,6 +220,132 @@ namespace NSN.Service.BusinessService
             long commentId = commentRepo.Add(feed.TypeId, feed.ItemId, userId, feed.User.UserId, commentText, ipAddr, timestamp);
             string originCommentText = HttpUtility.UrlDecode(commentText, System.Text.Encoding.GetEncoding("ISO-8859-1"));
             return commentTextRepo.Add(commentId, originCommentText, Encoder.HtmlEncode(originCommentText));
+        }
+
+        public FriendRequest AddRequestFriend(int friendUserId, string message)
+        {
+            User friendUser = userRepo.FindById(friendUserId);
+            if (friendUser == null)
+            {
+                throw new Exception("Cannot request not existed user.");
+            }
+            User myUser = sessionManager.GetUser();
+            if (friendUserId == myUser.UserId
+                || friendRepo.IsFriend(myUser.UserId, friendUserId)
+                || friendRequestRepo.IsConfirmingFriendRequest(myUser.UserId, friendUserId))
+            {
+                throw new Exception("Error when processing your request friend.");
+            }
+            string originMessage = HttpUtility.UrlDecode(message.Trim(), System.Text.Encoding.GetEncoding("ISO-8859-1"));
+            int timestamp = DateTimeUtils.UnixTimestamp;
+            FriendRequest friendRequest = new FriendRequest()
+            {
+                User = myUser,
+                FriendUser = friendUser,
+                Message = Encoder.HtmlEncode(message),
+                Timestamp = timestamp
+            };
+            return friendRequestRepo.Create(friendRequest);
+        }
+
+        public Friend AcceptFriendRequest(int requestId, int timestamp)
+        {
+            FriendRequest friendRequest = friendRequestRepo.FindById(requestId);
+            if (friendRequest == null)
+            {
+                throw new Exception("Friend request is not exists.");
+            }
+            // Thêm vào bạn mới
+            User myUser = sessionManager.GetUser(); // người accepted
+            User friendUser = friendRequest.User; // người requested
+            Friend newFriend1 = new Friend()
+            {
+                User = friendUser,
+                FriendUser = myUser,
+                Timestamp = timestamp
+            };
+            Friend newFriend2 = new Friend()
+            {
+                User = myUser, // User
+                FriendUser = friendUser, // ParentUser
+                Timestamp = timestamp
+            };
+            Friend newFriend = null;
+            try
+            {
+                friendRepo.Create(newFriend1);
+                newFriend = friendRepo.Create(newFriend2);
+            }
+            catch { }
+            // Nếu chấp nhận làm bạn, đặt IsIgnore = true
+            friendRequest.IsIgnore = true;
+            friendRequest.IsSeen = true;
+            friendRequestRepo.Save(friendRequest);
+            return newFriend;
+        }
+
+        public PhotoAlbum AddPhotoAlbum(HttpSessionStateBase session, int timestamp,
+            string albumTitle = "Untitled Album", byte privacy = 0)
+        {
+            string privacyRegex = @"^(0|1|10)$";
+            if (String.IsNullOrWhiteSpace(albumTitle)
+                || !Regex.IsMatch(privacy.ToString(), privacyRegex))
+            {
+                throw new Exception("Album title is unavailable.");
+            }
+            IList<ImageInfo> uploadedImages = (IList<ImageInfo>)session[Globals.SESSIONKEY_UPLOADED_PHOTOS + sessionManager.GetUser().UserId];
+            if (uploadedImages == null || uploadedImages.Count == 0)
+            {
+                throw new Exception("Have no any uploaded photo. Please add at least a photo or more.");
+            }
+            // Insert new photo album
+            string orginAlbumTitle = Globals.UrlDecode(albumTitle);
+            PhotoAlbum photoAlbum = new PhotoAlbum()
+            {
+                Name = Globals.HtmlEncode(orginAlbumTitle),
+                User = sessionManager.GetUser(),
+                ProfileId = 0,
+                Privacy = privacy,
+                PrivacyComment = NSNPrivacyCommentMode.PUBLIC,
+                Timestamp = timestamp
+            };
+            return photoAlbumRepo.Create(photoAlbum);
+        }
+
+        public void AddPhotosFromSession(HttpSessionStateBase session, PhotoAlbum photoAlbum, int timetamp)
+        {
+            IList<ImageInfo> uploadedImages = (IList<ImageInfo>)session[Globals.SESSIONKEY_UPLOADED_PHOTOS + sessionManager.GetUser().UserId];
+            foreach (ImageInfo imageInfo in uploadedImages)
+            {
+                Photo photo = new Photo()
+                {
+                    Album = photoAlbum,
+                    User = sessionManager.GetUser(),
+                    Privacy = NSNPrivacyMode.PUBLIC,
+                    Image = imageInfo.FileName,
+                    AllowComment = true,
+                    Timestamp = timetamp
+                };
+                Photo newPhoto = photoRepo.Create(photo);
+                this.AddPhotoInfo(newPhoto, imageInfo);
+            }
+        }
+
+        public PhotoInfo AddPhotoInfo(Photo photo, ImageInfo imageInfo)
+        {
+            Image sImg = Image.FromStream(imageInfo.ImageStream);
+            PhotoInfo photoInfo = new PhotoInfo()
+            {
+                Photo = photo,
+                FileName = imageInfo.FileName,
+                FileSize = imageInfo.FileSize,
+                MimeType = imageInfo.MimeType,
+                Extension = Path.GetExtension(imageInfo.FileName),
+                Description = "",
+                Width = sImg.Width,
+                Height = sImg.Height
+            };
+            return photoInfoRepo.Create(photoInfo);
         }
 
         public long LikeForFeed(long feedId, int userId)
@@ -163,6 +373,81 @@ namespace NSN.Service.BusinessService
                 likeCacheRepo.Remove(feed.TypeId, feed.ItemId, userId);
             }
         }
+
+        public void IncreaseCountOfFriendRequest(int userId, int count = 1)
+        {
+            UserCount userCount = userCountRepo.FindById(userId);
+            userCount.FriendRequest += count;
+            userCountRepo.Save(userCount);
+        }
+
+        public void IncreaseCountOfCommentPending(int userId, int count = 1)
+        {
+            UserCount userCount = userCountRepo.FindById(userId);
+            userCount.CommentPending += count;
+            userCountRepo.Save(userCount);
+        }
+
+        public void IncreaseCountOfMailNew(int userId, int count = 1)
+        {
+            UserCount userCount = userCountRepo.FindById(userId);
+            userCount.MailNew += count;
+            userCountRepo.Save(userCount);
+        }
+
+        public int SaveImagesInSession(HttpSessionStateBase session, IList<ImageInfo> images)
+        {
+            int userId = sessionManager.GetUser().UserId;
+            string sesKey = Globals.SESSIONKEY_UPLOADED_PHOTOS + userId.ToString();
+            if (session[sesKey] == null)
+            {
+                session[sesKey] = images;
+            }
+            else
+            {
+                IList<ImageInfo> _images = session[Globals.SESSIONKEY_UPLOADED_PHOTOS + userId.ToString()] as IList<ImageInfo>;
+                foreach (ImageInfo image in images)
+                {
+                    _images.Add(image);
+                }
+            }
+            return images.Count;
+        }
+
+        public void RemoveImagesFromSession(HttpSessionStateBase session)
+        {
+            int userId = sessionManager.GetUser().UserId;
+            string sesKey = Globals.SESSIONKEY_UPLOADED_PHOTOS + userId.ToString();
+            if (session[sesKey] != null)
+            {
+                session.Remove(sesKey);
+            }
+        }
+
+        public void RemoveImagesFromDisk(HttpSessionStateBase session)
+        {
+            int userId = sessionManager.GetUser().UserId;
+            string sesKey = Globals.SESSIONKEY_UPLOADED_PHOTOS + userId.ToString();
+            if (session[sesKey] == null)
+            {
+                return;
+            }
+            IList<ImageInfo> images = session[sesKey] as IList<ImageInfo>;
+            foreach (ImageInfo image in images)
+            {
+                try
+                {
+                    System.IO.File.Delete(image.LinkAccess);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            session.Remove(sesKey);
+        }
+
+        #endregion
 
         #region Static Method
 

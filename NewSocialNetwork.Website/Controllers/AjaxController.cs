@@ -21,5 +21,10 @@ namespace NewSocialNetwork.Website.Controllers
         {
             return RedirectToRoute("Go", new { controller = "Like", action = "UnlikeForFeed", feedId = feedId });
         }
+
+        public ActionResult PhotoAlbumUploader()
+        {
+            return RedirectToRoute("Go", new { controller = "PhotoAlbum", action = "Uploader" });
+        }
     }
 }

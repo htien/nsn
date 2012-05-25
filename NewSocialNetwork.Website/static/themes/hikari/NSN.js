@@ -103,8 +103,14 @@ var glbDebug = true,
             else
                 return glbContextPath;
         };
+        nsn.request = function(path) {
+            return nsn.url('/nsn/go/to/').concat(path);
+        };
         nsn.staticResource = function(path) {
             return nsn.url('/static/').concat(path);
+        };
+        nsn.staticUploadedImage = function(path) {
+            return nsn.staticResource('images/').concat(path);
         };
         nsn.smileImage = function(category, type, name) {
             var smilesPath = nsn.staticResource('smiles/' + category + '/' + type + '/' + name);
@@ -351,6 +357,12 @@ var glbDebug = true,
     NSN_getFeedId = function(feedItem) {
         return parseInt(feedItem.attr('id').slice(7), 10);
     };
+    NSN_getProfileItem = function(ofObj) {
+        return jQuery(ofObj).parents('.UIContent_UserProfile');
+    };
+    NSN_getProfileId = function(profileItem) {
+        return parseInt(profileItem.attr('id').slice(8), 10);
+    };
     NSN_postComment = function(feedId, commentText) {
         jQuery.ajax({
             url: nsn.url('/nsn/go/to/comment/addsave'),
@@ -362,10 +374,11 @@ var glbDebug = true,
             },
             success: function(data) {
                 if (data != null && data.length > 0) {
-                    var editor = nsn.$id('editor-update-' + feedId);
+                    var editor = nsn.$id('editor-update-' + feedId),
+                        cancelBtn = editor.parents('.commentBox').find('.guiButton.cancel');
                     editor.val('');
                     nsn.$id('update-' + feedId).find('.uiListTreeInner').append(data);
-                    editor.focus();
+                    cancelBtn.click();
                 }
                 else {
                     nsn.createJqDlg(glbDefaultDlgId, 'Cannot process your comment. Please try again!').dialog('open');
@@ -381,9 +394,15 @@ var glbDebug = true,
 /* end NSN/globals.js */
 
 /* begin NSN/ready.js */
-jQuery(function($) {
-    NSN.f.autoCompleteOff();
-	NSN.f.disableDrag('{"tags":["a", "img"], "classes":["guiButton"]}');
+jQuery(function ($) {
+    try {
+        NSN.f.autoCompleteOff();
+        NSN.f.disableDrag('{"tags":["a", "img"], "classes":["guiButton"]}');
+        $('textarea.autogrow').elastic();
+    }
+    catch (e) {
+        NSN._log(e);
+    }
 });
 
 /* end NSN/ready.js */

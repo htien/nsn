@@ -17,13 +17,13 @@ namespace NewSocialNetwork.Domain
         [BelongsTo("FriendUserId", NotNull = true)]
         public virtual User FriendUser { get; set; }
 
-        [BelongsTo("ListId", NotNull = true)]
+        [BelongsTo("ListId", NotNull = true, Insert = false)]
         public virtual FriendList List { get; set; }
 
-        [Property("IsSeen", NotNull = true, Default = "false")]
+        [Property("IsSeen", NotNull = true, Default = "false", Insert = false)]
         public virtual bool IsSeen { get; set; }
 
-        [Property("IsIgnore", NotNull = true, Default = "false")]
+        [Property("IsIgnore", NotNull = true, Default = "false", Insert = false)]
         public virtual bool IsIgnore { get; set; }
 
         [Property("Message", Length = 255, NotNull = false)]

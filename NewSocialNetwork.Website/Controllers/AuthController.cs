@@ -9,7 +9,7 @@ namespace NewSocialNetwork.Website.Controllers
     [HandleError]
     public class AuthController : AbstractController
     {
-        public FrontendService frontService { private get; set; }
+        public FrontendService frontendService { private get; set; }
         public IUserRepository userRepo { private get; set; }
 
         public AuthController()
@@ -35,8 +35,12 @@ namespace NewSocialNetwork.Website.Controllers
                 @"<p>Quá trình đăng ký gặp trắc trở và đã thất bại. Ôi thê thảm quá!</p>");
             try
             {
-                Domain.User user = frontService.RegisterNewUser(firstname, lastname, gender, reg_email, reg_password, confirm_password,
+                // Add new user
+                Domain.User user = frontendService.RegisterNewUser(firstname, lastname, gender, reg_email, reg_password, confirm_password,
                     (birthday_year + "/" + birthday_month + "/" + birthday_day));
+                // Init user count pending
+                frontendService.CreateUserCount(user);
+                // Returns
                 msg.SetStatusAndMessage(RStatus.SUCCESS,
                     String.Format(@"<p>Register successfully! Welcome to New Social Network.</p>
                                     <p>Your login ID is <strong>{0}</strong>.</p>", user.Email));
@@ -58,7 +62,7 @@ namespace NewSocialNetwork.Website.Controllers
                      Make sure that it is typed correctly.</p>");
             try
             {
-                Domain.User user = frontService.Login(nsnId, nsnPasswd);
+                Domain.User user = frontendService.Login(nsnId, nsnPasswd);
                 if (user != null)
                 {
                     msg.SetStatusAndMessage(RStatus.SUCCESS, "Authenticated!");
@@ -73,7 +77,7 @@ namespace NewSocialNetwork.Website.Controllers
 
         public ActionResult Logout()
         {
-            frontService.Logout();
+            frontendService.Logout();
             return RedirectToRoute("Root");
         }
     }
