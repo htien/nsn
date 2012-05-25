@@ -44,7 +44,7 @@ namespace NSN.Common
         /**************************************************************************/
 
         public const string glbEmailRegEx = @"^\s*[a-zA-Z0-9_%+#&'*/=^`{|}~-](?:\.?[a-zA-Z0-9_%+#&'*/=^`{|}~-])*@(?:[a-zA-Z0-9_](?:(?:\.?|-*)[a-zA-Z0-9_])*\.[a-zA-Z]{2,9}|\[(?:2[0-4]\d|25[0-5]|[01]?\d\d?)\.(?:2[0-4]\d|25[0-5]|[01]?\d\d?)\.(?:2[0-4]\d|25[0-5]|[01]?\d\d?)\.(?:2[0-4]\d|25[0-5]|[01]?\d\d?)])\s*$";
-        public const string glbUserNameRegEx = @"";
+        public const string glbUserNameRegEx = @"^[A-Za-z][A-Za-z0-9_]{4,30}$";
         public const string glbScriptFormat = "<script type=\"text/javascript\" src=\"{0}\"></script>";
 
         /**************************************************************************/
@@ -364,7 +364,7 @@ namespace NSN.Common
 
         public static string ApplyHtmlFrom(string text)
         {
-            return text.Replace(" ", "&nbsp;").Replace("&#10;", "<br />");
+            return text.Replace(" ", "&nbsp;").Replace("&#10;", "<br />").Replace("&#13;", "&nbsp;");
         }
 
         /// <summary>

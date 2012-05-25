@@ -213,6 +213,7 @@ img,
 }
 .UIContent_UserProfile {
   position: relative;
+  min-height: 1000px;
 }
 .UIContent_UserProfile .uiHeadProfile {
   padding: 0 19px;
@@ -577,4 +578,35 @@ img,
 }
 .UIList_RecommendedFriends .info {
   color: #999;
+}
+
+.UIProfile_EditInfo .pageletTitle {
+  line-height: 32px;
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 100;
+}
+.UIProfile_EditInfo .uiFormInner {
+  padding-top: 25px;
+}
+.UIProfile_EditInfo .formActions {
+  padding-top: 20px;
+}
+.UIProfile_EditInfo .uiGridForm .row {
+  overflow: hidden;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+}
+.UIProfile_EditInfo .uiGridForm .label {
+  display: inline-block;
+  width: 100px;
+  font-weight: bold;
+  color: #333;
+}
+.UIProfile_EditInfo .uiGridForm .persistText {
+  color: #000;
+}
+.UIProfile_EditInfo .uiGridForm .uiFormText,
+.UIProfile_EditInfo .uiGridForm .uiFormSelect.scale {
+  width: 300px;
 }

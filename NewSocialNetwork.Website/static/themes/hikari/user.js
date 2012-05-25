@@ -276,6 +276,18 @@ jQuery(function ($) {
         alert(userId);
         evt.preventDefault();
     });
+    jQuery('#profile-editinfo-form .submitBtn').click(function(evt) {
+        var form = NSN.$id('profile-editinfo-form');
+        NSN.ajaxSubmit(form)
+            .success(function(json) {
+                if (json.Status == 1) {
+                    document.location = json.ReturnedPath;
+                }
+                else {
+                    NSN.createJqDlg(glbDefaultDlgId, json.Message).dialog('open');
+                }
+            });
+    });
 });
 
 function ajaxCount() {

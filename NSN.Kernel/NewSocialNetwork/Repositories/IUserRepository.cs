@@ -10,6 +10,8 @@ namespace NewSocialNetwork.Repositories
         User GetUserByUsername(string username);
         string GetPasswordByEmail(string email);
         string GetPasswordByUsername(string username);
+        bool IsExistUsername(string username);
+        bool IsExistEmail(string email);
         IList<User> ListFriends(int userId);
         IList<User> ListFriendsInList(int listId);
         IList<User> ListNotMutualFriends(int userId, int friendUserId, int size = 5);

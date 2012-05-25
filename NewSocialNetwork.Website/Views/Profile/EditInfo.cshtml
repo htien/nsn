@@ -1,0 +1,108 @@
+﻿@using NSN.Common;
+@using NewSocialNetwork.Domain;
+@{
+    User user = ViewBag.MyProfile;
+}
+<div id="pagelet_edit_profileinfo">
+    <div class="UIProfile_EditInfo">
+        <h2 class="pageletTitle">Edit Profile</h2>
+        <form id="profile-editinfo-form" action="@Url.RouteUrl("ProfileAction", new { action = "EditInfoSave" })" method="post">
+            <div class="uiFormInner">
+                <div class="uiGridForm">
+                    <div class="row">
+                        <label>
+                            <span class="label">Username:</span>
+                            @if (String.IsNullOrWhiteSpace(user.Username)) {
+                                <input class="uiFormText guiInputText" type="text" name="username" />
+                            }
+                            else {
+                                <span class="persistText">@user.Username</span>
+                            }
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label>
+                            <span class="label">Full name:</span>
+                            <input class="uiFormText guiInputText" type="text" name="fullName" value="@user.FullName" />
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label>
+                            <span class="label">Email:</span>
+                            <input class="uiFormText guiInputText" type="text" name="email" value="@user.Email" />
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label>
+                            <span class="label">Gender:</span>
+                            <select class="uiFormSelect" name="gender">
+                                <option value="0"@Html.Raw(user.Gender==0?" selected=\"selected\"":"")>Unspecified</option>
+                                <option value="1"@Html.Raw(user.Gender==1?" selected=\"selected\"":"")>Male</option>
+                                <option value="2"@Html.Raw(user.Gender==2?" selected=\"selected\"":"")>Female</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="row">
+                        <span class="label">Birthday:</span>
+                        <select class="uiFormSelect" name="birthday_month">
+                            @{
+                                string[] monthNames = { "January", "February", "March", "April", "May", "June", "July", "August", "Septemper", "October", "November", "December" };
+                                for (int i = 0; i < monthNames.Length; i++) {
+                                    if (i + 1 == Globals.GetBirthday(user.Birthday).Month) {
+                                        <option value="@(i + 1)" selected="selected">@monthNames[i]</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@(i + 1)">@monthNames[i]</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <select class="uiFormSelect" name="birthday_day">
+                            @for (int i = 1; i <= 31; i++)
+                            {
+                                if (i == Globals.GetBirthday(user.Birthday).Day) {
+                                    <option value="@i" selected="selected">@i</option>
+                                }
+                                else {
+                                    <option value="@i">@i</option>
+                                }
+                            }
+                        </select>
+                        <select class="uiFormSelect" name="birthday_year">
+                            @for (int i = DateTime.UtcNow.Year; i >= 1905; i--)
+                            {
+                                if (i == Globals.GetBirthday(user.Birthday).Year) {
+                                    <option value="@i" selected="selected">@i</option>
+                                }
+                                else {
+                                    <option value="@i">@i</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label>
+                            <span class="label">Country:</span>
+                            <select class="uiFormSelect scale" name="countryiso">
+                                @foreach (Country country in ViewBag.Countries)
+                                {
+                                    if (user.Country != null
+                                        && country.CountryIso.Equals(user.Country.CountryIso, StringComparison.OrdinalIgnoreCase)) {
+                                        <option value="@country.CountryIso" selected="selected">@country.Name</option>
+                                    }
+                                    else {
+                                        <option value="@country.CountryIso">@country.Name</option>
+                                    }
+                                }
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="formActions">
+                    <div class="guiButton guiBlueButton submitBtn">Update Profile</div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

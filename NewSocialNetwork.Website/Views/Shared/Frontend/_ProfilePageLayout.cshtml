@@ -21,25 +21,32 @@
             <div id="@divProfile" class="UIContent_UserProfile">
                 <div class="uiHeadProfile">
                     <div class="profileActions">
-                        <div class="requestFriendAction">
-                            @if (userProfile.UserId != myProfile.UserId)
-                            {
-                                bool isFriend = Globals.IsFriend(myProfile.UserId, userProfile.UserId);
-                                bool isConfirming = Globals.IsConfirmingFriendRequest(myProfile.UserId, userProfile.UserId);
-                                if (!isFriend && !isConfirming)
-                                {
-                                    <div class="guiButton guiRedButton addFriend">Add Friend</div>
+                        @if (ViewBag.IsMyProfile && (ViewBag.IsEditInfoPage == null || !ViewBag.IsEditInfoPage))
+                        {
+                            <a class="guiButton guiBlueButton" href="@Url.RouteUrl("ProfileAction", new { action = "EditInfo" })">
+                                Edit Profile</a>
+                        }
+                        @if (userProfile.UserId != myProfile.UserId)
+                        {
+                            <div class="requestFriendAction">
+                                @{
+                                    bool isFriend = Globals.IsFriend(myProfile.UserId, userProfile.UserId);
+                                    bool isConfirming = Globals.IsConfirmingFriendRequest(myProfile.UserId, userProfile.UserId);
+                                    if (!isFriend && !isConfirming)
+                                    {
+                                        <div class="guiButton guiRedButton addFriend">Add Friend</div>
+                                    }
+                                    else if (!isFriend && isConfirming)
+                                    {
+                                        <div class="guiButton guiRedButton confirmingFriend">+1 Friend Request Sent</div>
+                                    }
+                                    else if (isFriend && isConfirming)
+                                    {
+                                        <div class="guiButton guiRedButton">Error!</div>
+                                    }
                                 }
-                                else if (!isFriend && isConfirming)
-                                {
-                                    <div class="guiButton guiRedButton confirmingFriend">+1 Friend Request Sent</div>
-                                }
-                                else if (isFriend && isConfirming)
-                                {
-                                    <div class="guiButton guiRedButton">Error!</div>
-                                }
-                            }
-                        </div>
+                            </div>
+                        }
                     </div>
                     <div class="uiProfileTitle">
                         @userProfile.FullName
@@ -102,6 +109,7 @@
                 <div class="uiBodyProfile">
                     <div class="uiBodyProfileContent">
                         @RenderBody()
+                        <div class="clearfix"></div>
                     </div>
                 </div>
             </div>

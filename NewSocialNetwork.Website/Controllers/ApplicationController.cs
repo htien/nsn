@@ -18,7 +18,10 @@ namespace NewSocialNetwork.Website.Controllers
             Domain.User myProfile = sessionManager.GetUser();
             Domain.User userProfile = frontendService.GetUserProfile(uid);
 
-            ViewBag.IsMyProfile = uid == null || uid.Equals(myProfile.UserId) || uid.Equals(myProfile.Username, StringComparison.OrdinalIgnoreCase);
+            ViewBag.IsMyProfile = uid == null
+                || uid.Equals(myProfile.UserId.ToString())
+                || uid.Equals(myProfile.Username, StringComparison.OrdinalIgnoreCase);
+
             if (!ViewBag.IsMyProfile && userProfile == null)
             {
                 filterContext.Result = new HttpNotFoundResult("Profile not found!");
