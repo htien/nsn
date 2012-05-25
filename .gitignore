@@ -2,6 +2,7 @@ bin/
 obj/
 packages/
 publish/
+/NewSocialNetwork.Website/static/images/
 
 *~
 *.bak

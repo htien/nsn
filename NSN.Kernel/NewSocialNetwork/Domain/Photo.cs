@@ -17,13 +17,13 @@ namespace NewSocialNetwork.Domain
         [BelongsTo("UserId", NotNull = true)]
         public virtual User User { get; set; }
 
-        [BelongsTo("FriendUserId", NotNull = true)]
+        [BelongsTo("FriendUserId", NotNull = true, Insert = false)]
         public virtual User FriendUser { get; set; }
 
         [Property("Privacy", NotNull = true, Default = "0")]
         public virtual byte Privacy { get; set; }
 
-        [Property("Title", Length = 255, NotNull = true)]
+        [Property("Title", Length = 255, NotNull = false)]
         public virtual string Title { get; set; }
 
         [Property("Image", Length = 255, NotNull = false)]

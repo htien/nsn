@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
+using NSN.Common.Utilities;
 using NSN.Kernel;
 using SaberLily.Utils;
 
@@ -42,6 +46,10 @@ namespace NSN.Common
         public const string glbEmailRegEx = @"^\s*[a-zA-Z0-9_%+#&'*/=^`{|}~-](?:\.?[a-zA-Z0-9_%+#&'*/=^`{|}~-])*@(?:[a-zA-Z0-9_](?:(?:\.?|-*)[a-zA-Z0-9_])*\.[a-zA-Z]{2,9}|\[(?:2[0-4]\d|25[0-5]|[01]?\d\d?)\.(?:2[0-4]\d|25[0-5]|[01]?\d\d?)\.(?:2[0-4]\d|25[0-5]|[01]?\d\d?)\.(?:2[0-4]\d|25[0-5]|[01]?\d\d?)])\s*$";
         public const string glbUserNameRegEx = @"";
         public const string glbScriptFormat = "<script type=\"text/javascript\" src=\"{0}\"></script>";
+
+        /**************************************************************************/
+
+        public const string SESSIONKEY_UPLOADED_PHOTOS = "uploaded_images_for_";
 
         /*** SystemGlobals.properties *********************************************/
 
@@ -240,10 +248,22 @@ namespace NSN.Common
             }
         }
 
-        public static Photo GetAlbumAvatar(int albumId)
+        public static bool IsFriend(int userId, int friendUserId)
         {
-            IPhotoRepository photoRepo = NSNContext.Current.Container.Resolve<IPhotoRepository>();
-            return photoRepo.GetFirstPhotoByAlbum(albumId);
+            IFriendRepository friendRepo = NSNContext.Current.Container.Resolve<IFriendRepository>();
+            return friendRepo.IsFriend(userId, friendUserId);
+        }
+
+        public static bool IsLikeForFeed(string typeId, int itemId, int userId)
+        {
+            ILikeRepository likeRepo = NSNContext.Current.Container.Resolve<ILikeRepository>();
+            return likeRepo.Exists(typeId, itemId, userId);
+        }
+
+        public static bool IsConfirmingFriendRequest(int userId, int friendUserId)
+        {
+            IFriendRequestRepository friendRequestRepo = NSNContext.Current.Container.Resolve<IFriendRequestRepository>();
+            return friendRequestRepo.IsConfirmingFriendRequest(userId, friendUserId);
         }
 
         public static IList<Comment> GetCommentsByFeed(string typeId, int itemId, int ownerUserId)
@@ -252,16 +272,99 @@ namespace NSN.Common
             return commentRepo.GetCommentsByFeed(typeId, itemId, ownerUserId);
         }
 
-        public static bool isLikeForFeed(string typeId, int itemId, int userId)
+        public static IList<Photo> GetNewPhotosByTimestamp(int timestamp, int size)
         {
-            ILikeRepository likeRepo = NSNContext.Current.Container.Resolve<ILikeRepository>();
-            return likeRepo.Exists(typeId, itemId, userId);
+            IPhotoRepository photoRepo = NSNContext.Current.Container.Resolve<IPhotoRepository>();
+            return photoRepo.GetPhotosByTimestamp(timestamp, size);
+        }
+
+        public static IList<User> GetNotMutualFriends(int userId, int size = 5)
+        {
+            IUserRepository userRepo = NSNContext.Current.Container.Resolve<IUserRepository>();
+            IList<int> friendUserIds = userRepo.ListFriendUserIds(userId);
+            Random rnd = new Random();
+            int chosenFriendUserId = friendUserIds[rnd.Next(friendUserIds.Count)];
+            return userRepo.ListNotMutualFriends(userId, chosenFriendUserId);
+        }
+
+        public static IList<User> GetMutualFriends(int userId, int friendUserId, int size = 10)
+        {
+            IUserRepository userRepo = NSNContext.Current.Container.Resolve<IUserRepository>();
+            return userRepo.ListMutualFriends(userId, friendUserId, size);
+        }
+
+        public static int GetTotalPhoto(int albumId)
+        {
+            IPhotoRepository photoRepo = NSNContext.Current.Container.Resolve<IPhotoRepository>();
+            return photoRepo.GetTotalPhoto(albumId);
         }
 
         public static int GetTotalLike(string typeId, int itemId)
         {
             ILikeRepository likeRepo = NSNContext.Current.Container.Resolve<ILikeRepository>();
             return likeRepo.GetTotalLike(typeId, itemId);
+        }
+
+        public static Photo GetAlbumAvatar(int albumId)
+        {
+            IPhotoRepository photoRepo = NSNContext.Current.Container.Resolve<IPhotoRepository>();
+            return photoRepo.GetFirstPhotoByAlbum(albumId);
+        }
+
+        public static UserCount GetUserCount(int userId)
+        {
+            IUserCountRepository userCountRepo = NSNContext.Current.Container.Resolve<IUserCountRepository>();
+            return userCountRepo.FindById(userId);
+        }
+
+        public static ImageInfo SaveImageInPlace(HttpPostedFileBase file, string intoPath)
+        {
+            if (file.ContentLength == 0)
+            {
+                throw new Exception("Content-Length equal zero.");
+            }
+            string extRegex = @"^(\.jpe?g|\.png|\.gif)$";
+            string mimeRegex = @"^image\/(jpeg|png|gif)$";
+            if (!Regex.IsMatch(file.ContentType, mimeRegex, RegexOptions.IgnoreCase)
+                || !Regex.IsMatch(Path.GetExtension(file.FileName), extRegex, RegexOptions.IgnoreCase))
+            {
+                throw new Exception("Not image in format. (only for .jpg, .png, .gif)");
+            }
+            int sizeInKB = file.ContentLength / 1024;
+            if (sizeInKB > 2048)
+            {
+                throw new Exception("Size is limited 2MB.");
+            }
+            string fileName = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(file.FileName);
+            string folderUpload = Globals.ApplicationMapPath + intoPath.Replace("/", "\\");
+            string linkAccess = Path.Combine(folderUpload, fileName);
+            int uploadTimestamp = DateTimeUtils.UnixTimestamp;
+            file.SaveAs(linkAccess);
+
+            return new ImageInfo()
+            {
+                FileName = fileName,
+                FileSize = file.ContentLength,
+                MimeType = file.ContentType,
+                LinkAccess = linkAccess,
+                UploadTimestamp = uploadTimestamp,
+                ImageStream = file.InputStream
+            };
+        }
+
+        public static string HtmlEncode(string text)
+        {
+            return Microsoft.Security.Application.Encoder.HtmlEncode(text);
+        }
+
+        public static string UrlDecode(string text)
+        {
+            return HttpUtility.UrlDecode(text, Encoding.GetEncoding("ISO-8859-1"));
+        }
+
+        public static string ApplyHtmlFrom(string text)
+        {
+            return text.Replace(" ", "&nbsp;").Replace("&#10;", "<br />");
         }
 
         /// <summary>

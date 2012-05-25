@@ -1,10 +1,11 @@
-﻿@{
-    NewSocialNetwork.Domain.PhotoAlbum album = ViewBag.Album;
+﻿@using NewSocialNetwork.Domain;
+@{
+    PhotoAlbum album = ViewBag.Album;
 }
 <div class="UIGrid_Photo">
-<h2 class="title">@album.Name (@ViewBag.Photos.Count)</h2>
+<h2 class="title">@Html.Raw(album.Name.Replace(" ", "&nbsp;").Replace("&#10;", "<br />")) (@ViewBag.Photos.Count)</h2>
     <div class="UIPhotoContainer">
-            @foreach (NewSocialNetwork.Domain.Photo photo in ViewBag.Photos)
+            @foreach (Photo photo in ViewBag.Photos)
             {
                 <div class="UIPhotoItem">
                     <div class="UIPhotoWrapper">

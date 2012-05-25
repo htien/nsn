@@ -1,0 +1,28 @@
+﻿@using NSN.Common;
+@using NewSocialNetwork.Domain;
+@using Domain = NewSocialNetwork.Domain;
+<div id="pagelet-friendrequests-stream">
+    <div class="UIStream_FriendRequests">
+        <div class="uiRequestContainer">
+            @if (ViewBag.FriendRequests == null)
+            {
+                <div>Have no any friend request.</div>
+            }
+            @foreach (FriendRequest request in ViewBag.FriendRequests)
+            {
+                Domain.User friend = request.User;
+                <div class="uiFriendRequestItem">
+                    <div>
+                        <a id="friend-request-@request.RequestId" class="profileItem" href="@Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(friend) })" target="_blank">
+                            <img src="@Url.Content("~/static/images/avatars/" + Globals.UserImage(friend.UserImage, friend.Gender))" alt="" width="30" height="30" />
+                            <span class="title">@friend.FullName</span>
+                        </a>
+                        <div class="actions">
+                            <a class="confirmBtn" href="#">Confirm</a> | <a class="notNowBtn" href="#">Not Now</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

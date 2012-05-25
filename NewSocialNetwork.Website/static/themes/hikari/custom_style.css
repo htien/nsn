@@ -156,7 +156,7 @@
 
 .UIUploader_PhotoAlbum {
   position: relative;
-  width: 600px;
+  width: 800px;
 }
 .UIUploader_PhotoAlbum h2.title {
   font-family: 'Open Sans', Arial, sans-serif;
@@ -168,13 +168,63 @@
   padding-bottom: 25px;
 }
 .UIUploader_PhotoAlbum .uiForm {
-  padding: 0 17px 17px;
+  padding-bottom: 17px;
 }
 .UIUploader_PhotoAlbum .uploadActions {
+  clear: left;
   margin-top: 15px;
 }
 .UIUploader_PhotoAlbum input {
   outline: 0;
+}
+.UIUploader_PhotoAlbum .uiGrid {
+  margin-top: 15px;
+}
+.UIUploader_PhotoAlbum .uiGrid td {
+  padding: 5px 5px 5px 0;
+  vertical-align: top;
+}
+
+.UIUploader_PhotoAlbum .uiGrid .uiFormText,
+.UIUploader_PhotoAlbum .uiGrid .uiFormSelect,
+.UIUploader_PhotoAlbum .uiGrid input[type=file] {
+  height: 28px;
+}
+.UIUploader_PhotoAlbum .uiGrid .browse-button {
+  height: 26px;
+}
+.UIUploader_PhotoAlbum .uiGrid .browse-button input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  line-height: 28px;
+  opacity: 0;
+  filter: alpha(opacity = 0);
+  cursor: pointer;
+}
+.UIUploader_PhotoAlbum .uploadedQueueContainer,
+.UIUploader_PhotoAlbum .uploadedQueue,
+.UIUploader_PhotoAlbum .uploadedItem {
+  position: relative;
+}
+.UIUploader_PhotoAlbum .uploadedQueueContainer {
+  padding-top: 15px;
+}
+.UIUploader_PhotoAlbum .uploadedQueue {
+  min-height: 151px;
+}
+.UIUploader_PhotoAlbum .uploadedQueue,
+.UIUploader_PhotoAlbum .uploadedItem {
+  overflow: hidden;
+}
+.UIUploader_PhotoAlbum .uploadedItem {
+  float: left;
+  margin: 0 5px 5px 0;
+  width: 193px;
+  height: 144px;
+  border: 1px dashed #ddd;
 }
 
 /*Photos By Album*/

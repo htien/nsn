@@ -1,6 +1,7 @@
 ﻿using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NHibernate;
+using NHibernate.Criterion;
 
 namespace NewSocialNetwork.DataAccess
 {
@@ -8,5 +9,13 @@ namespace NewSocialNetwork.DataAccess
     {
         public UserCountDAO(ISessionFactory sessionFactory) : base(sessionFactory)
         { }
+
+        public UserCount Get(int userId)
+        {
+            return this.Session().CreateCriteria<UserCount>()
+                .Add(Restrictions.Eq("UserId", userId))
+                .SetLockMode(LockMode.Write)
+                .UniqueResult<UserCount>();
+        }
     }
 }

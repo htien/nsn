@@ -1,0 +1,36 @@
+﻿@using NSN.Common;
+@using Domain = NewSocialNetwork.Domain;
+@{
+    Domain.User friendProfile = ViewBag.RequestingFriend;
+    string avatarPath = Url.Content("~/static/images/avatars/" + Globals.UserImage(friendProfile.UserImage, friendProfile.Gender));
+}
+<div id="pagelet-requestfriend">
+    <div class="UIForm_RequestFriend">
+        <div class="uiFormContainer">
+            <div class="uiFormControls">
+                <div class="row">
+                    <div class="uiFriendProfile">
+                        <span class="block"><img class="avatar" src="@avatarPath" alt="" width="50" height="50" /></span>
+                        <span class="block">
+                            <span class="title">@friendProfile.FullName</span>
+                            <span></span><span></span>
+                        </span>
+                    </div>
+                    <div class="hidden_elem">
+                        <input type="hidden" name="friendUserId" value="@friendProfile.UserId" />
+                    </div>
+                </div>
+                <div class="row">
+                    <h3>Message:</h3>
+                    <div>
+                        <textarea class="uiFormTextArea" name="message" rows="3" cols="20"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="requestActions">
+                <div class="guiButton2 guiBlueButton requestBtn">Request</div>
+                <div class="guiButton2 cancelBtn">Cancel</div>
+            </div>
+        </div>
+    </div>
+</div>

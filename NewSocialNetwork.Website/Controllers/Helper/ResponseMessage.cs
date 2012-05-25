@@ -9,6 +9,7 @@ namespace NewSocialNetwork.Website.Controllers.Helper
         public string Action { get; set; }
         public int Status { get; set; }
         public string Message { get; set; }
+        public string ReturnedPath { get; set; }
 
         public ResponseMessage() { }
 

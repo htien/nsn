@@ -1,5 +1,7 @@
-﻿@{
-    NewSocialNetwork.Domain.User userProfile = ViewBag.UProfile;
+﻿@using NSN.Common;
+@using Domain = NewSocialNetwork.Domain;
+@{
+    Domain.User userProfile = ViewBag.UProfile;
 }
 <div class="UIProfileInfo">
     <div class="uiProfileBasic">
@@ -20,19 +22,22 @@
         </div>
         <div class="row">
             <div class="label">Gender</div>
-            <div class="text">@NSN.Common.Globals.Gender(userProfile.Gender)</div>
+            <div class="text">@Globals.Gender(userProfile.Gender)</div>
         </div>
         <div class="row">
             <div class="label">Birthday</div>
-            <div class="text">@NSN.Common.Globals.ShowBirthday(userProfile.Birthday)</div>
+            <div class="text">@Globals.ShowBirthday(userProfile.Birthday)</div>
         </div>
-        <div class="row">
-            <div class="label">Live in</div>
-            <div class="text">@userProfile.Country.Name</div>
-        </div>
+        @if (userProfile.Country != null)
+        {
+            <div class="row">
+                <div class="label">Live in</div>
+                <div class="text">@userProfile.Country.Name</div>
+            </div>
+        }
         <div class="row">
             <div class="label">Join date</div>
-            <div class="text">@NSN.Common.Globals.ShowDate(userProfile.Joined)</div>
+            <div class="text">@Globals.ShowDate(userProfile.Joined)</div>
         </div>
         <div class="row">
             <div class="label"></div>

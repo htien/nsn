@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
 using System.Web.Mvc;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NewSocialNetwork.Website.Controllers.Helper;
 using NewSocialNetwork.Website.Models;
-using System.IO;
-using NSN.Common;
-using SaberLily.Utils;
+using NSN.Common.Utilities;
 
 namespace NewSocialNetwork.Website.Controllers
 {
@@ -69,29 +66,48 @@ namespace NewSocialNetwork.Website.Controllers
         [HttpPost]
         public JsonResult UploadSave()
         {
-            ResponseMessage msg = new ResponseMessage("PhotoAlbumUploader", RAction.ADD, RStatus.FAIL,
+            //ResponseMessage msg = new ResponseMessage("PhotoAlbumUploader", RAction.ADD, RStatus.FAIL,
+            //    "Error when processing your request.");
+            UploadedPhotoModel[] photosModel = null;
+            try
+            {
+                IList<ImageInfo> images = frontendService.SaveImages(Request.Files);
+                if (images.Count == 0)
+                {
+                    throw new Exception("Cannot process your request.");
+                }
+                // Save list of uploaded images to HttpSession
+                frontendService.SaveImagesInSession(this.Session, images);
+                //msg.SetStatusAndMessage(RStatus.SUCCESS, "Uploaded.");
+                photosModel = new UploadedPhotoModel[images.Count];
+                int i = 0;
+                foreach (ImageInfo image in images)
+                {
+                    UploadedPhotoModel model = new UploadedPhotoModel()
+                    {
+                        FileName = image.FileName,
+                        FileSize = image.FileSize,
+                        MimeType = image.MimeType,
+                        UploadTimestamp = image.UploadTimestamp
+                    };
+                    photosModel[i++] = model;
+                }
+            }
+            catch// (Exception e)
+            {
+                //msg.Message = e.Message;
+            }
+            return Json(photosModel);
+        }
+
+        public JsonResult CancelUpload()
+        {
+            ResponseMessage msg = new ResponseMessage("PhotoAlbumUploader", RAction.REMOVE, RStatus.FAIL,
                 "Error when processing your request.");
             try
             {
-                foreach (string upload in Request.Files)
-                {
-                    HttpPostedFileBase file = Request.Files[upload];
-                    if (file.ContentLength == 0)
-                    {
-                        continue;
-                    }
-                    int sizeInKB = file.ContentLength / 1024;
-                    if (sizeInKB > 2048)
-                    {
-                        continue;
-                    }
-                    string fileName = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(file.FileName);
-                    string folderUpload = Globals.ApplicationMapPath + "\\static\\images\\photos\\";
-                    string linkAccess = Path.Combine(folderUpload, fileName);
-                    int uploadTimestamp = DateTimeUtils.UnixTimestamp;
-                    file.SaveAs(linkAccess);
-                }
-                msg.SetStatusAndMessage(RStatus.SUCCESS, Request.Files.Count.ToString());
+                frontendService.RemoveImagesFromDisk(this.Session);
+                msg.SetStatusAndMessage(RStatus.SUCCESS, "Canceled.");
             }
             catch (Exception e)
             {
