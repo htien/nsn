@@ -246,18 +246,18 @@ namespace NSN.Common
             {
                 return userImage;
             }
-        }        
-
-        public static bool IsLikeForFeed(string typeId, int itemId, int userId)
-        {
-            ILikeRepository likeRepo = NSNContext.Current.Container.Resolve<ILikeRepository>();
-            return likeRepo.Exists(typeId, itemId, userId);
         }
 
         public static bool IsFriend(int userId, int friendUserId)
         {
             IFriendRepository friendRepo = NSNContext.Current.Container.Resolve<IFriendRepository>();
             return friendRepo.IsFriend(userId, friendUserId);
+        }
+
+        public static bool IsLikeForFeed(string typeId, int itemId, int userId)
+        {
+            ILikeRepository likeRepo = NSNContext.Current.Container.Resolve<ILikeRepository>();
+            return likeRepo.Exists(typeId, itemId, userId);
         }
 
         public static bool IsConfirmingFriendRequest(int userId, int friendUserId)
@@ -276,6 +276,21 @@ namespace NSN.Common
         {
             IPhotoRepository photoRepo = NSNContext.Current.Container.Resolve<IPhotoRepository>();
             return photoRepo.GetPhotosByTimestamp(timestamp, size);
+        }
+
+        public static IList<User> GetNotMutualFriends(int userId, int size = 5)
+        {
+            IUserRepository userRepo = NSNContext.Current.Container.Resolve<IUserRepository>();
+            IList<int> friendUserIds = userRepo.ListFriendUserIds(userId);
+            Random rnd = new Random();
+            int chosenFriendUserId = friendUserIds[rnd.Next(friendUserIds.Count)];
+            return userRepo.ListNotMutualFriends(userId, chosenFriendUserId);
+        }
+
+        public static IList<User> GetMutualFriends(int userId, int friendUserId, int size = 10)
+        {
+            IUserRepository userRepo = NSNContext.Current.Container.Resolve<IUserRepository>();
+            return userRepo.ListMutualFriends(userId, friendUserId, size);
         }
 
         public static int GetTotalPhoto(int albumId)

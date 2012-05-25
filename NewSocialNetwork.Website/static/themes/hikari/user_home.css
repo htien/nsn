@@ -557,3 +557,24 @@ img,
 .UIStream_FriendRequests .actions {
   float: right;
 }
+
+.UIList_RecommendedFriends {
+  margin-top: 20px;
+}
+.UIList_RecommendedFriends .uiListContainer {
+  padding-top: 5px;
+}
+.UIList_RecommendedFriends .uiListItem {
+  overflow: hidden;
+  padding: 5px 0 15px;
+}
+.UIList_RecommendedFriends .uiListItem a {
+  font-weight: bold;
+}
+.UIList_RecommendedFriends .uiListItem img {
+  float: left;
+  margin-right: 5px;
+}
+.UIList_RecommendedFriends .info {
+  color: #999;
+}

@@ -174,21 +174,24 @@ jQuery(function ($) {
             success: function (json) {
                 if (json.Status == 1) {
                     NSN.$id('ajax-uploader-form').dialog('destroy').remove();
-                }
-                NSN.createJqDlg(glbDefaultDlgId, json.Message, {
-                    buttons: [
-                        {
-                            text: 'Go to album',
-                            class: 'guiBlueButton',
-                            click: function () {
-                                document.location = json.ReturnedPath;
+                    NSN.createJqDlg(glbDefaultDlgId, json.Message, {
+                        buttons: [
+                            {
+                                text: 'Go to album',
+                                class: 'guiBlueButton',
+                                click: function () {
+                                    document.location = json.ReturnedPath;
+                                }
                             }
-                        }
-                    ]
-                }).dialog('open');
+                        ]
+                    }).dialog('open');
+                }
+                else {
+                    NSN.createJqDlg(glbDefaultDlgId, json.Message).dialog('open');
+                }
             },
             error: function (data) {
-                NSN.createJqDlg(glbDefaultDlgId, data);
+                NSN.createJqDlg(glbDefaultDlgId, data).dialog('open');
             }
         });
     });

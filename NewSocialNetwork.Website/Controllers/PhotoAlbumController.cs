@@ -28,21 +28,15 @@ namespace NewSocialNetwork.Website.Controllers
         
         public ActionResult List()
         {
-            User user = sessionManager.GetUser();
+            User user = ViewBag.UProfile;
             IList<PhotoAlbum> albums = photoAlbumRepo.GetPhotoAlbumByUser(user.UserId);
             int totalAlbum = photoAlbumRepo.GetTotalPhotoAlbumByUser(user.UserId);
             //int totalUsers = photoAlbumRepo.GetNotMutualFriends(1, 2).Count;
             //ViewBag.Total = totalUsers;
             //IList<Friend> u = friendRepo.GetNotMutualFriends(1, 2);
             //ViewBag.user = u;
-            int totalfriends = photoAlbumRepo.GetTotalFriendsByUser(1);
-            ViewBag.user = totalfriends;
-            IList<User> listfriend = photoAlbumRepo.GetListFriendByUser(1);
-            ViewBag.listfriend = listfriend;
             IList<Photo> listphotoalbum = photoAlbumRepo.GetPhotoByAlbum(2);
             ViewBag.listphotoalbum = listphotoalbum;
-            IList<User> friendsearch = photoAlbumRepo.SearchFriendByName("l", 1);
-            ViewBag.friendsearch = friendsearch;
             int totalcomment = commentRepo.GetTotalComment("photo", 1, 1);
             ViewBag.totalcomment = totalcomment;
             IList<Comment> allc = commentRepo.GetCommentsByFeed("photo", 1, 1);
@@ -58,18 +52,9 @@ namespace NewSocialNetwork.Website.Controllers
             IList<FriendList> fl = photoAlbumRepo.GetAllFriendListByUser(1);
             ViewBag.friendList = fl;
 
-            IList<User> userFriendList = photoAlbumRepo.GetFriendInListByUser(1);
-            ViewBag.userFriendList = userFriendList;
             IList<CustomRelation> customRelation = photoAlbumRepo.GetRelationshipBetweenUsers(1, 2);
             ViewBag.customRelation = customRelation;
             ViewBag.Albums = albums;
-
-            IList<User> NotMutualFriend = photoAlbumRepo.GetNotMutualFriend(2,1);
-            ViewBag.notMutualFriend = NotMutualFriend;
-
-            IList<User> MutualFriend = photoAlbumRepo.GetMutualFriend(2, 1);
-            ViewBag.mutualFriend = MutualFriend;
-
             return View();
         }
 

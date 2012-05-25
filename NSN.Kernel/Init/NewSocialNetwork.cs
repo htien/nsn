@@ -164,7 +164,7 @@ namespace NSN.Init
 
         protected void Session_End(object sender, EventArgs e)
         {
-            if (HttpContext.Current.Session == null)
+            if (HttpContext.Current == null || HttpContext.Current.Session == null)
                 return;
 
             ISessionManager sessionManager = NSNContext.Current.SessionManager;

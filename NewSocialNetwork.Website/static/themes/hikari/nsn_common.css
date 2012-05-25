@@ -208,7 +208,11 @@ table.fixed {
   height: 5px;
   background: url(images/stripe.gif) repeat-x;
 }
-
+.pageletTitle {
+  line-height: 26px;
+  font-size: 17px;
+  color: #006e12
+}
 .nsnCopyright {
   line-height: 1.4;
   font-size: 11px;

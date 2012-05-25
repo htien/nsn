@@ -4,6 +4,11 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
     Domain.User myProfile = ViewBag.MyProfile;
     Domain.User userProfile = ViewBag.UProfile;
+    IList<Domain.User> mutualFriends = null;
+    if (ViewBag.IsFriend != null && ViewBag.IsFriend)
+    {
+        mutualFriends = Globals.GetMutualFriends(myProfile.UserId, userProfile.UserId);
+    }
 }
 @section html_head_area {@RenderSection("html_head_area", false)}
 @RenderPage("~/Views/Shared/Frontend/pagelet/_apps_bar_pagelet.cshtml")
@@ -47,7 +52,7 @@
                         <div class="uiProfilePictureBox">
                             <div class="uiProfilePicture">
                                 <div class="uiPicture">
-                                    <img src="@Url.Content("~/static/images/avatars/" + ViewBag.UAvatarFileName)" title="" width="250" height="250" />
+                                    <img src="@Url.Content("~/static/images/avatars/" + ViewBag.UAvatarFileName)" alt="" width="250" height="250" />
                                 </div>
                             </div>
                         </div>
@@ -61,14 +66,38 @@
                                     </div>
                                     @if (userProfile.Country != null)
                                     {
-                                    <div class="infoContent">
-                                        <span>Live in</span> <strong>@userProfile.Country.Name</strong>
-                                    </div>
+                                        <div class="infoContent">
+                                            <span>Live in</span> <strong>@userProfile.Country.Name</strong>
+                                        </div>
                                     }
                                 </div>
                             </div>
                         </div>
                     </div>
+                    @if (ViewBag.IsFriend != null && ViewBag.IsFriend && mutualFriends != null)
+                    {
+                        <div id="pagelet_recommended_friends">
+                            <div class="UIList_RecommendedFriends">
+                                <h2 class="pageletTitle">Mutual Friends</h2>
+                                <div class="uiListContainer">
+                                    @foreach (Domain.User friend in mutualFriends)
+                                    {
+                                        <div class="uiListItem">
+                                            <a href="@Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(friend) })">
+                                                <img src="@Url.Content("~/static/images/avatars/" + Globals.UserImage(friend.UserImage, friend.Gender))"
+                                                    alt="" width="40" height="40" />
+                                                <span>@friend.FullName</span>
+                                            </a>
+                                            @if (friend.Country != null)
+                                            {
+                                                <div class="info">@friend.Country.Name</div>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
                 <div class="uiBodyProfile">
                     <div class="uiBodyProfileContent">
