@@ -610,3 +610,8 @@ img,
 .UIProfile_EditInfo .uiGridForm .uiFormSelect.scale {
   width: 300px;
 }
+
+.UIPhotoZoomContainer .photo {
+  max-width: 800px;
+  min-height: 600px;
+}

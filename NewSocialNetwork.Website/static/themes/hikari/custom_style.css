@@ -91,6 +91,10 @@
 }
 
 /*Photo Album By User*/
+img.zoomFeature {
+  cursor: pointer;
+}
+
 .album {
   position: relative;
   padding: 0;

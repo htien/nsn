@@ -24,9 +24,20 @@ namespace NewSocialNetwork.Website.Controllers
 
         //
         // GET: /Photo/
-
-        public ActionResult Show()
+        [HttpPost]
+        public ActionResult ShowZoom(int photoId)
         {
+            Photo photo = photoRepo.FindById(photoId);
+            if (photo == null)
+            {
+                return HttpNotFound("The photo does not exists.");
+            }
+            if ((photo.Privacy == NSNPrivacyMode.PUBLIC)
+                || (photo.Privacy == NSNPrivacyMode.FRIENDS && ViewBag.IsFriend)
+                || (photo.Privacy == NSNPrivacyMode.ONLYME && ViewBag.IsMyProfile))
+            {
+                ViewBag.Photo = photo;
+            }
             return View();
         }
 
