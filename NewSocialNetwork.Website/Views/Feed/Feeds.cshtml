@@ -68,25 +68,45 @@
                                         break;
                                     case NSNType.PHOTO_ALBUM:
                                         PhotoAlbum album = (PhotoAlbum)item._Entity;
+                                        string href = Url.RouteUrl("PhotoAlbumAction", new { uid = displayId, albumid = album.AlbumId, action = "ListPhotos" });
+                                        int totalPhoto = Globals.GetTotalPhoto(album.AlbumId);
+                                        IList<Photo> fetchedPhotos = Globals.GetNewPhotosByTimestamp(item._Feed.Timestamp, 4);
+                                        Photo first = fetchedPhotos[0];
                                         <div class="fTypePhotoAlbum">
-                                            @{
-                                               string href = Url.RouteUrl("PhotoAlbumAction", new { uid = displayId, albumid = album.AlbumId, action = "ListPhotos" });
-                                               int totalPhoto = Globals.GetTotalPhoto(album.AlbumId);
-                                               IList<Photo> fetchedPhotos = Globals.GetNewPhotosByTimestamp(item._Feed.Timestamp, 4);
-                                            }
                                             <div>
-                                                <a class="albumName" href="@href"><strong>@album.Name</strong></a> <span class="count">(@totalPhoto @(totalPhoto > 1 ? "photos" : "photo"))</span>
+                                                <a class="albumName" href="@href"><strong>@Html.Raw(Globals.ApplyHtmlFrom(album.Name))</strong></a> <span class="count">(@totalPhoto @(totalPhoto > 1 ? "photos" : "photo"))</span>
                                             </div>
                                             <div class="description">
                                             </div>
                                             <div class="photoUnit clearfix">
                                                 <div>
-                                                    @{Photo first = fetchedPhotos[0];}
                                                     <img src="@Url.Content("~/static/images/photos/" + first.Image)" alt="" />
                                                 </div>
                                                 @foreach (Photo photo in fetchedPhotos)
 	                                            {
                                                     if (photo.PhotoId == first.PhotoId) { continue; }
+                                                    <img src="@Url.Content("~/static/images/photos/" + photo.Image)" alt="" width="133" height="133" />
+                                                }
+                                            </div>
+                                        </div>
+                                        break;
+                                    case NSNType.PHOTO:
+                                        PhotoAlbum album2 = (PhotoAlbum)item._Entity;
+                                        string href2 = Url.RouteUrl("PhotoAlbumAction", new { uid = displayId, albumid = album2.AlbumId, action = "ListPhotos" });
+                                        int totalPhoto2 = Globals.TotalPhotoByTimestamp(album2.AlbumId, item._Feed.Timestamp);
+                                        IList<Photo> fetchedPhotos2 = Globals.GetNewPhotosByTimestamp(item._Feed.Timestamp, 4);
+                                        Photo first2 = fetchedPhotos2[0];
+                                        <div class="fTypePhotoAlbum">
+                                            <div>
+                                                Added <span class="count">@totalPhoto2 @(totalPhoto2 > 1 ? "photos" : "photo")</span> in <a class="albumName" href="@href2"><strong>@Html.Raw(Globals.ApplyHtmlFrom(album2.Name))</strong></a>.
+                                            </div>
+                                            <div class="photoUnit clearfix">
+                                                <div>
+                                                    <img src="@Url.Content("~/static/images/photos/" + first2.Image)" alt="" />
+                                                </div>
+                                                @foreach (Photo photo in fetchedPhotos2)
+	                                            {
+                                                    if (photo.PhotoId == first2.PhotoId) { continue; }
                                                     <img src="@Url.Content("~/static/images/photos/" + photo.Image)" alt="" width="133" height="133" />
                                                 }
                                             </div>

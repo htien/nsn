@@ -41,8 +41,17 @@ namespace NewSocialNetwork.DataAccess
         public int GetTotalPhoto(int albumId)
         {
             return Convert.ToInt32(this.Session().CreateQuery(
-                @"select count(p.Album) from Photo p where p.Album.AlbumId = :albumId")
+                @"select count(p.PhotoId) from Photo p where p.Album.AlbumId = :albumId")
                 .SetInt32("albumId", albumId)
+                .UniqueResult());
+        }
+
+        public int TotalPhotoByTimestamp(int albumId, int timetamp)
+        {
+            return Convert.ToInt32(this.Session().CreateQuery(
+                @"select count(p.PhotoId) from Photo p where p.Album.AlbumId = :albumId and Timestamp = :timestamp")
+                .SetInt32("albumId", albumId)
+                .SetInt32("timestamp", timetamp)
                 .UniqueResult());
         }
     }

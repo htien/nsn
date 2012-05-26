@@ -1,18 +1,1 @@
-﻿@{
-    ViewBag.hasLeftCol = false;
-    ViewBag.hasRightCol = true;
-}
-<h2>Index Photo</h2>
-<div>
-@{
-    if (ViewBag.Photos != null && ViewBag.Photos.Count > 0) {
-        foreach (var photo in ViewBag.Photos)
-        {
-            @:@photo.PhotoId
-        }
-    }
-    else {
-        @:<p>No Photo.</p>
-    }
-}
-</div>
+﻿Show page

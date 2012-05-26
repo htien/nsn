@@ -5,13 +5,17 @@ using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NewSocialNetwork.Website.Controllers.Helper;
 using NewSocialNetwork.Website.Models;
+using NSN.Common;
 using NSN.Common.Utilities;
+using SaberLily.Utils;
 
 namespace NewSocialNetwork.Website.Controllers
 {
     public class PhotoController : ApplicationController
     {
+        public IPhotoAlbumRepository photoAlbumRepo { private get; set; }
         public IPhotoRepository photoRepo { private get; set; }
+        public IFeedRepository feedRepo { private get; set; }
 
         public PhotoController()
         {
@@ -23,55 +27,59 @@ namespace NewSocialNetwork.Website.Controllers
 
         public ActionResult Show()
         {
-            Domain.User user = sessionManager.GetUser();
-            IList<Photo> photos = this.photoRepo.GetPhotosByUser(user.UserId);
-            ViewBag.Photos = photos;
             return View();
         }
 
-        [HttpGet]
-        public ActionResult Insert()
+        public ActionResult Uploader(int albumId)
         {
-            return View();
-        }
+            frontendService.RemoveImagesFromDisk(this.Session);
 
-        [HttpGet]
-        public ActionResult InsertSave()
-        {
-            return RedirectToAction("Insert");
+            PhotoAlbum photoAlbum = null;
+            if (photoAlbumRepo.IsAlbumOfUser(sessionManager.GetUser().UserId, albumId))
+            {
+                photoAlbum = photoAlbumRepo.FindById(albumId);
+            }
+            if (photoAlbum == null)
+            {
+                return HttpNotFound("You cannot upload to this or it does not exist.");
+            }
+
+            ViewBag.PhotoAlbum = photoAlbum;
+            return View();
         }
 
         [HttpPost]
-        public ActionResult InsertSave(InsertPhotoModel model)
+        public JsonResult SaveUploadedPhotos(int albumId, byte privacy = 0)
         {
+            ResponseMessage msg = new ResponseMessage("Photo", RAction.ADD, RStatus.FAIL,
+                "Error when uploading your photos. Please try again.");
             try
             {
-                string test = model.Test;
-                if (test.Equals("abc"))
-                {
-                    ViewBag.Message = "Insert Successfully";
-                }
-                else
-                {
-                    ViewBag.Message = "Insert Failed";
-                }
+                int timestamp = DateTimeUtils.UnixTimestamp;
+                // Add more photo images
+                frontendService.AddPhotosToAlbum(this.Session, albumId, timestamp, privacy);
+                // Remove photo images from session
+                frontendService.RemoveImagesFromSession(this.Session);
+                // Insert to feed
+                feedRepo.Add(NSNType.PHOTO, albumId, sessionManager.GetUser().UserId, 0, timestamp);
+                // Returns
+                msg.SetStatusAndMessage(RStatus.SUCCESS, String.Format("Uploaded your photos to album: <strong>{0}</strong>", ""));
+                msg.ReturnedPath = Url.RouteUrl("PhotoAlbumAction", new { uid = Globals.GetDisplayId(sessionManager.GetUser()), albumid = albumId, action = "ListPhotos" });
             }
-            catch
+            catch (Exception e)
             {
-                ViewBag.Message = "Insert Error";
+                msg.Message = e.Message;
             }
-            return View("Insert");
+            return Json(msg);
         }
 
         [HttpPost]
         public JsonResult UploadSave()
         {
-            //ResponseMessage msg = new ResponseMessage("PhotoAlbumUploader", RAction.ADD, RStatus.FAIL,
-            //    "Error when processing your request.");
             UploadedPhotoModel[] photosModel = null;
             try
             {
-                IList<ImageInfo> images = frontendService.SaveImages(Request.Files);
+                IList<ImageInfo> images = frontendService.SaveImagesFromHttp(Request.Files);
                 if (images.Count == 0)
                 {
                     throw new Exception("Cannot process your request.");
@@ -93,16 +101,14 @@ namespace NewSocialNetwork.Website.Controllers
                     photosModel[i++] = model;
                 }
             }
-            catch// (Exception e)
-            {
-                //msg.Message = e.Message;
-            }
+            catch { }
             return Json(photosModel);
         }
 
+        [HttpPost]
         public JsonResult CancelUpload()
         {
-            ResponseMessage msg = new ResponseMessage("PhotoAlbumUploader", RAction.REMOVE, RStatus.FAIL,
+            ResponseMessage msg = new ResponseMessage("ImageUploader", RAction.REMOVE, RStatus.FAIL,
                 "Error when processing your request.");
             try
             {

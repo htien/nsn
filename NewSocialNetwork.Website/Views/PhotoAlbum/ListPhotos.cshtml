@@ -1,24 +1,35 @@
-﻿@using NewSocialNetwork.Domain;
+﻿@using NSN.Common;
+@using NewSocialNetwork.Domain;
 @{
+    User user = ViewBag.UProfile;
     PhotoAlbum album = ViewBag.Album;
 }
-<div class="UIGrid_Photo">
-<h2 class="title">@Html.Raw(album.Name.Replace(" ", "&nbsp;").Replace("&#10;", "<br />")) (@ViewBag.Photos.Count)</h2>
+<div id="photo-album-@(album.AlbumId)" class="UIGrid_Photo">
+    <div class="uiHeadTop">
+        @if (ViewBag.IsMyProfile)
+        {
+            <div class="photosActions">
+                <div id="addPhoto" class="guiButton guiRedButton">Add Photo</div>
+            </div>
+        }
+        <h2 class="title">@Html.Raw(Globals.ApplyHtmlFrom(album.Name)) (@ViewBag.Photos.Count)</h2>
+        <div style="margin-top:8px;"><a href="@Url.RouteUrl("PhotoAlbumList", new { uid = Globals.GetDisplayId(user) })">Albums</a></div>
+    </div>
     <div class="UIPhotoContainer">
-            @foreach (Photo photo in ViewBag.Photos)
-            {
-                <div class="UIPhotoItem">
-                    <div class="UIPhotoWrapper">
-                    @if (photo.Album.ProfileId > 0)
-                    {
-                        <img alt="" src="@Url.Content("~/static/images/avatars/" + photo.Image)" width="185" height="139"  />
-                    }
-                    else
-                    {
-                         <img alt="" src="@Url.Content("~/static/images/photos/" + photo.Image)" width="185" height="139"  />
-                    }
-                    </div>
+        @foreach (Photo photo in ViewBag.Photos)
+        {
+            <div class="UIPhotoItem">
+                <div class="UIPhotoWrapper">
+                @if (photo.Album.ProfileId > 0)
+                {
+                    <img alt="" src="@Url.Content("~/static/images/avatars/" + photo.Image)" width="185" height="139"  />
+                }
+                else
+                {
+                    <img alt="" src="@Url.Content("~/static/images/photos/" + photo.Image)" width="185" height="139"  />
+                }
                 </div>
-            }
+            </div>
+        }
     </div>
 </div>

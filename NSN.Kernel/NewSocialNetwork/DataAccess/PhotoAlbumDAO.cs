@@ -75,5 +75,15 @@ namespace NewSocialNetwork.DataAccess
                 .SetInt32("withUserId", withUserId)
                 .List<CustomRelation>();
         }
+
+
+        public bool IsAlbumOfUser(int userId, int albumId)
+        {
+            return Convert.ToInt32(this.Session().CreateQuery(
+                @"select count(a.AlbumId) from PhotoAlbum a where a.AlbumId = :albumId and a.User.UserId = :userId")
+                .SetInt32("albumId", albumId)
+                .SetInt32("userId", userId)
+                .UniqueResult()) > 0;
+        }
     }
 }

@@ -1,0 +1,58 @@
+﻿@using NSN.Common;
+@using NewSocialNetwork.Domain;
+@{
+    Layout = null;
+    PhotoAlbum album = ViewBag.PhotoAlbum;
+}
+<div id="pagelet_photouploader">
+    <div class="UIUploader_Photo">
+        <h2 class="title">Upload Photos To Album</h2>
+        <div class="uiUploaderForm">
+            <form id="photo-uploader-form" action="?" method="post">
+                <div class="hidden_elem">
+                    <input type="hidden" name="albumId" value="@album.AlbumId" />
+                </div>
+                <div class="uiForm">
+                    <div class="uiControls">
+                        <table class="uiGrid">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong class="albumTitle">@Html.Raw(Globals.ApplyHtmlFrom(album.Name))</strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="uiGrid">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <select class="uiFormSelect" name="privacy">
+                                            <option value="0">Public</option>
+                                            <option value="1">Friends</option>
+                                            <option value="10">Only Me</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="guiButton2 browse-button">
+                                            <span>Add more photos..</span>
+                                            <input id="photo-fileupload" type="file" name="files[]" multiple="multiple" />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="uploadedQueueContainer">
+                            <div class="uploadedQueue">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="uploadActions">
+                    <div class="guiButton2 guiBlueButton upload">Upload</div>
+                    <div class="guiButton2 guiBlueButton xdlg">Cancel</div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

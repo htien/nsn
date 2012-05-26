@@ -14,5 +14,6 @@ namespace NewSocialNetwork.Repositories
         int GetTotalActivityPendingRelativeUser(int userId);
         IList<FriendList> GetAllFriendListByUser(int userId);
         IList<CustomRelation> GetRelationshipBetweenUsers(int userId, int withUserId);
+        bool IsAlbumOfUser(int userId, int albumId);
     }
 }
