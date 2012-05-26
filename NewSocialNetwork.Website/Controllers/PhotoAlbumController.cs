@@ -12,10 +12,6 @@ namespace NewSocialNetwork.Website.Controllers
     public class PhotoAlbumController : ApplicationController
     {
         public IPhotoAlbumRepository photoAlbumRepo { private get; set; }
-        public IPhotoRepository photoRepo { private get; set; }
-        public IPhotoInfoRepository photoInfoRepo { private get; set; }
-        public IFriendRepository friendRepo { private get; set; }
-        public ICommentRepository commentRepo { private get; set; }
         public IFeedRepository feedRepo { private get; set; }
 
         public PhotoAlbumController()
@@ -30,30 +26,6 @@ namespace NewSocialNetwork.Website.Controllers
         {
             User user = ViewBag.UProfile;
             IList<PhotoAlbum> albums = photoAlbumRepo.GetPhotoAlbumByUser(user.UserId);
-            int totalAlbum = photoAlbumRepo.GetTotalPhotoAlbumByUser(user.UserId);
-            //int totalUsers = photoAlbumRepo.GetNotMutualFriends(1, 2).Count;
-            //ViewBag.Total = totalUsers;
-            //IList<Friend> u = friendRepo.GetNotMutualFriends(1, 2);
-            //ViewBag.user = u;
-            IList<Photo> listphotoalbum = photoAlbumRepo.GetPhotoByAlbum(2);
-            ViewBag.listphotoalbum = listphotoalbum;
-            int totalcomment = commentRepo.GetTotalComment("photo", 1, 1);
-            ViewBag.totalcomment = totalcomment;
-            IList<Comment> allc = commentRepo.GetCommentsByFeed("photo", 1, 1);
-            ViewBag.allc = allc;
-            int friendRequest = photoAlbumRepo.GetTotalFriendRequestPending(1);
-            ViewBag.friendRequest = friendRequest;
-            int message = photoAlbumRepo.GetTotalMessagePending(1);
-            ViewBag.message = message;
-            int activity = photoAlbumRepo.GetTotalActivityPendingRelativeUser(1);
-            ViewBag.activity = activity;
-            ViewBag.friendRequest = friendRequest;
-
-            IList<FriendList> fl = photoAlbumRepo.GetAllFriendListByUser(1);
-            ViewBag.friendList = fl;
-
-            IList<CustomRelation> customRelation = photoAlbumRepo.GetRelationshipBetweenUsers(1, 2);
-            ViewBag.customRelation = customRelation;
             ViewBag.Albums = albums;
             return View();
         }

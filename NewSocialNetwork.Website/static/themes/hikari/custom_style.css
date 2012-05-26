@@ -154,46 +154,58 @@
   margin-right: 0;
 }
 
-.UIUploader_PhotoAlbum {
+.UIUploader_PhotoAlbum,
+.UIUploader_Photo {
   position: relative;
   width: 800px;
 }
-.UIUploader_PhotoAlbum h2.title {
+.UIUploader_PhotoAlbum h2.title,
+.UIUploader_Photo h2.title {
   font-family: 'Open Sans', Arial, sans-serif;
   font-size: 23px;
 }
-.UIUploader_PhotoAlbum .uiUploaderForm {
+.UIUploader_PhotoAlbum .uiUploaderForm,
+.UIUploader_Photo .uiUploaderForm {
   position: relative;
   padding-top: 17px;
   padding-bottom: 25px;
 }
-.UIUploader_PhotoAlbum .uiForm {
+.UIUploader_PhotoAlbum .uiForm,
+.UIUploader_Photo .uiForm {
   padding-bottom: 17px;
 }
-.UIUploader_PhotoAlbum .uploadActions {
+.UIUploader_PhotoAlbum .uploadActions,
+.UIUploader_Photo .uploadActions {
   clear: left;
   margin-top: 15px;
 }
-.UIUploader_PhotoAlbum input {
+.UIUploader_PhotoAlbum input,
+.UIUploader_Photo input {
   outline: 0;
 }
 .UIUploader_PhotoAlbum .uiGrid {
   margin-top: 15px;
 }
-.UIUploader_PhotoAlbum .uiGrid td {
+.UIUploader_PhotoAlbum .uiGrid td,
+.UIUploader_Photo .uiGrid td {
   padding: 5px 5px 5px 0;
   vertical-align: top;
 }
 
 .UIUploader_PhotoAlbum .uiGrid .uiFormText,
 .UIUploader_PhotoAlbum .uiGrid .uiFormSelect,
-.UIUploader_PhotoAlbum .uiGrid input[type=file] {
+.UIUploader_PhotoAlbum .uiGrid input[type=file],
+.UIUploader_Photo .uiGrid .uiFormText,
+.UIUploader_Photo .uiGrid .uiFormSelect,
+.UIUploader_Photo .uiGrid input[type=file] {
   height: 28px;
 }
-.UIUploader_PhotoAlbum .uiGrid .browse-button {
+.UIUploader_PhotoAlbum .uiGrid .browse-button,
+.UIUploader_Photo .uiGrid .browse-button {
   height: 26px;
 }
-.UIUploader_PhotoAlbum .uiGrid .browse-button input[type=file] {
+.UIUploader_PhotoAlbum .uiGrid .browse-button input[type=file],
+.UIUploader_Photo .uiGrid .browse-button input[type=file] {
   position: absolute;
   top: 0;
   right: 0;
@@ -206,20 +218,28 @@
 }
 .UIUploader_PhotoAlbum .uploadedQueueContainer,
 .UIUploader_PhotoAlbum .uploadedQueue,
-.UIUploader_PhotoAlbum .uploadedItem {
+.UIUploader_PhotoAlbum .uploadedItem,
+.UIUploader_Photo .uploadedQueueContainer,
+.UIUploader_Photo .uploadedQueue,
+.UIUploader_Photo .uploadedItem {
   position: relative;
 }
-.UIUploader_PhotoAlbum .uploadedQueueContainer {
+.UIUploader_PhotoAlbum .uploadedQueueContainer,
+.UIUploader_Photo .uploadedQueueContainer {
   padding-top: 15px;
 }
-.UIUploader_PhotoAlbum .uploadedQueue {
+.UIUploader_PhotoAlbum .uploadedQueue,
+.UIUploader_Photo .uploadedQueue {
   min-height: 151px;
 }
 .UIUploader_PhotoAlbum .uploadedQueue,
-.UIUploader_PhotoAlbum .uploadedItem {
+.UIUploader_PhotoAlbum .uploadedItem,
+.UIUploader_Photo .uploadedQueue,
+.UIUploader_Photo .uploadedItem {
   overflow: hidden;
 }
-.UIUploader_PhotoAlbum .uploadedItem {
+.UIUploader_PhotoAlbum .uploadedItem,
+.UIUploader_Photo .uploadedItem {
   float: left;
   margin: 0 5px 5px 0;
   width: 193px;
@@ -227,15 +247,21 @@
   border: 1px dashed #ddd;
 }
 
+.UIUploader_Photo .albumTitle {
+  line-height: 28px;
+  font-size: 14px;
+}
+
 /*Photos By Album*/
 .UIGrid_Photo {
   position: relative;
 }
-
-.UIGrid_Photo h2.title {
+.UIGrid_Photo .uiHeadTop {
   padding: 19px 30px 0;
 }
-
+.UIGrid_Photo .photosActions {
+  float: right;
+}
 .UIGrid_Photo .UIPhotoContainer {
   display: table;
   padding: 30px 0 0 30px;
@@ -254,8 +280,7 @@
   outline: none;
   vertical-align: bottom;
 }
-
-.UIPhotoItem .UIPhotoWrapper {
+.UIGrid_Photo .UIPhotoItem .UIPhotoWrapper {
   position: relative;
   overflow: hidden;
 }

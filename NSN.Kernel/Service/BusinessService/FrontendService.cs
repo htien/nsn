@@ -35,6 +35,7 @@ namespace NSN.Service.BusinessService
         public IUserTweetRepository userTweetRepo { private get; set; }
         public ICommentRepository commentRepo { private get; set; }
         public ICommentTextRepository commentTextRepo { private get; set; }
+        public ICountryRepository countryRepo { private get; set; }
         public ILikeRepository likeRepo { private get; set; }
         public ILikeCacheRepository likeCacheRepo { private get; set; }
         public IPhotoAlbumRepository photoAlbumRepo { private get; set; }
@@ -166,6 +167,9 @@ namespace NSN.Service.BusinessService
                     case NSNType.PHOTO_ALBUM:
                         entity = photoAlbumRepo.FindById(feed.ItemId);
                         break;
+                    case NSNType.PHOTO:
+                        entity = photoAlbumRepo.FindById(feed.ItemId);
+                        break;
                     case NSNType.FRIEND:
                         entity = friendRepo.FindById(feed.ItemId);
                         break;
@@ -175,7 +179,7 @@ namespace NSN.Service.BusinessService
             return feedManager.GetItems();
         }
 
-        public IList<ImageInfo> SaveImages(HttpFileCollectionBase imageCollection)
+        public IList<ImageInfo> SaveImagesFromHttp(HttpFileCollectionBase imageCollection)
         {
             IList<ImageInfo> images = new List<ImageInfo>();
             foreach (string upload in imageCollection)
@@ -260,6 +264,11 @@ namespace NSN.Service.BusinessService
             {
                 throw new Exception("Please choose your gender.");
             }
+            Country country = countryRepo.FindById(countryiso);
+            if (country == null)
+            {
+                throw new Exception("Country is unavailable.");
+            }
 
             // Update
             user.Email = email.Trim();
@@ -269,6 +278,7 @@ namespace NSN.Service.BusinessService
                                 birthDay.Year,
                                 birthDay.Month < 10 ? "0" + birthDay.Month.ToString() : birthDay.Month.ToString(),
                                 birthDay.Day < 10 ? "0" + birthDay.Day.ToString() : birthDay.Day.ToString());
+            user.Country = country;
             return userRepo.Save(user);
         }
 
@@ -362,7 +372,31 @@ namespace NSN.Service.BusinessService
             return photoAlbumRepo.Create(photoAlbum);
         }
 
-        public void AddPhotosFromSession(HttpSessionStateBase session, PhotoAlbum photoAlbum, int timetamp)
+        public void AddPhotosToAlbum(HttpSessionStateBase session, int albumId, int timestamp,
+            byte privacy = NSNPrivacyMode.PUBLIC)
+        {
+            // Validate
+            PhotoAlbum photoAlbum = null;
+            if (photoAlbumRepo.IsAlbumOfUser(sessionManager.GetUser().UserId, albumId))
+            {
+                photoAlbum = photoAlbumRepo.FindById(albumId);
+            }
+            if (photoAlbum == null)
+            {
+                throw new Exception("You cannot upload to this or it does not exist.");
+            }
+            IList<ImageInfo> uploadedImages = (IList<ImageInfo>)session[Globals.SESSIONKEY_UPLOADED_PHOTOS + sessionManager.GetUser().UserId];
+            if (uploadedImages == null || uploadedImages.Count == 0)
+            {
+                throw new Exception("Have no any uploaded photo. Please add at least a photo or more.");
+            }
+
+            // Add photos
+            this.AddPhotosFromSession(session, photoAlbum, timestamp, privacy);
+        }
+
+        public void AddPhotosFromSession(HttpSessionStateBase session, PhotoAlbum photoAlbum, int timetamp,
+            byte privacy = NSNPrivacyMode.PUBLIC)
         {
             IList<ImageInfo> uploadedImages = (IList<ImageInfo>)session[Globals.SESSIONKEY_UPLOADED_PHOTOS + sessionManager.GetUser().UserId];
             foreach (ImageInfo imageInfo in uploadedImages)
@@ -371,7 +405,7 @@ namespace NSN.Service.BusinessService
                 {
                     Album = photoAlbum,
                     User = sessionManager.GetUser(),
-                    Privacy = NSNPrivacyMode.PUBLIC,
+                    Privacy = privacy,
                     Image = imageInfo.FileName,
                     AllowComment = true,
                     Timestamp = timetamp

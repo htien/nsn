@@ -103,7 +103,7 @@ var glbDebug = true,
             else
                 return glbContextPath;
         };
-        nsn.request = function(path) {
+        nsn.requestUrl = function(path) {
             return nsn.url('/nsn/go/to/').concat(path);
         };
         nsn.staticResource = function(path) {
@@ -165,9 +165,17 @@ var glbDebug = true,
             if (typeof settings === 'object') {
                 settings.async = false;
             }
-            var responseText = isUrl
-                    ? jQuery.ajax(url, settings).responseText
-                    : url;
+            var responseText = null;
+            if (isUrl) {
+                var jqXHR = jQuery.ajax(url, settings);
+                if (jqXHR.status == 404) {
+                    return;
+                }
+                responseText = jqXHR.responseText;
+            }
+            else {
+                responseText = url;
+            }
             return nsn.createJqDlg(id, responseText, dlgOpts);
         };
         nsn.shakeContainer = function(container) {
@@ -365,7 +373,7 @@ var glbDebug = true,
     };
     NSN_postComment = function(feedId, commentText) {
         jQuery.ajax({
-            url: nsn.url('/nsn/go/to/comment/addsave'),
+            url: nsn.requestUrl('comment/addsave'),
             type: 'post',
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
             data: { fid: feedId, c: escape(commentText) },

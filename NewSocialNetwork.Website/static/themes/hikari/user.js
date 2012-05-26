@@ -105,7 +105,93 @@ jQuery(function ($) {
             }
         });
     });
-    jQuery('.UIGrid_Album #createAlbum').click(function () {
+    jQuery('.UIGrid_Photo #addPhoto').click(function() {
+        var albumId = parseInt(jQuery(this).parents('.UIGrid_Photo').attr('id').slice(12), 10);
+        NSN.callJqDlg('ajax-uploader-form', NSN.url('/ajax/photouploader'),
+        {
+            data: { albumId: albumId }
+        },
+        {
+            title: 'Upload Photo',
+            hasTitle: false,
+            width: 'auto',
+            buttons: {},
+            open: function (evt, ui) {
+                if (!jQuery(this).dialog("option", "hasTitle")) {
+                    jQuery('.ui-dialog-titlebar').remove();
+                }
+                NSN.$id('photo-fileupload').fileupload({
+                    url: NSN.requestUrl('photo/uploadsave'),
+                    dataType: 'json',
+                    done: function (e, data) {
+                        var result = data.result,
+                            img = '<img src="' + NSN.staticUploadedImage('photos/' + result[0].FileName) + '" alt="" />',
+                            item = '<div class="uploadedItem">' + img + '</div>';
+                        jQuery(this).parents('.uiControls').find('.uploadedQueue').append(item);
+                    }
+                });
+                NSN.$id('photo-fileupload').fileupload('option', {
+                    maxFileSize: 2000000, // 2MB
+                    acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+                    process: [
+                        {
+                            action: 'load',
+                            filetypes: /^image\/(gif|jpeg|png)$/,
+                            maxfilesize: 2000000
+                        },
+                        {
+                            action: 'resize',
+                            maxwidth: 1024,
+                            maxheight: 768
+                        },
+                        {
+                            action: 'save'
+                        }
+                    ]
+                });
+                NSN.$id('photo-fileupload').bind('fileuploadprogress', function (e, data) {
+                    console.log(data.bitrate);
+                });
+            }
+        }).dialog('open');
+    });
+    jQuery('.UIUploader_Photo .xdlg').live('click', function () {
+        jQuery.ajax({
+            url: NSN.requestUrl('photo/cancelupload'),
+            type: 'post',
+            success: function (json) {
+                NSN.createJqDlg(glbDefaultDlgId, json.Message, {
+                    hasTitle: false,
+                    width: 'auto'
+                }).dialog('open');
+            },
+            complete: function () {
+                NSN.$id('photo-fileupload').fileupload('destroy');
+                NSN.$id('ajax-uploader-form').dialog('destroy').remove();
+            }
+        });
+    });
+    jQuery('.UIUploader_Photo .upload').live('click', function () {
+        jQuery.ajax({
+            url: NSN.requestUrl('photo/saveuploadedphotos'),
+            type: 'post',
+            data: NSN.$id('photo-uploader-form').serialize(),
+            success: function (json) {
+                if (json.Status == 1) {
+                    NSN.$id('ajax-uploader-form').dialog('destroy').remove();
+                    document.location = json.ReturnedPath;
+                }
+                else {
+                    NSN.createJqDlg(glbDefaultDlgId, json.Message).dialog('open');
+                }
+            },
+            error: function (data) {
+                NSN.createJqDlg(glbDefaultDlgId, data).dialog('open');
+            }
+        });
+    });
+
+    jQuery('.UIGrid_Album #createAlbum').click(function() {
         NSN.callJqDlg('ajax-uploader-form', NSN.url('/ajax/photoalbumuploader'), {
             title: 'Upload Photo',
             hasTitle: false,
@@ -116,7 +202,7 @@ jQuery(function ($) {
                     jQuery('.ui-dialog-titlebar').remove();
                 }
                 NSN.$id('photoalbum-fileupload').fileupload({
-                    url: NSN.url('/nsn/go/to/photo/uploadsave'),
+                    url: NSN.requestUrl('photo/uploadsave'),
                     dataType: 'json',
                     done: function (e, data) {
                         var result = data.result,
@@ -152,7 +238,7 @@ jQuery(function ($) {
     });
     jQuery('.UIUploader_PhotoAlbum .xdlg').live('click', function () {
         jQuery.ajax({
-            url: NSN.url('/nsn/go/to/photo/cancelupload'),
+            url: NSN.requestUrl('photo/cancelupload'),
             type: 'post',
             success: function (json) {
                 NSN.createJqDlg(glbDefaultDlgId, json.Message, {
@@ -168,7 +254,7 @@ jQuery(function ($) {
     });
     jQuery('.UIUploader_PhotoAlbum .upload').live('click', function () {
         jQuery.ajax({
-            url: NSN.url('/nsn/go/to/photoalbum/saveuploadedphotos'),
+            url: NSN.requestUrl('photoalbum/saveuploadedphotos'),
             type: 'post',
             data: NSN.$id('photoalbum-uploader-form').serialize(),
             success: function (json) {
@@ -199,7 +285,7 @@ jQuery(function ($) {
     jQuery('.UIContent_UserProfile .profileActions').on('click', '.guiButton.addFriend', function (evtObj) {
         var profileItem = NSN_getProfileItem(this),
             profileId = NSN_getProfileId(profileItem);
-        NSN.callJqDlg('request-friend-form', NSN.url('/nsn/go/to/friendrequest/add'),
+        NSN.callJqDlg('request-friend-form', NSN.requestUrl('friendrequest/add'),
         {
             type: 'post',
             data: { friendUserId: profileId },
@@ -218,7 +304,7 @@ jQuery(function ($) {
         var friendUserId = jQuery('.UIForm_RequestFriend input[name=friendUserId]').val(),
             message = jQuery('.UIForm_RequestFriend textarea[name=message]').val();
         jQuery.ajax({
-            url: NSN.url('/nsn/go/to/friendrequest/addsave'),
+            url: NSN.requestUrl('friendrequest/addsave'),
             type: 'post',
             data: { friendUserId: friendUserId, message: escape(message) },
             success: function(json) {
@@ -247,7 +333,7 @@ jQuery(function ($) {
 
     NSN.$id('nsnRequestsJewel').click(function(evt) {
         jQuery.ajax({
-            url: NSN.url('/nsn/go/to/jewels/showfriendrequests'),
+            url: NSN.requestUrl('jewels/showfriendrequests'),
             type: 'post',
             success: function(result) {
                 NSN.createJqDlg('friend-request-stream', result, {
@@ -262,7 +348,7 @@ jQuery(function ($) {
         var divActions = jQuery(this).parent();
         var requestId = parseInt(divActions.prev().attr('id').slice(15), 10);
         jQuery.ajax({
-            url: NSN.request('friendrequest/accept'),
+            url: NSN.requestUrl('friendrequest/accept'),
             type: 'post',
             data: { requestId: requestId },
             success: function(json) {
@@ -292,7 +378,7 @@ jQuery(function ($) {
 
 function ajaxCount() {
     jQuery.ajax({
-        url: NSN.url('/nsn/go/to/usercount/countpending'),
+        url: NSN.requestUrl('usercount/countpending'),
         type: 'post',
         success: function(countOf) {
             var mailNew = countOf.MailNew,

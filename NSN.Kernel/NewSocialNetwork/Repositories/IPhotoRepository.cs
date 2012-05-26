@@ -10,5 +10,6 @@ namespace NewSocialNetwork.Repositories
         IList<Photo> GetPhotosByTimestamp(int timestamp, int size);
         Photo GetFirstPhotoByAlbum(int albumId);
         int GetTotalPhoto(int albumId);
+        int TotalPhotoByTimestamp(int albumId, int timetamp);
     }
 }

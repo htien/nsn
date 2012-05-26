@@ -218,11 +218,6 @@ namespace NSN.Kernel
                 "Auth/{action}",
                 new { controller = "Auth", action = "Register" }
             );
-            routes.MapRouteLowercase(
-                "SSOLogout",
-                "Logout",
-                new { controller = "Auth", action = "Logout" }
-            );
 
             // Back-end routes
 
