@@ -1,0 +1,24 @@
+﻿@using NewSocialNetwork.Domain;
+@{
+    Layout = null;
+    Photo photo = ViewBag.Photo;
+    string photoUrl = Url.Content("~/static/images/photos/" + photo.Image);
+    int maxWidth = 600;
+    int maxHeight = 450;
+    if (photo.PhotoInfo.Width < maxWidth) {
+        maxWidth = photo.PhotoInfo.Width;
+    }
+    if (photo.PhotoInfo.Height < maxHeight) {
+        maxHeight = photo.PhotoInfo.Height;
+    }
+}
+<div class="UIPhotoZoomContainer">
+    <div class="UIPhotoZoom">
+        <div>
+            <img class="photo" src="@photoUrl" alt="" width="@maxWidth" height="@maxHeight" />
+        </div>
+        <div class="rfloat">
+            Comments
+        </div>
+    </div>
+</div>

@@ -1221,7 +1221,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Auth\Register.cshtml" />
     <Content Include="Views\PhotoAlbum\List.cshtml" />
-    <Content Include="Views\Photo\Show.cshtml" />
+    <Content Include="Views\Photo\ShowZoom.cshtml" />
     <Content Include="Views\Shared\Frontend\pagelet\_bluebar_loggedOut_pagelet.cshtml" />
     <Content Include="Views\Shared\Frontend\pagelet\_bluebar_loggedIn_pagelet.cshtml" />
     <Content Include="Views\Shared\_MasterLayout.cshtml" />

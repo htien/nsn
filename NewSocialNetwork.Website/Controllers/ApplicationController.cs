@@ -49,6 +49,10 @@ namespace NewSocialNetwork.Website.Controllers
                 {
                     ViewBag.IsFriend = Globals.IsFriend(myProfile.UserId, userProfile.UserId);
                 }
+                else if (ViewBag.IsMyProfile)
+                {
+                    ViewBag.IsFriend = true;
+                }
             }
             base.OnActionExecuting(filterContext);
         }

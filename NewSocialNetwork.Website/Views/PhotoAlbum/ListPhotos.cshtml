@@ -18,15 +18,15 @@
     <div class="UIPhotoContainer">
         @foreach (Photo photo in ViewBag.Photos)
         {
-            <div class="UIPhotoItem">
+            <div id="photo-@photo.PhotoId" class="UIPhotoItem">
                 <div class="UIPhotoWrapper">
                 @if (photo.Album.ProfileId > 0)
                 {
-                    <img alt="" src="@Url.Content("~/static/images/avatars/" + photo.Image)" width="185" height="139"  />
+                    <img class="zoomFeature" src="@Url.Content("~/static/images/avatars/" + photo.Image)" width="185" height="139" alt="" />
                 }
                 else
                 {
-                    <img alt="" src="@Url.Content("~/static/images/photos/" + photo.Image)" width="185" height="139"  />
+                    <img class="zoomFeature" src="@Url.Content("~/static/images/photos/" + photo.Image)" width="185" height="139" alt="" />
                 }
                 </div>
             </div>

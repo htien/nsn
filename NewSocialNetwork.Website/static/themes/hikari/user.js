@@ -282,6 +282,36 @@ jQuery(function ($) {
         });
     });
 
+    function zoomPhotoItem(photoId) {
+        jQuery.ajax({
+            url: NSN.requestUrl('photo/showzoom'),
+            type: 'post',
+            data: { photoId: photoId },
+            success: function(result) {
+                var dlg = NSN.createJqDlg('ajax-photozoom', result, {
+                        hasTitle: false,
+                        width: 'auto',
+                        closeOnEscape: true
+                    }),
+                    parent = dlg.parent();
+                parent.css('cssText', 'top: 30px !important');
+                parent.css('cssText', 'right: 30px !important');
+                parent.css('cssText', 'bottom: 30px !important');
+                parent.css('cssText', 'left: 30px !important');
+                dlg.dialog('open');
+            }
+        });
+    };
+
+    jQuery('.UIGrid_Photo .UIPhotoItem').on('click', 'img.zoomFeature', function(evt) {
+        var photoId = parseInt(jQuery(this).parents('.UIPhotoItem').attr('id').slice(6), 10);
+        zoomPhotoItem(photoId);
+    });
+    jQuery('.uiFeedItem .photoUnit img.zoomFeature').live('click', function(evt) {
+        var photoId = parseInt(jQuery(this).attr('id').slice(6), 10);
+        zoomPhotoItem(photoId);
+    });
+
     jQuery('.UIContent_UserProfile .profileActions').on('click', '.guiButton.addFriend', function (evtObj) {
         var profileItem = NSN_getProfileItem(this),
             profileId = NSN_getProfileId(profileItem);
