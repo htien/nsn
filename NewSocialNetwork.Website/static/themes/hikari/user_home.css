@@ -612,6 +612,99 @@ img,
 }
 
 .UIPhotoZoomContainer .photo {
-  max-width: 800px;
-  min-height: 600px;
+  max-width: 600px;
+  max-height: 450px;
+}
+body._photoZoom {
+  overflow: hidden;
+}
+div._photoZoom {
+  right: 30px !important;
+  left: 30px !important;
+  max-height: 940px;
+  border-bottom-color: transparent;
+}
+div#ajax-photozoom._photoZoomInner {
+  padding: 0;
+}
+div._photoZoomOverlay {
+  background: #000;
+  opacity: .75;
+  filter: alpha(opacity=75);
+}
+.UIPhotoZoom .uiPhotoContainer {
+  margin-right: 340px;
+}
+.UIPhotoZoom .uiPhotoOuter {
+  background-color: #000;
+}
+.UIPhotoZoom .uiPhoto {
+  padding: 30px 0;
+  border: 1px solid rgba(255,255,255,.1);
+  -webkit-box-sizing: border-box;
+  text-align: center;
+}
+.UIPhotoZoom .uiPhoto img {
+  display: inline-block;
+  max-width: 100%;
+  max-height: 100%;
+  image-rendering: optimizeQuality;
+  vertical-align: middle;
+}
+.UIPhotoZoom .uiPhotoShowControls {
+  padding: 7px 7px 0 15px;
+  text-align: right;
+}
+.UIPhotoZoom .uiPhotoShowControls .closeTheater {
+  display: inline-block;
+  width: 11px;
+  height: 12px;
+  margin-left: 5px;
+  background: url(images/fb_sprite_icons_5.png) no-repeat -156px -98px;
+  vertical-align: top;
+}
+.UIPhotoZoom .authorPic {
+  margin-right: 10px;
+}
+.UIPhotoZoom .authorName {
+  display: inline;
+  padding-top: 1px;
+  padding-bottom: 3px;
+  line-height: 18px;
+  font-size: 13px;
+  font-weight: bold;
+}
+.UIPhotoZoom .info {
+  font-size: 11px;
+  color: #808080;
+}
+.UIPhotoZoom .uiPhotoCommentList {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 340px;
+}
+.UIPhotoZoom .uiPhotoCommentList .uiCommentList {
+  margin: 0 20px;
+}
+.UIPhotoZoom .photoCommentInput {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 5px 20px 4px;
+  background-color: #edeff4;
+  border-top: 2px solid rgba(0,0,0,.07);
+}
+.UIPhotoZoom .photoCommentInput .uiProfileImage {
+  float: left;
+  display: block;
+  margin-right: 6px;
+  width: 32px;
+  height: 32px;
+}
+.UIPhotoZoom .photoCommentInput .uiFormText {
+  display: inline-block;
+  width: 262px;
 }

@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Web.Mvc;
+using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NewSocialNetwork.Website.Controllers.Helper;
+using SaberLily.Utils;
 
 namespace NewSocialNetwork.Website.Controllers
 {
     public class UserTweetController : ApplicationController
     {
+        public IFeedRepository feedRepo { private get; set; }
+        public IUserCountRepository userCountRepo { private get; set; }
         public IUserTweetRepository userTweetRepo { private get; set; }
 
         public UserTweetController()
@@ -24,7 +28,21 @@ namespace NewSocialNetwork.Website.Controllers
                 "<p>Incomplete post.</p>");
             try
             {
-                frontendService.PostUserTweet(uid, inputText);
+                int timestamp = DateTimeUtils.UnixTimestamp;
+                // Post tweet
+                int tweetId = frontendService.PostUserTweet(uid, inputText, timestamp);
+                // Send to feed
+                UserTweet newTweet = userTweetRepo.FindById(tweetId);
+                if (newTweet.FriendUser == null)
+                {
+                    feedRepo.Add(NSNType.USER_TWEET, tweetId, newTweet.User.UserId, 0, timestamp);
+                }
+                else
+                {
+                    feedRepo.Add(NSNType.USER_TWEET, tweetId, newTweet.User.UserId, newTweet.FriendUser.UserId, timestamp);
+                    // Increase user count
+                    frontendService.IncreaseCountOfCommentPending(newTweet.FriendUser.UserId);
+                }
                 msg.SetStatusAndMessage(RStatus.SUCCESS, "<p>Posted.</p>");
             }
             catch (Exception e)

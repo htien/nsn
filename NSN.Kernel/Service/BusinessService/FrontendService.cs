@@ -4,7 +4,6 @@ using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Web;
-using Microsoft.Security.Application;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NSN.Common;
@@ -50,7 +49,7 @@ namespace NSN.Service.BusinessService
 
         public User RegisterNewUser(string firstName, string lastName, byte gender,
             string regEmail, string regPassword, string confirmPassword,
-            string birthday)
+            string birthday, int joinDate, string ipAddr)
         {
             if (userRepo.IsExistEmail(regEmail.Trim()))
             {
@@ -64,6 +63,7 @@ namespace NSN.Service.BusinessService
             UserGroup group = userGroupRepo.FindById(UserGroupLevel.RegisteredUser);
             User user = new User()
             {
+                UserGroup = group,
                 Email = regEmail.Trim(),
                 Password = PasswordCryptor.Hash(regPassword, 690),
                 FullName = firstName.Trim() + " " + lastName.Trim(),
@@ -72,7 +72,10 @@ namespace NSN.Service.BusinessService
                                 birthDay.Year,
                                 birthDay.Month < 10 ? "0" + birthDay.Month.ToString() : birthDay.Month.ToString(),
                                 birthDay.Day < 10 ? "0" + birthDay.Day.ToString() : birthDay.Day.ToString()),
-                UserGroup = group
+                Joined = joinDate,
+                LastLogin = sessionManager.GetUserSession().LastVisit,
+                LastActivity = sessionManager.GetUserSession().LastAccessedTime,
+                LastIpAddress = ipAddr
             };
             userRepo.Create(user);
             return user;
@@ -167,7 +170,7 @@ namespace NSN.Service.BusinessService
                     case NSNType.PHOTO_ALBUM:
                         entity = photoAlbumRepo.FindById(feed.ItemId);
                         break;
-                    case NSNType.PHOTO:
+                    case NSNType.PHOTO_ALBUM_MORE:
                         entity = photoAlbumRepo.FindById(feed.ItemId);
                         break;
                     case NSNType.FRIEND:
@@ -203,12 +206,11 @@ namespace NSN.Service.BusinessService
             return friendRequestRepo.List(userId);
         }
 
-        public void PostUserTweet(int userId, string content)
+        public int PostUserTweet(int userId, string content, int timestamp)
         {
-            int timestamp = DateTimeUtils.UnixTimestamp;
             User receiver = userRepo.FindById(userId);
             User sender = sessionManager.GetUser();
-            string originContent = HttpUtility.UrlDecode(content.Trim(), System.Text.Encoding.GetEncoding("ISO-8859-1"));
+            string originContent = Globals.UrlDecode(content.Trim());
 
             if (String.IsNullOrEmpty(originContent))
             {
@@ -216,22 +218,41 @@ namespace NSN.Service.BusinessService
             }
             if (receiver.UserId == sender.UserId)
             {
-                userTweetRepo.Add(sender.UserId, 0, Encoder.HtmlEncode(originContent), timestamp);
+                return userTweetRepo.Add(sender.UserId, 0, Globals.HtmlEncode(originContent), timestamp);
             }
             else
             {
-                userTweetRepo.Add(sender.UserId, receiver.UserId, Encoder.HtmlEncode(originContent), timestamp);
+                return userTweetRepo.Add(sender.UserId, receiver.UserId, Globals.HtmlEncode(originContent), timestamp);
             }
         }
 
-        public long AddComment(long feedId, int userId, string commentText)
+        public long AddCommentOnFeed(long feedId, int userId, int timestamp, string commentText, string ipAddr)
         {
             Feed feed = feedRepo.FindById(feedId);
-            string ipAddr = HttpContext.Current.Request.UserHostAddress;
-            int timestamp = DateTimeUtils.UnixTimestamp;
-            long commentId = commentRepo.Add(feed.TypeId, feed.ItemId, userId, feed.User.UserId, commentText, ipAddr, timestamp);
-            string originCommentText = HttpUtility.UrlDecode(commentText, System.Text.Encoding.GetEncoding("ISO-8859-1"));
-            return commentTextRepo.Add(commentId, originCommentText, Encoder.HtmlEncode(originCommentText));
+            if (feed == null)
+            {
+                throw new Exception("Cannot comment on the feed does not exist.");
+            }
+            int ownerUserId = (userId == feed.User.UserId) ? 0 : userId;
+            return this.AddComment(feed.TypeId, feed.ItemId, feed.User.UserId, ownerUserId, commentText, ipAddr, timestamp);
+        }
+
+        public long AddCommentOnPhoto(int photoId, int userId, int timestamp, string commentText, string ipAddr)
+        {
+            Photo photo = photoRepo.FindById(photoId);
+            if (photo == null)
+            {
+                throw new Exception("Cannot comment on the photo does not exist.");
+            }
+            int ownerUserId = (userId == photo.User.UserId) ? 0 : userId;
+            return this.AddComment(NSNType.PHOTO, photoId, photo.User.UserId, ownerUserId, commentText, ipAddr, timestamp);
+        }
+
+        public long AddComment(string type, int itemId, int userId, int ownerUserId, string commentText, string ipAddr, int timestamp)
+        {
+            long commentId = commentRepo.Add(type, itemId, userId, ownerUserId, commentText, ipAddr, timestamp);
+            string originCommentText = Globals.UrlDecode(commentText);
+            return commentTextRepo.Add(commentId, originCommentText, Globals.HtmlEncode(originCommentText));
         }
 
         public User UpdateProfileInfo(string username, string fullName, string email, byte gender,
@@ -296,13 +317,13 @@ namespace NSN.Service.BusinessService
             {
                 throw new Exception("Error when processing your request friend.");
             }
-            string originMessage = HttpUtility.UrlDecode(message.Trim(), System.Text.Encoding.GetEncoding("ISO-8859-1"));
+            string originMessage = Globals.UrlDecode(message.Trim());
             int timestamp = DateTimeUtils.UnixTimestamp;
             FriendRequest friendRequest = new FriendRequest()
             {
                 User = myUser,
                 FriendUser = friendUser,
-                Message = Encoder.HtmlEncode(message),
+                Message = Globals.HtmlEncode(message),
                 Timestamp = timestamp
             };
             return friendRequestRepo.Create(friendRequest);
