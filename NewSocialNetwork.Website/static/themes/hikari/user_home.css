@@ -678,14 +678,19 @@ div._photoZoomOverlay {
   font-size: 11px;
   color: #808080;
 }
-.UIPhotoZoom .uiPhotoCommentList {
+.UIPhotoZoom .uiPhotoCommentContainer {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   width: 340px;
+  overflow: hidden;
 }
-.UIPhotoZoom .uiPhotoCommentList .uiCommentList {
+.UIPhotoZoom .uiPhotoCommentContainer .wrap {
+  position: relative;
+  height: 100%;
+}
+.UIPhotoZoom .uiPhotoCommentContainer .uiCommentList {
   margin: 0 20px;
 }
 .UIPhotoZoom .photoCommentInput {
