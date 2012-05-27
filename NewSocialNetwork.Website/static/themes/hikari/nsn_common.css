@@ -69,10 +69,6 @@ pre, code {
 strong {
   font-weight: bold;
 }
-html {
-  overflow-x: auto;
-  overflow-y: scroll;
-}
 html, body {
   height: 100%;
 }

@@ -1,24 +1,64 @@
-﻿@using NewSocialNetwork.Domain;
+﻿@using NSN.Common;
+@using NewSocialNetwork.Domain;
 @{
     Layout = null;
     Photo photo = ViewBag.Photo;
-    string photoUrl = Url.Content("~/static/images/photos/" + photo.Image);
-    int maxWidth = 600;
-    int maxHeight = 450;
-    if (photo.PhotoInfo.Width < maxWidth) {
-        maxWidth = photo.PhotoInfo.Width;
-    }
-    if (photo.PhotoInfo.Height < maxHeight) {
-        maxHeight = photo.PhotoInfo.Height;
-    }
+    User author = ViewBag.Author;
+    IList<Comment> comments = ViewBag.Comments;
 }
 <div class="UIPhotoZoomContainer">
     <div class="UIPhotoZoom">
-        <div>
-            <img class="photo" src="@photoUrl" alt="" width="@maxWidth" height="@maxHeight" />
+        <div class="uiPhotoCommentList">
+            <div class="rHeader">
+                <div class="uiPhotoShowControls">
+                    <a class="closeTheater" href="#" title="Press Esc to close"></a>
+                </div>
+            </div>
+            <div class="uiCommentList">
+                <div class="authorInfo clearfix">
+                    <div class="lfloat authorPic">
+                        <a href="@Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(author) })">
+                            <img src="@Url.Content("~/static/images/avatars/" + Globals.UserImage(author.UserImage, author.Gender))" alt="" width="50" height="50" />
+                        </a>
+                    </div>
+                    <div>
+                        <div class="authorName">
+                            <a href="@Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(author) })">@author.FullName</a>
+                        </div>
+                        <div class="info">
+                            <cite title="@Globals.ShowFullDateTime(photo.Timestamp)">@Globals.ShowDate(photo.Timestamp)</cite>
+                        </div>
+                    </div>
+                </div>
+                <div>Like</div>
+                <div class="commentList">
+                    @if (comments != null && comments.Count > 0)
+                    {
+                        foreach (Comment comment in comments)
+                        {
+                            <div id="comment-@comment.CommentId" class="commentItem">
+                                @Html.Raw(Globals.ApplyHtmlFrom(comment.CommentText.TextParsed))
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="photoCommentInput clearfix">
+                <div class="clearfix">
+                    <img class="uiProfileImage" src="@Url.Content("~/static/images/avatars/" + Globals.UserImage(ViewBag.MyProfile.UserImage, ViewBag.MyProfile.Gender))" alt="" />
+                    <input class="uiFormText guiInputText" type="text" name="commentText" />
+                    <div class="hidden_elem">
+                        <input type="hidden" name="pid" value="@photo.PhotoId" />
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="rfloat">
-            Comments
+        <div class="uiPhotoContainer">
+            <div class="uiPhotoOuter">
+                <div class="uiPhoto">
+                    <img class="photo" src="@ViewBag.PhotoUrl" alt="" width="@ViewBag.Width" height="@ViewBag.Height" />
+                </div>
+            </div>
         </div>
     </div>
 </div>

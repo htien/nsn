@@ -11,7 +11,7 @@
         {
             Domain.User user = item._Feed.User;
             Domain.User parentUser = item._Feed.ParentUser;
-            IList<Comment> comments = Globals.GetCommentsByFeed(item._Feed.TypeId, item._Feed.ItemId, user.UserId);
+            IList<Comment> comments = Globals.ListComments(item._Feed.TypeId, item._Feed.ItemId, user.UserId);
             bool isLiked = Globals.IsLikeForFeed(item._Feed.TypeId, item._Feed.ItemId, ViewBag.MyProfile.UserId);
             int totalLike = Globals.GetTotalLike(item._Feed.TypeId, item._Feed.ItemId);
             string displayId = Globals.GetDisplayId(user);
@@ -42,7 +42,7 @@
                             case NSNType.FRIEND:
                                 break;
                             default:
-                                <a class="feedAvatar" href="#"><img src="@feedAvatarFileName" alt="" width="48" height="48" /></a>
+                                <a class="feedAvatar" href="@Url.RouteUrl("Profile", new { uid = displayId })"><img src="@feedAvatarFileName" alt="" width="48" height="48" /></a>
                                 <div class="userPost">
                                     <header>
                                         <h3 class="fname"><a href="@Url.RouteUrl("Profile", new { uid = displayId })">@user.FullName</a></h3>
@@ -65,13 +65,13 @@
                                         <div class="fTypeTweet">
                                             @Html.Raw(Globals.ApplyHtmlFrom(tweet.Content))
                                         </div>
-                                        break;
+                                       break;
                                     case NSNType.PHOTO_ALBUM:
-                                        PhotoAlbum album = (PhotoAlbum)item._Entity;
-                                        string href = Url.RouteUrl("PhotoAlbumAction", new { uid = displayId, albumid = album.AlbumId, action = "ListPhotos" });
-                                        int totalPhoto = Globals.GetTotalPhoto(album.AlbumId);
-                                        IList<Photo> fetchedPhotos = Globals.GetNewPhotosByTimestamp(item._Feed.Timestamp, 4);
-                                        Photo first = fetchedPhotos[0];
+                                       PhotoAlbum album = (PhotoAlbum)item._Entity;
+                                       string href = Url.RouteUrl("PhotoAlbumAction", new { uid = displayId, albumid = album.AlbumId, action = "ListPhotos" });
+                                       int totalPhoto = Globals.GetTotalPhoto(album.AlbumId);
+                                       IList<Photo> fetchedPhotos = Globals.GetNewPhotosByTimestamp(item._Feed.Timestamp, 4);
+                                       Photo first = fetchedPhotos[0];
                                         <div class="fTypePhotoAlbum">
                                             <div>
                                                 <a class="albumName" href="@href"><strong>@Html.Raw(Globals.ApplyHtmlFrom(album.Name))</strong></a> <span class="count">(@totalPhoto @(totalPhoto > 1 ? "photos" : "photo"))</span>
@@ -83,37 +83,37 @@
                                                     <img id="photo-@first.PhotoId" class="zoomFeature" src="@Url.Content("~/static/images/photos/" + first.Image)" alt="" />
                                                 </div>
                                                 @foreach (Photo photo in fetchedPhotos)
-	                                            {
+                                                {
                                                     if (photo.PhotoId == first.PhotoId) { continue; }
                                                     <img id="photo-@photo.PhotoId" class="zoomFeature" src="@Url.Content("~/static/images/photos/" + photo.Image)" alt="" width="133" height="133" />
                                                 }
                                             </div>
                                         </div>
-                                        break;
-                                    case NSNType.PHOTO:
-                                        PhotoAlbum album2 = (PhotoAlbum)item._Entity;
-                                        string href2 = Url.RouteUrl("PhotoAlbumAction", new { uid = displayId, albumid = album2.AlbumId, action = "ListPhotos" });
-                                        int totalPhoto2 = Globals.TotalPhotoByTimestamp(album2.AlbumId, item._Feed.Timestamp);
-                                        IList<Photo> fetchedPhotos2 = Globals.GetNewPhotosByTimestamp(item._Feed.Timestamp, 4);
-                                        Photo first2 = fetchedPhotos2[0];
+                                                break;
+                                    case NSNType.PHOTO_ALBUM_MORE:
+                                                PhotoAlbum album2 = (PhotoAlbum)item._Entity;
+                                                string href2 = Url.RouteUrl("PhotoAlbumAction", new { uid = displayId, albumid = album2.AlbumId, action = "ListPhotos" });
+                                                int totalPhoto2 = Globals.TotalPhotoByTimestamp(album2.AlbumId, item._Feed.Timestamp);
+                                                IList<Photo> fetchedPhotos2 = Globals.GetNewPhotosByTimestamp(item._Feed.Timestamp, 4);
+                                                Photo first2 = fetchedPhotos2[0];
                                         <div class="fTypePhotoAlbum">
                                             <div>
-                                                Added <span class="count">@totalPhoto2 @(totalPhoto2 > 1 ? "photos" : "photo")</span> in <a class="albumName" href="@href2"><strong>@Html.Raw(Globals.ApplyHtmlFrom(album2.Name))</strong></a>.
+                                                Added <span class="count">@totalPhoto2 new @(totalPhoto2 > 1 ? "photos" : "photo")</span> to the album <a class="albumName" href="@href2"><strong>@Html.Raw(Globals.ApplyHtmlFrom(album2.Name))</strong></a>.
                                             </div>
                                             <div class="photoUnit clearfix">
                                                 <div>
                                                     <img id="photo-@first2.PhotoId" class="zoomFeature" src="@Url.Content("~/static/images/photos/" + first2.Image)" alt="" />
                                                 </div>
                                                 @foreach (Photo photo2 in fetchedPhotos2)
-	                                            {
+                                                {
                                                     if (photo2.PhotoId == first2.PhotoId) { continue; }
                                                     <img id="photo-@photo2.PhotoId" class="zoomFeature" src="@Url.Content("~/static/images/photos/" + photo2.Image)" alt="" width="133" height="133" />
                                                 }
                                             </div>
                                         </div>
-                                        break;
+                                                break;
                                     case NSNType.FRIEND:
-                                        Friend friend = (Friend)item._Entity;
+                                                Friend friend = (Friend)item._Entity;
                                         <div class="fTypeFriend">
                                             <div>
                                                 <a href="@Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(user) })">
@@ -127,7 +127,7 @@
                                                 <span><cite title="@Globals.ShowFullDateTime(item._Feed.Timestamp)">@Globals.ShowDateTime(item._Feed.Timestamp)</cite></span>
                                             </div>
                                         </div>
-                                        break;
+                                                                                                               break;
                                 }
                             </div>
                         </div>
@@ -173,16 +173,20 @@
                                             <div class="uiListTreeInner">
                                                 @foreach (NewSocialNetwork.Domain.Comment comment in comments)
                                                 {
-                                                    string hrefUProfile = Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(comment.User) });
+                                                    User author = (comment.OwnerUser == null || comment.OwnerUser.UserId == 0) ? comment.User : comment.OwnerUser;
+                                                    string profileUrl = Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(author) });
+                                                    string profileAvatarUrl = Url.Content("~/static/images/avatars/" + Globals.UserImage(author));
+                                                    string fullDateTime = Globals.ShowFullDateTime(comment.Timestamp);
+                                                    string dateTime = Globals.ShowDateTime(comment.Timestamp);
                                                     <div id="comment-@comment.CommentId" class="uiCommentItem">
                                                         <div class="uiComment">
-                                                            <a class="userImage" href="@hrefUProfile">
-                                                                <img src="@Url.Content("~/static/images/avatars/" + Globals.UserImage(comment.User.UserImage, comment.User.Gender))" alt="" width="32" height="32" />
+                                                            <a class="userImage" href="@profileUrl">
+                                                                <img src="@profileAvatarUrl" alt="" width="32" height="32" />
                                                             </a>
                                                             <div>
-                                                                <a class="userFullName" href="@hrefUProfile">@comment.User.FullName</a>
+                                                                <a class="userFullName" href="@profileUrl">@author.FullName</a>
                                                                 <span class="commentInfo">
-                                                                    <span class="time" title="@Globals.ShowFullDateTime(comment.Timestamp)">@Globals.ShowDateTime(comment.Timestamp)</span>
+                                                                    <span class="time" title="@fullDateTime">@dateTime</span>
                                                                     <span class="commentActions"><span class="delete"></span></span>
                                                                 </span>
                                                                 <div class="commentText">@Html.Raw(Globals.ApplyHtmlFrom(comment.CommentText.TextParsed))</div>

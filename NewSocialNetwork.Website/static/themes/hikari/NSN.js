@@ -371,12 +371,12 @@ var glbDebug = true,
     NSN_getProfileId = function(profileItem) {
         return parseInt(profileItem.attr('id').slice(8), 10);
     };
-    NSN_postComment = function(feedId, commentText) {
+    NSN_postCommentOnFeed = function(feedId, commentText) {
         jQuery.ajax({
             url: nsn.requestUrl('comment/addsave'),
             type: 'post',
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
-            data: { fid: feedId, c: escape(commentText) },
+            data: { targetId: feedId, c: escape(commentText), where: 'on_feed' },
             beforeSend: function(xhr) {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
             },
@@ -393,6 +393,28 @@ var glbDebug = true,
                 }
             }
         })
+    };
+    NSN_postCommentOnPhoto = function(photoId, commentText) {
+        jQuery.ajax({
+            url: NSN.requestUrl('comment/addsave'),
+            type: 'post',
+            contentType: "application/x-www-form-urlencoded;charset=utf-8",
+            data: { targetId: photoId, c: escape(commentText), where: 'on_photo' },
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+            },
+            success: function(data) {
+                if (data != null && data.length > 0) {
+                    alert(data);
+                }
+                else {
+                    nsn.createJqDlg(glbDefaultDlgId, 'Cannot process your comment. Please try again!').dialog('open');
+                }
+            },
+            error: function(data) {
+                alert(data);
+            }
+        });
     };
     NSN_like = function(evtObj) {
         // TODO

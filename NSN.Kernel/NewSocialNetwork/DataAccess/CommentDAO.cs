@@ -39,15 +39,40 @@ namespace NewSocialNetwork.DataAccess
                 .UniqueResult());
         }
 
-        public IList<Comment> GetCommentsByFeed(string typeId, int itemId, int ownerUserId)
+        public IList<Comment> ListComments(string typeId, int itemId, int userId)
         {
             return this.Session().CreateQuery(
                 @"from Comment c inner join fetch c.CommentText
-                  where c.TypeId = :typeId and c.ItemId = :itemId and c.OwnerUser.UserId = :ownerUserId")
+                  where c.TypeId = :typeId and c.ItemId = :itemId and c.User.UserId = :userId")
                 .SetString("typeId", typeId)
                 .SetInt32("itemId", itemId)
-                .SetInt32("ownerUserId", ownerUserId)
+                .SetInt32("userId", userId)
                 .List<Comment>();
+        }
+
+        public IList<Comment> ListComments(string typeId, int itemId)
+        {
+            return this.Session().CreateQuery(
+                @"from Comment c inner join fetch c.CommentText
+                  where c.TypeId = :typeId and c.ItemId = :itemId")
+                .SetString("typeId", typeId)
+                .SetInt32("itemId", itemId)
+                .List<Comment>();
+        }
+
+        public IList<Comment> ListCommentsByPhotoAlbum(int albumId)
+        {
+            return this.ListComments(NSNType.PHOTO_ALBUM, albumId);
+        }
+
+        public IList<Comment> ListCommentsByPhoto(int photoId)
+        {
+            return this.ListComments(NSNType.PHOTO, photoId);
+        }
+
+        public IList<Comment> ListCommentsByUserTweet(int tweetId)
+        {
+            return this.ListComments(NSNType.USER_TWEET, tweetId);
         }
 
         #endregion

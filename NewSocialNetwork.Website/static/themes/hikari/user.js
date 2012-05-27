@@ -40,7 +40,7 @@ jQuery(function ($) {
             NSN.callJqDlg(glbDefaultDlgId, 'You really are funny :). Please comment!', { hasTitle: false }).dialog('open');
             return;
         }
-        NSN_postComment(feedId, commentText);
+        NSN_postCommentOnFeed(feedId, commentText);
     });
 
     jQuery('.uiFeedItem').on('click', '.guiButton.cancel', function (evtObj) {
@@ -282,23 +282,51 @@ jQuery(function ($) {
         });
     });
 
+    function disableHtmlScrollbar(ok) {
+        if (ok) {
+            jQuery('body').addClass('_photoZoom');
+        }
+        else {
+            jQuery('body').removeClass('_photoZoom');
+        }
+    }
+
     function zoomPhotoItem(photoId) {
         jQuery.ajax({
             url: NSN.requestUrl('photo/showzoom'),
             type: 'post',
             data: { photoId: photoId },
             success: function(result) {
+                disableHtmlScrollbar(true);
                 var dlg = NSN.createJqDlg('ajax-photozoom', result, {
                         hasTitle: false,
                         width: 'auto',
-                        closeOnEscape: true
+                        closeOnEscape: true,
+                        close: function() {
+                            NSN.$id('ajax-photozoom').dialog('destroy').remove();
+                            disableHtmlScrollbar(false);
+                        },
+                        buttons: {}
                     }),
-                    parent = dlg.parent();
-                parent.css('cssText', 'top: 30px !important');
-                parent.css('cssText', 'right: 30px !important');
-                parent.css('cssText', 'bottom: 30px !important');
-                parent.css('cssText', 'left: 30px !important');
+                    dlgParent = dlg.parent();
+                dlg.addClass('_photoZoomInner');
+                dlgParent.addClass('_photoZoom');
+                dlg.find('.closeTheater').click(function(evt) {
+                    dlg.dialog('close');
+                    evt.preventDefault();
+                });
+                dlg.on('keydown', 'input[name=commentText]', function(evt) {
+                    if (evt.keyCode == 13) {
+                        var me = jQuery(this),
+                            photoId = me.siblings('.hidden_elem').find('input[name=pid]').val(),
+                            c = me.val();
+                        NSN_postCommentOnPhoto(photoId, c);
+                    }
+                });
                 dlg.dialog('open');
+                dlgParent.next().addClass('_photoZoomOverlay').click(function(evt) {
+                    dlg.dialog('close');
+                });
             }
         });
     };
@@ -306,10 +334,12 @@ jQuery(function ($) {
     jQuery('.UIGrid_Photo .UIPhotoItem').on('click', 'img.zoomFeature', function(evt) {
         var photoId = parseInt(jQuery(this).parents('.UIPhotoItem').attr('id').slice(6), 10);
         zoomPhotoItem(photoId);
+        evt.preventDefault();
     });
     jQuery('.uiFeedItem .photoUnit img.zoomFeature').live('click', function(evt) {
         var photoId = parseInt(jQuery(this).attr('id').slice(6), 10);
         zoomPhotoItem(photoId);
+        evt.preventDefault();
     });
 
     jQuery('.UIContent_UserProfile .profileActions').on('click', '.guiButton.addFriend', function (evtObj) {
@@ -389,7 +419,7 @@ jQuery(function ($) {
     });
     jQuery('.UIStream_FriendRequests .notNowBtn').live('click', function(evt) {
         var requestId = parseInt(jQuery(this).parent().prev().attr('id').slice(15), 10);
-        alert(userId);
+        alert(requestId); // TODO
         evt.preventDefault();
     });
     jQuery('#profile-editinfo-form .submitBtn').click(function(evt) {

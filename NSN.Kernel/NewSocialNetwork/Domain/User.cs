@@ -201,4 +201,13 @@ namespace NewSocialNetwork.Domain
 
         public User() { }
     }
+
+    public class GenderType
+    {
+        public const byte UNSPECIFIES = 0;
+        public const byte MALE = 1;
+        public const byte FEMALE = 2;
+
+        private GenderType() { }
+    }
 }

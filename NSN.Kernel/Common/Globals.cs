@@ -20,6 +20,10 @@ namespace NSN.Common
         public const string CONFIG_FOLDER_NAME = "Config";
         public const string CONFIG_FOLDER_PATH = CONFIG_FOLDER_NAME + "/";
         public static string CONFIG_PHYSICAL_PATH = HttpContext.Current.Server.MapPath(CONFIG_FOLDER_PATH);
+        public const string RESOURCE = "~/static/";
+        public const string RESOURCE_IMAGES = "~/static/images/";
+        public const string RESOURCE_AVATARS = "~/static/images/avatars/";
+        public const string RESOURCE_PHOTOS = "~/static/images/photos/";
 
         public const string CTX_NSNCONTAINER = "__NSNContainer";
         public const string CTX_NSNCONFIG = "__NSNConfig";
@@ -225,21 +229,20 @@ namespace NSN.Common
             }
         }
 
+        public static string UserImage(User user)
+        {
+            return UserImage(user.UserImage, user.Gender);
+        }
+
         public static string UserImage(string userImage, int gender)
         {
             if (userImage == null || userImage.Length == 0)
             {
-                if (gender == 1)
+                switch (gender)
                 {
-                    return "default_medium_male.gif";
-                }
-                else if (gender == 2)
-                {
-                    return "default_medium_female.gif";
-                }
-                else
-                {
-                    return "";
+                    case GenderType.MALE: return "default_medium_male.gif";
+                    case GenderType.FEMALE: return "default_medium_female.gif";
+                    default: return "";
                 }
             }
             else
@@ -266,10 +269,10 @@ namespace NSN.Common
             return friendRequestRepo.IsConfirmingFriendRequest(userId, friendUserId);
         }
 
-        public static IList<Comment> GetCommentsByFeed(string typeId, int itemId, int ownerUserId)
+        public static IList<Comment> ListComments(string typeId, int itemId, int userId)
         {
             ICommentRepository commentRepo = NSNContext.Current.Container.Resolve<ICommentRepository>();
-            return commentRepo.GetCommentsByFeed(typeId, itemId, ownerUserId);
+            return commentRepo.ListComments(typeId, itemId, userId);
         }
 
         public static IList<Photo> GetNewPhotosByTimestamp(int timestamp, int size)

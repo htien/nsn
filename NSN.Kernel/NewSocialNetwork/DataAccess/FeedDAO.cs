@@ -78,7 +78,7 @@ namespace NewSocialNetwork.DataAccess
 
         public IList<Feed> GetUserFeeds(int userId, int start, int size)
         {
-            return GetUserFeeds(userId, start, size, false);
+            return GetUserFeeds(userId, start, size, true);
         }
 
         public IList<Feed> GetUserFeeds(int userId, int start, int size, bool onlyme)
@@ -96,7 +96,7 @@ namespace NewSocialNetwork.DataAccess
             {
                 hql = @"select FeedId, Privacy, TypeId, ItemId, UserId, ParentUserId, [Timestamp]
                         from [NSN.Feed] f
-                        where f.UserId = :userId or (f.ParentUserId = :userId) or (f.ParentUserId = :userId)
+                        where f.UserId = :userId or f.ParentUserId = :userId
                         order by f.Timestamp desc
                         offset :start rows fetch next :size rows only";
             }

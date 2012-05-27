@@ -1,15 +1,12 @@
-﻿using NewSocialNetwork.Domain;
+﻿using System;
+using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NHibernate;
-using SaberLily.Utils;
-using System;
 
 namespace NewSocialNetwork.DataAccess
 {
     public class UserTweetDAO : DAO<UserTweet>, IUserTweetRepository
     {
-        public IFeedRepository feedRepo { private get; set; }
-
         public UserTweetDAO(ISessionFactory sessionFactory) : base(sessionFactory)
         { }
 
@@ -31,7 +28,6 @@ namespace NewSocialNetwork.DataAccess
                 .SetString("content", content)
                 .SetInt32("timestamp", timestamp)
                 .UniqueResult());
-            feedRepo.Add(NSNType.USER_TWEET, tweetId, userId, friendUserId, timestamp);
             return tweetId;
         }
 

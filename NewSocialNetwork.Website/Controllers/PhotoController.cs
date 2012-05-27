@@ -13,6 +13,7 @@ namespace NewSocialNetwork.Website.Controllers
 {
     public class PhotoController : ApplicationController
     {
+        public ICommentRepository commentRepo { private get; set; }
         public IPhotoAlbumRepository photoAlbumRepo { private get; set; }
         public IPhotoRepository photoRepo { private get; set; }
         public IFeedRepository feedRepo { private get; set; }
@@ -36,7 +37,16 @@ namespace NewSocialNetwork.Website.Controllers
                 || (photo.Privacy == NSNPrivacyMode.FRIENDS && ViewBag.IsFriend)
                 || (photo.Privacy == NSNPrivacyMode.ONLYME && ViewBag.IsMyProfile))
             {
+                IList<Comment> comments = commentRepo.ListCommentsByPhoto(photo.PhotoId);
+                User author = photo.User;
+                int[] size = this.CalcPhotoSize(photo, 800, 500);
+
+                ViewBag.Comments = comments;
                 ViewBag.Photo = photo;
+                ViewBag.PhotoUrl = Url.Content("~/static/images/photos/" + photo.Image);
+                ViewBag.Width = size[0];
+                ViewBag.Height = size[1];
+                ViewBag.Author = author;
             }
             return View();
         }
@@ -72,7 +82,7 @@ namespace NewSocialNetwork.Website.Controllers
                 // Remove photo images from session
                 frontendService.RemoveImagesFromSession(this.Session);
                 // Insert to feed
-                feedRepo.Add(NSNType.PHOTO, albumId, sessionManager.GetUser().UserId, 0, timestamp);
+                feedRepo.Add(NSNType.PHOTO_ALBUM_MORE, albumId, sessionManager.GetUser().UserId, 0, timestamp);
                 // Returns
                 msg.SetStatusAndMessage(RStatus.SUCCESS, String.Format("Uploaded your photos to album: <strong>{0}</strong>", ""));
                 msg.ReturnedPath = Url.RouteUrl("PhotoAlbumAction", new { uid = Globals.GetDisplayId(sessionManager.GetUser()), albumid = albumId, action = "ListPhotos" });
@@ -131,6 +141,26 @@ namespace NewSocialNetwork.Website.Controllers
                 msg.Message = e.Message;
             }
             return Json(msg);
+        }
+
+        private int[] CalcPhotoSize(Photo photo, int maxWidth, int maxHeight)
+        {
+            double width = photo.PhotoInfo.Width;
+            double height = photo.PhotoInfo.Height;
+            double ratio = Math.Round(width / height, 2);
+            if (height > maxHeight)
+            {
+                height = maxHeight;
+                width = Math.Round(height * ratio);
+            }
+            if (width > maxWidth)
+            {
+                width = maxWidth;
+                height = Math.Round(width / ratio);
+            }
+            int iWidth = Convert.ToInt16(width);
+            int iHeight = Convert.ToInt16(height);
+            return new int[] { iWidth, iHeight };
         }
     }
 }

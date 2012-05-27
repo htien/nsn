@@ -1,0 +1,7 @@
+﻿@using NSN.Common;
+@using NewSocialNetwork.Domain;
+@{
+    Layout = null;
+    Comment comment = ViewBag.Comment;
+}
+@Html.Raw(Globals.ApplyHtmlFrom(comment.CommentText.TextParsed))

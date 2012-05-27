@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using NewSocialNetwork.Repositories;
 using NewSocialNetwork.Website.Controllers.Helper;
 using NSN.Service.BusinessService;
+using SaberLily.Utils;
 
 namespace NewSocialNetwork.Website.Controllers
 {
@@ -35,9 +36,11 @@ namespace NewSocialNetwork.Website.Controllers
                 @"<p>Quá trình đăng ký gặp trắc trở và đã thất bại. Ôi thê thảm quá!</p>");
             try
             {
+                int joinDate = DateTimeUtils.UnixTimestamp;
+                string ipAddr = Request.UserHostAddress;
                 // Add new user
                 Domain.User user = frontendService.RegisterNewUser(firstname, lastname, gender, reg_email, reg_password, confirm_password,
-                    (birthday_year + "/" + birthday_month + "/" + birthday_day));
+                    (birthday_year + "/" + birthday_month + "/" + birthday_day), joinDate, ipAddr);
                 // Init user count pending
                 frontendService.CreateUserCount(user);
                 // Returns

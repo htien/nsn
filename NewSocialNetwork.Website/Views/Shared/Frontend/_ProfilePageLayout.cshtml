@@ -1,11 +1,11 @@
 ﻿@using NSN.Common;
-@using Domain = NewSocialNetwork.Domain;
+@using NewSocialNetwork.Domain;
 @{
     Layout = "~/Views/Shared/_UserLayout.cshtml";
-    Domain.User myProfile = ViewBag.MyProfile;
-    Domain.User userProfile = ViewBag.UProfile;
-    IList<Domain.User> mutualFriends = null;
-    if (ViewBag.IsFriend != null && ViewBag.IsFriend)
+    User myProfile = ViewBag.MyProfile;
+    User userProfile = ViewBag.UProfile;
+    IList<User> mutualFriends = null;
+    if (!ViewBag.IsMyProfile && ViewBag.IsFriend != null && ViewBag.IsFriend)
     {
         mutualFriends = Globals.GetMutualFriends(myProfile.UserId, userProfile.UserId);
     }
@@ -81,13 +81,13 @@
                             </div>
                         </div>
                     </div>
-                    @if (ViewBag.IsFriend != null && ViewBag.IsFriend && mutualFriends != null)
+                    @if (!ViewBag.IsMyProfile && ViewBag.IsFriend != null && ViewBag.IsFriend && mutualFriends != null && mutualFriends.Count > 0)
                     {
                         <div id="pagelet_recommended_friends">
                             <div class="UIList_RecommendedFriends">
                                 <h2 class="pageletTitle">Mutual Friends</h2>
                                 <div class="uiListContainer">
-                                    @foreach (Domain.User friend in mutualFriends)
+                                    @foreach (User friend in mutualFriends)
                                     {
                                         <div class="uiListItem">
                                             <a href="@Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(friend) })">

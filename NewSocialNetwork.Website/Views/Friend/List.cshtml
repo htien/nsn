@@ -1,7 +1,19 @@
 ﻿@using NSN.Common;
+@using NewSocialNetwork.Domain;
+@{
+    User myUser = ViewBag.MyProfile;
+    User userProfile = ViewBag.UProfile;
+}
 <div id="pagelet_friends">
     <div class="UIGrid_Friends">
-        <h2 class="title">Friends (@ViewBag.totalFriends)</h2>
+        @if (ViewBag.IsFriend && !ViewBag.IsMyProfile)
+        {
+            <h2 class="title">@userProfile.FullName's Friends (@ViewBag.totalFriends)</h2>
+        }
+        else
+        {
+            <h2 class="title">Friends (@ViewBag.totalFriends)</h2>
+        }
         <div class="uiFriendsContainer">
             @if (ViewBag.listfriend != null && ViewBag.listfriend.Count > 0)
             {
@@ -9,21 +21,36 @@
                 {
                     <div class="uiFriendItem">
                         <div class="uiFriend">
-                            @if(user.UserImage != null)
+                            @{
+                    string hrefToFriend = @Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(user) });
+                            }
+                            @if (user.UserImage != null)
                             {
-                                <div class="friendAvatar" ><img src="@Url.Content("~/static/images/avatars/" + @user.UserImage)" alt="" /></div>
+                                <div class="friendAvatar" >
+                                    <a href="@hrefToFriend">
+                                        <img src="@Url.Content("~/static/images/avatars/" + @user.UserImage)" alt="" />
+                                    </a>
+                                </div>
                             }
                             else if (user.Gender == 1)
                             {
-                                <div class="friendAvatar"><img src="@Url.Content("~/static/images/avatars/default_male.gif")" alt="" width="100" height="100" /></div>
+                                <div class="friendAvatar">
+                                    <a href="@hrefToFriend">
+                                        <img src="@Url.Content("~/static/images/avatars/default_male.gif")" alt="" width="100" height="100" />
+                                    </a>
+                                </div>
                             }
                             else if (user.Gender == 2)
                             {
-                                <div class="friendAvatar"><img src="@Url.Content("~/static/images/avatars/default_female.gif")" alt="" width="100" height="100" /></div>
+                                <div class="friendAvatar">
+                                    <a href="@hrefToFriend">
+                                        <img src="@Url.Content("~/static/images/avatars/default_female.gif")" alt="" width="100" height="100" />
+                                    </a>
+                                </div>
                             }
                             
                             <div class="friendInfo">
-                                <div class="name"><b style="font-weight:bold"><a href="@Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(user) })">@user.FullName</a></b><br />@Globals.ShowBirthday(user.Birthday)</div>
+                                <div class="name"><b style="font-weight:bold"><a href="@hrefToFriend">@user.FullName</a></b><br />@Globals.ShowBirthday(user.Birthday)</div>
                             </div>
                         </div>
                     </div>
