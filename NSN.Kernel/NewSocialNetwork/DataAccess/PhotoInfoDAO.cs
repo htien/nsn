@@ -8,5 +8,13 @@ namespace NewSocialNetwork.DataAccess
     {
         public PhotoInfoDAO(ISessionFactory sessionFactory) : base(sessionFactory)
         { }
+
+        public int Remove(int photoId)
+        {
+            return this.Session().CreateQuery(
+                @"delete from PhotoInfo where PhotoId = :photoId")
+                .SetInt32("photoId", photoId)
+                .ExecuteUpdate();
+        }
     }
 }

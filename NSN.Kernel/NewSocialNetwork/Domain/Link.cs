@@ -20,6 +20,9 @@ namespace NewSocialNetwork.Domain
         [Property("Privacy", NotNull = true, Default = "0")]
         public virtual byte Privacy { get; set; }
 
+        [Property("Content", ColumnType = "StringClob", SqlType = "NTEXT", NotNull = false)]
+        public virtual string Content { get; set; }
+
         [Property("Url", Length = 255, NotNull = true)]
         public virtual string Url { get; set; }
 

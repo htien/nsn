@@ -9,7 +9,8 @@
         @if (ViewBag.IsMyProfile)
         {
             <div class="photosActions">
-                <div id="addPhoto" class="guiButton guiRedButton">Add Photo</div>
+                <div id="addPhoto" class="guiButton guiRedButton">Add Photos</div>
+                <div id="removeAlbum" class="guiButton guiRedButton">Remove This Album</div>
             </div>
         }
         <h2 class="title">@Html.Raw(Globals.ApplyHtmlFrom(album.Name)) (@ViewBag.Photos.Count)</h2>
@@ -29,6 +30,12 @@
                     <img class="zoomFeature" src="@Url.Content("~/static/images/photos/" + photo.Image)" width="185" height="139" alt="" />
                 }
                 </div>
+                @if (ViewBag.IsMyProfile)
+                {
+                    <div class="photoActions">
+                        <a class="removePhoto" href="#" title="Remove this photo">Remove</a>
+                    </div>
+                }
             </div>
         }
     </div>

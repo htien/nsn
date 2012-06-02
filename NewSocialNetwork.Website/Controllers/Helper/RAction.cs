@@ -7,5 +7,6 @@
         public const string REMOVE = "remove";
         public const string LIST = "list";
         public const string LOGIN = "login";
+        public const string TOTAL = "total";
     }
 }

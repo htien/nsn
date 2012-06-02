@@ -93,17 +93,77 @@ img,
   background-repeat: no-repeat;
 }
 #composer-tabs .uiComposer-outer {
-  border: 1px solid #ddd !important;
+  border: 1px solid #ddd;
+  border-top: 1px solid #bbb;
+  -webkit-border-radius: 3x;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+#composer-tabs .uiComposer .wrap {
+  border-top: 1px solid #f9f9f9;
 }
 #composer-tabs .uiComposer .uiInput {
-  padding: 5px;
+  padding: 5px 5px 5px 8px;
 }
 #composer-tabs .uiComposer .linkShareStage {
   border-top: 1px dashed #ccc;
+  padding: 7px;
+}
+#composer-tabs .uiComposer .linkShareStage .uiBlock {
+  position: relative;
+}
+#composer-tabs .uiComposer .linkShareStage .uiCloseButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+#composer-tabs .uiComposer .linkShareStage:hover .uiCloseButton {
+  opacity: 1;
+}
+.UIShareStage_Image {
+  float: left;
+  max-width: 100px;
+  padding: 0 12px 12px 0;
+}
+.UIShareStage_ThumbPager {
+  width: 100px;
+}
+.UIThumbPager .UIThumbPager_Loader {
+  padding: 32px 0;
+  text-align: center;
+}
+.UIShareStage_ShareContent {
+  float: left;
+  width: 290px;
+}
+.UIShareStage_Title {
+  font-weight: bold;
+  color: #000;
+}
+.UIShareStage_Subtitle {
+  font-size: 11px;
+  font-weight: normal;
+  color: #666;
+}
+.UIShareStage_Summary {
+  margin-top: 6px;
+}
+.UIThumbPagerControl {
+  position: relative;
+  line-height: 29px;
+}
+.UIThumbPagerControl .guiButton {
+  width: 12px;
+  min-width: 12px;
+  margin-right: 0;
+}
+.UIThumbPagerControl .UIThumbPagerControl_Text {
+  margin-left: 10px;
+  font-size: 11px;
 }
 #composer-tabs .uiComposer .buttons {
-  background-color: #f2f2f2;
-  border-top: 1px solid #e6e6e6;
+  background-color: #eed;
+  border-top: 1px solid #ebebeb;
 }
 #composer-tabs .uiComposer .buttons .buttons-inner {
   padding: 4px;
@@ -129,12 +189,37 @@ img,
   margin: 0 auto !important;
   padding: 0;
   width: 494px !important;
+  min-height: 32px;
   border-width: 0;
   outline: none;
   resize: none;
 }
 #postStatus, #postLink {
   margin-right: 0;
+}
+#composer-addlink .uiAddLink {
+  position: relative;
+  overflow: hidden;
+}
+#composer-addlink .uiAddLink .uiInput {
+  display: inline-block;
+  width: 413px;
+  vertical-align: middle;
+}
+#composer-addlink .uiAddLink .uiFormText {
+  height: 30px;
+}
+#composer-addlink .uiAddLink .addBtn {
+  display: inline-block;
+  margin-right: 8px;
+  height: 28px;
+  vertical-align: middle;
+}
+#composer-addlink .linkShareStage {
+  display: none;
+}
+#composer-addlink .linkShareStage .uiCloseButton {
+  
 }
 #composer-addphoto .composerPhotoGrid .borderItem {
   border-right: 1px solid #e5e5e5;
@@ -337,6 +422,26 @@ img,
   color: #222;
   text-decoration: none;
 }
+.uiCloseButton {
+  float: right;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-image: url(images/fb_sprite_icons_6.png);
+  background-repeat: no-repeat;
+  opacity: 0;
+  zoom: 1;
+}
+.uiCloseButton:hover {
+  background-position: left -32px;
+  opacity: 1;
+}
+.uiCloseButton:active {
+  background-position: left -48px;
+}
+.UIFeeds_Content .uiFeed:hover .uiCloseButton {
+  opacity: 1;
+}
 .UIFeeds_Content .uiFeed .postInfo {
   font-size: 11px;
   color: #999;
@@ -499,6 +604,8 @@ img,
   color: #999;
   text-align: right;
 }
+.UIFeeds_Content .fTypeLink {
+}
 .UIForm_RequestFriend {
   position: relative;
 }
@@ -633,6 +740,7 @@ div._photoZoomOverlay {
   filter: alpha(opacity=75);
 }
 .UIPhotoZoom .uiPhotoContainer {
+  position: relative;
   margin-right: 340px;
 }
 .UIPhotoZoom .uiPhotoOuter {
@@ -640,9 +748,12 @@ div._photoZoomOverlay {
 }
 .UIPhotoZoom .uiPhoto {
   padding: 30px 0;
-  border: 1px solid rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.3);
   -webkit-box-sizing: border-box;
   text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 .UIPhotoZoom .uiPhoto img {
   display: inline-block;
@@ -650,6 +761,31 @@ div._photoZoomOverlay {
   max-height: 100%;
   image-rendering: optimizeQuality;
   vertical-align: middle;
+}
+.UIPhotoZoom .photoZoomActions {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  left: 2px;
+  opacity: .7;
+  text-align: right;
+}
+.UIPhotoZoom .photoZoomActions:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+.UIPhotoZoom .photoZoomActions a {
+  text-decoration: none;
+}
+.UIPhotoZoom .photoZoomActions .likeBtn,
+.UIPhotoZoom .photoZoomActions .unlikeBtn {
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 13px;
+  font-weight: bold;
+  background-color: #111;
+  color: #999;
+  text-align: center;
 }
 .UIPhotoZoom .uiPhotoShowControls {
   padding: 7px 7px 0 15px;
@@ -690,8 +826,71 @@ div._photoZoomOverlay {
   position: relative;
   height: 100%;
 }
+.UIPhotoZoom .uiPhotoCommentContainer .rHeader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+}
+.UIPhotoZoom .uiPhotoCommentContainer .uiPhotoCommentList {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  bottom: 44px;
+  left: 0;
+  overflow-y: auto;
+}
 .UIPhotoZoom .uiPhotoCommentContainer .uiCommentList {
   margin: 0 20px;
+}
+.UIPhotoZoom .commentItem {
+  margin-bottom: 1px;
+  padding: 5px 5px 4px;
+  background-color: #edeff4;
+}
+.UIPhotoZoom .commentItem .actorPic {
+  float: left;
+  margin-right: 8px;
+}
+.UIPhotoZoom .commentItem .actorPic img {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+.UIPhotoZoom .commentItem .commentContent {
+  display: table-cell;
+  vertical-align: top;
+}
+.UIPhotoZoom .commentItem .actorName {
+  font-weight: bold;
+  color: #2e8bcc;
+}
+.UIPhotoZoom .commentItem .commentActions {
+  padding-top: 2px;
+}
+.UIPhotoZoom .commentItem .commentActions .timestamp {
+  font-size: 11px;
+  color: #808080;
+}
+.UIPhotoZoom .commentItem .uiCloseButton {
+  float: right;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-image: url(images/fb_sprite_icons_6.png);
+  background-repeat: no-repeat;
+  opacity: 0;
+  zoom: 1;
+}
+.UIPhotoZoom .commentItem:hover .uiCloseButton {
+  opacity: 1;
+}
+.UIPhotoZoom .commentItem .uiCloseButton:hover {
+  background-position: left -32px;
+}
+.UIPhotoZoom .commentItem .uiCloseButton:active {
+  background-position: left -48px;
 }
 .UIPhotoZoom .photoCommentInput {
   position: absolute;
@@ -712,4 +911,64 @@ div._photoZoomOverlay {
 .UIPhotoZoom .photoCommentInput .uiFormText {
   display: inline-block;
   width: 262px;
+}
+
+/** Stream */
+
+.fcg {
+  color: gray;
+}
+.mts {
+  margin-top: 5px;
+}
+
+.uiListItem {
+  display: block;
+}
+
+.uiStream .uiStreamHeader {
+  position: relative;
+  margin: 20px 0 5px -18px;
+  height: 1px;
+  background-color: #e9e9e9;
+}
+.uiStream .uiStreamHeader .uiStreamHeaderChronologicalForm {
+  position: absolute;
+  top: -9px;
+  right: 35px;
+  background-color: #fff;
+}
+.uiStream .uiStreamHeader .text {
+  margin: 0 2px;
+  font-family: Tahoma, Arial, sans-serif;
+  font-size: 9px;
+  font-weight: bold;
+  color: #808080;
+}
+.uiStreamMessage, .uiAttachmentTitle, .uiAttachmentDesc {
+  word-break: break-word;
+  word-wrap: break-word;
+}
+.uiStreamAttachments {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.uiStreamAttachments .profilePhotoAttachment, .uiStreamAttachments .external img {
+  max-height: 90px;
+  max-width: 90px;
+}
+.uiStream .uiStreamMessage {
+  margin: 0 0 5px;
+}
+.UIImageBlock_Image {
+  float: left;
+  margin-right: 10px;
+}
+.UIImageBlock_Image .img, img.UIImageBlock_Image, i.UIImageBlock_Image {
+  display: block;
+}
+.UIImageBlock_Content {
+  display: table-cell;
+  vertical-align: top;
+  width: 10000px;
 }

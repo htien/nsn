@@ -9,7 +9,7 @@
     string authorImageUrl = Url.Content("~/static/images/avatars/" + Globals.UserImage(author));
 }
 <div class="UIPhotoZoomContainer">
-    <div class="UIPhotoZoom">
+    <div id="photo-zoom-@photo.PhotoId" class="UIPhotoZoom">
         <div class="uiPhotoCommentContainer">
             <div class="wrap">
                 <div class="rHeader">
@@ -35,26 +35,55 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="commentList">
+                            <div class="summaryInfo">
+                                <p class="likeInfo">
+                                    @if (ViewBag.TotalLike != null && ViewBag.TotalLike > 0)
+                                    {
+                                        @:<span class="totalLike">@ViewBag.TotalLike</span> people liked this.
+                                    }
+                                </p>
+                            </div>
+                            <ul class="commentList">
                                 @if (comments != null && comments.Count > 0)
                                 {
                                     foreach (Comment comment in comments)
                                     {
-                                        <div id="comment-@comment.CommentId" class="commentItem">
-                                            @Html.Raw(Globals.ApplyHtmlFrom(comment.CommentText.TextParsed))
-                                        </div>
+                                        User actor = comment.OwnerUser;
+                                        if (actor == null || actor.UserId == 0)
+                                        {
+                                            actor = comment.User;
+                                        }
+                                        string actorProfileUrl = Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(actor) });
+                                        string actorImageUrl = Url.Content("~/static/images/avatars/" + Globals.UserImage(actor));
+                                        string commentFullDateTime = Globals.ShowFullDateTime(comment.Timestamp);
+                                        string commentDateTime = Globals.ShowDateTime(comment.Timestamp);
+                                        <li id="comment-@comment.CommentId" class="commentItem">
+                                            <div class="clearfix">
+                                                <a class="actorPic">
+                                                    <img src="@actorImageUrl" alt="" width="32" height="32" />
+                                                </a>
+                                                <a class="uiCloseButton commentRemoverBtn" href="#" title="Hide as spam"></a>
+                                                <div class="commentContent">
+                                                    <a class="actorName" href="@actorProfileUrl">@actor.FullName</a>
+                                                    <span class="commentBody">@Html.Raw(Globals.ApplyHtmlFrom(comment.CommentText.TextParsed))</span>
+                                                    <div class="commentActions">
+                                                        <cite class="timestamp" title="@commentFullDateTime">@commentDateTime</cite>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
                                     }
                                 }
-                            </div>
+                            </ul>
                         </div>
-                        <div class="photoCommentInput clearfix">
-                            <div class="clearfix">
-                                <img class="uiProfileImage" src="@Url.Content("~/static/images/avatars/" + Globals.UserImage(ViewBag.MyProfile.UserImage, ViewBag.MyProfile.Gender))" alt="" />
-                                <input class="uiFormText guiInputText" type="text" name="commentText" />
-                                <div class="hidden_elem">
-                                    <input type="hidden" name="pid" value="@photo.PhotoId" />
-                                </div>
-                            </div>
+                    </div>
+                </div>
+                <div class="photoCommentInput clearfix">
+                    <div class="clearfix">
+                        <img class="uiProfileImage" src="@Url.Content("~/static/images/avatars/" + Globals.UserImage(ViewBag.MyProfile.UserImage, ViewBag.MyProfile.Gender))" alt="" />
+                        <input class="uiFormText guiInputText" type="text" name="commentText" />
+                        <div class="hidden_elem">
+                            <input type="hidden" name="pid" value="@photo.PhotoId" />
                         </div>
                     </div>
                 </div>
@@ -64,6 +93,18 @@
             <div class="uiPhotoOuter">
                 <div class="uiPhoto">
                     <img class="photo" src="@ViewBag.PhotoUrl" alt="" width="@ViewBag.Width" height="@ViewBag.Height" />
+                    <div class="photoZoomActions">
+                        <a id="like-@photo.PhotoId" class="@(ViewBag.IsLike ? "unlikeBtn" : "likeBtn")" href="#">
+                            @if (ViewBag.IsLike)
+                            {
+                                <span>Unlike</span>
+                            }
+                            else
+                            {
+                                <span>Like</span>
+                            }
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

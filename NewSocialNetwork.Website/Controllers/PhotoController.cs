@@ -47,6 +47,8 @@ namespace NewSocialNetwork.Website.Controllers
                 ViewBag.Width = size[0];
                 ViewBag.Height = size[1];
                 ViewBag.Author = author;
+                ViewBag.IsLike = Globals.IsLikeForPhoto(photo.PhotoId, sessionManager.GetUser().UserId);
+                ViewBag.TotalLike = Globals.GetTotalLike(NSNType.PHOTO, photo.PhotoId);
             }
             return View();
         }
@@ -135,6 +137,27 @@ namespace NewSocialNetwork.Website.Controllers
             {
                 frontendService.RemoveImagesFromDisk(this.Session);
                 msg.SetStatusAndMessage(RStatus.SUCCESS, "Canceled.");
+            }
+            catch (Exception e)
+            {
+                msg.Message = e.Message;
+            }
+            return Json(msg);
+        }
+
+        [HttpPost]
+        public JsonResult Remove(int albumId, int photoId)
+        {
+            ResponseMessage msg = new ResponseMessage("Photo", RAction.REMOVE, RStatus.FAIL,
+                "An error occurred when deleting this photo. Or you do not have permission.s");
+            try
+            {
+                int totalRemoved = frontendService.RemovePhoto(albumId, photoId);
+                if (totalRemoved > 0)
+                {
+                    frontendService.RemoveFeed_OnPhotoAlbumEmpty(albumId);
+                    msg.SetStatusAndMessage(RStatus.SUCCESS, "Removed.");
+                }
             }
             catch (Exception e)
             {

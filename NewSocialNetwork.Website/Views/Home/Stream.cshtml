@@ -1,8 +1,38 @@
-﻿@{
+﻿@using NSN.Common;
+@using NewSocialNetwork.Domain;
+@{
     ViewBag.hasLeftCol = true;
     ViewBag.hasRightCol = true;
+    IList<Feed> feeds = ViewBag.Feeds;
+    LinkInfo info = ViewBag.LinkInfo;
 }
 @RenderPage("~/Views/Shared/Frontend/pagelet/_composer_pagelet.cshtml")
 <div id="pagelet_home_stream">
-Load news feed here!
+    <ul id="boulder_fixed_header" class="uiStream">
+        <li class="uiStreamHeader">
+            <div class="uiInlineBlock uiStreamHeaderChronologicalForm">
+                <span class="text">STREAM</span>
+            </div>
+        </li>
+    </ul>
+    <div class="UIStream">
+        @if (feeds != null && feeds.Count > 0)
+        {
+            <ul class="uiList uiStream uiStreamHomePage">
+                @foreach (Feed feed in feeds)
+                {
+                    <li class="uiListItem uiStreamStory">
+                        @feed.FeedId
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>No Posts.</p>
+        }
+    </div>
+    <script type="text/javascript">
+        var lastFeedId = @(ViewBag.LastFeedId);
+    </script>
 </div>

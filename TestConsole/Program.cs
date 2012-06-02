@@ -2,6 +2,7 @@
 using SaberLily.PowerShell;
 using SaberLily.Security.Crypto;
 using SaberLily.Utils;
+using System.IO;
 
 namespace NewSocialNetwork.TestConsole
 {

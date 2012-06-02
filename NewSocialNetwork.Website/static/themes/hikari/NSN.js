@@ -394,7 +394,7 @@ var glbDebug = true,
             }
         })
     };
-    NSN_postCommentOnPhoto = function(photoId, commentText) {
+    NSN_postCommentOnPhoto = function(self, photoId, commentText) {
         jQuery.ajax({
             url: NSN.requestUrl('comment/addsave'),
             type: 'post',
@@ -403,9 +403,12 @@ var glbDebug = true,
             beforeSend: function(xhr) {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
             },
-            success: function(data) {
-                if (data != null && data.length > 0) {
-                    alert(data);
+            success: function(result) {
+                if (result != null && result.length > 0) {
+                    self.find('input[name=commentText]').val('');
+                    self.find('.commentList').append(result);
+                    var scrollList = self.find('.uiPhotoCommentList');
+                    scrollList.animate({ scrollTop: scrollList.find('.scrollList').prop('scrollHeight') }, 300);
                 }
                 else {
                     nsn.createJqDlg(glbDefaultDlgId, 'Cannot process your comment. Please try again!').dialog('open');

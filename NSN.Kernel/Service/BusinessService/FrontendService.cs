@@ -7,7 +7,6 @@ using System.Web;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NSN.Common;
-using NSN.Common.Utilities;
 using NSN.Framework;
 using NSN.Kernel;
 using NSN.Kernel.Manager;
@@ -37,6 +36,7 @@ namespace NSN.Service.BusinessService
         public ICountryRepository countryRepo { private get; set; }
         public ILikeRepository likeRepo { private get; set; }
         public ILikeCacheRepository likeCacheRepo { private get; set; }
+        public ILinkRepository linkRepo { private get; set; }
         public IPhotoAlbumRepository photoAlbumRepo { private get; set; }
         public IPhotoRepository photoRepo { get; set; }
         public IPhotoInfoRepository photoInfoRepo { get; set; }
@@ -167,6 +167,9 @@ namespace NSN.Service.BusinessService
                     case NSNType.USER_TWEET:
                         entity = userTweetRepo.FindById(feed.ItemId);
                         break;
+                    case NSNType.LINK:
+                        entity = linkRepo.FindById(feed.ItemId);
+                        break;
                     case NSNType.PHOTO_ALBUM:
                         entity = photoAlbumRepo.FindById(feed.ItemId);
                         break;
@@ -223,6 +226,36 @@ namespace NSN.Service.BusinessService
             else
             {
                 return userTweetRepo.Add(sender.UserId, receiver.UserId, Globals.HtmlEncode(originContent), timestamp);
+            }
+        }
+
+        public int PostLink(int userId, string content, string linkUrl, string imageUrl, string title, string description, int timestamp)
+        {
+            User receiver = userRepo.FindById(userId);
+            User sender = sessionManager.GetUser();
+            string parsedContent = Globals.HtmlEncode(Globals.UrlDecode(content.Trim()));
+            string parsedTitle = Globals.HtmlEncode(Globals.UrlDecode(title.Trim()));
+            string parsedDescription = Globals.HtmlEncode(Globals.UrlDecode(description.Trim()));
+            LinkInfo linkInfo = Globals.GetLinkInfo(linkUrl);
+
+            if (String.IsNullOrEmpty(parsedTitle))
+            {
+                parsedTitle = linkInfo.Title.Trim();
+            }
+            if (String.IsNullOrEmpty(parsedDescription))
+            {
+                parsedDescription = linkInfo.Description.Trim();
+            }
+            parsedContent = Globals.TruncateString(parsedContent, 255);
+            parsedTitle = Globals.TruncateString(parsedTitle, 255);
+            parsedDescription = Globals.TruncateString(parsedDescription, 255);
+            if (receiver.UserId == sender.UserId)
+            {
+                return linkRepo.Add(sender.UserId, 0, parsedContent, linkUrl, imageUrl, parsedTitle, parsedDescription, timestamp);
+            }
+            else
+            {
+                return linkRepo.Add(sender.UserId, receiver.UserId, parsedContent, linkUrl, imageUrl, parsedTitle, parsedDescription, timestamp);
             }
         }
 
@@ -453,14 +486,141 @@ namespace NSN.Service.BusinessService
             return photoInfoRepo.Create(photoInfo);
         }
 
-        public long LikeForFeed(long feedId, int userId)
+        public int RemoveFeed_OnPhotoAlbumEmpty(int albumId)
         {
-            int timestamp = DateTimeUtils.UnixTimestamp;
-            Feed feed = feedRepo.FindById(feedId);
-            if (!likeRepo.Exists(feed.TypeId, feed.ItemId, userId))
+            int removedCount = 0;
+            if (photoAlbumRepo.Exists(albumId))
             {
-                long likeId = likeRepo.Add(feed.TypeId, feed.ItemId, userId, timestamp);
-                likeCacheRepo.Add(feed.TypeId, feed.ItemId, userId);
+                IList<Feed> listF1 = feedRepo.ListFeedsByItem(NSNType.PHOTO_ALBUM_MORE, albumId);
+                if (listF1.Count > 0)
+                {
+                    foreach (Feed f in listF1)
+                    {
+                        if (!photoAlbumRepo.HasPhotosByTimestamp(albumId, f.Timestamp))
+                        {
+                            removedCount += feedRepo.Remove(f.FeedId);
+                        }
+                    }
+                }
+                IList<Feed> listF2 = feedRepo.ListFeedsByItem(NSNType.PHOTO_ALBUM, albumId);
+                if (listF2.Count > 0)
+                {
+                    foreach (Feed f in listF2)
+                    {
+                        if (!photoAlbumRepo.HasPhotosByTimestamp(albumId, f.Timestamp))
+                        {
+                            removedCount += feedRepo.Remove(f.FeedId);
+                        }
+                    }
+                }
+            }
+            return removedCount;
+        }
+
+        public void RemoveAlbum(int albumId)
+        {
+            User user = sessionManager.GetUser();
+            if (!photoAlbumRepo.Exists(albumId)
+                || !photoAlbumRepo.IsAlbumOfUser(user.UserId, albumId))
+            {
+                throw new Exception("This album does not exist or you do not have permission to remove it.");
+            }
+            PhotoAlbum album = photoAlbumRepo.FindById(albumId);
+            // Xóa tất cả photos và xóa ảnh từ disk
+            IList<Photo> photos = album.Photos;
+            foreach (Photo photo in photos)
+            {
+                string imageFileName = photo.Image;
+                photoRepo.Remove(photo.PhotoId);
+                this.RemovePhotoFromDisk(imageFileName);
+            }
+            // Xóa các feed liên quan
+            this.RemoveFeed_OnPhotoAlbumEmpty(albumId);
+
+            // Xóa album
+            photoAlbumRepo.Remove(albumId);
+        }
+
+        public int RemovePhoto(int albumId, int photoId)
+        {
+            User user = sessionManager.GetUser();
+            bool allowRemove = photoRepo.IsPhotoOfUser(photoId, user.UserId)
+                || photoAlbumRepo.IsAlbumOfUser(user.UserId, albumId);
+            if (allowRemove)
+            {
+                string imageFileName = photoRepo.ImageFileName(photoId);
+                int removedCount = photoRepo.Remove(photoId);
+                this.RemovePhotoFromDisk(imageFileName);
+                return removedCount;
+            }
+            return 0;
+        }
+
+        public int RemoveComment(string typeId, int itemId, int commentId)
+        {
+            User user = sessionManager.GetUser();
+            bool allowRemove = commentRepo.IsCommentOfUser(commentId, user.UserId)
+                || feedRepo.IsItemOfUser(typeId, itemId, user.UserId);
+            return allowRemove ? commentRepo.Remove(commentId) : 0;
+        }
+
+        public bool RemoveFeed(long feedId, int userId)
+        {
+            Feed feed = feedRepo.FindById(feedId);
+            if (feed == null)
+            {
+                throw new Exception("Feed does not exists.");
+            }
+            // kiểm tra feedId của user mới dc phép xóa
+            if (!feedRepo.IsItemOfUser(feed.TypeId, feed.ItemId, userId))
+            {
+                throw new Exception("You do not permission to delete post.");
+            }
+
+            return feedRepo.Remove(feedId) > 0;
+        }
+
+        public long LikeForFeed(long feedId, int userId, int timestamp)
+        {
+            return this.Like("on_feed", feedId, userId, timestamp);
+        }
+
+        public void UnlikeForFeed(long feedId, int userId)
+        {
+            this.Unlike("on_feed", feedId, userId);
+        }
+
+        public long LikeForPhoto(int photoId, int userId, int timestamp)
+        {
+            return this.Like("on_photo", photoId, userId, timestamp);
+        }
+
+        public void UnlikeForPhoto(int photoId, int userId)
+        {
+            this.Unlike("on_photo", photoId, userId);
+        }
+
+        public long Like(string where, long id, int userId, int timestamp)
+        {
+            string typeId = null;
+            int itemId = 0;
+            switch (where)
+            {
+                case "on_feed":
+                    Feed feed = feedRepo.FindById(id);
+                    typeId = feed.TypeId;
+                    itemId = feed.ItemId;
+                    break;
+                case "on_photo":
+                    Photo photo = photoRepo.FindById(Convert.ToInt32(id));
+                    typeId = NSNType.PHOTO;
+                    itemId = photo.PhotoId;
+                    break;
+            }
+            if (!likeRepo.Exists(typeId, itemId, userId))
+            {
+                long likeId = likeRepo.Add(typeId, itemId, userId, timestamp);
+                likeCacheRepo.Add(typeId, itemId, userId);
                 return likeId;
             }
             else
@@ -469,14 +629,37 @@ namespace NSN.Service.BusinessService
             }
         }
 
-        public void UnlikeForFeed(long feedId, int userId)
+        public void Unlike(string where, long id, int userId)
         {
-            Feed feed = feedRepo.FindById(feedId);
-            if (likeRepo.Exists(feed.TypeId, feed.ItemId, userId))
+            string typeId = null;
+            int itemId = 0;
+            switch (where)
             {
-                likeRepo.Remove(feed.TypeId, feed.ItemId, userId);
-                likeCacheRepo.Remove(feed.TypeId, feed.ItemId, userId);
+                case "on_feed":
+                    Feed feed = feedRepo.FindById(id);
+                    typeId = feed.TypeId;
+                    itemId = feed.ItemId;
+                    break;
+                case "on_photo":
+                    Photo photo = photoRepo.FindById(Convert.ToInt32(id));
+                    typeId = NSNType.PHOTO;
+                    itemId = photo.PhotoId;
+                    break;
             }
+            if (likeRepo.Exists(typeId, itemId, userId))
+            {
+                likeRepo.Remove(typeId, itemId, userId);
+                likeCacheRepo.Remove(typeId, itemId, userId);
+            }
+        }
+
+        public int TotalLike(string typeId, int itemId)
+        {
+            if (!sessionManager.GetUserSession().IsLogged())
+            {
+                throw new Exception("Cannot process for get total likes. Please login.");
+            }
+            return likeCacheRepo.TotalLike(typeId, itemId);
         }
 
         public void IncreaseCountOfFriendRequest(int userId, int count = 1)
@@ -550,6 +733,26 @@ namespace NSN.Service.BusinessService
                 }
             }
             session.Remove(sesKey);
+        }
+
+        public void RemovePhotoFromDisk(string fileName)
+        {
+            try
+            {
+                string imageUrl = Globals.ApplicationMapPath + "/static/images/photos/" + fileName;
+                Globals.RemoveImageInPlace(imageUrl);
+            }
+            catch { }
+        }
+
+        public void RemoveAvatarFromDisk(string fileName)
+        {
+            try
+            {
+                string imageUrl = Globals.ApplicationMapPath + "/static/images/avatars/" + fileName;
+                Globals.RemoveImageInPlace(imageUrl);
+            }
+            catch { }
         }
 
         #endregion

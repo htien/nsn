@@ -8,6 +8,8 @@ namespace NewSocialNetwork.DataAccess
 {
     public class CommentDAO : DAO<Comment>, ICommentRepository
     {
+        public ICommentTextRepository commentTextRepo { private get; set; }
+
         public CommentDAO(ISessionFactory sessionFactory) : base(sessionFactory)
         { }
 
@@ -26,6 +28,15 @@ namespace NewSocialNetwork.DataAccess
                 .SetInt32("timestamp", timestamp)
                 .SetString("ipAddr", ipAddr)
                 .UniqueResult());
+        }
+
+        public int Remove(int commentId)
+        {
+            commentTextRepo.Remove(commentId);
+            return this.Session().CreateQuery(
+                @"delete from Comment where CommentId = :commentId")
+                .SetInt32("commentId", commentId)
+                .ExecuteUpdate();
         }
 
         public int GetTotalComment(string typeId, int itemId, int ownerUserId)
@@ -73,6 +84,16 @@ namespace NewSocialNetwork.DataAccess
         public IList<Comment> ListCommentsByUserTweet(int tweetId)
         {
             return this.ListComments(NSNType.USER_TWEET, tweetId);
+        }
+
+        public bool IsCommentOfUser(int commentId, int userId)
+        {
+            return Convert.ToInt32(this.Session().CreateQuery(
+                @"select count(CommentId) from Comment
+                  where CommentId = :commentId and (OwnerUser.UserId = :userId or User.UserId = :userId)")
+                .SetInt32("commentId", commentId)
+                .SetInt32("userId", userId)
+                .UniqueResult()) > 0;
         }
 
         #endregion

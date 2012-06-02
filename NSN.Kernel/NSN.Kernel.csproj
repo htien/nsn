@@ -88,8 +88,11 @@
   <ItemGroup>
     <Compile Include="Application\About.cs" />
     <Compile Include="Application\AssemblyStatusAttribute.cs" />
-    <Compile Include="Common\Utilities\ImageInfo.cs" />
+    <Compile Include="Common\ImageInfo.cs" />
+    <Compile Include="Common\LinkInfo.cs" />
     <Compile Include="Common\Utilities\Null.cs" />
+    <Compile Include="Common\Utilities\SiteInfo.cs" />
+    <Compile Include="Common\Utilities\SiteReader.cs" />
     <Compile Include="Facility\PersistenceFacility.cs" />
     <Compile Include="Init\NewSocialNetwork.cs" />
     <Compile Include="HttpModule\RequestFilter.cs" />
