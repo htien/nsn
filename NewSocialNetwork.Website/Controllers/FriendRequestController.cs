@@ -76,5 +76,26 @@ namespace NewSocialNetwork.Website.Controllers
             }
             return Json(msg);
         }
+
+        [HttpPost]
+        public JsonResult Cancel(int requestId)
+        {
+            ResponseMessage msg = new ResponseMessage("Friend", RAction.ADD, RStatus.FAIL,
+                "Cannot cancel this friend request.");
+            try
+            {
+                User myUser = sessionManager.GetUser();
+                // Hủy yêu cầu kết bạn
+                frontendService.CancelFriendRequest(requestId, myUser.UserId);
+                // Giảm số FriendRequest trong bảng UserCount
+                frontendService.IncreaseCountOfFriendRequest(myUser.UserId, -1);
+                msg.SetStatusAndMessage(RStatus.SUCCESS, "Canceled.");
+            }
+            catch (Exception e)
+            {
+                msg.Message = e.Message;
+            }
+            return Json(msg);
+        }
     }
 }

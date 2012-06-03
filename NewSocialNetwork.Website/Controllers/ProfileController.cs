@@ -22,6 +22,7 @@ namespace NewSocialNetwork.Website.Controllers
         public ActionResult Info(string uid)
         {
             ViewBag.PageTitle += " Info";
+            ViewBag.IsInfoPage = true;
             return View();
         }
 

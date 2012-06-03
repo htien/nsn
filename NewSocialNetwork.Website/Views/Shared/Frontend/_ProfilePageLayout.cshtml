@@ -21,11 +21,6 @@
             <div id="@divProfile" class="UIContent_UserProfile">
                 <div class="uiHeadProfile">
                     <div class="profileActions">
-                        @if (ViewBag.IsMyProfile && (ViewBag.IsEditInfoPage == null || !ViewBag.IsEditInfoPage))
-                        {
-                            <a class="guiButton guiBlueButton" href="@Url.RouteUrl("ProfileAction", new { action = "EditInfo" })">
-                                Edit Profile</a>
-                        }
                         @if (userProfile.UserId != myProfile.UserId)
                         {
                             <div class="requestFriendAction">
@@ -46,6 +41,15 @@
                                     }
                                 }
                             </div>
+                        }
+                        @if (ViewBag.IsMyProfile && (ViewBag.IsEditInfoPage == null || !ViewBag.IsEditInfoPage))
+                        {
+                            <a class="guiButton guiBlueButton" href="@Url.RouteUrl("ProfileAction", new { action = "EditInfo" })">
+                                Edit Profile</a>
+                        }
+                        @if (ViewBag.IsInfoPage == null || !ViewBag.IsInfoPage)
+                        {
+                            <a class="guiButton guiBlueButton" href="@Url.RouteUrl("ProfileInfo")">About</a>
                         }
                     </div>
                     <div class="uiProfileTitle">

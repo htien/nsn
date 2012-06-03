@@ -25,6 +25,7 @@ namespace NewSocialNetwork.Website.Controllers
             long commentId = 0;
             switch (where)
             {
+                case "on_stream":
                 case "on_feed":
                     commentId = frontendService.AddCommentOnFeed(targetId, myUser.UserId, timestamp, c, ipAddr);
                     break;
@@ -43,6 +44,7 @@ namespace NewSocialNetwork.Website.Controllers
 
                 switch (where)
                 {
+                    case "on_stream": return View("AddSaveOnStream");
                     case "on_feed": return View("AddSaveOnFeed");
                     case "on_photo": return View("AddSaveOnPhoto");
                 }

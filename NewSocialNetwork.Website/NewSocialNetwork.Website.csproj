@@ -195,6 +195,7 @@
     <Content Include="static\themes\hikari\images\fb_sprite_icons_3.png" />
     <Content Include="static\themes\hikari\images\fb_sprite_icons_5.png" />
     <Content Include="static\themes\hikari\images\fb_sprite_icons_6.png" />
+    <Content Include="static\themes\hikari\images\fb_sprite_icons_7.png" />
     <Content Include="static\themes\hikari\images\gp_sprite_icons_stream_1.png" />
     <Content Include="static\themes\hikari\images\indicator_blue_large.gif" />
     <Content Include="static\js\goog\array\array.js" />
@@ -1255,6 +1256,7 @@
     <Content Include="Views\Comment\AddSaveOnPhoto.cshtml" />
     <Content Include="Views\Shared\Empty.cshtml" />
     <Content Include="Views\Feed\NewestFeeds.cshtml" />
+    <Content Include="Views\Comment\AddSaveOnStream.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

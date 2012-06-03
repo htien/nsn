@@ -1,10 +1,12 @@
 ﻿@using NSN.Common;
+@using NSN.Kernel.Manager;
 @using NewSocialNetwork.Domain;
 @{
     ViewBag.hasLeftCol = true;
     ViewBag.hasRightCol = true;
-    IList<Feed> feeds = ViewBag.Feeds;
-    LinkInfo info = ViewBag.LinkInfo;
+    User myUser = ViewBag.MyProfile;
+    IList<FeedItem> feedItems = ViewBag.FeedItems;
+    string myAvatarUrl = Url.Content(Globals.AvatarUrl(ViewBag.MyAvatarFileName));
 }
 @RenderPage("~/Views/Shared/Frontend/pagelet/_composer_pagelet.cshtml")
 <div id="pagelet_home_stream">
@@ -16,13 +18,260 @@
         </li>
     </ul>
     <div class="UIStream">
-        @if (feeds != null && feeds.Count > 0)
+        @if (feedItems != null && feedItems.Count > 0)
         {
             <ul class="uiList uiStream uiStreamHomePage">
-                @foreach (Feed feed in feeds)
+                @foreach (FeedItem item in feedItems)
                 {
-                    <li class="uiListItem uiStreamStory">
-                        @feed.FeedId
+                    Feed feed = item._Feed;
+                    User user = feed.User;
+                    User parentUser = feed.ParentUser;
+                    IList<Comment> comments = Globals.ListComments(feed.TypeId, feed.ItemId, user.UserId);
+                    bool isLiked = Globals.IsLikeForFeed(feed.TypeId, feed.ItemId, myUser.UserId);
+                    int totalLike = Globals.GetTotalLike(feed.TypeId, feed.ItemId);
+                    string displayId = Globals.GetDisplayId(user);
+                    string profilePath = Url.RouteUrl("Profile", new { uid = displayId });
+                    string feedAvatarPath = Url.Content(Globals.AvatarUrl(Globals.UserImage(user)));
+                    string privacyMode;
+                    switch (feed.Privacy)
+                    {
+                        case 0: privacyMode = "Public"; break;
+                        case 1: privacyMode = "Friends Only"; break;
+                        case 10: privacyMode = "Only Me"; break;
+                        default: privacyMode = "Unknown"; break;
+                    }
+                    <li id="story-@(feed.FeedId)" class="uiListItem uiStreamStory">
+                        <div class="storyContent">
+                            <div class="UIImageBlock clearfix">
+                                <a class="UIImageBlock_Image actorPhoto" href="@profilePath">
+                                    <img class="uiProfilePhoto profilePic uiProfilePhotoLarge img" src="@feedAvatarPath" alt="" />
+                                </a>
+                                <div class="UIImageBlock_Content storyInnerContent">
+                                    <a class="uiInlineBlock uiCloseButton uiStreamHide" href="#" title="Delete this post"></a>
+                                    <div class="mainWrapper">
+                                        @switch (feed.TypeId)
+                                        {
+                                            case NSNType.USER_TWEET:
+                                                {
+                                                    UserTweet tweet = (UserTweet)item._Entity;
+                                                    User friendUserOfTweet = tweet.FriendUser;
+                                                    if (friendUserOfTweet == null || friendUserOfTweet.UserId == 0)
+                                                    {
+                                                        <h3 class="uiStreamMessage uiStreamHeadline">
+                                                            <a class="actorName" href="@profilePath">@user.FullName</a>
+                                                        </h3>
+                                                    }
+                                                    else
+                                                    {
+                                                        string friendDisplayId = Globals.GetDisplayId(friendUserOfTweet);
+                                                        string friendProfilePath = Url.RouteUrl("Profile", new { uid = friendDisplayId });
+                                                        <h3 class="uiStreamMessage uiStreamHeadline">
+                                                            <a class="actorName" href="@profilePath">@user.FullName</a>
+                                                            <span class="fcg fsn">►</span>
+                                                            <a class="actorName" href="@friendProfilePath">@friendUserOfTweet.FullName</a>
+                                                        </h3>
+                                                    }
+                                                    <div class="uiStreamMessage">
+                                                        <span class="messageBody">@Html.Raw(Globals.ApplyHtmlFrom(tweet.Content))</span>
+                                                    </div>
+                                                }
+                                                break;
+                                            case NSNType.FRIEND:
+                                                {
+                                                    Friend friend = (Friend)item._Entity;
+                                                    string userProfileUrl = Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(user) });
+                                                    string parentProfileUrl = Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(parentUser) });
+                                                    <h3 class="uiStreamMessage uiStreamHeadline">
+                                                        <a class="actorName" href="@userProfileUrl">@user.FullName</a>
+                                                        became friends with
+                                                        <a class="actorName" href="@parentProfileUrl">@parentUser.FullName</a>.
+                                                    </h3>
+                                                }
+                                                break;
+                                            case NSNType.LINK:
+                                                {
+                                                    Link link = (Link)item._Entity;
+                                                    User friendUserOfLink = link.FriendUser;
+                                                    if (friendUserOfLink == null || friendUserOfLink.UserId == 0)
+                                                    {
+                                                        <h3 class="uiStreamMessage uiStreamHeadline">
+                                                            <a class="actorName" href="@profilePath">@user.FullName</a> share a <a href="@link.Url" target="_blank">link</a>.
+                                                        </h3>
+                                                    }
+                                                    else
+                                                    {
+                                                        string friendDisplayId = Globals.GetDisplayId(friendUserOfLink);
+                                                        string friendProfilePath = Url.RouteUrl("Profile", new { uid = friendDisplayId });
+                                                        <h3 class="uiStreamMessage uiStreamHeadline">
+                                                            <a class="actorName" href="@profilePath">@user.FullName</a>
+                                                            <span class="fcg fsn">►</span>
+                                                            <a class="actorName" href="@friendProfilePath">@friendUserOfLink.FullName</a>
+                                                        </h3>
+                                                    }
+                                                    <div class="uiStreamMessage">
+                                                        <span class="messageBody">@Html.Raw(Globals.ApplyHtmlFrom(link.Content))</span>
+                                                    </div>
+                                                    <div class="uiStreamAttachments clearfix">
+                                                        <div class="UIImageBlock clearfix">
+                                                            @if (!String.IsNullOrEmpty(link.Image))
+                                                            {
+                                                                <a class="UIImageBlock_Image external" href="@link.Url">
+                                                                    <img class="img" src="@link.Image" alt="" />
+                                                                </a>
+                                                            }
+                                                            <div class="UIImageBlock_Content">
+                                                                <div class="uiAttachmentTitle">
+                                                                    <strong>
+                                                                        <a href="@link.Url" target="_blank">@Html.Raw(Globals.ApplyHtmlFrom(link.Title))</a>
+                                                                    </strong>
+                                                                </div>
+                                                                <span class="caption">
+                                                                    <span class="fcg">@link.Url</span>
+                                                                </span>
+                                                                <div class="iAttachmentDesc fcg mts">@Html.Raw(Globals.ApplyHtmlFrom(link.Description))</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                break;
+                                            case NSNType.PHOTO_ALBUM:
+                                            case NSNType.PHOTO_ALBUM_MORE:
+                                                {
+                                                    PhotoAlbum album = (PhotoAlbum)item._Entity;
+                                                    string albumUrl = Url.RouteUrl("PhotoAlbumAction", new { uid = displayId, albumid = album.AlbumId, action = "ListPhotos" });
+                                                    int totalPhoto = Globals.TotalPhotoByTimestamp(album.AlbumId, feed.Timestamp);
+                                                    IList<Photo> fetchedPhotos = Globals.GetNewPhotosByTimestamp(feed.Timestamp, 3);
+                                                    if (fetchedPhotos.Count == 0) { break; }
+                                                    <h3 class="uiStreamMessage uiStreamHeadline">
+                                                        <a class="actorName" href="@profilePath">@user.FullName</a> added @(totalPhoto == 1 ? "a" : totalPhoto.ToString()) new @(totalPhoto > 1 ? "photos" : "photo") to the album <a href="@albumUrl"><strong>@Html.Raw(Globals.ApplyHtmlFrom(album.Name))</strong></a>.
+                                                    </h3>
+                                                    <div class="uiStreamAttachments clearfix">
+                                                        <div>
+                                                            @if (fetchedPhotos.Count == 1)
+                                                            {
+                                                                <a class="uiMediaThumb largePhoto photo_@(fetchedPhotos[0].PhotoId)">
+                                                                    <i style="background-image:url(@Url.Content(Globals.PhotoUrl(fetchedPhotos[0].Image)));width:300px;height:199px"></i>
+                                                                </a>
+                                                            }
+                                                            @if (fetchedPhotos.Count == 2)
+                                                            {
+                                                                <div class="uiAttachmentPhotoBox clearfix pvs">
+                                                                    <a class="uiMediaThumb beforeHorizontalSplit photo_@(fetchedPhotos[0].PhotoId)">
+                                                                        <i style="background-image:url(@Url.Content(Globals.PhotoUrl(fetchedPhotos[0].Image)));width:194px;height:130px"></i>
+                                                                    </a>
+                                                                    <a class="uiMediaThumb photo_@(fetchedPhotos[1].PhotoId)">
+                                                                        <i style="background-image:url(@Url.Content(Globals.PhotoUrl(fetchedPhotos[1].Image)));width:194px;height:130px"></i>
+                                                                    </a>
+                                                                </div>
+                                                            }
+                                                            @if (fetchedPhotos.Count == 3)
+                                                            {
+                                                                <div class="uiAttachmentPhotoBox clearfix pvs">
+                                                                    <div class="clearfix horizontalSplitContainer" style="width:409.8px">
+                                                                        <a class="uiMediaThumb beforeHorizontalSplit photo_@(fetchedPhotos[0].PhotoId)">
+                                                                            <i style="background-image:url(@Url.Content(Globals.PhotoUrl(fetchedPhotos[0].Image)));width:267px;height:179px;"></i>
+                                                                        </a>
+                                                                        <a class="uiMediaThumb beforeVerticalSplit photo_@(fetchedPhotos[1].PhotoId)">
+                                                                            <i style="background-image:url(@Url.Content(Globals.PhotoUrl(fetchedPhotos[1].Image)));width:125px;height:82px"></i>
+                                                                        </a>
+                                                                        <a class="uiMediaThumb photo_@(fetchedPhotos[2].PhotoId)">
+                                                                            <i style="background-image:url(@Url.Content(Globals.PhotoUrl(fetchedPhotos[2].Image)));width:125px;height:88px"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                }
+                                                break;
+                                        }
+                                        @switch (feed.TypeId)
+                                        {
+                                            case NSNType.FRIEND: break;
+                                            default:
+                                                {
+                                                    <div>
+                                                        <div class="uiStreamFooter">
+                                                            <div class="UIActionLinks UIActionLinks_bottom">
+                                                                @if (!isLiked)
+                                                                {
+                                                                    <a class="uiLinkButton like_action" title="Like this item">
+                                                                        <span class="default_message">Like</span>
+                                                                        <span class="saving_message" style="display:none">Unlike</span>
+                                                                    </a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a class="uiLinkButton unlike_action" title="Like this item">
+                                                                        <span class="default_message">Unlike</span>
+                                                                        <span class="saving_message" style="display:none">Like</span>
+                                                                    </a>
+                                                                }
+                                                                ·
+                                                                <a class="uiLinkButton comment_action" title="Leave a comment">Comment</a>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <ul class="uiList uiUfi">
+                                                                <li class="uiListItem ufiItem uiUfiLike uiListVerticalItemBorder@(totalLike == 0 ? " hidden_elem" : "")">
+                                                                    <div class="UIImageBlock clearfix">
+                                                                        <a class="UIImageBlock_Image UIImageBlock_ICON_Image">
+                                                                            <span class="uiUfiLikeIcon"></span>
+                                                                        </a>
+                                                                        <div class="UIImageBlock_Content UIImageBlock_ICON_Content">
+                                                                            <a class="total_like">@totalLike people</a> like this.
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li class="uiListItem uiUfiComments uiListVerticalItemBorder">
+                                                                    <ul class="commentList">
+                                                                        <li class="ufiItem uiUfiViewAll" style="display:none"></li>
+                                                                            @foreach (Comment comment in comments)
+                                                                            {
+                                                                                User author = (comment.OwnerUser == null || comment.OwnerUser.UserId == 0) ? comment.User : comment.OwnerUser;
+                                                                                string profileUrl = Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(author) });
+                                                                                string profileAvatarUrl = Url.Content(Globals.AvatarUrl(Globals.UserImage(author)));
+                                                                                string fullDateTime = Globals.ShowFullDateTime(comment.Timestamp);
+                                                                                string dateTime = Globals.ShowDateTime(comment.Timestamp);
+                                                                                <li class="ufiItem uiUfiComment comment_@(comment.CommentId)">
+                                                                                    <div class="UIImageBlock clearfix uiUfiActorBlock">
+                                                                                        <a class="UIImageBlock_Image UIImageBlock_SMALL_Image actorPic" href="@profileUrl">
+                                                                                            <img class="uiProfilePhoto uiProfilePhotoMedium img" src="@profileAvatarUrl" alt="" />
+                                                                                        </a>
+                                                                                        <a class="uiCloseButton commentRemoverButton" title="Delete this comment"></a>
+                                                                                        <div class="UIImageBlock_Content UIImageBlock_SMALL_Content commentContent">
+                                                                                            <a class="actorName" href="@profileUrl">@author.FullName</a>
+                                                                                            <span class="commentBody">@Html.Raw(Globals.ApplyHtmlFrom(comment.CommentText.TextParsed))</span>
+                                                                                            <div class="commentActions fsm fwn fcg">
+                                                                                                <span class="uiLinkSubtle" title="@fullDateTime">@dateTime</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </li>
+                                                                            }
+                                                                            @*append comment here*@
+                                                                    </ul>
+                                                                </li>
+                                                                <li class="uiListItem ufiItem uiUfiAddComment clearfix uiListVerticalItemBorder hidden_elem">
+                                                                    <div class="UIImageBlock clearfix mentionsAddComment">
+                                                                        <img class="UIImageBlock_Image UIImageBlock_ICON_Image uiProfilePhoto uiProfilePhotoMedium actorPic img" src="@myAvatarUrl" alt="" />
+                                                                        <div class="UIImageBlock_Content commentArea">
+                                                                            <div class="commentBox">
+                                                                                <input class="uiFormText" type="text" name="commentText" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                break;
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                 }
             </ul>
@@ -33,6 +282,6 @@
         }
     </div>
     <script type="text/javascript">
-        var lastFeedId = @(ViewBag.LastFeedId);
+        var lastFeedId = @(ViewBag.LastFeedId == null ? 0 : ViewBag.LastFeedId);
     </script>
 </div>
