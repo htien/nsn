@@ -143,12 +143,6 @@
     <Content Include="static\images\avatars\default_medium_male.gif" />
     <Content Include="static\images\photos\1_tien.gif" />
     <Content Include="static\images\photos\2_lien.png" />
-    <Content Include="static\images\photos\a.jpg" />
-    <Content Include="static\images\photos\b.jpg" />
-    <Content Include="static\images\photos\c.jpg" />
-    <Content Include="static\images\photos\d.jpg" />
-    <Content Include="static\images\photos\e.jpg" />
-    <Content Include="static\images\photos\f.jpg" />
     <Content Include="static\js\jquery\jquery-ui-1.8.20.js" />
     <Content Include="static\js\jquery\jquery.editinplace-2.2.1.js" />
     <Content Include="static\js\jquery\jquery.elastic-1.6.11.js" />
