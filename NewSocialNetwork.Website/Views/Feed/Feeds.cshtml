@@ -1,16 +1,16 @@
 ﻿@using NSN.Common;
+@using NSN.Kernel.Manager;
 @using NewSocialNetwork.Domain;
-@using Domain = NewSocialNetwork.Domain;
 @{
-    IList<NSN.Kernel.Manager.FeedItem> feedItems = ViewBag.FeedItems;
+    IList<FeedItem> feedItems = ViewBag.FeedItems;
 }
 @RenderPage("~/Views/Shared/Frontend/pagelet/_composer_pagelet.cshtml")
 <div id="pagelet_feeds_page">
     <div class="UIFeeds_Content">
         @foreach (NSN.Kernel.Manager.FeedItem item in feedItems)
         {
-            Domain.User user = item._Feed.User;
-            Domain.User parentUser = item._Feed.ParentUser;
+            User user = item._Feed.User;
+            User parentUser = item._Feed.ParentUser;
             IList<Comment> comments = Globals.ListComments(item._Feed.TypeId, item._Feed.ItemId, user.UserId);
             bool isLiked = Globals.IsLikeForFeed(item._Feed.TypeId, item._Feed.ItemId, ViewBag.MyProfile.UserId);
             int totalLike = Globals.GetTotalLike(item._Feed.TypeId, item._Feed.ItemId);
@@ -45,6 +45,7 @@
                                 <a class="feedAvatar" href="@Url.RouteUrl("Profile", new { uid = displayId })"><img src="@feedAvatarFileName" alt="" width="48" height="48" /></a>
                                 <div class="userPost">
                                     <header>
+                                        <a class="uiCloseButton feedRemoverBtn" title="Delete this feed"></a>
                                         <h3 class="fname"><a href="@Url.RouteUrl("Profile", new { uid = displayId })">@user.FullName</a></h3>
                                         <span class="postInfo">
                                             <a class="time" target="_blank" title="@Globals.ShowFullDateTime(item._Feed.Timestamp)">@NSN.Common.Globals.ShowDate(item._Feed.Timestamp)</a>
@@ -63,15 +64,47 @@
                                     case NSNType.USER_TWEET:
                                         UserTweet tweet = (UserTweet)item._Entity;
                                         <div class="fTypeTweet">
-                                            @Html.Raw(Globals.ApplyHtmlFrom(tweet.Content))
+                                            <span class="messageBody">@Html.Raw(Globals.ApplyHtmlFrom(tweet.Content))</span>
                                         </div>
-                                       break;
+                                        break;
+                                    case NSNType.LINK:
+                                        Link link = (Link)item._Entity;
+                                        <div class="fTypeLink">
+                                            <div class="uiStreamMessage">
+                                                <span class="messageBody">@Html.Raw(Globals.ApplyHtmlFrom(link.Content))</span>
+                                            </div>
+                                            <div class="uiStreamAttachments">
+                                                <div class="UIImageBlock clearfix">
+                                                    <a class="UIImageBlock_Image external" href="@link.Url">
+                                                        <img class="img" src="@link.Image" alt="" />
+                                                    </a>
+                                                    <div class="UIImageBlock_Content">
+                                                        <div class="uiAttachmentTitle">
+                                                            <strong>
+                                                                <a href="@link.Url" target="_blank">@Html.Raw(Globals.ApplyHtmlFrom(link.Title))</a>
+                                                            </strong>
+                                                        </div>
+                                                        <span class="caption">
+                                                            <a class="fcg" href="@link.Url" target="_blank">@link.Url</a>
+                                                        </span>
+                                                        <div class="uiAttachmentDesc fcg mts">
+                                                            @Html.Raw(Globals.ApplyHtmlFrom(link.Description))
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        break;
                                     case NSNType.PHOTO_ALBUM:
-                                       PhotoAlbum album = (PhotoAlbum)item._Entity;
-                                       string href = Url.RouteUrl("PhotoAlbumAction", new { uid = displayId, albumid = album.AlbumId, action = "ListPhotos" });
-                                       int totalPhoto = Globals.GetTotalPhoto(album.AlbumId);
-                                       IList<Photo> fetchedPhotos = Globals.GetNewPhotosByTimestamp(item._Feed.Timestamp, 4);
-                                       Photo first = fetchedPhotos[0];
+                                        PhotoAlbum album = (PhotoAlbum)item._Entity;
+                                        string href = Url.RouteUrl("PhotoAlbumAction", new { uid = displayId, albumid = album.AlbumId, action = "ListPhotos" });
+                                        int totalPhoto = Globals.GetTotalPhoto(album.AlbumId);
+                                        IList<Photo> fetchedPhotos = Globals.GetNewPhotosByTimestamp(item._Feed.Timestamp, 4);
+                                        if (fetchedPhotos.Count == 0)
+                                        {
+                                            break;
+                                        }
+                                        Photo first = fetchedPhotos[0];
                                         <div class="fTypePhotoAlbum">
                                             <div>
                                                 <a class="albumName" href="@href"><strong>@Html.Raw(Globals.ApplyHtmlFrom(album.Name))</strong></a> <span class="count">(@totalPhoto @(totalPhoto > 1 ? "photos" : "photo"))</span>
@@ -89,13 +122,17 @@
                                                 }
                                             </div>
                                         </div>
-                                                break;
+                                        break;
                                     case NSNType.PHOTO_ALBUM_MORE:
-                                                PhotoAlbum album2 = (PhotoAlbum)item._Entity;
-                                                string href2 = Url.RouteUrl("PhotoAlbumAction", new { uid = displayId, albumid = album2.AlbumId, action = "ListPhotos" });
-                                                int totalPhoto2 = Globals.TotalPhotoByTimestamp(album2.AlbumId, item._Feed.Timestamp);
-                                                IList<Photo> fetchedPhotos2 = Globals.GetNewPhotosByTimestamp(item._Feed.Timestamp, 4);
-                                                Photo first2 = fetchedPhotos2[0];
+                                        PhotoAlbum album2 = (PhotoAlbum)item._Entity;
+                                        string href2 = Url.RouteUrl("PhotoAlbumAction", new { uid = displayId, albumid = album2.AlbumId, action = "ListPhotos" });
+                                        int totalPhoto2 = Globals.TotalPhotoByTimestamp(album2.AlbumId, item._Feed.Timestamp);
+                                        IList<Photo> fetchedPhotos2 = Globals.GetNewPhotosByTimestamp(item._Feed.Timestamp, 4);
+                                        if (fetchedPhotos2.Count == 0)
+                                        {
+                                            break;
+                                        }
+                                        Photo first2 = fetchedPhotos2[0];
                                         <div class="fTypePhotoAlbum">
                                             <div>
                                                 Added <span class="count">@totalPhoto2 new @(totalPhoto2 > 1 ? "photos" : "photo")</span> to the album <a class="albumName" href="@href2"><strong>@Html.Raw(Globals.ApplyHtmlFrom(album2.Name))</strong></a>.
@@ -111,7 +148,7 @@
                                                 }
                                             </div>
                                         </div>
-                                                break;
+                                        break;
                                     case NSNType.FRIEND:
                                                 Friend friend = (Friend)item._Entity;
                                         <div class="fTypeFriend">
@@ -151,10 +188,12 @@
                                             <span class="saving_message" style="display:none"><img src="@Url.Content("~/static/smiles/pidgin/default/in_love.png")" alt="" width="16" height="16" /> Like</span>
                                         </a>
                                     }
-                                    @if (totalLike > 0)
-                                    {
-                                        <span class="literal">(@totalLike liked)</span>
-                                    }
+                                    <span class="literal">
+                                        @if (totalLike > 0)
+                                        {
+                                            @:(@totalLike people liked)
+                                        }
+                                    </span>
                                 </div>
                                     break;
                         }
@@ -187,7 +226,7 @@
                                                                 <a class="userFullName" href="@profileUrl">@author.FullName</a>
                                                                 <span class="commentInfo">
                                                                     <span class="time" title="@fullDateTime">@dateTime</span>
-                                                                    <span class="commentActions"><span class="delete"></span></span>
+                                                                    <span class="commentActions"><span class="delete" title="Remove this comment"></span></span>
                                                                 </span>
                                                                 <div class="commentText">@Html.Raw(Globals.ApplyHtmlFrom(comment.CommentText.TextParsed))</div>
                                                             </div>
@@ -215,7 +254,7 @@
                                     <div class="maskText">Add a comment...</div>
                                 </div>
                             </div>
-                                                         break;
+                            break;
                     }
                 </div> @*uiFeedItem_Inner*@
             </div>

@@ -33,7 +33,7 @@ namespace NewSocialNetwork.Website.Controllers
                 int tweetId = frontendService.PostUserTweet(uid, inputText, timestamp);
                 // Send to feed
                 UserTweet newTweet = userTweetRepo.FindById(tweetId);
-                if (newTweet.FriendUser == null)
+                if (newTweet.FriendUser == null || newTweet.FriendUser.UserId == 0)
                 {
                     feedRepo.Add(NSNType.USER_TWEET, tweetId, newTweet.User.UserId, 0, timestamp);
                 }

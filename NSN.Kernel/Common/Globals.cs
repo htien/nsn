@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -263,6 +265,12 @@ namespace NSN.Common
             return likeRepo.Exists(typeId, itemId, userId);
         }
 
+        public static bool IsLikeForPhoto(int photoId, int userId)
+        {
+            ILikeRepository likeRepo = NSNContext.Current.Container.Resolve<ILikeRepository>();
+            return likeRepo.Exists(NSNType.PHOTO, photoId, userId);
+        }
+
         public static bool IsConfirmingFriendRequest(int userId, int friendUserId)
         {
             IFriendRequestRepository friendRequestRepo = NSNContext.Current.Container.Resolve<IFriendRequestRepository>();
@@ -311,7 +319,7 @@ namespace NSN.Common
         public static int GetTotalLike(string typeId, int itemId)
         {
             ILikeRepository likeRepo = NSNContext.Current.Container.Resolve<ILikeRepository>();
-            return likeRepo.GetTotalLike(typeId, itemId);
+            return likeRepo.TotalLike(typeId, itemId);
         }
 
         public static Photo GetAlbumAvatar(int albumId)
@@ -324,6 +332,64 @@ namespace NSN.Common
         {
             IUserCountRepository userCountRepo = NSNContext.Current.Container.Resolve<IUserCountRepository>();
             return userCountRepo.FindById(userId);
+        }
+
+        public static LinkInfo GetLinkInfo(string url, int size = 10)
+        {
+            SiteReader reader = new SiteReader(url.Trim());
+            SiteInfo info = reader.SiteInfo;
+            Uri address = info.Address;
+            string hostUrl = address.IsDefaultPort
+                ? String.Format("{0}://{1}",address.Scheme, address.Host)
+                : String.Format("{0}://{1}:{2}", address.Scheme, address.Host, address.Port);
+            string parsedUrl = hostUrl + address.PathAndQuery;
+
+            List<string> imageUrls = new List<string>();
+            int count = 0;
+            foreach (string imgUrl in info.ImageUrls)
+            {
+                string parsedImgUrl = null;
+                if (!Regex.IsMatch(imgUrl, @".jpg$", RegexOptions.IgnoreCase))
+                    continue;
+                if (!Regex.IsMatch(imgUrl, @"^(http:|https:|ftp:)//", RegexOptions.IgnoreCase))
+                    parsedImgUrl = !Regex.IsMatch(imgUrl, @"^/")
+                        ? String.Format("{0}/{1}", hostUrl + address.LocalPath, imgUrl)
+                        : String.Format("{0}{1}", hostUrl, imgUrl);
+                imageUrls.Add((parsedImgUrl != null) ? parsedImgUrl : imgUrl);
+                if (count < size - 1)
+                    count++;
+                else
+                    break;
+            }
+
+            return new LinkInfo()
+            {
+                Url = parsedUrl,
+                Title = info.MetaTitle,
+                Description = info.MetaDescription,
+                ImageUrls = imageUrls.ToArray()
+            };
+        }
+
+        public static bool IsBrokenLink(string url)
+        {
+            HttpWebRequest request;
+            HttpWebResponse response = null;
+            try
+            {
+                Uri uri = new Uri(url, UriKind.Absolute);
+                request = (HttpWebRequest)WebRequest.Create(uri);
+                request.Method = "HEAD";
+                request.KeepAlive = false;
+                request.Timeout = 5 * 1000;
+                response = (HttpWebResponse)request.GetResponse();
+                return !(response.StatusCode == HttpStatusCode.OK);
+            }
+            finally
+            {
+                if (response != null)
+                    response.Close();
+            }
         }
 
         public static ImageInfo SaveImageInPlace(HttpPostedFileBase file, string intoPath)
@@ -361,6 +427,11 @@ namespace NSN.Common
             };
         }
 
+        public static void RemoveImageInPlace(string imageUrl)
+        {
+            System.IO.File.Delete(imageUrl.Replace("/", "\\"));
+        }
+
         public static string HtmlEncode(string text)
         {
             return Microsoft.Security.Application.Encoder.HtmlEncode(text);
@@ -368,12 +439,24 @@ namespace NSN.Common
 
         public static string UrlDecode(string text)
         {
-            return HttpUtility.UrlDecode(text, Encoding.GetEncoding("ISO-8859-1"));
+            string decodedString = HttpUtility.UrlDecode(text, Encoding.GetEncoding("ISO-8859-1"));
+            decodedString = Regex.Replace(decodedString, @"\r+", "");
+            decodedString = Regex.Replace(decodedString, @" +", " ");
+            return decodedString;
         }
 
         public static string ApplyHtmlFrom(string text)
         {
-            return text.Replace(" ", "&nbsp;").Replace("&#10;", "<br />").Replace("&#13;", "&nbsp;");
+            return text.Replace("&#10;", "<br />").Replace("&#13;", "");
+        }
+
+        public static string TruncateString(string strIn, int maxSize)
+        {
+            if (strIn.Length > maxSize)
+            {
+                return strIn.Substring(0, maxSize - 3) + "...";
+            }
+            return strIn;
         }
 
         /// <summary>

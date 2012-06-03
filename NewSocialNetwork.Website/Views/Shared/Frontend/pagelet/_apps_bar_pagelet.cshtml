@@ -4,14 +4,17 @@
 }
 <div id="pagelet_apps" class="UIContainer_Apps">
     <div class="uiAppListBox">
-        <div class="uiAppItem">
-            <a class="uiItemBox" href="@Url.RouteUrl("Stream")">
-                <div class="uiItem">
-                    <div class="uiItemImage itemImage_Home"></div>
-                    <div class="uiItemTitle">Home</div>
-                </div>
-            </a>
-        </div>
+        @if (ViewBag.IsMyProfile)
+        {
+            <div class="uiAppItem">
+                <a class="uiItemBox" href="@Url.RouteUrl("Stream")">
+                    <div class="uiItem">
+                        <div class="uiItemImage itemImage_Home"></div>
+                        <div class="uiItemTitle">Home</div>
+                    </div>
+                </a>
+            </div>
+        }
         <div class="uiAppItem">
             <a class="uiItemBox" href="@Url.RouteUrl("Profile", new { uid = ViewBag.UDisplayId })">
                 <div class="uiItem">

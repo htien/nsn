@@ -11,5 +11,8 @@ namespace NewSocialNetwork.Repositories
         Photo GetFirstPhotoByAlbum(int albumId);
         int GetTotalPhoto(int albumId);
         int TotalPhotoByTimestamp(int albumId, int timetamp);
+        int Remove(int photoId);
+        string ImageFileName(int photoId);
+        bool IsPhotoOfUser(int photoId, int userId);
     }
 }

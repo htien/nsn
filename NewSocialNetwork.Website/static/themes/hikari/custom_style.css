@@ -271,20 +271,25 @@ img.zoomFeature {
   padding: 30px 0 0 30px;
 }
 
-.UIGrid_Photo .UIPhotoContainer .UIPhotoItem {
+.UIGrid_Photo .UIPhotoItem {
   position: relative;
   display: inline-block;
   margin: 0 12px 20px 0;
   padding: 4px;
   width: 185px;
-  height: 139px;
   background: white;
   border: 1px solid #ccc;
   cursor: pointer;
   outline: none;
   vertical-align: bottom;
 }
-.UIGrid_Photo .UIPhotoItem .UIPhotoWrapper {
+.UIGrid_Photo .UIPhotoItem .photoActions {
+  padding-top: 4px;
+}
+.UIGrid_Photo .UIPhotoWrapper {
   position: relative;
   overflow: hidden;
+}
+.UIGrid_Photo .UIPhotoWrapper img {
+  display: block;
 }

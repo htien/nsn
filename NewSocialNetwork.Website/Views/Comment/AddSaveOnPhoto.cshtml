@@ -3,5 +3,24 @@
 @{
     Layout = null;
     Comment comment = ViewBag.Comment;
+    User actor = ViewBag.Author;
+    string actorProfileUrl = ViewBag.AuthorProfileUrl;
+    string actorImageUrl = ViewBag.AuthorImageUrl;
+    string commentFullDateTime = Globals.ShowFullDateTime(comment.Timestamp);
+    string commentDateTime = Globals.ShowDateTime(comment.Timestamp);
 }
-@Html.Raw(Globals.ApplyHtmlFrom(comment.CommentText.TextParsed))
+<li id="comment-@comment.CommentId" class="commentItem">
+    <div class="clearfix">
+        <a class="actorPic">
+            <img src="@actorImageUrl" alt="" width="32" height="32" />
+        </a>
+        <a class="uiCloseButton commentRemoverBtn" href="#" title="Hide as spam"></a>
+        <div class="commentContent">
+            <a class="actorName" href="@actorProfileUrl">@actor.FullName</a>
+            <span class="commentBody">@Html.Raw(Globals.ApplyHtmlFrom(comment.CommentText.TextParsed))</span>
+            <div class="commentActions">
+                <cite class="timestamp" title="@commentFullDateTime">@commentDateTime</cite>
+            </div>
+        </div>
+    </div>
+</li>

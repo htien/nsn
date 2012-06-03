@@ -23,6 +23,14 @@ namespace NewSocialNetwork.DataAccess
             return commentId;
         }
 
+        public int Remove(int commentId)
+        {
+            return this.Session().CreateQuery(
+                @"delete from CommentText where CommentId = :commentId")
+                .SetInt32("commentId", commentId)
+                .ExecuteUpdate();
+        }
+
         #endregion
     }
 }

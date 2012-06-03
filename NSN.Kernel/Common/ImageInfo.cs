@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace NSN.Common.Utilities
+namespace NSN.Common
 {
     public class ImageInfo
     {

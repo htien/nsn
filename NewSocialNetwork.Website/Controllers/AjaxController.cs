@@ -12,14 +12,14 @@ namespace NewSocialNetwork.Website.Controllers
             return RedirectToRoute("Go", new { controller = "Feed", action = "Feeds" });
         }
 
-        public ActionResult LikeForFeed(long feedId)
+        public ActionResult Like(string where, long id)
         {
-            return RedirectToRoute("Go", new { controller = "Like", action = "ForFeed", feedId = feedId });
+            return RedirectToRoute("Go", new { controller = "Like", action = "Like", where = where, id = id });
         }
 
-        public ActionResult UnlikeForFeed(long feedId)
+        public ActionResult Unlike(string where, long id)
         {
-            return RedirectToRoute("Go", new { controller = "Like", action = "UnlikeForFeed", feedId = feedId });
+            return RedirectToRoute("Go", new { controller = "Like", action = "Unlike", where = where, id = id });
         }
 
         public ActionResult PhotoAlbumUploader()

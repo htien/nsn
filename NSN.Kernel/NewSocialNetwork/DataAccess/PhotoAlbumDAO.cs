@@ -8,6 +8,8 @@ namespace NewSocialNetwork.DataAccess
 {
     public class PhotoAlbumDAO : DAO<PhotoAlbum>, IPhotoAlbumRepository
     {
+        public IPhotoAlbumInfoRepository photoAlbumRepo { private get; set; }
+
         public PhotoAlbumDAO(ISessionFactory sessionFactory) : base(sessionFactory)
         { }
 
@@ -18,20 +20,29 @@ namespace NewSocialNetwork.DataAccess
                 .List<PhotoAlbum>();
         }
 
-        public int GetTotalPhotoAlbumByUser(int userId)
-        {
-            return Convert.ToInt32(this.Session()
-                .CreateQuery(@"select count(a.AlbumId) from PhotoAlbum a where a.User.UserId = :userId")
-                .SetInt32("userId", userId)
-                .UniqueResult());
-        }
-
         public IList<Photo> GetPhotoByAlbum(int albumId)
         {
             return this.Session().CreateQuery(
                 @"select p from Photo p where p.Album.AlbumId = :albumId")
                 .SetInt32("albumId", albumId)
                 .List<Photo>();
+        }
+
+        public int Remove(int albumId)
+        {
+            photoAlbumRepo.Remove(albumId);
+            return this.Session().CreateQuery(
+                @"delete from PhotoAlbum where AlbumId = :albumId")
+                .SetInt32("albumId", albumId)
+                .ExecuteUpdate();
+        }
+
+        public int GetTotalPhotoAlbumByUser(int userId)
+        {
+            return Convert.ToInt32(this.Session()
+                .CreateQuery(@"select count(a.AlbumId) from PhotoAlbum a where a.User.UserId = :userId")
+                .SetInt32("userId", userId)
+                .UniqueResult());
         }
 
         public int GetTotalFriendRequestPending(int userId)
@@ -76,11 +87,38 @@ namespace NewSocialNetwork.DataAccess
                 .List<CustomRelation>();
         }
 
+        public bool Exists(int albumId)
+        {
+            return Convert.ToUInt32(this.Session().CreateQuery(
+                @"select count(AlbumId) from PhotoAlbum where AlbumId = :albumId")
+                .SetInt32("albumId", albumId)
+                .UniqueResult()) > 0;
+        }
+
+        public bool HasPhotos(int albumId)
+        {
+            return Convert.ToUInt32(this.Session().CreateQuery(
+                @"select count(PhotoId) from Photo where Album.AlbumId = :albumId")
+                .SetInt32("albumId", albumId)
+                .UniqueResult()) > 0;
+        }
+
+
+        public bool HasPhotosByTimestamp(int albumId, int timestamp)
+        {
+            return Convert.ToUInt32(this.Session().CreateQuery(
+                @"select count(PhotoId) from Photo
+                  where Album.AlbumId = :albumId and Timestamp = :timestamp")
+                .SetInt32("albumId", albumId)
+                .SetInt32("timestamp", timestamp)
+                .UniqueResult()) > 0;
+        }
 
         public bool IsAlbumOfUser(int userId, int albumId)
         {
             return Convert.ToInt32(this.Session().CreateQuery(
-                @"select count(a.AlbumId) from PhotoAlbum a where a.AlbumId = :albumId and a.User.UserId = :userId")
+                @"select count(AlbumId) from PhotoAlbum
+                  where AlbumId = :albumId and User.UserId = :userId")
                 .SetInt32("albumId", albumId)
                 .SetInt32("userId", userId)
                 .UniqueResult()) > 0;

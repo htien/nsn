@@ -1,0 +1,11 @@
+﻿@using NewSocialNetwork.Domain;
+@{
+    Layout = null;
+    IList<Feed> feeds = ViewBag.NewestFeeds;
+}
+<div>
+@foreach (Feed feed in feeds)
+{
+    <li>@feed.FeedId</li>
+}
+</div>

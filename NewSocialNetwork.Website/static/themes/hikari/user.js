@@ -1,5 +1,8 @@
 ﻿jQuery(window).load(function() {
     setInterval(ajaxCount, 1000);
+    if (jQuery('.uiStreamHomePage').length > 0) {
+        setInterval(ajaxStream, 5000);
+    }
 });
 
 jQuery(function ($) {
@@ -7,8 +10,9 @@ jQuery(function ($) {
     NSN.$id('composer-tabs').tabs();
 
     /* User post status scripts */
-    var postStatusButton = 'postStatus';
-    NSN.$id(postStatusButton).click(function (evt) {
+    var postStatusButton = 'postStatus',
+        postLinkButton = 'postLink';
+    NSN.$id(postStatusButton).click(function(evt) {
         var composerForm = jQuery(this).parents('form');
         NSN.ajaxSubmit(composerForm)
             .success(function (json) {
@@ -30,6 +34,141 @@ jQuery(function ($) {
             .error(function (json) {
                 NSN.callJqDlg(glbDefaultDlgId, json.Message).dialog('open');
             });
+    });
+    NSN.$id(postLinkButton).click(function(evt) {
+        var composer = NSN.$id('composer-addlink'),
+            uid = composer.find('input[name=uid]').val(),
+            inputText = composer.find('textarea[name=inputText]'),
+            inputLink = composer.find('input[name=inputLink]'),
+            imageUrl = (thumbPagerListImages[thumbPagerCurrent-1] ? thumbPagerListImages[thumbPagerCurrent-1].src : ""),
+            title = composer.find('.UIShareStage_Title').text(),
+            description = composer.find('.UIShareStage_Summary').text();
+        jQuery.ajax({
+            url: NSN.requestUrl('link/post'),
+            type: 'post',
+            data: { uid: uid, inputText: escape(inputText.val()), inputLink: inputLink.val(), imageUrl: imageUrl, title: escape(title), description: escape(description) },
+            success: function(json) {
+                if (json.Status == 1) {
+                    inputText.val('');
+                    inputLink.val('');
+                    jQuery('.linkShareStage .composerCloseShare').click();
+                }
+                else {
+                    NSN.createJqDlg(glbDefaultDlgId, json.Message).dialog('open');
+                }
+            }
+        });
+    });
+    
+    jQuery('#composer-addlink .addBtn').click(function(evt) {
+        var me = jQuery(this),
+            addLinkBox = me.parents('.uiAddLink'),
+            uiShareStage = addLinkBox.siblings('.linkShareStage').find('.UIShareStage'),
+            inputLink = addLinkBox.find('input[name=inputLink]').val();
+        if (NSN.isUrl(inputLink)) {
+            jQuery.ajax({
+                url: NSN.url('/links/getremote'),
+                type: 'post',
+                data: { remoteUrl: inputLink },
+                success: function(json) {
+                    if (json != null && !NSN.isBlank(json.Url)) {
+                        var thumbPager = uiShareStage.find('.UIThumbPager_Thumbs');
+                        thumbPager.html('');
+                        jQuery.each(json.ImageUrls, function(idx, val) {
+                            thumbPager.append(jQuery('<img class="img" style="display:none" />').attr("src", val));
+                        });
+                        uiShareStage.find('.UIShareStage_Title').html(jQuery('<span class="inline-edit"></span>').html(json.Title));
+                        uiShareStage.find('.UIShareStage_Subtitle').html(json.Url);
+                        uiShareStage.find('.UIShareStage_Summary').html(jQuery('<p class="UIShareStage_BottomMargin inline-edit"></p>').html(json.Description));
+                        uiShareStage.find('.inline-edit').editInPlace({
+                            callback: function(unused, enteredText) { return enteredText; }
+                        });
+                        addLinkBox.hide();
+                        uiShareStage.parents('.linkShareStage').slideDown(100);
+                        thumbPager.siblings('.UIThumbPager_Loader').hide();
+
+                        var pageNumberControl = uiShareStage.find('.UIThumbPagerControl_PageNumber');
+                        thumbPagerListImages = thumbPager.find('.img');
+                        thumbPagerTotal = json.ImageUrls.length;
+                        if (thumbPagerTotal > 0) {
+                            jQuery(thumbPagerListImages[0]).show();
+                            thumbPagerCurrent = 1;
+                        }
+                        thumbPagerNextBtn = uiShareStage.find('.UIThumbPagerControl_Button_Right');
+                        thumbPagerPrevBtn = uiShareStage.find('.UIThumbPagerControl_Button_Left');
+                        if (thumbPagerTotal > 1) {
+                            thumbPagerNextBtn.click(LinkShareStage_nextThumbPager);
+                            thumbPagerPrevBtn.click(LinkShareStage_prevThumbPager);
+                            LinkShareStage_displayPageCounter(thumbPagerTotal, thumbPagerCurrent);
+                        }
+                        else {
+                            LinkShareStage_displayPageCounter(null);
+                        }
+                    }
+                }
+            });
+        }
+    });
+    var thumbPagerTotal = 0,
+        thumbPagerCurrent = 0,
+        thumbPagerNextBtn = null,
+        thumbPagerPrevBtn = null,
+        thumbPagerListImages = null;
+    function LinkShareStage_nextThumbPager(evt) {
+        if (thumbPagerTotal <= 0 || thumbPagerCurrent == 0 || thumbPagerCurrent == thumbPagerTotal) {
+            return;
+        }
+        if (thumbPagerCurrent < thumbPagerTotal) {
+            thumbPagerCurrent++;
+            jQuery.each(thumbPagerListImages, function(idx, val) {
+                if ((idx+1) == thumbPagerCurrent) {
+                    jQuery(this).show();
+                }
+                else {
+                    jQuery(this).hide();
+                }
+            });
+            LinkShareStage_displayPageCounter(thumbPagerTotal, thumbPagerCurrent);
+        }
+    }
+    function LinkShareStage_prevThumbPager(evt) {
+        if (thumbPagerTotal <= 0 || thumbPagerCurrent == 0 || thumbPagerCurrent == 1) {
+            return;
+        }
+        if (thumbPagerCurrent > 1) {
+            thumbPagerCurrent--;
+            jQuery.each(thumbPagerListImages, function(idx, val) {
+                if ((idx+1) == thumbPagerCurrent) {
+                    jQuery(this).show();
+                }
+                else {
+                    jQuery(this).hide();
+                }
+            });
+        }
+        LinkShareStage_displayPageCounter(thumbPagerTotal, thumbPagerCurrent);
+    }
+    function LinkShareStage_displayPageCounter(total, current) {
+        var uiStageShare = jQuery('.UIShareStage');
+        if (!total || total == 0) {
+            uiStageShare.find('.UIThumbPagerControl').hide();
+            uiStageShare.find('.UIShareStage_ThumbPager').hide();
+            return;
+        }
+        else {
+            uiStageShare.find('.UIThumbPagerControl').show();
+            uiStageShare.find('.UIShareStage_ThumbPager').show();
+        }
+        var uiCurrent = uiStageShare.find('.UIThumbPagerControl_PageNumber_Current'),
+            uiTotal = uiStageShare.find('.UIThumbPagerControl_PageNumber_Total');
+        uiCurrent.text(current);
+        uiTotal.text(total);
+    }
+    jQuery('.linkShareStage .composerCloseShare').click(function(evt) {
+        var linkShareStage = jQuery(this).parents('.linkShareStage'),
+            addLinkBox = linkShareStage.siblings('.uiAddLink');
+        linkShareStage.hide();
+        addLinkBox.slideDown(100);
     });
 
     jQuery('.uiFeedItem').on('click', '.guiButton.post', function (evtObj) {
@@ -64,15 +203,16 @@ jQuery(function ($) {
             feedId = NSN_getFeedId(feedItem),
             likeButton = jQuery(this);
         jQuery.ajax({
-            url: NSN.url('/ajax/likeforfeed'),
+            url: NSN.url('/ajax/like'),
             type: 'get',
-            data: { feedId: feedId },
+            data: { where: "on_feed", id: feedId },
             success: function (json) {
                 if (json.Status == 1) {
                     likeButton.find('.saving_message').hide();
                     likeButton.find('.default_message').show();
                     likeButton.removeClass('likeAction');
                     likeButton.addClass('unlikeAction');
+                    displayTotalLiked_InFeed(likeButton, feedId);
                 }
                 else {
                     NSN.createJqDlg(glbDefaultDlgId,
@@ -87,15 +227,16 @@ jQuery(function ($) {
             feedId = NSN_getFeedId(feedItem),
             likeButton = jQuery(this);
         jQuery.ajax({
-            url: NSN.url('/ajax/unlikeforfeed'),
+            url: NSN.url('/ajax/unlike'),
             type: 'get',
-            data: { feedId: feedId },
+            data: { where: "on_feed", id: feedId },
             success: function (json) {
                 if (json.Status == 1) {
                     likeButton.find('.default_message').hide();
                     likeButton.find('.saving_message').show();
                     likeButton.removeClass('unlikeAction');
                     likeButton.addClass('likeAction');
+                    displayTotalLiked_InFeed(likeButton, feedId);
                 }
                 else {
                     NSN.createJqDlg(glbDefaultDlgId,
@@ -104,6 +245,107 @@ jQuery(function ($) {
                 }
             }
         });
+    });
+    function displayTotalLiked_InFeed(self, feedId) {
+        jQuery.ajax({
+            url: NSN.requestUrl('like/totallikeonfeed'),
+            data: { feedId: feedId },
+            success: function(json) {
+                if (json.Status == 1) {
+                    var totalLikeSpan = self.siblings('span.literal'),
+                        totalLike = json.Message;
+                    if (!totalLike || totalLike == 0) {
+                        totalLikeSpan.html('');
+                    }
+                    else {
+                        totalLikeSpan.html('(' + totalLike + ' people liked)');
+                    }
+                }
+            }
+        });
+    }
+    jQuery('.uiFeedItem').delegate('.feedRemoverBtn', 'click', function(evt) {
+        evt.preventDefault();
+        var feedItem = NSN_getFeedItem(this);
+        function deleteFeed(feedItem) {
+            var feedId = NSN_getFeedId(feedItem);
+            jQuery.ajax({
+                url: NSN.requestUrl('feed/remove'),
+                type: 'post',
+                async: false,
+                data: { feedId: feedId },
+                success: function(json) {
+                    if (json.Status == 1) {
+                        feedItem.remove();
+                    }
+                    else {
+                        NSN.createJqDlg(glbDefaultDlgId, json.Message).dialog('open');
+                    }
+                }
+            });
+        }
+        NSN.createJqDlg('confirm-remove-dialog', 'Are you sure remove this feed?', {
+            title: 'Remove Feed Confirmation',
+            buttons: [
+                {
+                    text: 'Yes',
+                    class: 'guiBlueButton',
+                    click: function() {
+                        deleteFeed(feedItem);
+                        jQuery(this).dialog('destroy').remove();
+                    }
+                },
+                {
+                    text: 'No',
+                    click: function() {
+                        jQuery(this).dialog('destroy').remove();
+                    }
+                }
+            ]
+        }).dialog('open');
+    });
+    jQuery('.uiFeedItem').delegate('.uiCommentItem .commentActions .delete', 'click', function (evt) {
+        evt.preventDefault();
+        var feedItem = NSN_getFeedItem(this),
+            commentItem = jQuery(this).parents('.uiCommentItem');
+        function deleteCommentOnFeed(commentItem, feedId) {
+            var commentId = parseInt(commentItem.attr('id').slice(8), 10);
+            jQuery.ajax({
+                url: NSN.requestUrl('comment/removeonfeed'),
+                type: 'post',
+                async: false,
+                data: { feedId: feedId, commentId: commentId },
+                success: function(json) {
+                    if (json.Status == 1) {
+                        commentItem.remove();
+                        jQuery('.UIFeeds_Content').find('#comment-' + commentId).remove();
+                    }
+                    else {
+                        NSN.createJqDlg(glbDefaultDlgId, json.Message).dialog('open');
+                    }
+                }
+            });
+        }
+        NSN.createJqDlg('confirm-remove-dialog', 'Delete this comment? (Cannot undo)', {
+            title: 'Remove Confirmation',
+            buttons: [
+                {
+                    text: 'Yes',
+                    class: 'guiBlueButton',
+                    click: function() {
+                        var feedId = NSN_getFeedId(feedItem);
+                        deleteCommentOnFeed(commentItem, feedId);
+                        jQuery(this).dialog('destroy').remove();
+                    }
+                },
+                {
+                    text: 'No',
+                    click: function() {
+                        jQuery(this).dialog('destroy').remove();
+                    }
+                }
+            ]
+        }).dialog('open');
     });
     jQuery('.UIGrid_Photo #addPhoto').click(function() {
         var albumId = parseInt(jQuery(this).parents('.UIGrid_Photo').attr('id').slice(12), 10);
@@ -153,6 +395,56 @@ jQuery(function ($) {
                     console.log(data.bitrate);
                 });
             }
+        }).dialog('open');
+    });
+    jQuery('.UIGrid_Photo #removeAlbum').click(function() {
+        var albumItem = jQuery(this).parents('.UIGrid_Photo'),
+            albumId = parseInt(albumItem.attr('id').slice(12), 10);
+        function removeAlbum(albumItem) {
+            albumItem.remove();
+        }
+        NSN.createJqDlg('confirm-remove-dlg', 'Delete this album? (Carefully! Cannot undo)', {
+            title: 'Remove Album Confirmation',
+            buttons: [
+                {
+                    text: 'Yes',
+                    class: 'guiBlueButton',
+                    click: function() {
+                        jQuery.ajax({
+                            url: NSN.requestUrl('photoalbum/remove'),
+                            type: 'post',
+                            async: false,
+                            data: { albumId: albumId },
+                            success: function(json) {
+                                if (json.Status == 1) {
+                                    removeAlbum(albumItem);
+                                    NSN.createJqDlg(glbDefaultDlgId, json.Message, {
+                                        buttons: [
+                                            {
+                                                text: 'Your Albums',
+                                                class: 'guiBlueButton',
+                                                click: function() {
+                                                    document.location = json.ReturnedPath;
+                                                }
+                                            }
+                                        ]
+                                    }).dialog('open');
+                                }
+                                else {
+                                    NSN.createJqDlg(glbDefaultDlgId, json.Message).dialog('open');
+                                }
+                            }
+                        });
+                        jQuery(this).dialog('destroy').remove();
+                    }
+                },
+                {
+                    text: 'No',
+                    click: function() {
+                        jQuery(this).dialog('destroy').remove();
+                    }
+                }
+            ]
         }).dialog('open');
     });
     jQuery('.UIUploader_Photo .xdlg').live('click', function () {
@@ -263,7 +555,7 @@ jQuery(function ($) {
                     NSN.createJqDlg(glbDefaultDlgId, json.Message, {
                         buttons: [
                             {
-                                text: 'Go to album',
+                                text: 'Go To Album',
                                 class: 'guiBlueButton',
                                 click: function () {
                                     document.location = json.ReturnedPath;
@@ -280,6 +572,44 @@ jQuery(function ($) {
                 NSN.createJqDlg(glbDefaultDlgId, data).dialog('open');
             }
         });
+    });
+    jQuery('.UIGrid_Photo').on('click', '.UIPhotoItem .removePhoto', function(evt) {
+        evt.preventDefault();
+        var photoItem = jQuery(this).parents('.UIPhotoItem');
+        function deletePhoto(photoItem) {
+            var photoId = parseInt(photoItem.attr('id').slice(6), 10),
+                albumId = parseInt(photoItem.parents('.UIGrid_Photo').attr('id').slice(12), 10);
+            jQuery.ajax({
+                url: NSN.requestUrl('photo/remove'),
+                type: 'post',
+                async: false,
+                data: { albumId: albumId, photoId: photoId },
+                success: function(json) {
+                    if (json.Status == 1) {
+                        photoItem.remove();
+                    }
+                }
+            });
+        }
+        NSN.createJqDlg('confirm-remove-dialog', 'Delete this photo? (Cannot undo)', {
+            title: 'Remove Photo Confirmation',
+            buttons: [
+                {
+                    text: 'Yes',
+                    class: 'guiBlueButton',
+                    click: function() {
+                        deletePhoto(photoItem);
+                        jQuery(this).dialog('destroy').remove();
+                    }
+                },
+                {
+                    text: 'No',
+                    click: function() {
+                        jQuery(this).dialog('destroy').remove();
+                    }
+                }
+            ]
+        }).dialog('open');
     });
 
     function disableHtmlScrollbar(ok) {
@@ -320,9 +650,134 @@ jQuery(function ($) {
                         var me = jQuery(this),
                             photoId = me.siblings('.hidden_elem').find('input[name=pid]').val(),
                             c = me.val();
-                        NSN_postCommentOnPhoto(photoId, c);
+                        NSN_postCommentOnPhoto(dlg, photoId, c);
                     }
                 });
+                dlg.delegate('.commentRemoverBtn', 'click', function(evt) {
+                    evt.preventDefault();
+                    var commentItem = jQuery(this).parents('.commentItem');
+                    function deleteCommentOnPhoto(commentItem, photoId) {
+                        var commentId = parseInt(commentItem.attr('id').slice(8), 10);
+                        jQuery.ajax({
+                            url: NSN.requestUrl('comment/remove'),
+                            type: 'post',
+                            async: false,
+                            data: { typeId: 'photo', itemId: photoId, commentId: commentId },
+                            success: function(json) {
+                                if (json.Status == 1) {
+                                    commentItem.remove();
+                                }
+                                else {
+                                    NSN.createJqDlg(glbDefaultDlgId, json.Message).dialog('open');
+                                }
+                            }
+                        });
+                    }
+                    NSN.createJqDlg('confirm-remove-dialog', 'Delete this comment? (Cannot undo)', {
+                        title: 'Remove Confirmation',
+                        buttons: [
+                            {
+                                text: 'Yes',
+                                class: 'guiBlueButton',
+                                click: function() {
+                                    deleteCommentOnPhoto(commentItem, photoId);
+                                    jQuery(this).dialog('destroy').remove();
+                                }
+                            },
+                            {
+                                text: 'No',
+                                click: function() {
+                                    jQuery(this).dialog('destroy').remove();
+                                }
+                            }
+                        ]
+                    }).dialog('open');
+                });
+                function likeForPhotoHandler(evt) {
+                    var likeBtn = jQuery(this),
+                        photoId =  parseInt(likeBtn.attr('id').slice(5), 10);
+                    jQuery.ajax({
+                        url: NSN.requestUrl('ajax/like'),
+                        type: 'get',
+                        async: false,
+                        data: { where: 'on_photo', id: photoId },
+                        success: function(json) {
+                            if (json.Status == 1) {
+                                likeBtn.removeClass('likeBtn');
+                                likeBtn.addClass('unlikeBtn');
+                                likeBtn.html('<span>Unlike</span>');
+                                likeBtn.unbind('click');
+                                likeBtn.bind('click', unlikeForPhotoHandler);
+                                displayTotalLiked_InPhotoZoom(photoId);
+                            }
+                            else {
+                                NSN.createJqDlg(glbDefaultDlgId,
+                                    '<div class="nsn-popup-msg ui-state-error">' + json.Message + '</div>')
+                                    .dialog('open');
+                            }
+                        }
+                    });
+                    evt.preventDefault();
+                }
+                function unlikeForPhotoHandler(evt) {
+                    var likeBtn = jQuery(this),
+                        photoId =  parseInt(likeBtn.attr('id').slice(5), 10);
+                    jQuery.ajax({
+                        url: NSN.requestUrl('ajax/unlike'),
+                        type: 'get',
+                        async: false,
+                        data: { where: 'on_photo', id: photoId },
+                        success: function(json) {
+                            if (json.Status == 1) {
+                                likeBtn.removeClass('unlikeBtn');
+                                likeBtn.addClass('likeBtn');
+                                likeBtn.html('<span>Like</span>');
+                                likeBtn.unbind('click');
+                                likeBtn.bind('click', likeForPhotoHandler);
+                                displayTotalLiked_InPhotoZoom(photoId);
+                            }
+                            else {
+                                NSN.createJqDlg(glbDefaultDlgId,
+                                    '<div class="nsn-popup-msg ui-state-error">' + json.Message + '</div>')
+                                    .dialog('open');
+                            }
+                        }
+                    });
+                    evt.preventDefault();
+                }
+                function displayTotalLiked_InPhotoZoom(photoId) {
+                    jQuery.ajax({
+                        url: NSN.requestUrl('like/totallike'),
+                        data: { typeId: 'photo', itemId: photoId },
+                        success: function(json) {
+                            if (json.Status == 1) {
+                                var photoZoomItem = NSN.$id('photo-zoom-' + photoId),
+                                    summaryInfo = photoZoomItem.find('.summaryInfo');
+                                    totalLike = json.Message;
+                                if (!totalLike || totalLike == 0) {
+                                    summaryInfo.find('.likeInfo').html('');
+                                }
+                                else {
+                                    var totalLikeSpan = summaryInfo.find('.totalLike');
+                                    if (totalLikeSpan && totalLikeSpan.length > 0) {
+                                        totalLikeSpan.text(totalLike);
+                                    }
+                                    else {
+                                        var likeInfoDiv = summaryInfo.find('.likeInfo');
+                                        totalLikeSpan = '<span class="totalLike">' + totalLike + '</span> people liked this.';
+                                        likeInfoDiv.html(totalLikeSpan);
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+                if (dlg.find('.likeBtn')) {
+                    dlg.on('click', '.likeBtn', likeForPhotoHandler);
+                }
+                if (dlg.find('.unlikeBtn')) {
+                    dlg.on('click', '.unlikeBtn', unlikeForPhotoHandler);
+                }
                 dlg.dialog('open');
                 dlgParent.next().addClass('_photoZoomOverlay').click(function(evt) {
                     dlg.dialog('close');
@@ -450,6 +905,26 @@ function ajaxCount() {
             jewelRequests.find('.jewelCount').html((friendRequest > 0) ? ('<span>' + friendRequest + '</span>') : (''));
             jewelMessages.find('.jewelCount').html((mailNew > 0) ? ('<span>' + mailNew + '</span>') : (''));
             jewelNotifs.find('.jewelCount').html((commentPedding > 0) ? ('<span>' + commentPedding + '</span>') : (''));
+        }
+    });
+}
+
+function ajaxStream() {
+    jQuery.ajax({
+        url: NSN.requestUrl('feed/newestfeeds'),
+        type: 'post',
+        data: { feedId: lastFeedId },
+        dataType: 'html',
+        success: function(result) {
+            if (!NSN.isBlank(result)) {
+                var html = jQuery(result),
+                    tags = jQuery('li', result),
+                    streamContainer = jQuery('.UIStream .uiStreamHomePage');
+                lastFeedId += tags.length;
+                tags.each(function(idx, val) {
+                    streamContainer.prepend('<li>' + jQuery(this).html() + '</li>');
+                });
+            }
         }
     });
 }

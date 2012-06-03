@@ -36,6 +36,67 @@ namespace NewSocialNetwork.DataAccess
                 .UniqueResult());
         }
 
+        public int Remove(long feedId)
+        {
+            return this.Session().CreateQuery(
+                @"delete from Feed where FeedId = :feedId")
+                .SetInt64("feedId", feedId)
+                .ExecuteUpdate();
+        }
+
+        public int Remove(string typeId, int itemId)
+        {
+            return this.Session().CreateQuery(
+                @"delete from Feed where TypeId = :typeId and ItemId = :itemId")
+                .SetString("typeId", typeId)
+                .SetInt32("itemId", itemId)
+                .ExecuteUpdate();
+        }
+
+        public IList<Feed> ListStreamByUser(int userId, int start = 0, int size = 25)
+        {
+            IList listFeeds = this.Session().CreateSQLQuery(
+                @"select FeedId, Privacy, TypeId, ItemId, UserId, ParentUserId, [Timestamp]
+                  from [NSN.Feed] f
+                  where f.UserId = :userId or
+                        f.UserId in (select fr.FriendUserId from [NSN.Friend] fr
+                                        where fr.UserId = :userId)
+                  order by Timestamp desc
+                  offset :start rows fetch next :size rows only")
+                .SetInt32("userId", userId)
+                .SetInt32("start", start)
+                .SetInt32("size", size)
+                .List();
+            return LoadFeeds(listFeeds);
+        }
+
+        public IList<Feed> ListNewestFeed(int userId, long lastFeedId, int start = 0, int size = 5)
+        {
+            IList listFeeds = this.Session().CreateSQLQuery(
+                @"select FeedId, Privacy, TypeId, ItemId, UserId, ParentUserId, [Timestamp]
+                  from [NSN.Feed] f
+                  where f.FeedId > :lastFeedId and
+                        (f.UserId = :userId or
+                         f.UserId in (select fr.FriendUserId from [NSN.Friend] fr where fr.UserId = :userId))
+                  order by Timestamp asc
+                  offset :start rows fetch next :size rows only")
+                .SetInt32("userId", userId)
+                .SetInt64("lastFeedId", lastFeedId)
+                .SetInt32("start", start)
+                .SetInt32("size", size)
+                .List();
+            return LoadFeeds(listFeeds);
+        }
+
+        public IList<Feed> ListFeedsByItem(string typeId, int itemId)
+        {
+            return this.Session().CreateQuery(
+                @"from Feed where TypeId = :typeId and ItemId = :itemId")
+                .SetString("typeId", typeId)
+                .SetInt32("itemId", itemId)
+                .List<Feed>();
+        }
+
         public IList<Feed> GetUserFeeds(int userId)
         {
             return GetUserFeeds(userId, false);
@@ -59,21 +120,12 @@ namespace NewSocialNetwork.DataAccess
 
         public Feed GetFeed(long feedId)
         {
-            object[] o =  (object[])this.Session().CreateSQLQuery(
+            object[] objFeed =  (object[])this.Session().CreateSQLQuery(
                 @"select FeedId, Privacy, TypeId, ItemId, UserId, ParentUserId, [Timestamp]
                   from [NSN.Feed] f where f.FeedId = :feedId")
                 .SetInt64("feedId", feedId)
                 .UniqueResult();
-            return new Feed()
-            {
-                FeedId = Convert.ToInt64(o[0]),
-                Privacy = Convert.ToByte(o[1]),
-                TypeId = Convert.ToString(o[2]),
-                ItemId = Convert.ToInt32(o[3]),
-                User = userRepo.FindById(Convert.ToInt32(o[4])),
-                ParentUser = Convert.ToInt32(o[5]) == 0 ? null : userRepo.FindById(Convert.ToInt32(o[5])),
-                Timestamp = Convert.ToInt32(o[6])
-            };
+            return LoadFeed(objFeed);
         }
 
         public IList<Feed> GetUserFeeds(int userId, int start, int size)
@@ -105,24 +157,68 @@ namespace NewSocialNetwork.DataAccess
                 .SetInt32("start", start)
                 .SetInt32("size", size)
                 .List();
+            return LoadFeeds(list);
+        }
 
-            // Xử lý kết quả
+        public bool IsItemOfUser(string typeId, int itemId, int userId)
+        {
+            string hql = null;
+            switch (typeId)
+            {
+                case NSNType.PHOTO_ALBUM:
+                case NSNType.PHOTO_ALBUM_MORE:
+                    hql = @"select count(AlbumId) from PhotoAlbum where AlbumId = :itemId and User.UserId = :userId";
+                    break;
+                case NSNType.PHOTO:
+                case NSNType.PHOTO_FRIEND:
+                    hql = @"select count(PhotoId) from Photo
+                            where PhotoId = :itemId and (FriendUser.UserId = :userId or User.UserId = :userId)";
+                    break;
+                case NSNType.USER_TWEET:
+                    hql = @"select count(TweetId) from UserTweet
+                            where TweetId = :itemId and (FriendUser.UserId = :userId or User.UserId = :userId)";
+                    break;
+                case NSNType.LINK:
+                case NSNType.LINK_FRIEND:
+                    hql = @"select count(LinkId) from Link
+                            where LinkId = :itemId and (FriendUser.UserId = :userId or User.UserId = :userId)";
+                    break;
+            }
+            if (!String.IsNullOrEmpty(hql))
+            {
+                return Convert.ToInt32(this.Session().CreateQuery(hql)
+                    .SetInt32("itemId", itemId)
+                    .SetInt32("userId", userId)
+                    .UniqueResult()) > 0;
+            }
+            return false;
+        }
+
+        #endregion
+
+        private Feed LoadFeed(object[] objFeed)
+        {
+            return new Feed()
+            {
+                FeedId = Convert.ToInt64(objFeed[0]),
+                Privacy = Convert.ToByte(objFeed[1]),
+                TypeId = Convert.ToString(objFeed[2]),
+                ItemId = Convert.ToInt32(objFeed[3]),
+                User = userRepo.FindById(Convert.ToInt32(objFeed[4])),
+                ParentUser = Convert.ToInt32(objFeed[5]) == 0 ? null : userRepo.FindById(Convert.ToInt32(objFeed[5])),
+                Timestamp = Convert.ToInt32(objFeed[6])
+            };
+        }
+
+        private IList<Feed> LoadFeeds(IList list)
+        {
             IList<Feed> feeds = new List<Feed>();
             foreach (object[] o in list)
             {
-                Feed feed = new Feed();
-                feed.FeedId = Convert.ToInt64(o[0]);
-                feed.Privacy = Convert.ToByte(o[1]);
-                feed.TypeId = Convert.ToString(o[2]);
-                feed.ItemId = Convert.ToInt32(o[3]);
-                feed.User = userRepo.FindById(Convert.ToInt32(o[4]));
-                feed.ParentUser = Convert.ToInt32(o[5]) == 0 ? null : userRepo.FindById(Convert.ToInt32(o[5]));
-                feed.Timestamp = Convert.ToInt32(o[6]);
+                Feed feed = LoadFeed(o);
                 feeds.Add(feed);
             }
             return feeds;
         }
-
-        #endregion
     }
 }

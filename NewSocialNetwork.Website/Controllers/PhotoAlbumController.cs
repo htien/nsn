@@ -43,6 +43,24 @@ namespace NewSocialNetwork.Website.Controllers
             return View();
         }
 
+        [HttpPost]
+        public JsonResult Remove(int albumId)
+        {
+            ResponseMessage msg = new ResponseMessage("PhotoAlbum", RAction.REMOVE, RStatus.FAIL,
+                "An error occurs when removing this album.");
+            try
+            {
+                frontendService.RemoveAlbum(albumId);
+                msg.SetStatusAndMessage(RStatus.SUCCESS, "Removed successfully.");
+                msg.ReturnedPath = Url.RouteUrl("PhotoAlbumList", new { uid = Globals.GetDisplayId(sessionManager.GetUser()) });
+            }
+            catch (Exception e)
+            {
+                msg.Message = e.Message;
+            }
+            return Json(msg);
+        }
+
         public ActionResult Uploader()
         {
             frontendService.RemoveImagesFromDisk(this.Session);

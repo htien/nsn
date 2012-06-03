@@ -25,6 +25,16 @@ namespace NewSocialNetwork.DataAccess
                 .UniqueResult());
         }
 
+        public int Remove(string typeId, int itemId)
+        {
+            return this.Session().CreateSQLQuery(
+                @"delete from [NSN.Like]
+                  where TypeId = :typeId and ItemId = :itemId")
+                .SetString("typeId", typeId)
+                .SetInt32("itemId", itemId)
+                .ExecuteUpdate();
+        }
+
         public bool Remove(string typeId, int itemId, int userId)
         {
             return Convert.ToInt32(this.Session().CreateSQLQuery(
@@ -47,7 +57,7 @@ namespace NewSocialNetwork.DataAccess
                 .UniqueResult()) > 0;
         }
 
-        public int GetTotalLike(string typeId, int itemId)
+        public int TotalLike(string typeId, int itemId)
         {
             return Convert.ToInt32(this.Session().CreateQuery(
                 @"select count(lc.User) from LikeCache lc where lc.Key.TypeId = :typeId and lc.Key.ItemId = :itemId")
