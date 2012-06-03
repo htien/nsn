@@ -190,6 +190,7 @@
     <Content Include="static\themes\hikari\images\fb_sprite_icons_5.png" />
     <Content Include="static\themes\hikari\images\fb_sprite_icons_6.png" />
     <Content Include="static\themes\hikari\images\fb_sprite_icons_7.png" />
+    <Content Include="static\themes\hikari\images\fb_sprite_icons_8.png" />
     <Content Include="static\themes\hikari\images\gp_sprite_icons_stream_1.png" />
     <Content Include="static\themes\hikari\images\indicator_blue_large.gif" />
     <Content Include="static\js\goog\array\array.js" />
@@ -1137,6 +1138,7 @@
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RedirectorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UserCountController.cs" />
     <Compile Include="Controllers\UserTweetController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1251,6 +1253,10 @@
     <Content Include="Views\Shared\Empty.cshtml" />
     <Content Include="Views\Feed\NewestFeeds.cshtml" />
     <Content Include="Views\Comment\AddSaveOnStream.cshtml" />
+    <Content Include="Views\Search\Result.cshtml" />
+    <Content Include="Views\Search\UsersResult.cshtml" />
+    <Content Include="Views\Search\_ViewStart.cshtml" />
+    <Content Include="Views\Profile\ChangeAvatar.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

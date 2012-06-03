@@ -112,6 +112,7 @@
 }
 
 #UIGlobal_BlueBar #pageHead {
+  overflow: visible;
   margin: 0 auto;
   width: 981px;
 }
@@ -268,4 +269,74 @@
 .slimHeader #pageNav .middleLink a,
 .slimHeader #pageNav .lastLink a {
   padding: 0 8px;
+}
+.slimHeader #pageNav .menuPulldown {
+  overflow: hidden;
+  width: 24px;
+  height: 31px;
+  background: url(images/fb_sprite_icons_8.png) no-repeat -218px -213px;
+}
+.slimHeader #pageNav .openToggler .menuPulldown:hover {
+  background-color: #fff;
+}
+.slimHeader #pageNav #navAccount.openToggler {
+  position: relative;
+  top: 1px;
+}
+.slimHeader #pageNav #navAccountLink {
+  padding-right: 0;
+  padding-left: 0;
+}
+.slimHeader #pageNav #navAccount .navSubmenu {
+  padding: 0 22px;
+  height: 22px;
+  line-height: 22px;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  color: #222;
+}
+.slimHeader #pageNav #navAccount .navSubmenu:hover,
+.slimHeader #pageNav #navAccount .navSubmenu:focus,
+.slimHeader #pageNav #navAccount .navSubmenu:active {
+  background: #6d84b4;
+  border-top: 1px solid #3b5998;
+  border-bottom: 1px solid #3b5998;
+  color: #fff;
+}
+.slimHeader #navAccount .navigation {
+  border-bottom-color: #333;
+  padding: 10px 0;
+}
+.openToggler #navAccountLink, .no_js #navAccount:hover #navAccountLink {
+  position: relative;
+  margin: -1px -1px 0;
+  background-color: #fff;
+  border: 1px solid #333;
+  border-bottom: 0;
+  color: #333;
+  z-index: 2;
+}
+#navAccount .navigation {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 10px 0 5px;
+  min-width: 200px;
+  background: #fff;
+  border: 1px solid #333;
+  border-bottom: 2px solid #2D4486;
+  z-index: 1;
+}
+#navAccount.openToggler .navigation, .no_js #navAccount:hover .navigation {
+  display: block;
+}
+#navAccount .navigation a {
+  display: block;
+  padding: 4px 10px 5px;
+  height: auto;
+  font-weight: normal;
+  color: #3A579a;
+  white-space: nowrap;
 }

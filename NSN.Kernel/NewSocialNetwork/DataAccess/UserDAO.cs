@@ -4,6 +4,7 @@ using Castle.ActiveRecord;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
 using NHibernate;
+using SaberLily.Text;
 
 namespace NewSocialNetwork.DataAccess
 {
@@ -111,6 +112,15 @@ namespace NewSocialNetwork.DataAccess
                 .SetString("name", "%" + friendName + "%")
                 .SetInt32("userId", userId)
                 .List<User>();
+        }
+
+        public IList<User> SearchUserByName(string name)
+        {
+            return this.Session().CreateQuery(
+               @"from User where FullName like :name1 or FullName like :name2")
+               .SetString("name1", "%" + name + "%")
+               .SetString("name2", "%" + TextConverter.ConvertVietnameseToUnsign(name) + "%")
+               .List<User>();
         }
 
         public int GetTotalFriendsByUser(int userId)

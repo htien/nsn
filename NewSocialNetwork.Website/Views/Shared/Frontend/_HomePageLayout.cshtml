@@ -1,7 +1,7 @@
-﻿@using Domain = NewSocialNetwork.Domain;
+﻿@using NewSocialNetwork.Domain;
 @{
     Layout = "~/Views/Shared/_UserLayout.cshtml";
-    Domain.User myProfile = ViewBag.MyProfile;
+    User myProfile = ViewBag.MyProfile;
     string hrefProfile = Url.RouteUrl("ProfileAction", new { uid = ViewBag.MyDisplayId, action = UrlParameter.Optional });
 }
 @section html_head_area {@RenderSection("html_head_area", false)}
@@ -34,14 +34,14 @@
                                     <span class="linkWrap">News Feed</span>
                                 </a>
                             </li>
-                            <li class="sideNavItem">
+                            <li class="sideNavItem hidden_elem">
                                 <a class="item">
                                     <span class="imgWrap itemMessages"></span>
                                     <span class="linkWrap">Messages</span>
                                 </a>
                             </li>
                             <li class="sideNavItem">
-                                <a class="item">
+                                <a class="item" href="@Url.RouteUrl("SearchAction", new { action = "Result", type = NSNSearchType.FRIENDS })">
                                     <span class="imgWrap itemFindFriends"></span>
                                     <span class="linkWrap">Find Friends</span>
                                 </a>

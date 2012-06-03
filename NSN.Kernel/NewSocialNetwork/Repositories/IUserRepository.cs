@@ -17,6 +17,7 @@ namespace NewSocialNetwork.Repositories
         IList<User> ListNotMutualFriends(int userId, int friendUserId, int size = 5);
         IList<User> ListMutualFriends(int userId, int friendUserId, int size = 10);
         IList<User> SearchFriendByName(string friendName, int userId);
+        IList<User> SearchUserByName(string name);
         int GetTotalFriendsByUser(int userId);
         IList<int> ListFriendUserIds(int userId);
     }

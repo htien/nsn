@@ -31,10 +31,5 @@ namespace NewSocialNetwork.Website.Controllers
             }
             return View();
         }
-
-        public ActionResult FindFriends()
-        {
-            return View();
-        }
     }
 }

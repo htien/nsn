@@ -407,7 +407,7 @@ namespace NSN.Common
                 throw new Exception("Not image in format. (only for .jpg, .png, .gif)");
             }
             int sizeInKB = file.ContentLength / 1024;
-            if (sizeInKB > 2048)
+            if (sizeInKB > 1024)
             {
                 throw new Exception("Size is limited 2MB.");
             }

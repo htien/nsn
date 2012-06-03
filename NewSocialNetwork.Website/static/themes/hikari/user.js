@@ -45,7 +45,10 @@
 
 jQuery(function ($) {
     /* init */
-    NSN.$id('composer-tabs').tabs();
+    NSN.$id('composer-tabs').tabs({disabled: [1]});
+    NSN.$id('navAccount').click(navAccountClickHandler);
+    NSN.$id('userNavigation').mouseleave(userNavigationMouseOutHandler);
+    NSN.$id('logout').click(logOutHandler);
 
     /* User post status scripts */
     var postStatusButton = 'postStatus',
@@ -751,50 +754,64 @@ jQuery(function ($) {
     $('.UIContent_UserProfile .profileActions').on('click', '.guiButton.addFriend', function (evtObj) {
         var profileItem = NSN_getProfileItem(this),
             profileId = NSN_getProfileId(profileItem);
-        NSN.callJqDlg('request-friend-form', NSN.requestUrl('friendrequest/add'),
-        {
-            type: 'post',
-            data: { friendUserId: profileId }
-        },
-        {
-            title: 'Request Friend',
-            buttons: {}
-        }).dialog('open');
+        createRequestFriendDlg("_profile", profileId);
     });
 
     $('.UIForm_RequestFriend .requestActions .cancelBtn').live('click', function (evtObj) {
         NSN.$id('request-friend-form').dialog('destroy').remove();
     });
 
-    $('.UIForm_RequestFriend .requestActions .requestBtn').live('click', function (evtObj) {
+    $('.UIForm_RequestFriend._profile .requestActions .requestBtn').live('click', function (evtObj) {
         var friendUserId = $('.UIForm_RequestFriend input[name=friendUserId]').val(),
             message = $('.UIForm_RequestFriend textarea[name=message]').val();
-        $.ajax({
-            url: NSN.requestUrl('friendrequest/addsave'),
-            type: 'post',
-            data: { friendUserId: friendUserId, message: escape(message) },
-            success: function (json) {
-                if (json.Status == 1) {
-                    NSN.$id('request-friend-form').dialog('destroy').remove();
-                    NSN.createJqDlg(glbDefaultDlgId, json.Message, {
-                        buttons: [
-                            {
-                                'text': 'Close',
-                                'class': 'guiBlueButton',
-                                'click': function () {
-                                    $('.UIContent_UserProfile .requestFriendAction')
-                                        .html('<div class="guiButton guiRedButton confirmingFriend">+1 Friend Request Sent</div>');
-                                    $(this).dialog('destroy').remove();
-                                }
-                            }
-                        ]
-                    }).dialog('open');
-                }
-                else {
-                    NSN_alertError(json.Message);
-                }
+        ajaxAddFriendRequest(friendUserId, message, successCallback);
+        function successCallback(json) {
+            if (json.Status == 1) {
+                NSN.$id('request-friend-form').dialog('destroy').remove();
+                NSN.createJqDlg(glbDefaultDlgId, json.Message, {
+                    buttons: [
+				                {
+				                    'text': 'Close',
+				                    'class': 'guiBlueButton',
+				                    'click': function () {
+				                        $('.UIContent_UserProfile .requestFriendAction')
+							                .html('<div class="guiButton guiRedButton confirmingFriend">+1 Friend Request Sent</div>');
+				                        $(this).dialog('destroy').remove();
+				                    }
+				                }
+			                ]
+                }).dialog('open');
             }
-        });
+            else {
+                NSN_alertError(json.Message);
+            }
+        }
+    });
+    $('.UIForm_RequestFriend._search .requestActions .requestBtn').live('click', function (evt) {
+        var friendUserId = $('.UIForm_RequestFriend input[name=friendUserId]').val(),
+            message = $('.UIForm_RequestFriend textarea[name=message]').val();
+        ajaxAddFriendRequest(friendUserId, message, successCallback);
+        function successCallback(json) {
+            if (json.Status == 1) {
+                NSN.$id('request-friend-form').dialog('destroy').remove();
+                NSN.createJqDlg(glbDefaultDlgId, json.Message, {
+                    buttons: [
+                				{
+                				    'text': 'Close',
+                				    'class': 'guiBlueButton',
+                				    'click': function () {
+                				        $('#pagelet_search_results').find('.addFriend._' + friendUserId)
+                                            .parent().html('<span>+1 Friend Request Sent</span>')
+                				        $(this).dialog('destroy').remove();
+                				    }
+                				}
+                            ]
+                }).dialog('open');
+            }
+            else {
+                NSN_alertError(json.Message);
+            }
+        }
     });
 
     NSN.$id('nsnRequestsJewel').click(function (evt) {
@@ -854,6 +871,20 @@ jQuery(function ($) {
                     NSN_alertError(json.Message);
                 }
             });
+    });
+    $('#change-avatar-btn').click(function (evt) {
+        evt.preventDefault();
+        $.ajax({
+            url: NSN.requestUrl('profile/changeavatar'),
+            async: false,
+            success: dialogHandler
+        });
+        function dialogHandler(result) {
+            NSN.createJqDlg('change-avatar-dialog', result, {
+                title: 'Change Profile Photo',
+                buttons: {}
+            }).dialog('open');
+        }
     });
 
     // Home Stream Page
@@ -965,6 +996,13 @@ jQuery(function ($) {
         zoomPhotoItem(photoId);
     });
 
+    $('#pagelet_search_results').on('click', '.addFriend', function (evt) {
+        evt.preventDefault();
+        var addFriendBtn = $(this),
+            friendUserId = /_\d+/.exec(addFriendBtn.attr('class')).toString().slice(1);
+        createRequestFriendDlg("_search", friendUserId);
+    });
+
     function HomeStream_getStreamStoryItem(el) {
         return (el instanceof $) ? el.parents('.uiStreamStory') : $(el).parents('.uiStreamStory');
     }
@@ -1011,6 +1049,14 @@ jQuery(function ($) {
             success: successCallback
         });
     }
+    function ajaxAddFriendRequest(friendUserId, message, successCallback) {
+        $.ajax({
+            url: NSN.requestUrl('friendrequest/addsave'),
+            type: 'post',
+            data: { friendUserId: friendUserId, message: escape(message) },
+            success: successCallback
+        });
+    }
     function ajaxCancelFriendRequest(requestId, successCallback) {
         $.ajax({
             url: NSN.requestUrl('friendrequest/cancel'),
@@ -1018,6 +1064,65 @@ jQuery(function ($) {
             data: { requestId: requestId },
             success: successCallback
         });
+    }
+    function ajaxLogOut(successCallback) {
+        $.ajax({
+            url: NSN.url('auth/logout'),
+            type: 'post',
+            success: successCallback
+        });
+    }
+    function createRequestFriendDlg(where, friendUserId) {
+        NSN.callJqDlg('request-friend-form', NSN.requestUrl('friendrequest/add'),
+        {
+            type: 'post',
+            data: { where: where, friendUserId: friendUserId }
+        },
+        {
+            title: 'Request Friend',
+            buttons: {}
+        }).dialog('open');
+    }
+    //    function createRequestFriendDlg(where, friendUserId) {
+    //        $.ajax({
+    //            url: NSN.requestUrl('friendrequest/add'),
+    //            type: 'post',
+    //            data: { where: where, friendUserId: friendUserId },
+    //            success: openDialogHandler
+    //        });
+    //        function openDialogHandler(result) {
+    //            NSN.createJqDlg('request-friend-form', result, {
+    //                title: 'Request Friend',
+    //                buttons: {}
+    //            }).dialog('open');
+    //        }
+    //    }
+    function navAccountClickHandler(evt) {
+        evt.preventDefault();
+        var item = $(this),
+            menu = item.find('ul.navigation');
+        if (!item.hasClass('openToggler')) {
+            item.addClass('openToggler');
+        }
+        if (menu.hasClass('hidden_elem')) {
+            menu.removeClass('hidden_elem');
+        }
+    }
+    function userNavigationMouseOutHandler(evt) {
+        var menu = $(this);
+        if (!menu.hasClass('hidden_elem')) {
+            menu.addClass('hidden_elem');
+        }
+        if (NSN.$id('navAccount').hasClass('openToggler')) {
+            NSN.$id('navAccount').removeClass('openToggler');
+        }
+    }
+    function logOutHandler(evt) {
+        evt.preventDefault();
+        ajaxLogOut(successCallback);
+        function successCallback() {
+            document.location = NSN.url('/');
+        }
     }
     function displayTotalLiked_OnStream(storyItem, feedId) {
         $.ajax({

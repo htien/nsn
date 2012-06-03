@@ -20,7 +20,7 @@ img,
 .UIPage_Hikari #globalFooter {position: absolute;right: 0;bottom: 0;left: 0;clear: left;height: 55px;}
 .UIPage_Hikari #mainContainer {}
 .UIPage_Hikari .nsnContentCol {background-color: #fbfbfb;border-top: 0 !important;border: 1px solid #ddd;box-shadow: 0 1px0 1px #ccc}
-.UIPage_Hikari .nsnContentCol .nsnContentArea {padding: 0 20px 20px;background-color: #fff;word-wrap: break-word;}
+.UIPage_Hikari .nsnContentCol .nsnContentArea {padding: 0 20px 20px;min-height: 200px;background-color: #fff;word-wrap: break-word;}
 .UIPage_Hikari .hasLeftCol .nsnContentCol {margin-left: 178px;}
 .UIPage_Hikari .hasLeftCol .hasRightCol .nsnContentArea {padding: 0 25px 20px 18px;width: 511px;}
 .UIPage_Hikari .hasRightCol .nsnContentArea {float: left;margin-right: 0;width: 695px;}
@@ -917,26 +917,21 @@ div._photoZoomOverlay {
 }
 
 /** Stream */
+.fcb {color: #333;}
+.fcg {color: #808080;}
+.fsm {font-size: 11px;}
+.fsn {font-size: 12px;}
+.fsl {font-size: 13px;}
+.fwn {font-weight: normal;}
+.fwb {font-weight: bold;}
+.mtm {margin-top: 10px;}
+.mts {margin-top: 5px;}
+.mbm {margin-bottom: 10px;}
+.mbs {margin-bottom: 5px;}
+.pls {padding-left: 5px;}
+.plm {padding-left: 10px;}
+.pvs {padding-top: 5px;padding-bottom: 5px;}
 
-.fcg {
-  color: gray;
-}
-.fsm {
-  font-size: 11px;
-}
-.fsn {
-  font-size: 12px;
-}
-.fwn {
-  font-weight: normal;
-}
-.mts {
-  margin-top: 5px;
-}
-.pvs {
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
 .uiListItem {
   display: block;
 }
@@ -1104,4 +1099,44 @@ div._photoZoomOverlay {
   background-image: url(images/fb_sprite_icons_7.png);
   background-repeat: no-repeat;
   background-position: -14px -63px;
+}
+
+.uiHeaderPage {
+  padding: 15px 0 10px;
+  border-bottom: 1px solid #aaa;
+}
+.uiHeader h2 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1c2a47;
+}
+.uiHeaderPage .uiHeaderTitle {
+  padding-bottom: 2px;
+  min-height: 20px;
+  line-height: 20px;
+  vertical-align: bottom;
+}
+.uiHeaderWithImage .uiHeaderTitle {
+  padding-left: 22px;
+}
+.detailedsearch_feature_header {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 0;
+  height: 7px;
+  background-color: #e9e9e9;
+  border: 0;
+  text-align: center;
+}
+.detailedsearch_feature_header span {
+  position: relative;
+  top: -4px;
+  padding: 0 5px;
+  background-color: #fff;
+  font-weight: bold;
+  color: gray;
+}
+.detailedsearch_result {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #e9e9e9;
 }

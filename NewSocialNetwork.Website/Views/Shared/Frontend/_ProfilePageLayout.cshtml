@@ -65,6 +65,10 @@
                                 <div class="uiPicture">
                                     <img src="@Url.Content("~/static/images/avatars/" + ViewBag.UAvatarFileName)" alt="" width="250" height="250" />
                                 </div>
+                                @if (ViewBag.IsMyProfile)
+                                {
+                                    <div><a id="change-avatar-btn">Change profile photo</a></div>
+                                }
                             </div>
                         </div>
                     </div>
