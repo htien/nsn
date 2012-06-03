@@ -314,7 +314,8 @@ jQuery(function ($) {
         evt.preventDefault();
         var feedItem = NSN_getFeedItem(this);
         NSN_alertConfirmRemove('Are you sure remove this feed?', 'Remove Feed Confirmation', function () {
-            ajaxRemoveFeed(feedItem, successCallback);
+            var feedId = NSN_getFeedId(feedItem);
+            ajaxRemoveFeed(feedId, successCallback);
             $(this).dialog('destroy').remove();
         });
         function successCallback(json) {

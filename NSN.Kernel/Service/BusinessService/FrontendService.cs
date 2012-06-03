@@ -512,7 +512,7 @@ namespace NSN.Service.BusinessService
 
         public PhotoInfo AddPhotoInfo(Photo photo, ImageInfo imageInfo)
         {
-            Image sImg = Image.FromStream(imageInfo.ImageStream);
+            Image sImg = Image.FromFile(imageInfo.LinkAccess);
             PhotoInfo photoInfo = new PhotoInfo()
             {
                 Photo = photo,
