@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
@@ -9,6 +10,7 @@ namespace NewSocialNetwork.Website.Controllers
 {
     public class ProfileController : ApplicationController
     {
+        public IUserRepository userRepo { get; set; }
         public ICountryRepository countryRepo { get; set; }
 
         public ProfileController()
@@ -22,6 +24,7 @@ namespace NewSocialNetwork.Website.Controllers
         public ActionResult Info(string uid)
         {
             ViewBag.PageTitle += " Info";
+            ViewBag.IsInfoPage = true;
             return View();
         }
 
@@ -56,6 +59,45 @@ namespace NewSocialNetwork.Website.Controllers
             }
 
             return Json(msg);
+        }
+
+        public ActionResult ChangeAvatar()
+        {
+            if (ViewBag.UProfile.UserId != ViewBag.MyProfile.UserId)
+            {
+                return HttpNotFound("You do not have permission access this page.");
+            }
+            
+            return View();
+        }
+
+        //[HttpPost]
+        //public JsonResult ChangeSaveAvatar()
+        //{
+        //    ResponseMessage msg = new ResponseMessage("ProfilePhoto", RAction.EDIT, RStatus.FAIL,
+        //        "Error occurs when changing your profile photo.");
+        //    try
+        //    {
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        msg.Message = e.Message;
+        //    }
+        //    return Json(msg);
+        //}
+
+        [HttpPost]
+        public ActionResult ChangeSaveAvatar(HttpPostedFileBase avatar)
+        {
+            try
+            {
+                ImageInfo avatarInfo = Globals.SaveImageInPlace(avatar, "/static/images/avatars/");
+                User user = sessionManager.GetUser();
+                user.UserImage = avatarInfo.FileName;
+                userRepo.Save(user);
+            }
+            catch { }
+            return RedirectToAction("Info");
         }
     }
 }

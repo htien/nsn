@@ -158,6 +158,27 @@ namespace NSN.Service.BusinessService
             if (size < 1)
                 size = 5;
             IList<Feed> feeds = feedRepo.GetUserFeeds(userId, start, size);
+            return FetchFeedItems(feeds);
+        }
+
+        public IList<FeedItem> LoadStreamItems(int userId, int start, int size)
+        {
+            if (start < 0)
+                start = 0;
+            if (size < 1)
+                size = 5;
+            IList<Feed> feeds = feedRepo.ListStreamByUser(userId, start, size);
+            return FetchFeedItems(feeds);
+        }
+
+        public IList<FeedItem> LoadStreamNewestItems(int userId, long feedId, int start = 0, int size = 5)
+        {
+            IList<Feed> newestFeeds = feedRepo.ListNewestFeed(userId, feedId);
+            return FetchFeedItems(newestFeeds);
+        }
+
+        public IList<FeedItem> FetchFeedItems(IList<Feed> feeds)
+        {
             FeedManager feedManager = new FeedManager();
             foreach (Feed feed in feeds)
             {
@@ -296,17 +317,21 @@ namespace NSN.Service.BusinessService
             // Validate
             if (String.IsNullOrWhiteSpace(user.Username))
             {
-                if (userRepo.IsExistUsername(username.Trim()))
+                username = username.Trim();
+                if (!String.IsNullOrEmpty(username))
                 {
-                    throw new Exception("Username is exists. Please choose another.");
-                }
-                else
-                {
-                    if (!Regex.IsMatch(username, Globals.glbUserNameRegEx))
+                    if (userRepo.IsExistUsername(username.Trim()))
                     {
-                        throw new Exception("Username is invalid. Allow A-Z, a-z, 0-9. First letter must be alphabet character. At least 5 characters.");
+                        throw new Exception("Username is exists. Please choose another.");
                     }
-                    user.Username = username.Trim();
+                    else
+                    {
+                        if (!Regex.IsMatch(username, Globals.glbUserNameRegEx))
+                        {
+                            throw new Exception("Username is invalid. Allow A-Z, a-z, 0-9. First letter must be alphabet character. At least 5 characters.");
+                        }
+                        user.Username = username.Trim();
+                    }
                 }
             }
             if (!Regex.IsMatch(email.Trim(), Globals.glbEmailRegEx))
@@ -398,6 +423,22 @@ namespace NSN.Service.BusinessService
             return newFriend;
         }
 
+        public void CancelFriendRequest(int requestId, int userId)
+        {
+            FriendRequest friendRequest = friendRequestRepo.FindById(requestId);
+            if (friendRequest == null)
+            {
+                throw new Exception("Friend request does not exists.");
+            }
+            if (friendRequest.FriendUser.UserId != userId)
+            {
+                throw new Exception("Wrong friend request ID.");
+            }
+            friendRequest.IsIgnore = true;
+            friendRequest.IsSeen = true;
+            friendRequestRepo.Save(friendRequest);
+        }
+
         public PhotoAlbum AddPhotoAlbum(HttpSessionStateBase session, int timestamp,
             string albumTitle = "Untitled Album", byte privacy = 0)
         {
@@ -471,7 +512,7 @@ namespace NSN.Service.BusinessService
 
         public PhotoInfo AddPhotoInfo(Photo photo, ImageInfo imageInfo)
         {
-            Image sImg = Image.FromStream(imageInfo.ImageStream);
+            Image sImg = Image.FromFile(imageInfo.LinkAccess);
             PhotoInfo photoInfo = new PhotoInfo()
             {
                 Photo = photo,

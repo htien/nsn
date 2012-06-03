@@ -32,12 +32,12 @@ namespace NewSocialNetwork.Website.Controllers
         public ActionResult NewestFeeds(long feedId)
         {
             User myUser = sessionManager.GetUser();
-            IList<Feed> newestFeeds = feedRepo.ListNewestFeed(myUser.UserId, feedId);
-            if (newestFeeds == null || newestFeeds.Count == 0)
+            IList<FeedItem> newestItems = frontendService.LoadStreamNewestItems(myUser.UserId, feedId);
+            if (newestItems == null || newestItems.Count == 0)
             {
                 return View("Empty");
             }
-            ViewBag.NewestFeeds = newestFeeds;
+            ViewBag.NewestFeedItems = newestItems;
             return View();
         }
 

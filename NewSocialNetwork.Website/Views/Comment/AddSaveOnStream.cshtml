@@ -1,0 +1,24 @@
+﻿@using NSN.Common;
+@using NewSocialNetwork.Domain;
+@{
+    Layout = null;
+    Comment comment = ViewBag.Comment;
+    User author = ViewBag.Author;
+    string fullDateTime = Globals.ShowFullDateTime(comment.Timestamp);
+    string dateTime = Globals.ShowDateTime(comment.Timestamp);
+}
+<li class="ufiItem uiUfiComment comment_@(comment.CommentId)">
+    <div class="UIImageBlock clearfix uiUfiActorBlock">
+        <a class="UIImageBlock_Image UIImageBlock_SMALL_Image actorPic" href="@ViewBag.AuthorProfileUrl">
+            <img class="uiProfilePhoto uiProfilePhotoMedium img" src="@ViewBag.AuthorImageUrl" alt="" />
+        </a>
+        <a class="uiCloseButton commentRemoverButton"></a>
+        <div class="UIImageBlock_Content UIImageBlock_SMALL_Content commentContent">
+            <a class="actorName" href="@ViewBag.AuthorProfileUrl">@author.FullName</a>
+            <span class="commentBody">@Html.Raw(Globals.ApplyHtmlFrom(comment.CommentText.TextParsed))</span>
+            <div class="commentActions fsm fwn fcg">
+                <span class="uiLinkSubtle" title="@fullDateTime">@dateTime</span>
+            </div>
+        </div>
+    </div>
+</li>

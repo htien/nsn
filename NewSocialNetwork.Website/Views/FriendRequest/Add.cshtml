@@ -3,9 +3,10 @@
 @{
     Domain.User friendProfile = ViewBag.RequestingFriend;
     string avatarPath = Url.Content("~/static/images/avatars/" + Globals.UserImage(friendProfile.UserImage, friendProfile.Gender));
+    string where = ViewBag.Where;
 }
 <div id="pagelet-requestfriend">
-    <div class="UIForm_RequestFriend">
+    <div class="UIForm_RequestFriend @where">
         <div class="uiFormContainer">
             <div class="uiFormControls">
                 <div class="row">

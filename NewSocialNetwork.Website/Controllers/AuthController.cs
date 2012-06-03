@@ -78,10 +78,21 @@ namespace NewSocialNetwork.Website.Controllers
             return Json(msg);
         }
 
-        public ActionResult Logout()
+        [HttpPost]
+        public JsonResult Logout()
         {
-            frontendService.Logout();
-            return RedirectToRoute("Root");
+            ResponseMessage msg = new ResponseMessage("Logout", RAction.LOGOUT, RStatus.FAIL, "Cannot logout.");
+            try
+            {
+                frontendService.Logout();
+                msg.SetStatusAndMessage(RStatus.SUCCESS, "Logged Out.");
+                msg.ReturnedPath = Url.RouteUrl("Root");
+            }
+            catch (Exception e)
+            {
+                msg.Message = e.Message;
+            }
+            return Json(msg);
         }
     }
 }

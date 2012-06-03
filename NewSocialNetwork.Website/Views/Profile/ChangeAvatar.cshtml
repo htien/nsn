@@ -1,0 +1,20 @@
+﻿@using NSN.Common;
+@using NewSocialNetwork.Domain;
+@{
+    Layout = null;
+    User user = ViewBag.MyProfile;
+}
+<div id="pagelet_profile_photo_change">
+    <div class="UIProfilePhoto_Change">
+        <form method="post" action="@Url.RouteUrl("ProfileAction", new { action = "ChangeSaveAvatar", uid = Globals.GetDisplayId(user) })" enctype="multipart/form-data">
+            <div>
+                <div>
+                    <input type="file" name="avatar" />
+                </div>
+                <div class="actions mtm">
+                    <input type="submit" value="Submit" class="guiButton3" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

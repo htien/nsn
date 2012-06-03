@@ -152,6 +152,7 @@
     <Compile Include="NewSocialNetwork\Domain\MailText.cs" />
     <Compile Include="NewSocialNetwork\Domain\NSNPrivacyCommentMode.cs" />
     <Compile Include="NewSocialNetwork\Domain\NSNPrivacyMode.cs" />
+    <Compile Include="NewSocialNetwork\Domain\NSNSearchType.cs" />
     <Compile Include="NewSocialNetwork\Domain\NSNType.cs" />
     <Compile Include="NewSocialNetwork\Domain\NSNVersion.cs" />
     <Compile Include="NewSocialNetwork\Domain\Photo.cs" />

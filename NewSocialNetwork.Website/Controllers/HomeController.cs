@@ -2,8 +2,7 @@
 using System.Web.Mvc;
 using NewSocialNetwork.Domain;
 using NewSocialNetwork.Repositories;
-using NSN.Common.Utilities;
-using NSN.Common;
+using NSN.Kernel.Manager;
 
 namespace NewSocialNetwork.Website.Controllers
 {
@@ -24,14 +23,12 @@ namespace NewSocialNetwork.Website.Controllers
         public ActionResult Stream()
         {
             User myUser = sessionManager.GetUser();
-            IList<Feed> feeds = feedRepo.ListStreamByUser(myUser.UserId);
-            ViewBag.Feeds = feeds;
-            ViewBag.LastFeedId = feeds[0].FeedId;
-            return View();
-        }
-
-        public ActionResult FindFriends()
-        {
+            IList<FeedItem> feedItems = frontendService.LoadStreamItems(myUser.UserId, 0, 40);
+            if (feedItems != null && feedItems.Count > 0)
+            {
+                ViewBag.FeedItems = feedItems;
+                ViewBag.LastFeedId = feedItems[0]._Feed.FeedId;
+            }
             return View();
         }
     }

@@ -12,7 +12,7 @@
                 <div id="createAlbum" class="guiButton guiRedButton">Create Album</div>
             </div>
         }
-        @if (ViewBag.IsFriend && !ViewBag.IsMyProfile)
+        @if (!ViewBag.IsMyProfile)
         {
             <h2 class="title">@userProfile.FullName's Albums (@ViewBag.Albums.Count)</h2>
         }

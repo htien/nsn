@@ -250,6 +250,11 @@ namespace NSN.Kernel
                 "NSN/Go/To/{controller}/{action}"
             );
             routes.MapRouteLowercase(
+                "SearchAction",
+                "Search/{action}",
+                new { controller = "Search", action = "Result" }
+            );
+            routes.MapRouteLowercase(
                 "LinkAction",
                 "Links/{action}",
                 new { controller = "Link", action = "List" }

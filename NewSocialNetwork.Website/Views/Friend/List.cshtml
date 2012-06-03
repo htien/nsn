@@ -6,7 +6,7 @@
 }
 <div id="pagelet_friends">
     <div class="UIGrid_Friends">
-        @if (ViewBag.IsFriend && !ViewBag.IsMyProfile)
+        @if (!ViewBag.IsMyProfile)
         {
             <h2 class="title">@userProfile.FullName's Friends (@ViewBag.totalFriends)</h2>
         }

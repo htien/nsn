@@ -250,9 +250,9 @@ var glbDebug = true,
         },
         buttons: [
             {
-                text: 'Close',
-                class: 'guiBlueButton',
-                click: function() {
+                'text': 'Close',
+                'class': 'guiBlueButton',
+                'click': function() {
                     jQuery(this).dialog('destroy').remove();
                 }
             }
@@ -317,9 +317,9 @@ var glbDebug = true,
 			title: title,
 			buttons: [
                 {
-                    text: 'OK',
-                    class: 'guiBlueButton',
-                    click: function(evt) {
+                    'text': 'OK',
+                    'class': 'guiBlueButton',
+                    'click': function(evt) {
                         buildJqConfirmDlgOpts_OK(this, targetForm, callbackSuccess);
                     }
                 },
@@ -341,9 +341,9 @@ var glbDebug = true,
 			    nsn.callJqDlg(glbDefaultDlgId, json.Message, {
 				    buttons: [
                         {
-                            text: 'Close',
-                            class: 'guiBlueButton',
-                            click: function() {
+                            'text': 'Close',
+                            'class': 'guiBlueButton',
+                            'click': function() {
                                 jQuery(dlg).dialog('destroy').remove();
                                 callbackSuccess.call(this);
                             }
@@ -359,6 +359,29 @@ var glbDebug = true,
 			    jQuery(this).dialog('destroy').remove();
 		    });
     };
+    NSN_alertError = function(msg) {
+        nsn.createJqDlg(glbDefaultDlgId,
+            '<div class="nsn-popup-msg ui-state-error">' + msg + '</div>')
+            .dialog('open');
+    };
+    NSN_alertConfirmRemove = function(msg, title, yesHandler, noHandler) {
+        if (!yesHandler) {
+            yesHandler = title;
+            title = "Remove Confirmation";
+        }
+        if (!noHandler) {
+            noHandler = function(evt) {
+                jQuery(this).dialog('destroy').remove();
+            };
+        }
+        NSN.createJqDlg('confirm-remove-dialog', msg, {
+            title: title,
+            buttons: [
+                {'text': 'Yes', 'class': 'guiBlueButton', 'click': yesHandler},
+                {'text': 'No', 'click': noHandler}
+            ]
+        }).dialog('open');
+    };
     NSN_getFeedItem = function(ofObj) {
         return jQuery(ofObj).parents('.uiFeedItem');
     };
@@ -371,30 +394,19 @@ var glbDebug = true,
     NSN_getProfileId = function(profileItem) {
         return parseInt(profileItem.attr('id').slice(8), 10);
     };
-    NSN_postCommentOnFeed = function(feedId, commentText) {
+    NSN_postComment = function(where, feedId, commentText, successCallback) {
         jQuery.ajax({
             url: nsn.requestUrl('comment/addsave'),
             type: 'post',
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
-            data: { targetId: feedId, c: escape(commentText), where: 'on_feed' },
+            data: { targetId: feedId, c: escape(commentText), where: where },
             beforeSend: function(xhr) {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
             },
-            success: function(data) {
-                if (data != null && data.length > 0) {
-                    var editor = nsn.$id('editor-update-' + feedId),
-                        cancelBtn = editor.parents('.commentBox').find('.guiButton.cancel');
-                    editor.val('');
-                    nsn.$id('update-' + feedId).find('.uiListTreeInner').append(data);
-                    cancelBtn.click();
-                }
-                else {
-                    nsn.createJqDlg(glbDefaultDlgId, 'Cannot process your comment. Please try again!').dialog('open');
-                }
-            }
+            success: successCallback
         })
     };
-    NSN_postCommentOnPhoto = function(self, photoId, commentText) {
+    NSN_postCommentOnPhoto = function(self, photoId, commentText, successCallback) {
         jQuery.ajax({
             url: NSN.requestUrl('comment/addsave'),
             type: 'post',
@@ -403,6 +415,7 @@ var glbDebug = true,
             beforeSend: function(xhr) {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
             },
+            //success: successCallback,
             success: function(result) {
                 if (result != null && result.length > 0) {
                     self.find('input[name=commentText]').val('');
@@ -411,11 +424,11 @@ var glbDebug = true,
                     scrollList.animate({ scrollTop: scrollList.find('.scrollList').prop('scrollHeight') }, 300);
                 }
                 else {
-                    nsn.createJqDlg(glbDefaultDlgId, 'Cannot process your comment. Please try again!').dialog('open');
+                    NSN_alertError('Cannot process your comment. Please try again!');
                 }
             },
             error: function(data) {
-                alert(data);
+                NSN_alertError(data);
             }
         });
     };

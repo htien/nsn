@@ -3,31 +3,26 @@
 @using NewSocialNetwork.Domain;
 @{
     IList<FeedItem> feedItems = ViewBag.FeedItems;
+    User myUser = ViewBag.MyProfile;
 }
 @RenderPage("~/Views/Shared/Frontend/pagelet/_composer_pagelet.cshtml")
 <div id="pagelet_feeds_page">
     <div class="UIFeeds_Content">
-        @foreach (NSN.Kernel.Manager.FeedItem item in feedItems)
+        @foreach (FeedItem item in feedItems)
         {
-            User user = item._Feed.User;
-            User parentUser = item._Feed.ParentUser;
-            IList<Comment> comments = Globals.ListComments(item._Feed.TypeId, item._Feed.ItemId, user.UserId);
-            bool isLiked = Globals.IsLikeForFeed(item._Feed.TypeId, item._Feed.ItemId, ViewBag.MyProfile.UserId);
-            int totalLike = Globals.GetTotalLike(item._Feed.TypeId, item._Feed.ItemId);
+            Feed feed = item._Feed;
+            User user = feed.User;
+            User parentUser = feed.ParentUser;
+            IList<Comment> comments = Globals.ListComments(feed.TypeId, feed.ItemId, user.UserId);
+            bool isLiked = Globals.IsLikeForFeed(feed.TypeId, feed.ItemId, myUser.UserId);
+            int totalLike = Globals.GetTotalLike(feed.TypeId, feed.ItemId);
             string displayId = Globals.GetDisplayId(user);
-            string feedAvatarFileName;
+            string profilePath = Url.RouteUrl("Profile", new { uid = displayId });
+            string feedAvatarPath = Url.Content("~/static/images/avatars/" + Globals.UserImage(user));
             string privacyMode;
-            string divFeedId = "update-" + item._Feed.FeedId;
-            string editorFeedId = "editor-update-" + item._Feed.FeedId;
-            if (String.IsNullOrEmpty(item._Feed.User.UserImage))
-            {
-                feedAvatarFileName = Url.Content("~/static/images/avatars/default_medium_male.gif");
-            }
-            else
-            {
-                feedAvatarFileName = Url.Content("~/static/images/avatars/" + user.UserImage);
-            }
-            switch (item._Feed.Privacy)
+            string divFeedId = "update-" + feed.FeedId;
+            string editorFeedId = "editor-update-" + feed.FeedId;
+            switch (feed.Privacy)
             {
                 case 0: privacyMode = "Public"; break;
                 case 1: privacyMode = "Friends Only"; break;
@@ -37,223 +32,221 @@
             <div id="@divFeedId" class="uiFeedItem">
                 <div class="uiFeedItem_Inner">
                     <div class="uiFeed">
-                        @switch (item._Feed.TypeId)
+                        @switch (feed.TypeId)
                         {
-                            case NSNType.FRIEND:
-                                break;
+                            case NSNType.FRIEND: break;
                             default:
-                                <a class="feedAvatar" href="@Url.RouteUrl("Profile", new { uid = displayId })"><img src="@feedAvatarFileName" alt="" width="48" height="48" /></a>
-                                <div class="userPost">
-                                    <header>
-                                        <a class="uiCloseButton feedRemoverBtn" title="Delete this feed"></a>
-                                        <h3 class="fname"><a href="@Url.RouteUrl("Profile", new { uid = displayId })">@user.FullName</a></h3>
-                                        <span class="postInfo">
-                                            <a class="time" target="_blank" title="@Globals.ShowFullDateTime(item._Feed.Timestamp)">@NSN.Common.Globals.ShowDate(item._Feed.Timestamp)</a>
-                                            &nbsp;-&nbsp;
-                                            <span class="privacyMode">@privacyMode</span>
-                                        </span>
-                                    </header>
-                                </div>
-                                <div class="feedArrow"></div>
+                                {
+                                    <a class="feedAvatar" href="@profilePath"><img src="@feedAvatarPath" alt="" width="48" height="48" /></a>
+                                    <div class="userPost">
+                                        <header>
+                                            <a class="uiCloseButton feedRemoverBtn" title="Delete this feed"></a>
+                                            <h3 class="fname"><a href="@profilePath">@user.FullName</a></h3>
+                                            <span class="postInfo">
+                                                <a class="time" target="_blank" title="@Globals.ShowFullDateTime(feed.Timestamp)">@NSN.Common.Globals.ShowDate(feed.Timestamp)</a>
+                                                &nbsp;-&nbsp;
+                                                <span class="privacyMode">@privacyMode</span>
+                                            </span>
+                                        </header>
+                                    </div>
+                                    <div class="feedArrow"></div>
+                                }
                                 break;
                         }
                         <div class="feedDetail">
                             <div class="feedDetailContent">
-                                @switch (item._Feed.TypeId)
+                                @switch (feed.TypeId)
                                 {
                                     case NSNType.USER_TWEET:
-                                        UserTweet tweet = (UserTweet)item._Entity;
-                                        <div class="fTypeTweet">
-                                            <span class="messageBody">@Html.Raw(Globals.ApplyHtmlFrom(tweet.Content))</span>
-                                        </div>
+                                        {
+                                            UserTweet tweet = (UserTweet)item._Entity;
+                                            <div class="fTypeTweet">
+                                                <span class="messageBody">@Html.Raw(Globals.ApplyHtmlFrom(tweet.Content))</span>
+                                            </div>
+                                        }
                                         break;
                                     case NSNType.LINK:
-                                        Link link = (Link)item._Entity;
-                                        <div class="fTypeLink">
-                                            <div class="uiStreamMessage">
-                                                <span class="messageBody">@Html.Raw(Globals.ApplyHtmlFrom(link.Content))</span>
-                                            </div>
-                                            <div class="uiStreamAttachments">
-                                                <div class="UIImageBlock clearfix">
-                                                    <a class="UIImageBlock_Image external" href="@link.Url">
-                                                        <img class="img" src="@link.Image" alt="" />
-                                                    </a>
-                                                    <div class="UIImageBlock_Content">
-                                                        <div class="uiAttachmentTitle">
-                                                            <strong>
-                                                                <a href="@link.Url" target="_blank">@Html.Raw(Globals.ApplyHtmlFrom(link.Title))</a>
-                                                            </strong>
-                                                        </div>
-                                                        <span class="caption">
-                                                            <a class="fcg" href="@link.Url" target="_blank">@link.Url</a>
-                                                        </span>
-                                                        <div class="uiAttachmentDesc fcg mts">
-                                                            @Html.Raw(Globals.ApplyHtmlFrom(link.Description))
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        break;
-                                    case NSNType.PHOTO_ALBUM:
-                                        PhotoAlbum album = (PhotoAlbum)item._Entity;
-                                        string href = Url.RouteUrl("PhotoAlbumAction", new { uid = displayId, albumid = album.AlbumId, action = "ListPhotos" });
-                                        int totalPhoto = Globals.GetTotalPhoto(album.AlbumId);
-                                        IList<Photo> fetchedPhotos = Globals.GetNewPhotosByTimestamp(item._Feed.Timestamp, 4);
-                                        if (fetchedPhotos.Count == 0)
                                         {
-                                            break;
-                                        }
-                                        Photo first = fetchedPhotos[0];
-                                        <div class="fTypePhotoAlbum">
-                                            <div>
-                                                <a class="albumName" href="@href"><strong>@Html.Raw(Globals.ApplyHtmlFrom(album.Name))</strong></a> <span class="count">(@totalPhoto @(totalPhoto > 1 ? "photos" : "photo"))</span>
-                                            </div>
-                                            <div class="description">
-                                            </div>
-                                            <div class="photoUnit clearfix">
-                                                <div>
-                                                    <img id="photo-@first.PhotoId" class="zoomFeature" src="@Url.Content("~/static/images/photos/" + first.Image)" alt="" />
+                                            Link link = (Link)item._Entity;
+                                            <div class="fTypeLink">
+                                                <div class="uiStreamMessage">
+                                                    <span class="messageBody">@Html.Raw(Globals.ApplyHtmlFrom(link.Content))</span>
                                                 </div>
-                                                @foreach (Photo photo in fetchedPhotos)
-                                                {
-                                                    if (photo.PhotoId == first.PhotoId) { continue; }
-                                                    <img id="photo-@photo.PhotoId" class="zoomFeature" src="@Url.Content("~/static/images/photos/" + photo.Image)" alt="" width="133" height="133" />
-                                                }
-                                            </div>
-                                        </div>
-                                        break;
-                                    case NSNType.PHOTO_ALBUM_MORE:
-                                        PhotoAlbum album2 = (PhotoAlbum)item._Entity;
-                                        string href2 = Url.RouteUrl("PhotoAlbumAction", new { uid = displayId, albumid = album2.AlbumId, action = "ListPhotos" });
-                                        int totalPhoto2 = Globals.TotalPhotoByTimestamp(album2.AlbumId, item._Feed.Timestamp);
-                                        IList<Photo> fetchedPhotos2 = Globals.GetNewPhotosByTimestamp(item._Feed.Timestamp, 4);
-                                        if (fetchedPhotos2.Count == 0)
-                                        {
-                                            break;
-                                        }
-                                        Photo first2 = fetchedPhotos2[0];
-                                        <div class="fTypePhotoAlbum">
-                                            <div>
-                                                Added <span class="count">@totalPhoto2 new @(totalPhoto2 > 1 ? "photos" : "photo")</span> to the album <a class="albumName" href="@href2"><strong>@Html.Raw(Globals.ApplyHtmlFrom(album2.Name))</strong></a>.
-                                            </div>
-                                            <div class="photoUnit clearfix">
-                                                <div>
-                                                    <img id="photo-@first2.PhotoId" class="zoomFeature" src="@Url.Content("~/static/images/photos/" + first2.Image)" alt="" />
-                                                </div>
-                                                @foreach (Photo photo2 in fetchedPhotos2)
-                                                {
-                                                    if (photo2.PhotoId == first2.PhotoId) { continue; }
-                                                    <img id="photo-@photo2.PhotoId" class="zoomFeature" src="@Url.Content("~/static/images/photos/" + photo2.Image)" alt="" width="133" height="133" />
-                                                }
-                                            </div>
-                                        </div>
-                                        break;
-                                    case NSNType.FRIEND:
-                                                Friend friend = (Friend)item._Entity;
-                                        <div class="fTypeFriend">
-                                            <div>
-                                                <a href="@Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(user) })">
-                                                    <strong>@user.FullName</strong>
-                                                </a>
-                                                became friends with
-                                                <a href="@Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(parentUser) })">
-                                                    <strong>@parentUser.FullName</strong></a>.
-                                            </div>
-                                            <div class="subinfo">
-                                                <span><cite title="@Globals.ShowFullDateTime(item._Feed.Timestamp)">@Globals.ShowDateTime(item._Feed.Timestamp)</cite></span>
-                                            </div>
-                                        </div>
-                                                                                                               break;
-                                }
-                            </div>
-                        </div>
-                        @switch (item._Feed.TypeId)
-                        {
-                            case NSNType.FRIEND:
-                                break;
-                            default:
-                                <div class="feedActionBlock">
-                                    @if (!isLiked)
-                                    {
-                                        <a class="lnkButton likeAction">
-                                            <span class="default_message" style="display:none">Unlike</span>
-                                            <span class="saving_message"><img src="@Url.Content("~/static/smiles/pidgin/default/in_love.png")" alt="" width="16" height="16" /> Like</span>
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <a class="lnkButton unlikeAction">
-                                            <span class="default_message">Unlike</span>
-                                            <span class="saving_message" style="display:none"><img src="@Url.Content("~/static/smiles/pidgin/default/in_love.png")" alt="" width="16" height="16" /> Like</span>
-                                        </a>
-                                    }
-                                    <span class="literal">
-                                        @if (totalLike > 0)
-                                        {
-                                            @:(@totalLike people liked)
-                                        }
-                                    </span>
-                                </div>
-                                    break;
-                        }
-                    </div> @*uiFeed*@
-
-                    @switch (item._Feed.TypeId)
-                    {
-                        case NSNType.FRIEND:
-                            break;
-                        default:
-                            <div class="uiFeedComment">
-                                <div class="top"></div>
-                                <div class="commentBoxOuter">
-                                    <div class="commentListTree">
-                                        <div class="uiListTree">
-                                            <div class="uiListTreeInner">
-                                                @foreach (NewSocialNetwork.Domain.Comment comment in comments)
-                                                {
-                                                    User author = (comment.OwnerUser == null || comment.OwnerUser.UserId == 0) ? comment.User : comment.OwnerUser;
-                                                    string profileUrl = Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(author) });
-                                                    string profileAvatarUrl = Url.Content("~/static/images/avatars/" + Globals.UserImage(author));
-                                                    string fullDateTime = Globals.ShowFullDateTime(comment.Timestamp);
-                                                    string dateTime = Globals.ShowDateTime(comment.Timestamp);
-                                                    <div id="comment-@comment.CommentId" class="uiCommentItem">
-                                                        <div class="uiComment">
-                                                            <a class="userImage" href="@profileUrl">
-                                                                <img src="@profileAvatarUrl" alt="" width="32" height="32" />
+                                                <div class="uiStreamAttachments">
+                                                    <div class="UIImageBlock clearfix">
+                                                        @if (!String.IsNullOrEmpty(link.Image)) {
+                                                            <a class="UIImageBlock_Image external" href="@link.Url" target="_blank">
+                                                                <img class="img" src="@link.Image" alt="" />
                                                             </a>
-                                                            <div>
-                                                                <a class="userFullName" href="@profileUrl">@author.FullName</a>
-                                                                <span class="commentInfo">
-                                                                    <span class="time" title="@fullDateTime">@dateTime</span>
-                                                                    <span class="commentActions"><span class="delete" title="Remove this comment"></span></span>
-                                                                </span>
-                                                                <div class="commentText">@Html.Raw(Globals.ApplyHtmlFrom(comment.CommentText.TextParsed))</div>
+                                                        }
+                                                        <div class="UIImageBlock_Content">
+                                                            <div class="uiAttachmentTitle">
+                                                                <strong>
+                                                                    <a href="@link.Url" target="_blank">@Html.Raw(Globals.ApplyHtmlFrom(link.Title))</a>
+                                                                </strong>
+                                                            </div>
+                                                            <span class="caption">
+                                                                <a class="fcg" href="@link.Url" target="_blank">@link.Url</a>
+                                                            </span>
+                                                            <div class="uiAttachmentDesc fcg mts">
+                                                                @Html.Raw(Globals.ApplyHtmlFrom(link.Description))
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        break;
+                                    case NSNType.PHOTO_ALBUM:
+                                    case NSNType.PHOTO_ALBUM_MORE:
+                                        {
+                                            PhotoAlbum album = (PhotoAlbum)item._Entity;
+                                            string href = Url.RouteUrl("PhotoAlbumAction", new { uid = displayId, albumid = album.AlbumId, action = "ListPhotos" });
+                                            int totalPhoto = Globals.TotalPhotoByTimestamp(album.AlbumId, feed.Timestamp);
+                                            IList<Photo> fetchedPhotos = Globals.GetNewPhotosByTimestamp(feed.Timestamp, 4);
+                                            if (fetchedPhotos.Count == 0) { break; }
+                                            Photo first = fetchedPhotos[0];
+                                            <div class="fTypePhotoAlbum">
+                                                @if (feed.TypeId.Equals(NSNType.PHOTO_ALBUM))
+                                                {
+                                                    <div>
+                                                        Added the first <span class="count">@(totalPhoto == 1 ? "a" : totalPhoto.ToString()) @(totalPhoto > 1 ? "photos" : "photo")</span> on the new album <a class="albumName" href="@href"><strong>@Html.Raw(Globals.ApplyHtmlFrom(album.Name))</strong></a>.
+                                                    </div>
+                                                    <div class="description">
+                                                        @if (album.AlbumInfo != null && !String.IsNullOrEmpty(album.AlbumInfo.Description))
+                                                        {
+                                                            @album.AlbumInfo.Description;
+                                                        }
+                                                    </div>
                                                 }
-                                                @*append comment here*@
+                                                @if (feed.TypeId.Equals(NSNType.PHOTO_ALBUM_MORE))
+                                                {
+                                                    <div>
+                                                        Added <span class="count">@(totalPhoto == 1 ? "a" : totalPhoto.ToString()) new @(totalPhoto > 1 ? "photos" : "photo")</span> to the album <a class="albumName" href="@href"><strong>@Html.Raw(Globals.ApplyHtmlFrom(album.Name))</strong></a>.
+                                                    </div>
+                                                }
+                                                <div class="photoUnit clearfix">
+                                                    <div>
+                                                        <img id="photo-@first.PhotoId" class="zoomFeature" src="@Url.Content("~/static/images/photos/" + first.Image)" alt="" />
+                                                    </div>
+                                                    @foreach (Photo photo in fetchedPhotos)
+                                                    {
+                                                        if (photo.PhotoId == first.PhotoId) { continue; }
+                                                        <img id="photo-@photo.PhotoId" class="zoomFeature" src="@Url.Content("~/static/images/photos/" + photo.Image)" alt="" width="133" height="133" />
+                                                    }
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="commentBox" style="display:none">
-                                        <a class="commentAvatar" href=""><img src="@Url.Content("~/static/images/avatars/" + ViewBag.MyAvatarFileName)" alt="" width="32" height="32" /></a>
-                                        <div class="commentEditorBox">
-                                            <div class="commentEditorBoxInner">
-                                                <textarea id="@editorFeedId" class="commentEditor" rows="4" cols="20"></textarea>
+                                        }
+                                        break;
+                                    case NSNType.FRIEND:
+                                        {
+                                            Friend friend = (Friend)item._Entity;
+                                            <div class="fTypeFriend">
+                                                <div>
+                                                    <a href="@Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(user) })">
+                                                        <strong>@user.FullName</strong>
+                                                    </a>
+                                                    became friends with
+                                                    <a href="@Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(parentUser) })">
+                                                        <strong>@parentUser.FullName</strong></a>.
+                                                </div>
+                                                <div class="subinfo">
+                                                    <span><cite title="@Globals.ShowFullDateTime(feed.Timestamp)">@Globals.ShowDateTime(feed.Timestamp)</cite></span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="commentButtons">
-                                            <div class="guiButton guiBlueButton post">Post comment</div>
-                                            <div class="guiButton cancel">Cancel</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="maskAddComment">
-                                    <div class="maskText">Add a comment...</div>
-                                </div>
+                                        }
+                                        break;
+                                }
                             </div>
+                        </div>
+                        @switch (feed.TypeId)
+                        {
+                            case NSNType.FRIEND: break;
+                            default:
+                                {
+                                    <div class="feedActionBlock">
+                                        @if (!isLiked)
+                                        {
+                                            <a class="lnkButton likeAction">
+                                                <span class="default_message" style="display:none">Unlike</span>
+                                                <span class="saving_message"><img src="@Url.Content("~/static/smiles/pidgin/default/in_love.png")" alt="" width="16" height="16" /> Like</span>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="lnkButton unlikeAction">
+                                                <span class="default_message">Unlike</span>
+                                                <span class="saving_message" style="display:none"><img src="@Url.Content("~/static/smiles/pidgin/default/in_love.png")" alt="" width="16" height="16" /> Like</span>
+                                            </a>
+                                        }
+                                        <span class="literal">
+                                            @if (totalLike > 0)
+                                            {
+                                                @:(@totalLike people liked)
+                                            }
+                                        </span>
+                                    </div>
+                                }
+                                break;
+                        }
+                    </div> @*uiFeed*@
+
+                    @switch (feed.TypeId)
+                    {
+                        case NSNType.FRIEND: break;
+                        default:
+                            {
+                                <div class="uiFeedComment">
+                                    <div class="top"></div>
+                                    <div class="commentBoxOuter">
+                                        <div class="commentListTree">
+                                            <div class="uiListTree">
+                                                <div class="uiListTreeInner">
+                                                    @foreach (Comment comment in comments)
+                                                    {
+                                                        User author = (comment.OwnerUser == null || comment.OwnerUser.UserId == 0) ? comment.User : comment.OwnerUser;
+                                                        string profileUrl = Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(author) });
+                                                        string profileAvatarUrl = Url.Content(Globals.AvatarUrl(Globals.UserImage(author)));
+                                                        string fullDateTime = Globals.ShowFullDateTime(comment.Timestamp);
+                                                        string dateTime = Globals.ShowDateTime(comment.Timestamp);
+                                                        <div id="comment-@comment.CommentId" class="uiCommentItem">
+                                                            <div class="uiComment">
+                                                                <a class="userImage" href="@profileUrl">
+                                                                    <img src="@profileAvatarUrl" alt="" width="32" height="32" />
+                                                                </a>
+                                                                <div>
+                                                                    <a class="userFullName" href="@profileUrl">@author.FullName</a>
+                                                                    <span class="commentInfo">
+                                                                        <span class="time" title="@fullDateTime">@dateTime</span>
+                                                                        <span class="commentActions"><span class="delete" title="Remove this comment"></span></span>
+                                                                    </span>
+                                                                    <div class="commentText">@Html.Raw(Globals.ApplyHtmlFrom(comment.CommentText.TextParsed))</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    @*append comment here*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="commentBox" style="display:none">
+                                            <a class="commentAvatar" href=""><img src="@Url.Content("~/static/images/avatars/" + ViewBag.MyAvatarFileName)" alt="" width="32" height="32" /></a>
+                                            <div class="commentEditorBox">
+                                                <div class="commentEditorBoxInner">
+                                                    <textarea id="@editorFeedId" class="commentEditor" rows="4" cols="20"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="commentButtons">
+                                                <div class="guiButton guiBlueButton post">Post comment</div>
+                                                <div class="guiButton cancel">Cancel</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="maskAddComment">
+                                        <div class="maskText">Add a comment...</div>
+                                    </div>
+                                </div>
+                            }
                             break;
                     }
                 </div> @*uiFeedItem_Inner*@

@@ -14,7 +14,7 @@
             </div>
         }
         <h2 class="title">@Html.Raw(Globals.ApplyHtmlFrom(album.Name)) (@ViewBag.Photos.Count)</h2>
-        <div style="margin-top:8px;"><a href="@Url.RouteUrl("PhotoAlbumList", new { uid = Globals.GetDisplayId(user) })">Albums</a></div>
+        <div style="margin-top:8px;"><a href="@Url.RouteUrl("PhotoAlbumList", new { uid = Globals.GetDisplayId(user) })">@user.FullName's Albums</a></div>
     </div>
     <div class="UIPhotoContainer">
         @foreach (Photo photo in ViewBag.Photos)

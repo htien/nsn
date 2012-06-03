@@ -1,0 +1,100 @@
+﻿@using NSN.Common;
+@using NewSocialNetwork.Domain;
+@{
+    ViewBag.hasLeftCol = true;
+    ViewBag.hasRightCol = true;
+    IList<User> people = ViewBag.Results;
+    User myUser = ViewBag.MyProfile;
+    string searchType = ViewBag.SearchType;
+}
+<div id="pagelet_search_results">
+    <div class="uiHeader uiHeaderPage">
+        <div class="uiHeaderTop clearfix">
+            <div class="uiHeaderAction rfloat"></div>
+            <div>
+                <h2 class="uiHeaderTitle">
+                    <i class="uiHeaderImage img"></i>
+                    @switch (searchType)
+                    {
+                        case NSNSearchType.FRIENDS:
+                            {
+                                @:@myUser.FullName's Friends
+                            }
+                            break;
+                        case NSNSearchType.NOTMUTUALFRIENDS:
+                            {
+                                @:Not Mutual Friends
+                            }
+                            break;
+                        default:
+                            {
+                                @:People
+                            }
+                            break;
+                    }
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="detailedsearch_feature_header mbs"><span>RESULTS</span></div>
+    <div>
+        @if (people != null && people.Count > 0)
+        {
+            foreach (User user in people)
+            {
+                string profileUrl = Url.RouteUrl("Profile", new { uid = Globals.GetDisplayId(user) });
+                string avatarUrl = Url.Content(Globals.AvatarUrl(Globals.UserImage(user)));
+                bool isFriend = Globals.IsFriend(myUser.UserId, user.UserId);
+                bool isConfirmingFriend = Globals.IsConfirmingFriendRequest(myUser.UserId, user.UserId);
+                bool isRequestingFriend = Globals.IsConfirmingFriendRequest(user.UserId, myUser.UserId);
+                <div class="detailedsearch_result mbm">
+                    <div class="uiImageBlock clearfix">
+                        <a class="uiImageBlockImage uiImageBlockSmallImage lfloat" href="@profileUrl">
+                            <img class="img" src="@avatarUrl" alt="" width="50" height="50" />
+                        </a>
+                        <div class="uiImageBlockContent uiImageBlockSmallContent">
+                            <div class="rfloat">
+                                @if (!isFriend && isConfirmingFriend)
+                                {
+                                    <span>Waiting confirm friend</span>
+                                }
+                                @if (!isFriend && isRequestingFriend)
+                                {
+                                    <span>Requesting friend with you</span>
+                                }
+                                @if (!isFriend && !isConfirmingFriend && !isRequestingFriend && myUser.UserId != user.UserId)
+                                {
+                                    <div class="guiButton guiRedButton addFriend _@(user.UserId)">Add Friend</div>
+                                }
+                                @if (searchType.Equals(NSNSearchType.FRIENDS) && isFriend)
+                                {
+                                    string notMutualFriendsUrl = Url.RouteUrl("SearchAction", new { action = "Result", type = NSNSearchType.NOTMUTUALFRIENDS, friendUid = user.UserId });
+                                    <a class="guiButton guiBlueButton findFriend" href="@notMutualFriendsUrl">Find not mutual</a>
+                                }
+                            </div>
+                            <div class="pls">
+                                <div class="fsl fwb fcb">
+                                    <a href="@profileUrl">@user.FullName</a>
+                                </div>
+                                <div class="fsm fwn fcg">
+                                    @if (user.Country != null)
+                                    {
+                                        <div class="profileByline searchResultPersonByline">
+                                            <span>
+                                                <span class="profileBylineLabel">Lives in @user.Country.Name</span>
+                                            </span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No result.</p>
+        }
+    </div>
+</div>

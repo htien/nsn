@@ -34,16 +34,19 @@
                 </div>
                 <div id="nsnHeadNav" class="UIComponent">
                     <div class="lfloat">
-                        <form id="navSearchForm" action="?" method="get">
+                        <form id="navSearchForm" action="@Url.RouteUrl("SearchAction", new { action = "Result" })" method="get">
                             <div id="navSearch" class="uiTypeahead UIInputText">
                                 <div class="wrap">
                                     <div class="innerWrap">
                                         <span class="uiSearchInput">
-                                            <input type="text" name="q" class="textInput nostyle" />
+                                            <input type="text" name="q" class="textInput nostyle off" />
                                             <button><span class="hidden_elem">Search</span></button>
                                         </span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="hidden_elem">
+                                <input type="hidden" name="type" value="users" />
                             </div>
                         </form>
                     </div>
@@ -51,15 +54,23 @@
                         <ul id="pageNav">
                             <li id="navTinyman" class="topNavLink tinyman">
                                 <a href="@Url.RouteUrl("Profile", new { uid = ViewBag.MyDisplayId })" title="Profile">
-                                    <img class="uiProfilePhoto" src="@Url.Content("~/static/images/avatars/" + ViewBag.MyAvatarFileName)" width="25" height="25" />
+                                    <img class="uiProfilePhoto" src="@Url.Content("~/static/images/avatars/" + ViewBag.MyAvatarFileName)" alt="" width="25" height="25" />
                                     <span class="tinymanName">@myProfile.FullName</span>
                                 </a>
                             </li>
                             <li class="topNavLink middleLink">
-                                <a href="#">Find Friends</a>
+                                <a href="@Url.RouteUrl("SearchAction", new { action = "Result", type = NSNSearchType.FRIENDS })">Find Friends</a>
                             </li>
-                            <li id="navHome" class="topNavLink lastLink">
+                            <li id="navHome" class="topNavLink middleLink">
                                 <a href="@ViewBag.ContextPath">Home</a>
+                            </li>
+                            <li id="navAccount" class="topNavLink lastLink">
+                                <a id="navAccountLink"><div class="menuPulldown"></div></a>
+                                <ul id="userNavigation" class="navigation hidden_elem">
+                                    <li>
+                                        <a id="logout" class="navSubmenu">Sign Out</a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </div>

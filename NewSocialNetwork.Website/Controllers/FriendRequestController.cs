@@ -18,17 +18,18 @@ namespace NewSocialNetwork.Website.Controllers
         // GET: /FriendRequest/
 
         [HttpPost]
-        public ActionResult Add(int friendUserId)
+        public ActionResult Add(string where, int friendUserId)
         {
             Domain.User myUser = sessionManager.GetUser();
             if (friendUserId == myUser.UserId
                 || friendRepo.IsFriend(myUser.UserId, friendUserId)
                 || friendRequestRepo.IsConfirmingFriendRequest(myUser.UserId, friendUserId))
             {
-                return View();
+                return View("empty");
             }
             Domain.User requestingFriend = userRepo.FindById(friendUserId);
             ViewBag.RequestingFriend = requestingFriend;
+            ViewBag.Where = where.Trim();
             return View();
         }
 
@@ -69,6 +70,27 @@ namespace NewSocialNetwork.Website.Controllers
                 feedRepo.Add(NSNType.FRIEND, friend.FriendId, friend.User.UserId, friend.FriendUser.UserId, timestamp);
 
                 msg.SetStatusAndMessage(RStatus.SUCCESS, "Accepted.");
+            }
+            catch (Exception e)
+            {
+                msg.Message = e.Message;
+            }
+            return Json(msg);
+        }
+
+        [HttpPost]
+        public JsonResult Cancel(int requestId)
+        {
+            ResponseMessage msg = new ResponseMessage("Friend", RAction.ADD, RStatus.FAIL,
+                "Cannot cancel this friend request.");
+            try
+            {
+                User myUser = sessionManager.GetUser();
+                // Hủy yêu cầu kết bạn
+                frontendService.CancelFriendRequest(requestId, myUser.UserId);
+                // Giảm số FriendRequest trong bảng UserCount
+                frontendService.IncreaseCountOfFriendRequest(myUser.UserId, -1);
+                msg.SetStatusAndMessage(RStatus.SUCCESS, "Canceled.");
             }
             catch (Exception e)
             {

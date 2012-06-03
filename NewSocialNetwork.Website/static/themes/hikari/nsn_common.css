@@ -8,6 +8,14 @@
 *|*:-moz-any-link:focus {
   outline: none;
 }
+::selection {
+  background: #a8141b;
+  color: #fff;
+}
+::-moz-selection {
+  background: #a8141b;
+  color: #fff;
+}
 button::-moz-focus-inner,
 input[type="reset"]::-moz-focus-inner,
 input[type="button"]::-moz-focus-inner,

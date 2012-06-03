@@ -44,9 +44,10 @@ namespace NewSocialNetwork.DataAccess
         {
             return Convert.ToInt32(this.Session().CreateQuery(
                 @"select count(fr.RequestId) from FriendRequest fr
-                  where fr.User.UserId = :userId and fr.FriendUser.UserId = :friendUserId")
+                  where fr.User.UserId = :userId and fr.FriendUser.UserId = :friendUserId and IsIgnore = :isIgnore")
                 .SetInt32("userId", userId)
                 .SetInt32("friendUserId", friendUserId)
+                .SetBoolean("isIgnore", false)
                 .UniqueResult()) == 1;
         }
     }

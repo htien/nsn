@@ -24,8 +24,9 @@ namespace NSN.Common
         public static string CONFIG_PHYSICAL_PATH = HttpContext.Current.Server.MapPath(CONFIG_FOLDER_PATH);
         public const string RESOURCE = "~/static/";
         public const string RESOURCE_IMAGES = "~/static/images/";
-        public const string RESOURCE_AVATARS = "~/static/images/avatars/";
-        public const string RESOURCE_PHOTOS = "~/static/images/photos/";
+        public const string RESOURCE_AVATARS = RESOURCE_IMAGES + "avatars/";
+        public const string RESOURCE_PHOTOS = RESOURCE_IMAGES + "photos/";
+        public const string RESOURCE_SMILES = "~/static/smiles/";
 
         public const string CTX_NSNCONTAINER = "__NSNContainer";
         public const string CTX_NSNCONFIG = "__NSNConfig";
@@ -406,7 +407,7 @@ namespace NSN.Common
                 throw new Exception("Not image in format. (only for .jpg, .png, .gif)");
             }
             int sizeInKB = file.ContentLength / 1024;
-            if (sizeInKB > 2048)
+            if (sizeInKB > 1024)
             {
                 throw new Exception("Size is limited 2MB.");
             }
@@ -440,6 +441,7 @@ namespace NSN.Common
         public static string UrlDecode(string text)
         {
             string decodedString = HttpUtility.UrlDecode(text, Encoding.GetEncoding("ISO-8859-1"));
+            decodedString = Regex.Replace(decodedString, @"^\n+", "");
             decodedString = Regex.Replace(decodedString, @"\r+", "");
             decodedString = Regex.Replace(decodedString, @" +", " ");
             return decodedString;
@@ -454,9 +456,28 @@ namespace NSN.Common
         {
             if (strIn.Length > maxSize)
             {
-                return strIn.Substring(0, maxSize - 3) + "...";
+                StringBuilder sb = new StringBuilder(strIn.Substring(0, maxSize - 3));
+                int indexOfLastSpace = sb.ToString().LastIndexOf(" ");
+                int lengthFromLastIndex = sb.Length - indexOfLastSpace;
+                sb.Remove(indexOfLastSpace, lengthFromLastIndex).Append("...");
+                return sb.ToString();
             }
             return strIn;
+        }
+
+        public static string PhotoUrl(string filename)
+        {
+            return RESOURCE_PHOTOS + filename;
+        }
+
+        public static string AvatarUrl(string filename)
+        {
+            return RESOURCE_AVATARS + filename;
+        }
+
+        public static string SmileUrl(string filename, string provider = "pidgin", string type = "default")
+        {
+            return RESOURCE_SMILES + provider + "/" + type + "/" + filename;
         }
 
         /// <summary>
