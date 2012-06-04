@@ -1067,7 +1067,7 @@ jQuery(function ($) {
     }
     function ajaxLogOut(successCallback) {
         $.ajax({
-            url: NSN.url('auth/logout'),
+            url: NSN.url('/auth/logout'),
             type: 'post',
             success: successCallback
         });

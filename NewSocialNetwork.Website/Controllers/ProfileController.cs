@@ -97,7 +97,7 @@ namespace NewSocialNetwork.Website.Controllers
                 userRepo.Save(user);
             }
             catch { }
-            return RedirectToAction("Info");
+            return RedirectToRoute("ProfileInfo");
         }
     }
 }
