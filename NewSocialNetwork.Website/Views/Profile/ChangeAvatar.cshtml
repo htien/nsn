@@ -8,11 +8,11 @@
     <div class="UIProfilePhoto_Change">
         <form method="post" action="@Url.RouteUrl("ProfileAction", new { action = "ChangeSaveAvatar", uid = Globals.GetDisplayId(user) })" enctype="multipart/form-data">
             <div>
-                <div>
+                <div class="pvm">
                     <input type="file" name="avatar" />
                 </div>
-                <div class="actions mtm">
-                    <input type="submit" value="Submit" class="guiButton3" />
+                <div class="actions pvm">
+                    <input type="submit" value="Submit" class="guiButton guiBlueButton" />
                 </div>
             </div>
         </form>

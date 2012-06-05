@@ -69,8 +69,8 @@ __*Lưu ý: Visual Studio phải được cài đặt Nuget plugin.*__
 
 Đề án được lưu trữ lại:
 
-  * [https://github.com/lilylnx/hellworld-dotnet/][1]
-  * [http://code.google.com/p/helloworld-dotnet/][2]
+  * [https://github.com/htien/nsn/][1]
+  * [http://code.google.com/p/nsn/][2]
 
 Sử dụng công cụ [msysgit] để tải đề án về.
 
@@ -147,10 +147,11 @@ Nếu ở remotehost, đường dẫn sẽ là `http://yourdomain`.
 Sau đây là các đường dẫn đến các trang:
 
     /auth               ...Login & Register
-    /{userid}         
-    /{userid}/home      ...Home Feed
-    /photo/{photoid}    ...Show a photo
+    /        
+    /home               ...Home Feed
+	/{userid}           ...Profile
     /{userid}/photos    ...List of Photo Albums
+	/{userid}/friends   ...List of User Friends
 
 
 HƯỚNG DẪN PUBLISH LÊN IIS 7.5
@@ -179,8 +180,8 @@ Ví dụ đăng ký MIME type cho tập tin có phần mở rộng ".xyz":
 Tien Nguyen ([Blog][tiennguyen-blog])
 
 
-[1]: https://github.com/lilylnx/hellworld-dotnet/ "'helloworld-dotnet' trên Github"
-[2]: http://code.google.com/p/helloworld-dotnet/ "'helloworld-dotnet' trên Google Code"
+[1]: https://github.com/htien/nsn/ "'helloworld-dotnet' trên Github"
+[2]: http://code.google.com/p/nsn/ "'helloworld-dotnet' trên Google Code"
 [msysgit]: http://code.google.com/p/msysgit/
 [NuGet]: http://nuget.org
 [tiennguyen-blog]: http://lilylnx.wordpress.com/ "Tien Nguyen - The Long Road"

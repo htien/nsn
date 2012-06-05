@@ -1194,9 +1194,9 @@
     </Content>
     <Content Include="Config\Custom.properties" />
     <Content Include="Config\SystemGlobals.properties" />
-    <Content Include="Config\Web.config">
+    <None Include="Config\Web.config">
       <SubType>Designer</SubType>
-    </Content>
+    </None>
     <Content Include="Config\Web.config.new" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

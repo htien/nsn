@@ -3,7 +3,7 @@
  */
 
 .UIPage_Hikari {
-  background: url(images/background1_2.png) repeat 50% 50%;
+  /*background: url(images/background1_2.png) repeat 50% 50%;*/
 }
 
 img,
@@ -931,6 +931,7 @@ div._photoZoomOverlay {
 .pls {padding-left: 5px;}
 .plm {padding-left: 10px;}
 .pvs {padding-top: 5px;padding-bottom: 5px;}
+.pvm {padding-top: 10px;padding-bottom: 10px;}
 
 .uiListItem {
   display: block;
