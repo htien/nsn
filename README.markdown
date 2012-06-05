@@ -69,8 +69,8 @@ __*Lưu ý: Visual Studio phải được cài đặt Nuget plugin.*__
 
 Đề án được lưu trữ lại:
 
-  * [https://github.com/lilylnx/hellworld-dotnet/][1]
-  * [http://code.google.com/p/helloworld-dotnet/][2]
+  * [https://github.com/htien/nsn/][1]
+  * [http://code.google.com/p/nsn/][2]
 
 Sử dụng công cụ [msysgit] để tải đề án về.
 
