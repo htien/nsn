@@ -3,49 +3,52 @@
     if (jQuery('.uiStreamHomePage').length > 0) {
         setInterval(ajaxStream, 5000);
     }
-    function ajaxCount() {
-        jQuery.ajax({
-            url: NSN.requestUrl('usercount/countpending'),
-            type: 'post',
-            success: function (countOf) {
-                var mailNew = countOf.MailNew,
+});
+
+function ajaxCount() {
+    jQuery.ajax({
+        url: NSN.requestUrl('usercount/countpending'),
+        type: 'post',
+        success: function (countOf) {
+            var mailNew = countOf.MailNew,
                 commentPedding = countOf.CommentPending,
                 friendRequest = countOf.FriendRequest;
-                var jewelRequests = NSN.$id('nsnRequestsJewel'),
+            var jewelRequests = NSN.$id('nsnRequestsJewel'),
                 jewelMessages = NSN.$id('nsnMessagesJewel'),
                 jewelNotifs = NSN.$id('nsnNotificationsJewel');
-                jewelRequests.find('.jewelCount').html((friendRequest > 0) ? ('<span>' + friendRequest + '</span>') : (''));
-                jewelMessages.find('.jewelCount').html((mailNew > 0) ? ('<span>' + mailNew + '</span>') : (''));
-                jewelNotifs.find('.jewelCount').html((commentPedding > 0) ? ('<span>' + commentPedding + '</span>') : (''));
-            }
-        });
-    }
-    function ajaxStream() {
-        jQuery.ajax({
-            url: NSN.requestUrl('feed/newestfeeds'),
-            type: 'post',
-            data: { feedId: lastFeedId },
-            dataType: 'html',
-            success: function (result) {
-                if (!NSN.isBlank(result)) {
-                    var html = jQuery(result),
+            jewelRequests.find('.jewelCount').html((friendRequest > 0) ? ('<span>' + friendRequest + '</span>') : (''));
+            jewelMessages.find('.jewelCount').html((mailNew > 0) ? ('<span>' + mailNew + '</span>') : (''));
+            jewelNotifs.find('.jewelCount').html((commentPedding > 0) ? ('<span>' + commentPedding + '</span>') : (''));
+        }
+    });
+}
+function ajaxStream() {
+    jQuery.ajax({
+        url: NSN.requestUrl('feed/newestfeeds'),
+        type: 'post',
+        data: { feedId: lastFeedId },
+        dataType: 'html',
+        success: function (result) {
+            if (!NSN.isBlank(result)) {
+                var html = jQuery(result),
                     tags = jQuery('li.uiStreamStory', result),
                     streamContainer = jQuery('.UIStream .uiStreamHomePage');
-                    lastFeedId += tags.length;
-                    tags.each(function (idx, val) {
-                        var tagId = jQuery(this).attr('id'),
-                            tagClass = jQuery(this).attr('class');
-                        streamContainer.prepend('<li id="' + tagId + '" class="' + tagClass + '">' + jQuery(this).html() + '</li>');
-                    });
-                }
+                //lastFeedId += tags.length;
+                tags.each(function (idx, val) {
+                    var tagId = jQuery(this).attr('id'),
+                        tagClass = jQuery(this).attr('class'),
+                        feedId = tagId.slice(6);
+                    streamContainer.prepend('<li id="' + tagId + '" class="' + tagClass + '">' + jQuery(this).html() + '</li>');
+                    lastFeedId = feedId;
+                });
             }
-        });
-    }
-});
+        }
+    });
+}
 
 jQuery(function ($) {
     /* init */
-    NSN.$id('composer-tabs').tabs({disabled: [1]});
+    NSN.$id('composer-tabs').tabs({ disabled: [1] });
     NSN.$id('navAccount').click(navAccountClickHandler);
     NSN.$id('userNavigation').mouseleave(userNavigationMouseOutHandler);
     NSN.$id('logout').click(logOutHandler);
@@ -56,24 +59,14 @@ jQuery(function ($) {
     NSN.$id(postStatusButton).click(function (evt) {
         var composerForm = $(this).parents('form');
         NSN.ajaxSubmit(composerForm)
-            .success(function (json) {
-                NSN.callJqDlg(glbDefaultDlgId, json.Message, {
-                    hasTitle: false,
-                    width: 'auto',
-                    buttons: [
-                        {
-                            'text': 'Close',
-                            'class': 'guiBlueButton',
-                            'click': function () {
-                                $(this).dialog('destroy').remove();
-                                NSN.resetForm(composerForm);
-                            }
-                        }
-                    ]
-                }).dialog('open');
+            .success(function (result) {
+                if (result && result.length > 0) {
+                    NSN.resetForm(composerForm);
+                    $('.UIFeeds_Content').prepend(result);
+                }
             })
-            .error(function (json) {
-                NSN.callJqDlg(glbDefaultDlgId, json.Message).dialog('open');
+            .error(function (result) {
+                NSN_alertError(result.responseText);
             });
     });
     NSN.$id(postLinkButton).click(function (evt) {
@@ -88,15 +81,16 @@ jQuery(function ($) {
             url: NSN.requestUrl('link/post'),
             type: 'post',
             data: { uid: uid, inputText: escape(inputText.val()), inputLink: inputLink.val(), imageUrl: imageUrl, title: escape(title), description: escape(description) },
-            success: function (json) {
-                if (json.Status == 1) {
+            success: function (result) {
+                if (result && result.length > 0) {
                     inputText.val('');
                     inputLink.val('');
                     $('.linkShareStage .composerCloseShare').click();
+                    $('.UIFeeds_Content').prepend(result);
                 }
-                else {
-                    NSN_alertError(json.Message);
-                }
+            },
+            error: function(result) {
+                NSN_alertError(result.responseText);
             }
         });
     });
@@ -212,7 +206,7 @@ jQuery(function ($) {
         addLinkBox.slideDown(100);
     });
 
-    $('.uiFeedItem').on('click', '.guiButton.post', function (evtObj) {
+    $('.uiFeedItem .guiButton.post').live('click', function (evtObj) {
         var feedItem = NSN_getFeedItem(this),
             feedId = NSN_getFeedId(feedItem),
             commentText = $.trim(feedItem.find('.commentEditor')[0].value);
@@ -235,14 +229,14 @@ jQuery(function ($) {
         }
     });
 
-    $('.uiFeedItem').on('click', '.guiButton.cancel', function (evtObj) {
+    $('.uiFeedItem .guiButton.cancel').live('click', function (evtObj) {
         var commentBox = $(this).parents('.commentBox'),
             maskCommentBox = commentBox.parent().next();
         commentBox.hide();
         maskCommentBox.show();
     });
 
-    $('.uiFeedItem').on('mousedown', '.maskText', function (evtObj) {
+    $('.uiFeedItem .maskText').live('mousedown', function (evtObj) {
         var maskCommentBox = $(this).parent(),
             commentBox = $(maskCommentBox.prev().children()[1]),
             commentEditor = commentBox.find('.commentEditor');
@@ -251,7 +245,7 @@ jQuery(function ($) {
         commentEditor.focus();
     });
 
-    $('.uiFeedItem .feedActionBlock').on('click', '.likeAction', function (evtObj) {
+    $('.uiFeedItem .feedActionBlock .likeAction').live('click', function (evtObj) {
         var feedItem = NSN_getFeedItem(this),
             feedId = NSN_getFeedId(feedItem),
             likeButton = $(this);
@@ -273,7 +267,7 @@ jQuery(function ($) {
             }
         });
     });
-    $('.uiFeedItem .feedActionBlock').on('click', '.unlikeAction', function (evtObj) {
+    $('.uiFeedItem .feedActionBlock .unlikeAction').live('click', function (evtObj) {
         var feedItem = NSN_getFeedItem(this),
             feedId = NSN_getFeedId(feedItem),
             likeButton = $(this);
@@ -313,7 +307,7 @@ jQuery(function ($) {
             }
         });
     }
-    $('.uiFeedItem').delegate('.feedRemoverBtn', 'click', function (evt) {
+    $('.uiFeedItem .feedRemoverBtn').live('click', function (evt) {
         evt.preventDefault();
         var feedItem = NSN_getFeedItem(this);
         NSN_alertConfirmRemove('Are you sure remove this feed?', 'Remove Feed Confirmation', function () {
@@ -330,7 +324,7 @@ jQuery(function ($) {
             }
         }
     });
-    $('.uiFeedItem').delegate('.uiCommentItem .commentActions .delete', 'click', function (evt) {
+    $('.uiFeedItem .uiCommentItem .commentActions .delete').live('click', function (evt) {
         evt.preventDefault();
         var feedItem = NSN_getFeedItem(this),
             commentItem = $(this).parents('.uiCommentItem');
