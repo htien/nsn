@@ -41,10 +41,8 @@ namespace NewSocialNetwork.Website.Controllers
         }
 
         [HttpPost]
-        public JsonResult Post(int uid, string inputText, string inputLink, string imageUrl, string title, string description)
+        public ActionResult Post(int uid, string inputText, string inputLink, string imageUrl, string title, string description)
         {
-            ResponseMessage msg = new ResponseMessage("Link", RAction.ADD, RStatus.FAIL,
-                "<p>Incomplete post.</p>");
             try
             {
                 int timestamp = DateTimeUtils.UnixTimestamp;
@@ -52,23 +50,29 @@ namespace NewSocialNetwork.Website.Controllers
                 int linkId = frontendService.PostLink(uid, inputText, inputLink, imageUrl, title, description, timestamp);
                 // Send to feed
                 Link newLink = linkRepo.FindById(linkId);
+                long newFeedId = 0;
                 if (newLink.FriendUser == null || newLink.FriendUser.UserId == 0)
                 {
-                    feedRepo.Add(NSNType.LINK, linkId, newLink.User.UserId, 0, timestamp);
+                    newFeedId = feedRepo.Add(NSNType.LINK, linkId, newLink.User.UserId, 0, timestamp);
                 }
                 else
                 {
-                    feedRepo.Add(NSNType.LINK, linkId, newLink.User.UserId, newLink.FriendUser.UserId, timestamp);
+                    newFeedId = feedRepo.Add(NSNType.LINK, linkId, newLink.User.UserId, newLink.FriendUser.UserId, timestamp);
                     // Increase user count
                     frontendService.IncreaseCountOfCommentPending(newLink.FriendUser.UserId);
                 }
-                msg.SetStatusAndMessage(RStatus.SUCCESS, "<p>Posted.</p>");
+                if (newFeedId > 0)
+                {
+                    Feed newFeed = feedRepo.GetFeed(newFeedId);
+                    ViewBag.NewFeed = newFeed;
+                    ViewBag.NewPost = newLink;
+                }
             }
-            catch (Exception e)
+            catch
             {
-                msg.Message = e.Message;
+                return View("Empty");
             }
-            return Json(msg);
+            return View("PostResult");
         }
 
     }

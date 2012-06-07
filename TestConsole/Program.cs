@@ -14,6 +14,7 @@ namespace NewSocialNetwork.TestConsole
             Console.WriteLine("Current timestamp: " + GetTimestamp());
             Console.WriteLine(PublicKeyToken.Get(@"D:\workspace\HelloWorld\packages\Quartz.1.0.3\lib\3.5\Quartz.dll"));
             Console.WriteLine(DateTimeUtils.CurrentTimeMillis);
+            Console.WriteLine(HashPassword("tester"));
             Console.ReadLine();
         }
 

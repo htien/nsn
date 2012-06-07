@@ -50,7 +50,7 @@
                             }
                             
                             <div class="friendInfo">
-                                <div class="name"><b style="font-weight:bold"><a href="@hrefToFriend">@user.FullName</a></b><br />@Globals.ShowBirthday(user.Birthday)</div>
+                                <div class="name"><b style="font-weight:bold"><a href="@hrefToFriend">@user.FullName</a></b><br />@(user.Birthday != null ? Globals.ShowBirthday(user.Birthday) : "")</div>
                             </div>
                         </div>
                     </div>

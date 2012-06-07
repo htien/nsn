@@ -18,7 +18,7 @@
             int totalLike = Globals.GetTotalLike(feed.TypeId, feed.ItemId);
             string displayId = Globals.GetDisplayId(user);
             string profilePath = Url.RouteUrl("Profile", new { uid = displayId });
-            string feedAvatarPath = Url.Content("~/static/images/avatars/" + Globals.UserImage(user));
+            string feedAvatarPath = Url.Content(Globals.RESOURCE_AVATARS + Globals.UserImage(user));
             string privacyMode;
             string divFeedId = "update-" + feed.FeedId;
             string editorFeedId = "editor-update-" + feed.FeedId;
@@ -43,7 +43,7 @@
                                             <a class="uiCloseButton feedRemoverBtn" title="Delete this feed"></a>
                                             <h3 class="fname"><a href="@profilePath">@user.FullName</a></h3>
                                             <span class="postInfo">
-                                                <a class="time" target="_blank" title="@Globals.ShowFullDateTime(feed.Timestamp)">@NSN.Common.Globals.ShowDate(feed.Timestamp)</a>
+                                                <a class="time" target="_blank" title="@Globals.ShowFullDateTime(feed.Timestamp)">@Globals.ShowDate(feed.Timestamp)</a>
                                                 &nbsp;-&nbsp;
                                                 <span class="privacyMode">@privacyMode</span>
                                             </span>

@@ -182,28 +182,34 @@ namespace NSN.Service.BusinessService
             FeedManager feedManager = new FeedManager();
             foreach (Feed feed in feeds)
             {
-                IEntity entity = null;
-                switch (feed.TypeId)
-                {
-                    case NSNType.USER_TWEET:
-                        entity = userTweetRepo.FindById(feed.ItemId);
-                        break;
-                    case NSNType.LINK:
-                        entity = linkRepo.FindById(feed.ItemId);
-                        break;
-                    case NSNType.PHOTO_ALBUM:
-                        entity = photoAlbumRepo.FindById(feed.ItemId);
-                        break;
-                    case NSNType.PHOTO_ALBUM_MORE:
-                        entity = photoAlbumRepo.FindById(feed.ItemId);
-                        break;
-                    case NSNType.FRIEND:
-                        entity = friendRepo.FindById(feed.ItemId);
-                        break;
-                }
+                IEntity entity = FromFeed(feed);
                 feedManager.AddFeedItem(feed, entity);
             }
             return feedManager.GetItems();
+        }
+
+        public IEntity FromFeed(Feed feed)
+        {
+            IEntity entity = null;
+            switch (feed.TypeId)
+            {
+                case NSNType.USER_TWEET:
+                    entity = userTweetRepo.FindById(feed.ItemId);
+                    break;
+                case NSNType.LINK:
+                    entity = linkRepo.FindById(feed.ItemId);
+                    break;
+                case NSNType.PHOTO_ALBUM:
+                    entity = photoAlbumRepo.FindById(feed.ItemId);
+                    break;
+                case NSNType.PHOTO_ALBUM_MORE:
+                    entity = photoAlbumRepo.FindById(feed.ItemId);
+                    break;
+                case NSNType.FRIEND:
+                    entity = friendRepo.FindById(feed.ItemId);
+                    break;
+            }
+            return entity;
         }
 
         public IList<ImageInfo> SaveImagesFromHttp(HttpFileCollectionBase imageCollection)

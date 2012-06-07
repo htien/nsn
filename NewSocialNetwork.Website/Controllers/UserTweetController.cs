@@ -22,10 +22,8 @@ namespace NewSocialNetwork.Website.Controllers
         // GET: /UserTweet/
 
         [HttpPost]
-        public JsonResult Post(int uid, string inputText)
+        public ActionResult Post(int uid, string inputText)
         {
-            ResponseMessage msg = new ResponseMessage("UserPostTweet", RAction.ADD, RStatus.FAIL,
-                "<p>Incomplete post.</p>");
             try
             {
                 int timestamp = DateTimeUtils.UnixTimestamp;
@@ -33,23 +31,29 @@ namespace NewSocialNetwork.Website.Controllers
                 int tweetId = frontendService.PostUserTweet(uid, inputText, timestamp);
                 // Send to feed
                 UserTweet newTweet = userTweetRepo.FindById(tweetId);
+                long newFeedId = 0;
                 if (newTweet.FriendUser == null || newTweet.FriendUser.UserId == 0)
                 {
-                    feedRepo.Add(NSNType.USER_TWEET, tweetId, newTweet.User.UserId, 0, timestamp);
+                    newFeedId = feedRepo.Add(NSNType.USER_TWEET, tweetId, newTweet.User.UserId, 0, timestamp);
                 }
                 else
                 {
-                    feedRepo.Add(NSNType.USER_TWEET, tweetId, newTweet.User.UserId, newTweet.FriendUser.UserId, timestamp);
+                    newFeedId = feedRepo.Add(NSNType.USER_TWEET, tweetId, newTweet.User.UserId, newTweet.FriendUser.UserId, timestamp);
                     // Increase user count
                     frontendService.IncreaseCountOfCommentPending(newTweet.FriendUser.UserId);
                 }
-                msg.SetStatusAndMessage(RStatus.SUCCESS, "<p>Posted.</p>");
+                if (newFeedId > 0)
+                {
+                    Feed newFeed = feedRepo.GetFeed(newFeedId);
+                    ViewBag.NewFeed = newFeed;
+                    ViewBag.NewPost = frontendService.FromFeed(newFeed);
+                }
             }
-            catch (Exception e)
+            catch
             {
-                msg.Message = e.Message;
+                return View("Empty");
             }
-            return Json(msg);
+            return View("PostResult");
         }
     }
 }
