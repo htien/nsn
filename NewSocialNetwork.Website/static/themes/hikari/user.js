@@ -1,8 +1,6 @@
 ﻿jQuery(window).load(function () {
     setInterval(ajaxCount, 5000);
-    if (jQuery('.uiStreamHomePage').length > 0) {
-        setInterval(ajaxStream, 5000);
-    }
+    setInterval(ajaxStream, 5000);
 });
 
 function ajaxCount() {
@@ -28,13 +26,18 @@ function ajaxStream() {
         type: 'post',
         data: { feedId: lastFeedId },
         dataType: 'html',
-        success: function (result) {
+        success: function(result) {
             if (!NSN.isBlank(result)) {
                 var html = jQuery(result),
                     tags = jQuery('li.uiStreamStory', result),
                     streamContainer = jQuery('.UIStream .uiStreamHomePage');
                 //lastFeedId += tags.length;
-                tags.each(function (idx, val) {
+                if (streamContainer.length == 0) {
+                    jQuery('.UIStream .no-posts').remove();
+                    jQuery('.UIStream').prepend('<ul class="uiList uiStream uiStreamHomePage"></ul>')
+                    streamContainer = jQuery('.UIStream .uiStreamHomePage');
+                }
+                tags.each(function(idx, val) {
                     var tagId = jQuery(this).attr('id'),
                         tagClass = jQuery(this).attr('class'),
                         feedId = tagId.slice(6);
@@ -883,18 +886,18 @@ jQuery(function ($) {
 
     // Home Stream Page
 
-    $('.uiStreamHomePage').delegate('.UIActionLinks_bottom a.comment_action', 'click', function (evt) {
+    $('.uiStreamHomePage .UIActionLinks_bottom a.comment_action').live('click', function (evt) {
         var storyItem = HomeStream_getStreamStoryItem(this),
             uiAddComment = storyItem.find('.uiUfiAddComment');
         uiAddComment.removeClass('hidden_elem');
         uiAddComment.find('input[name=commentText]').focus();
         evt.preventDefault();
     });
-    $('.uiStreamHomePage').delegate('.uiUfiLike .uiUfiLikeIcon', 'click', function (evt) {
+    $('.uiStreamHomePage .uiUfiLike .uiUfiLikeIcon').live('click', function (evt) {
         var storyItem = HomeStream_getStreamStoryItem(this);
         $('.UIActionLinks_bottom a.like_action', storyItem).click();
     });
-    $('.uiStreamHomePage').delegate('.UIActionLinks_bottom a.like_action', 'click', function (evt) {
+    $('.uiStreamHomePage .UIActionLinks_bottom a.like_action').live('click', function (evt) {
         var likeBtn = $(this),
             storyItem = HomeStream_getStreamStoryItem(likeBtn),
             feedId = HomeStream_getFeedId(storyItem);
@@ -909,7 +912,7 @@ jQuery(function ($) {
             }
         }
     });
-    $('.uiStreamHomePage').delegate('.UIActionLinks_bottom a.unlike_action', 'click', function (evt) {
+    $('.uiStreamHomePage .UIActionLinks_bottom a.unlike_action').live('click', function (evt) {
         var unlikeBtn = $(this),
             storyItem = HomeStream_getStreamStoryItem(unlikeBtn),
             feedId = HomeStream_getFeedId(storyItem);
@@ -924,7 +927,7 @@ jQuery(function ($) {
             }
         }
     });
-    $('.uiStreamHomePage').delegate('.commentArea input[name=commentText]', 'keydown', function (evt) {
+    $('.uiStreamHomePage .commentArea input[name=commentText]').live('keydown', function (evt) {
         var input = jQuery(this),
             storyItem = HomeStream_getStreamStoryItem(input),
             feedId = HomeStream_getFeedId(storyItem),
@@ -946,7 +949,7 @@ jQuery(function ($) {
             }
         }
     });
-    $('.uiStreamHomePage').delegate('.uiUfiComment .commentRemoverButton', 'click', function (evt) {
+    $('.uiStreamHomePage .uiUfiComment .commentRemoverButton').live('click', function (evt) {
         evt.preventDefault();
         var removeBtn = jQuery(this),
             storyItem = HomeStream_getStreamStoryItem(removeBtn),
@@ -966,7 +969,7 @@ jQuery(function ($) {
             }
         }
     });
-    $('.uiStreamHomePage').delegate('.uiStreamHide', 'click', function (evt) {
+    $('.uiStreamHomePage .uiStreamHide').live('click', function (evt) {
         evt.preventDefault();
         var storyItem = HomeStream_getStreamStoryItem(this);
         NSN_alertConfirmRemove('Are you sure remove this feed?', 'Remove Feed Confirmation', function () {

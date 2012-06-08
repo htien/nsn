@@ -345,7 +345,9 @@ var glbDebug = true,
                             'class': 'guiBlueButton',
                             'click': function() {
                                 jQuery(dlg).dialog('destroy').remove();
-                                callbackSuccess.call(this);
+                                if (callbackSuccess) {
+                                    callbackSuccess.call(this);
+                                }
                             }
                         }
 				    ]

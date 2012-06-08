@@ -77,8 +77,7 @@ namespace NSN.Service.BusinessService
                 LastActivity = sessionManager.GetUserSession().LastAccessedTime,
                 LastIpAddress = ipAddr
             };
-            userRepo.Create(user);
-            return user;
+            return userRepo.Create(user);
         }
 
         public User Login(string usernameOrEmail, string password)
