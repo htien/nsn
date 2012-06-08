@@ -9,11 +9,11 @@
   outline: none;
 }
 ::selection {
-  background: #a8141b;
+  background-color: #2271A9;
   color: #fff;
 }
 ::-moz-selection {
-  background: #a8141b;
+  background-color: #2271A9;
   color: #fff;
 }
 button::-moz-focus-inner,
@@ -146,6 +146,13 @@ body {
 .nobullet {
   list-style-type: none;
 }
+.size32 {
+  width: 32px;
+  height: 32px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
 .w100 {
   width: 100%;
 }
@@ -234,4 +241,7 @@ table.fixed {
   padding: 8px 0;
   font-weight: bold;
   color: #222;
+}
+.metadata {
+  font-size: 11px;
 }

@@ -246,6 +246,9 @@ img,
   top: 37px;
   bottom: 0;
   width: 100px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 .UIContainer_Content {
   position: relative;

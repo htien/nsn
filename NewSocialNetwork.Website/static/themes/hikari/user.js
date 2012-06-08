@@ -1092,7 +1092,6 @@ jQuery(function ($) {
     //        }
     //    }
     function navAccountClickHandler(evt) {
-        evt.preventDefault();
         var item = $(this),
             menu = item.find('ul.navigation');
         if (!item.hasClass('openToggler')) {

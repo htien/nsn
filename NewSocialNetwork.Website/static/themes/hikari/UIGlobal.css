@@ -290,30 +290,35 @@
   padding-left: 0;
 }
 .slimHeader #pageNav #navAccount .navSubmenu {
-  padding: 0 22px;
-  height: 22px;
-  line-height: 22px;
-  border-top: 1px solid #fff;
-  border-bottom: 1px solid #fff;
+  padding: 3px 22px;
+  line-height: 20px;
   color: #222;
 }
 .slimHeader #pageNav #navAccount .navSubmenu:hover,
 .slimHeader #pageNav #navAccount .navSubmenu:focus,
 .slimHeader #pageNav #navAccount .navSubmenu:active {
-  background: #6d84b4;
+  /*background: #6d84b4;
   border-top: 1px solid #3b5998;
-  border-bottom: 1px solid #3b5998;
-  color: #fff;
+  border-bottom: 1px solid #3b5998;*/
+  background-color: #2271A9;
+  background-repeat: repeat-x;
+  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#2F7EB6),color-stop(100%,#2271A9));
+  background-image: -webkit-linear-gradient(top,#2F7EB6 0,#2271A9 100%);
+  background-image: -moz-linear-gradient(top,#2F7EB6 0,#2271A9 100%);
+  background-image: -ms-linear-gradient(top,#2F7EB6 0,#2271A9 100%);
+  background-image: -o-linear-gradient(top,#2F7EB6 0,#2271A9 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2f7eb6',endColorstr='#2271a9',GradientType=0);
+  background-image: linear-gradient(top,#2F7EB6 0,#2271A9 100%);
+  color: #fff !important;
 }
 .slimHeader #navAccount .navigation {
-  border-bottom-color: #333;
   padding: 10px 0;
 }
 .openToggler #navAccountLink, .no_js #navAccount:hover #navAccountLink {
   position: relative;
   margin: -1px -1px 0;
   background-color: #fff;
-  border: 1px solid #333;
+  border: 1px solid rgba(0,0,0,.2);
   border-bottom: 0;
   color: #333;
   z-index: 2;
@@ -327,8 +332,14 @@
   padding: 10px 0 5px;
   min-width: 200px;
   background: #fff;
-  border: 1px solid #333;
-  border-bottom: 2px solid #2D4486;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 4px 0 4px 4px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding-box;
+  background-clip: padding-box;
   z-index: 1;
 }
 #navAccount.openToggler .navigation, .no_js #navAccount:hover .navigation {
@@ -341,4 +352,17 @@
   font-weight: normal;
   color: #3A579a;
   white-space: nowrap;
+}
+#navAccount .account-group {
+}
+#navAccount .account-group img {
+  margin-right: 5px;
+}
+#navAccount .account-group .block {
+  line-height: 16px;
+}
+.dropdown-divider {
+  margin: 5px 1px 6px;
+  padding-top: 1px;
+  border-bottom: 1px solid #ddd;
 }
